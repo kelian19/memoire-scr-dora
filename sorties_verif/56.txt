@@ -1,0 +1,81 @@
+﻿
+====================================================================================
+1. Le posterieur par paire : ce que la donnee concentre, ce qu'elle laisse libre
+====================================================================================
+  Prior de reference : Beta(1,1) uniforme (aucune elicitation).
+  paire     n_lo  n_hi   E[theta]       IC90 de theta   sens implique
+  P1-P2        0     0       0.50   [0.05 ; 0.95]     indetermine
+  P1-P3        5     0       0.86   [0.61 ; 0.99]        P1 -> P3
+  P1-P4        3     0       0.80   [0.47 ; 0.99]     indetermine
+  P1-P5        1     0       0.67   [0.22 ; 0.97]     indetermine
+  P2-P3        0     4       0.17   [0.01 ; 0.45]        P3 -> P2
+  P2-P4        0     3       0.20   [0.01 ; 0.53]     indetermine
+  P2-P5        0     0       0.50   [0.05 ; 0.95]     indetermine
+  P3-P4        0     0       0.50   [0.05 ; 0.95]     indetermine
+  P3-P5        0     1       0.33   [0.03 ; 0.78]     indetermine
+  P4-P5        0     0       0.50   [0.05 ; 0.95]     indetermine
+
+  Les 4 paires sans donnee gardent E[theta] = 0,50 et un IC90 quasi complet : le
+  posterieur reproduit de lui-meme l'ignorance totale, sans qu'on la pose.
+
+  A NOTER, ET C'EST PLUS SEVERE QUE LE SCRIPT 53 : sur les 6 paires documentees,
+  seules 2 ont un IC90 qui EXCLUT 0,50, donc un sens veritablement tranche.
+  Avec 1 a 3 chaines observees, l'esperance penche nettement mais la credibilite a 90 %
+  ne suffit pas a exclure l'absence de direction. Le test de signe du script 53 (p tres
+  faible) repondait a une AUTRE question : la coherence GLOBALE des 17 transitions entre
+  elles. Le posterieur, lui, juge CHAQUE paire separement, et se montre plus prudent.
+  Les deux lectures sont justes ; la bayesienne est la plus conservatrice, donc la plus
+  defendable devant un jury.
+
+====================================================================================
+2. Loi a posteriori du SCR, sous les trois priors
+====================================================================================
+  On tire theta a posteriori, on en deduit A = S(2 theta - 1), donc W, puis le SCR.
+  Rappel du module : a queue lourde la VaR est peu sensible a la structure, la MOYENNE
+  la revele mieux ; on donne donc les deux.
+
+  prior                     SCR median         IC90 credible  largeur  moyenne med.
+  uniforme Beta(1,1)            8127 M   [7957 ; 8316]     359 M        1028 M
+  Jeffreys Beta(1/2,1/2)        8147 M   [7878 ; 8373]     495 M        1034 M
+  sceptique Beta(4,4)           8085 M   [7958 ; 8174]     216 M        1018 M
+
+  Bornes du chapitre 10 (ignorance totale, sommets) : [6858 ; 8697] M,
+  largeur 1839 M. Intervalle credible a 90 % sous prior uniforme :
+  [7957 ; 8316] M, largeur 359 M, soit 81 % de moins.
+  Ce n'est PAS une contradiction : les bornes couvrent le PIRE cas admissible, le
+  credible couvre 90 % de la masse a posteriori. Les deux repondent a deux questions
+  differentes, et le memoire peut donner les deux : bornes opposables, credible informatif.
+
+====================================================================================
+3. Sensibilite au prior : la conclusion vient-elle du prior ?
+====================================================================================
+  mediane : uniforme 8127 | Jeffreys 8147 | sceptique 8085 M
+  ecart maximal entre priors : 62 M, soit 0.8 % de la mediane
+  et 3 % de la largeur des bornes du chapitre 10.
+
+  Le prior SCEPTIQUE Beta(4,4) tire vers theta = 1/2, donc vers l'ABSENCE de direction :
+  c'est le prior le plus defavorable a la these du memoire. Sa mediane reste a
+  8085 M contre 8127 M sous prior uniforme. La conclusion ne vient donc pas
+  du prior : elle vient des comptes documentes, qui dominent un prior meme sceptique
+  des que quelques chaines sont observees.
+
+====================================================================================
+VERDICT
+====================================================================================
+  1. La direction non identifiee se traite proprement en bayesien : theta ~ Beta,
+     conjugaison exacte sur les comptes de chaines documentees, aucun MCMC, aucun prior
+     d'expert. W passe de « borne a la main » a « estime sous prior explicite ».
+  2. Le posterieur REPRODUIT SEUL la structure d'identification : paires documentees
+     concentrees, paires sans donnee uniformes sur tout l'intervalle admissible.
+  3. Le SCR devient une loi : mediane 8127 M, credible 90 % [7957 ; 8316] M,
+     nettement plus informatif que les bornes de pire cas [6858 ; 8697].
+  4. La conclusion resiste a un prior SCEPTIQUE (ecart de mediane 62 M, 0.8 %) :
+     elle est portee par la donnee documentaire, pas par le choix du prior.
+  5. NUANCE IMPORTANTE : par paire, seules 2 des 6 paires documentees ont un
+     sens tranche a 90 % de credibilite. Le corpus etablit une COHERENCE d'ensemble
+     (script 53) bien plus qu'une direction paire par paire. A dire dans ces termes.
+  6. Limite heritee : la vraisemblance repose sur le codage des post-mortems, donc sur
+     ses reserves propres (codeur unique, biais de narration des enquetes). Le bayesien
+     formalise l'incertitude ; il ne cree pas d'information.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z19_bayes_direction.png

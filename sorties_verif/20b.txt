@@ -1,0 +1,42 @@
+﻿==========================================================================
+20b  interaction du Delta_DORA : seed=909  ny=60,000
+==========================================================================
+
+  OPRISK  [VaR 99,5 %]
+    Delta total =   10926.5 M   somme marginaux =    9531.4 M
+    INTERACTION =   +1395.1 M   (super-additif)
+    classement marginaux : P1 > P4 > P2 > P3 > P5
+
+  OPRISK  [perte moyenne]
+    Delta total =    2527.1 M   somme marginaux =    1966.7 M
+    INTERACTION =    +560.4 M   (super-additif)
+    classement marginaux : P1 > P4 > P2 > P3 > P5
+
+  PRC  [VaR 99,5 %]
+    Delta total =    4956.9 M   somme marginaux =    4051.7 M
+    INTERACTION =    +905.2 M   (super-additif)
+    classement marginaux : P1 > P4 > P2 > P3 > P5
+
+  PRC  [perte moyenne]
+    Delta total =    3881.2 M   somme marginaux =    3054.0 M
+    INTERACTION =    +827.2 M   (super-additif)
+    classement marginaux : P1 > P4 > P2 > P3 > P5
+
+==========================================================================
+Balayage de graine, a resolution EGALE (ny=60,000)
+==========================================================================
+   graine    interaction VaR OpRisk  interaction moyenne OpRisk
+      909                   1,395.1                       560.4
+     1234                    -126.6                       658.6
+     2718                    -136.8                       570.7
+    31415                     791.4                       556.4
+     4242                     258.4                       532.1
+    57721                     706.5                       533.9
+
+  VaR      : de -136.8 a +1,395.1 M EUR (-0.1 a +1.4 Md)
+  signes   : 4 positifs / 6 graines  -> le SIGNE n'est pas resolu en VaR
+  moyenne  : de +532.1 a +658.6 M EUR ; 6/6 positifs
+  La perte MOYENNE garde son signe, la VaR non : c'est l'argument du memoire, et
+  c'est pourquoi la super-additivite n'est revendiquee qu'en moyenne.
+
+EXIT 0

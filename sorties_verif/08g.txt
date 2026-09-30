@@ -1,0 +1,42 @@
+﻿
+==============================================================================
+Cas d'usage P4 : concentration du portefeuille sur les causes communes
+==============================================================================
+jours observes : 2922 | evenements : 4614
+indice de Gini de la charge journaliere : 0.69  (0 = uniforme, 1 = tout un jour)
+   les 1% de jours les plus charges portent 16% des sinistres
+   les 2% de jours les plus charges portent 21% des sinistres
+   les 5% de jours les plus charges portent 34% des sinistres
+
+causes communes detectees : 49 (6.1/an), portant 20% des sinistres
+victimes par cause : mediane 11 | max 191
+indice de queue (Hill) des victimes par cause : alpha = 1.46
+
+==============================================================================
+Etude de cas : les plus grosses causes communes
+==============================================================================
+   2023-05-29 :  191 victimes <- MOVEit (tiers) | ex: ['Continental General Insurance Company', 'United Association National Pension Fund']
+   2023-05-27 :   91 victimes <- MOVEit (tiers) | ex: ['Kirkwood Bank & Trust', 'Woodsville Guaranty Savings Bank']
+   2023-05-30 :   41 victimes <- MOVEit (tiers) | ex: ['Foresight Wealth Management, LLC', 'Longbridge Financial']
+   2023-05-31 :   38 victimes <- MOVEit (tiers) | ex: ['BankCard USA Merchant Services Inc.', 'Unum Group']
+   2023-05-28 :   27 victimes <- MOVEit (tiers) | ex: ['Pan-American Life Insurance Group, Inc.', 'American National Insurance Company']
+   2021-10-27 :   26 victimes | ex: ['Lakeview Loan Servicing, LLC', 'Pingora Loan Servicing, LLC']
+   2023-10-29 :   23 victimes | ex: ['Fidelity Investments Life Insurance Company', 'The Northwestern Mutual Life Insurance Company']
+   2020-07-30 :   22 victimes | ex: ['U.S. Bank, N.A.', 'Pathfinder LLD Insurance Group LLC']
+
+lignes taggees MOVEit : 12. La vague fin mai 2023 = un seul prestataire
+(Progress Software / MOVEit) faisant chuter des dizaines d'entites financieres.
+
+==============================================================================
+VERDICT
+==============================================================================
+1. CONCENTRATION forte : Gini 0.69 ; 1.7% des jours portent 20% des sinistres.
+2. La queue des victimes par cause est lourde (Hill alpha = 1.46) : un seul
+   tiers peut faire tomber un nombre non borne d'entites (MOVEit : 191 en un jour).
+3. C'est la traduction chiffree du 'registre d'externalisation' : le risque P4 est
+   un risque de CONCENTRATION sur des prestataires partages, pas une somme de
+   risques independants. KPI P4 : Gini de concentration + queue victimes/cause.
+4. Convergence : le modele qualitatif (ROOT[4]=0,90, P4 en tete des cascades) et la
+   donnee (accumulation) designent le meme pilier. Validation externe du jugement.
+
+figure ecrite : exploratory\vasicek_lab\figures\S_cas_usage_p4.png

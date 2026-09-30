@@ -1,0 +1,38 @@
+====================================================================
+(A) ASYMETRIE : une correlation est SYMETRIQUE par definition
+====================================================================
+  ||TRANS - TRANS^T||_F = 1.631   (0 = symetrique)
+  rapport asymetrie/intensite = 81.4%
+    P1->P2 = 0.80  mais  P2->P1 = 0.20   (ecart 0.60)
+    P2->P4 = 0.30  mais  P4->P2 = 0.80   (ecart 0.50)
+    P1->P4 = 0.70  mais  P4->P1 = 0.20   (ecart 0.50)
+  => la propagation a un SENS ; aucune matrice de correlation ne l'encode.
+
+====================================================================
+(B) LA SYMETRISEE EST-ELLE UNE CORRELATION VALIDE ?
+====================================================================
+  valeurs propres de la symetrisee : [0.405 0.468 0.696 0.824 2.608]
+  valeur propre minimale = 0.405   (>= 0 => matrice VALIDE)
+  distortion pour la rendre valide = 0.000 (0.0% de la matrice)
+  => RESULTAT NEGATIF, a assumer : la symetrisee EST semi-definie positive,
+     donc c'est une matrice de correlation parfaitement valide, et la ramener
+     a une correlation ne coute AUCUNE distortion. L'argument (B) ne tient
+     pas et ne doit pas etre repris dans le memoire. Ce qui reste vrai est
+     (A) : la matrice DIRIGEE, elle, est asymetrique, donc ce n'est pas une
+     correlation. C'est la direction qui echappe, pas l'intensite.
+
+====================================================================
+(C) NON-TRANSITIVITE : un facteur unique impose r_ik >= r_ij * r_jk
+====================================================================
+  meilleur facteur unique : chargements a = [0.69 0.8  0.59 0.64 0.45]
+  RMSE du mono-facteur sur la dependance = 0.050
+  triples violant la transitivite du mono-facteur : 0
+  => RESULTAT NEGATIF, a assumer : ZERO violation, et le meilleur facteur
+     unique ajuste la dependance avec un RMSE de 0.050. La transitivite
+     n'est donc PAS violee, et l'argument (C) ne doit pas etre repris.
+     L'enonce correct, verifie par le script 32, est la DEPENDANCE A L'ORDRE :
+     la criticite d'une chaine change selon l'ordre des piliers (22 ensembles
+     sur 26, ecart jusqu'a 6 points sur 10), ce qu'aucune fonction d'ensemble,
+     donc aucune copule ni aucun score additif, ne peut reproduire.
+
+figure ecrite : exploratory/vasicek_lab/figures/G1_non_transitivite.png

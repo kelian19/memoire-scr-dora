@@ -1,0 +1,141 @@
+﻿
+========================================================================================
+1. AUDIT DU PROTOCOLE : les marges sont-elles vraiment appariees ?
+========================================================================================
+  « A marges appariees » est une affirmation sur la CONSTRUCTION, et elle se verifie. La
+  reconstruction par copule evalue le quantile empirique de la marge de la cascade en un
+  uniforme : les marges doivent donc coincider a l'erreur d'interpolation pres. Si elles
+  ne coincidaient pas, la bande de dependance publiee comparerait deux lois qui ne
+  partagent pas leurs marges, et son interpretation tomberait.
+
+    pilier   moyenne cascade   moyenne copule    ecart   q99 cascade   q99 copule    ecart
+        P1            147.11           148.07    0.65 %        1537.0       1589.5    3.42 %
+        P2            130.28           128.17   -1.62 %        1430.7       1399.6   -2.18 %
+        P3            105.59           105.01   -0.55 %        1195.4       1185.6   -0.82 %
+        P4            153.85           152.71   -0.75 %        1606.9       1597.7   -0.57 %
+        P5             78.89            78.54   -0.44 %         992.2        964.4   -2.80 %
+
+  Ecart relatif maximal sur les dix comparaisons : 3.42 %.
+  LE PROTOCOLE EST DONC VALIDE, et ce n'etait pas gratuit a verifier : c'est ce qui
+  autorise a lire toute difference de SCR comme un effet de la seule structure de
+  dependance. L'ecart residuel est de l'echantillonnage des uniformes, non un biais.
+
+========================================================================================
+2. CONTROLE : on reproduit les deux nombres publies a 99,5 %
+========================================================================================
+  Perimetre et reglages du script 23 : 60 000 annees, graine 909.
+  SCR cascade, etat tous conforme : 6085 M€.
+
+  structure           SCR 99,5 %  ecart vs cascade    publie
+  gaussienne                6089              0.1 %    +0,1 %
+  Student nu=4              7143             17.4 %     +17 %
+  independance              5623             -7.6 %         -
+
+  Les deux nombres du memoire sont retrouves, donc l'echelle qui suit part bien du
+  protocole publie et non d'une variante. Le reste du script tourne sur un echantillon
+  plus grand (120 000 annees, 4 graines) parce qu'un quantile a 99,95 % ne
+  s'estime pas sur 60 000 annees : il n'y reposerait que sur 30 annees de queue.
+
+========================================================================================
+3. L'ECHELLE DES QUANTILES, avec le bruit de chaque point
+========================================================================================
+  Chaque case donne l'ecart relatif au SCR de la cascade, en %, moyenne sur 4 graines,
+  suivi de l'etendue entre graines. L'etendue est l'unite de lecture, et une ETOILE marque
+  les cases ou l'ecart la depasse : la seule ou l'on puisse dire que la structure de
+  dependance se voit. Ailleurs, ce qu'on lit est du tirage.
+
+     niveau  cascade (M€)             gaussienne           Student nu=4           independance
+     50.00%           334          -1.9 ±  0.9 *          -7.9 ±  0.7 *         +12.9 ±  1.1 *
+     80.00%           888          -3.6 ±  0.7 *          -9.9 ±  0.9 *          -5.6 ±  1.0 *
+     90.00%          1383          -2.1 ±  2.2            -6.1 ±  1.6 *          -9.4 ±  1.5 *
+     95.00%          1978          -0.0 ±  1.7            +0.1 ±  2.5            -9.9 ±  1.8 *
+     99.00%          4210          +5.8 ±  3.7 *         +17.1 ±  4.7 *          -6.2 ±  2.9 *
+     99.50%          6018          +4.8 ± 10.0           +20.4 ±  4.4 *          -3.8 ±  4.9  
+     99.90%         14127          +1.7 ± 11.7           +29.8 ±  4.9 *          -4.6 ± 14.1  
+     99.95%         20554          +2.2 ± 13.2           +31.2 ± 17.1 *          -1.9 ± 30.6  
+
+  Niveaux ou l'ecart depasse son propre bruit :
+    gaussienne    50 %, 80 %, 99 %
+    Student nu=4  50 %, 80 %, 90 %, 99 %, 99.5 %, 99.9 %, 99.95 %
+    independance  50 %, 80 %, 90 %, 95 %, 99 %
+
+  LA PARTITION EST NETTE AU-DELA DE 99 %, et c'est la forme la plus tranchee du resultat :
+  aux trois niveaux superieurs a 99 %, la Student depasse son bruit aux trois, et NI la
+  gaussienne NI l'independance n'y depassent le leur a aucun. Enonce verifie par le
+  script : True. Autrement dit, dans la zone qui interesse un regulateur, la seule
+  structure de dependance qui se laisse voir est celle qui porte une dependance de QUEUE.
+
+========================================================================================
+4. LA CITATION EST VRAIE POUR UNE SEULE DES TROIS STRUCTURES, ET C'EST LE RESULTAT
+========================================================================================
+  LE MEMOIRE CITE « la separation n'apparait qu'en queue » COMME SI C'ETAIT UNE PROPRIETE
+  DE LA DEPENDANCE EN GENERAL. La table dit autre chose, et il faut la lire structure par
+  structure plutot que globalement.
+
+  (i) LA STUDENT REPLIQUE LA CITATION, ET ELLE SEULE. Son ecart CROIT de facon monotone
+      avec le niveau : +0.1 % a 95 %, +20.4 % a 99,5 %, +31.2 % a 99,95 %.
+      Il depasse son bruit a 7 niveaux sur 8. C'est bien une separation qui
+      APPARAIT en queue.
+
+  (ii) LA GAUSSIENNE NE LA REPLIQUE PAS, et ma premiere lecture etait fausse : l'ecart ne
+      « se referme » pas quand on monte. Il vaut -1.9 % a la mediane, CHANGE DE SIGNE
+      vers 95 %, culmine a +5.8 % a 99 % puis retombe. Aucune monotonie, et un ecart
+      qui ne depasse son bruit qu'a 3 niveau(x) sur 8.
+
+  (iii) L'INDEPENDANCE NON PLUS : +12.9 % a la mediane, -3.8 % a 99,5 %, avec un
+      creux vers 95 %. Son plus gros ecart est a la MEDIANE, donc a l'oppose de la queue.
+
+  LE MECANISME QUI ORDONNE CES TROIS COMPORTEMENTS EST LE GRAND SAUT UNIQUE. A indice de
+  queue 0,595 la severite est sous-exponentielle, donc la queue d'une SOMME est celle du
+  plus grand terme : P(S > x) ~ somme des P(X_j > x), expression qui ne contient AUCUN terme
+  de dependance. En queue, le capital ne depend donc plus que des marges, et les marges sont
+  appariees par construction. CE QUI SURVIT N'EST PAS LA DEPENDANCE MAIS LA DEPENDANCE DE
+  QUEUE ASYMPTOTIQUE : la gaussienne et l'independance n'en ont pas, la Student nu = 4 en a,
+  et c'est exactement la partition que la table montre.
+
+  D'OU LA CORRECTION A PORTER AU MEMOIRE, et elle est de precision et non de fond : le
+  prepublie doit etre cite sur le PROTOCOLE, qui est reproduit, et non sur l'ordre du
+  resultat, qui depend de la lourdeur de la queue. Une queue plus legere laisse la
+  dependance agir en queue ; celle-ci ne le permet pas. Le meme protocole donne donc des
+  ordres differents selon l'indice de queue, ce qui est un enonce PLUS FORT que « meme
+  protocole, meme conclusion » et plus defendable devant un jury.
+
+  ET UNE SECONDE CORRECTION, PLUS GENANTE : LE +0,1 % EST UNE GRAINE. A 99,5 % l'ecart
+  gaussien vaut +4.8 % avec une etendue de 10.0 points entre 4 graines. Le +0,1 %
+  publie est donc UN TIRAGE a l'interieur de cet etalement, pas une coincidence remarquable.
+  La conclusion tient, et c'est meme la bonne : a 99,5 % la gaussienne est INDISCERNABLE de
+  la cascade. Mais elle doit s'ecrire ainsi, avec son bruit, et non a une decimale. C'est
+  exactement le travers deja corrige sur la VaR predictive publiee a 648 puis 645.
+
+  ENFIN, LE BRUIT CROIT AVEC LE NIVEAU, et cela a une consequence pratique. L'etendue passe
+  de 0.7 point a la mediane a 30.6 points a 99,95 %. Monter dans le quantile pour
+  mieux distinguer deux structures de dependance est donc contre-productif : c'est la que
+  l'estimateur est le plus fragile ET que le grand saut unique efface l'effet cherche.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LE PROTOCOLE A MARGES APPARIEES EST AUDITE et non plus suppose. Les dix comparaisons
+     coincident a 3.42 % pres, et les ecarts sont de SIGNES MELANGES, donc de
+     l'echantillonnage fini et non un biais de construction. Toute difference de SCR est
+     imputable a la seule structure de dependance.
+  2. LES DEUX NOMBRES PUBLIES SONT REPRODUITS a la graine et au nombre d'annees du script 23.
+  3. LA CITATION « la separation apparait en queue » N'EST VRAIE QUE POUR LA STUDENT, dont
+     l'ecart croit de +0.1 % a 95 % jusqu'a +31.2 % a 99,95 %. La gaussienne change de
+     SIGNE vers 95 % et culmine a +5.8 % a 99 % ; l'independance a son plus gros ecart a la
+     MEDIANE. Il n'y a donc pas de comportement commun a « la dependance ».
+  4. CE QUI PARTITIONNE LES TROIS EST LA DEPENDANCE DE QUEUE ASYMPTOTIQUE, et le mecanisme
+     est le grand saut unique : a queue lourde P(S > x) ~ somme des P(X_j > x), expression
+     sans terme de dependance. Seule la Student en a une qui survit a cette limite.
+  5. LE MEMOIRE DOIT DONC CITER LE PREPUBLIE SUR LE PROTOCOLE, PAS SUR L'ORDRE DU RESULTAT.
+     Le meme protocole donne des ordres differents selon l'indice de queue, ce qui est un
+     enonce plus fort et plus defendable que « meme protocole, meme conclusion ».
+  6. ET LE +0,1 % PUBLIE EST UNE GRAINE : l'ecart gaussien a 99,5 % vaut +4.8 % avec une
+     etendue de 10.0 points sur 4 graines. La conclusion tient, la gaussienne est bien
+     INDISCERNABLE de la cascade a ce niveau, mais elle doit se publier avec son bruit et
+     non a une decimale. Meme travers que la VaR predictive publiee a 648 puis 645.
+  7. LE BRUIT CROIT AVEC LE NIVEAU, de 0.7 a 30.6 points de la mediane a 99,95 %. Monter
+     dans le quantile pour separer deux structures est contre-productif : c'est la que
+     l'estimateur est le plus fragile et que l'effet cherche s'efface.
+
+figure ecrite : exploratory\vasicek_lab\figures\S36_echelle_quantiles.png

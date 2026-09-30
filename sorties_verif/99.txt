@@ -1,0 +1,43 @@
+
+========================================================================================
+1. Le multiplicateur de frequence, vecteur par vecteur
+========================================================================================
+  lambda a l'etat conforme (S0, OpRisk) : 21.56 incidents materiels par an
+
+  vecteur                part pi_v    S1 partiel   S2 non conf.  centre S2  pi_v x m_v
+  phishing_social_eng        0.388   [1.2 ; 1.6]    [1.8 ; 3.0]       2.40      0.9312
+  exploit_vuln               0.338   [1.3 ; 1.8]    [2.0 ; 2.6]       2.30      0.7774
+  supply_chain_tiers         0.158   [1.3 ; 1.9]    [1.9 ; 2.6]       2.25      0.3555
+  identifiants               0.063   [1.5 ; 3.0]    [3.0 ; 8.0]       5.50      0.3465
+  autres                     0.053   [1.1 ; 1.3]    [1.3 ; 1.6]       1.45      0.0769
+  somme                      1.000                                              2.4875
+
+  multiplicateur agrege, etat partiellement conforme (S1) : 1.5253
+  multiplicateur agrege, etat non conforme (S2)           : 2.4875
+  lambda non conforme = 21.56 x 2.4875 = 53.62 incidents par an
+  controle : ecart au moteur (canaux_conformite.LAM_NC) = 7.1e-15 -> OK
+
+========================================================================================
+2. Ce qui est ancre et ce qui est pose
+========================================================================================
+  Les PARTS pi_v sont une citation externe (Hackmageddon, non recalculable). Les BORNES des
+  fourchettes sont POSEES : chacune traduit un effet publie en multiplicateur prudent, sans
+  estimation sur donnee du projet. Le multiplicateur est donc semi-ancre, au sens de la
+  table des parametres : sa provenance est tracee, sa valeur n'est pas calibree.
+  phishing_social_eng    Ponemon/IBM Cost of a Data Breach 2025 — formation réduit le risque jusqu'à 86%
+  exploit_vuln           ENISA Threat Landscape 2025 — conversion intrusion 70% (exploit) vs 27% (phishing), ratio x2.6
+  supply_chain_tiers     IBM/Ponemon 2023-2025 — surcoût +11.8%/+8.3% ; SecurityScorecard 2025 — part tierce 15%->36%/an
+  identifiants           Microsoft Research, arXiv:2305.00945 — MFA réduit compromission de 99.22% (population), 98.56% (identifiants déjà fuités)
+  autres                 Pas de source dédiée — multiplicateur transverse prudent, borné par les autres vecteurs
+
+  poids du seul vecteur 'identifiants' dans le multiplicateur S2 : 0.3465, soit 13.9 % du total pour 6.3 % des incidents
+  multiplicateur S2 aux bornes basses : 1.9325 ; aux bornes hautes : 3.0424
+  lambda non conforme correspondant : 41.66 a 65.58 incidents par an
+
+========================================================================================
+3. Grandeurs citees, sans separateur
+========================================================================================
+  lambda conforme 21.56 ; multiplicateur S2 2.487 ; lambda non conforme 53.62
+  multiplicateur S1 1.525 ; lambda partiel 32.88
+  plage S2 : multiplicateur 1.933 a 3.042, lambda 41.7 a 65.6
+  vecteur identifiants : 13.9 % du multiplicateur S2

@@ -1,0 +1,30 @@
+
+==========================================================================
+Courbe 1 : SCR comme fonction continue de la CONFORMITE q (contagion g fixe)
+==========================================================================
+  g fixe = 0.9. SCR de q=0 (NC) a q=1 (C) :
+    q=0,0 :    16847 M   q=0,5 :    12318 M   q=1,0 :     7987 M
+    gain de conformite (NC->C) : 8861 M de SCR en moins (-53 %)
+  Lecture : la courbe est lisse et monotone. Decouper en 3 (ou 5) niveaux n'est
+  qu'une grille de lecture, pas un choix de modele : le continu les subsume.
+
+==========================================================================
+Courbe 2 : SCR comme fonction de la CONTAGION g (conformite q fixe) -- levier 4
+==========================================================================
+  q fixe = 0.5 (conformite mediane). SCR de g=0,05 a g=0,95 :
+    g=0,05 :     7834 M   g=0,90 :    12318 M
+    amplitude imputable a la contagion : x1.60 sur la plage admissible
+  On ne CALIBRE pas g : on lit l'intervalle de SCR qu'il engendre. C'est le
+  resultat honnete (levier 4) : 'la contagion ajoute entre X et Y au capital'.
+
+==========================================================================
+Surface : SCR(q, g), avec les 3 etats de reference comme points
+==========================================================================
+  grille 9x9 calculee. SCR min = 4887 M (q=1,g bas), max = 18649 M (q=0,g haut).
+  etat Conforme       a (q=0.85, g=0.45) : SCR = 7021 M
+  etat Partiellement  a (q=0.52, g=0.68) : SCR = 10612 M
+  etat Non conforme   a (q=0.17, g=0.9) : SCR = 14770 M
+  Les 3 etats du modele discret sont 3 POINTS sur cette surface : le continu ne
+  contredit pas le 16, il le generalise et rend le choix du nombre d'etats inutile.
+
+figure ecrite : exploratory/vasicek_lab/figures/U_scr_continu.png

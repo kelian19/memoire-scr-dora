@@ -1,0 +1,187 @@
+% =====================================================================
+% PISTES POUR DE FUTURS MEMOIRES D'ACTUARIAT
+%
+% ANNEXE EXIGEE PAR L'INSTITUT DES ACTUAIRES. Le paragraphe 5.1.h des
+% Recommandations Jury applicables depuis le 1er avril 2026 impose deux
+% annexes, dont celle-ci : << Pistes eventuelles pour de futurs memoires
+% actuariels >>, qui << peuvent reprendre de facon non limitative des pistes
+% d'enrichissement du memoire presente mais aussi des axes d'etudes
+% abandonnees et n'ayant pas conduit a une impasse definitive >>, et qui
+% << constituent un legs a l'entreprise ayant accueilli l'etudiant mais aussi
+% un apport pour la communaute actuarielle >>.
+%
+% CREE LE 21 SEPTEMBRE 2026. Aucune piste inventee : chacune est un travail
+% deja instruit dans le memoire et laisse ouvert pour une raison ecrite. Les
+% grandeurs chiffrees reprises ici viennent toutes d'ailleurs dans le memoire et
+% citent le script qui les imprime : 66 % et 28,9 % du chapitre de la donnee
+% manquante, et les elasticites 0,95 / 0,39 / 2,42 du script 74.
+%
+% DEUX PISTES DE STRUCTURE AJOUTEES LE 23 SEPTEMBRE 2026, sur demande de Kelian.
+% Motif : sur les six pistes d'origine, CINQ demandaient de la donnee et une
+% seule etait une evolution de modelisation. L'annexe se lisait donc comme
+% << il manque des donnees a ce travail >>, ce qui est defensif. Les deux
+% ajoutees portent sur la STRUCTURE du modele, aux deux endroits ou il se sait
+% le plus contraint : l'additivite des couts et le perimetre d'une seule entite.
+% Elles sont placees en fin, l'annexe etant ordonnee du plus executable au plus
+% exploratoire, et l'encadre de cloture est mis a jour avec elles.
+% =====================================================================
+
+\chapter{Pistes pour de futurs mémoires d'actuariat}
+\label{ann:pistes}
+
+\begin{cle}
+\textbf{Idée directrice.} Les pistes ci-dessous ne sont pas des suggestions générales. Chacune
+correspond à un travail que ce mémoire a instruit, outillé, puis laissé ouvert pour une raison
+qu'il énonce : une donnée qui n'existe pas encore, un protocole diffusé resté sans réponse, ou une
+limite dont il démontre qu'elle est structurelle. Elles sont classées par ce qu'il resterait à
+faire, du plus immédiatement exécutable au plus exploratoire.
+\end{cle}
+
+\section{Exécuter l'élicitation structurée préparée par ce mémoire}
+
+L'annexe~\ref{ch:elicitation} décrit un protocole de Cooke complet, préparé et diffusé, resté
+sans réponse : la direction de la contagion n'étant pas identifiable sur la donnée disponible, le
+jugement d'experts est la seule source qui puisse la fixer. Le questionnaire est rédigé, sa partie d'étalonnage
+comporte dix questions de graine dont les valeurs vraies sont calculées et contrôlées, et la
+convention d'orientation des liens y est fixée sans ambiguïté.
+
+Ce qui manque est le panel. Un mémoire qui conduirait cette élicitation auprès de responsables de
+la résilience opérationnelle disposerait donc d'un instrument prêt, et son apport propre porterait
+sur ce que ce mémoire n'a pas pu faire : la constitution du panel, la mesure de la calibration des
+experts sur les questions de graine, la pondération des avis qui en découle, et la confrontation
+des poids obtenus aux directions que le corpus documentaire indique déjà.
+
+\begin{attention}
+\textbf{Une précaution à ne pas perdre.} Les valeurs vraies des questions de graine ne sont pas
+publiées dans ce mémoire, et ne doivent pas l'être : les publier brûlerait l'instrument pour toute
+élicitation ultérieure. Un futur mémoire qui reprendrait le protocole doit maintenir cette
+séparation entre le questionnaire et son barème.
+\end{attention}
+
+\section{Documenter la dépendance entre gouvernance et gestion des incidents}
+
+Le chapitre~\ref{ch:livrable} hiérarchise les données manquantes par la valeur d'information
+qu'elles portent, et ce classement est très inégal. Fixer le seul sens de la dépendance entre la
+gouvernance du risque TIC et la gestion des incidents lèverait $28{,}9\,\%$ de
+l'ambiguïté de capital ; fixer celui du lien entre tests et prestataires tiers n'en lèverait rien.
+
+La dépendance la plus précieuse est précisément celle que le corpus de rapports publics ne couvre
+pas. La lecture documentaire a livré ce qu'elle pouvait livrer, et le reste exige de la donnée
+d'entité : une chronologie interne d'incidents, horodatée à la survenance et catégorisée par
+domaine de contrôle. Un mémoire conduit chez un assureur disposant de ce registre interne aurait
+accès à ce que ce travail a dû traiter en bornes, et pourrait mesurer de combien la bande se
+resserre réellement, là où ce mémoire ne peut en donner que la valeur théorique.
+
+% SOURCES-SCRIPTS: 55
+
+\section{Le second codage en aveugle du corpus de rapports post-incident}
+
+La direction des dépendances est codée à partir de rapports post-incident officiels. Ce codage est
+le fait d'un seul lecteur, et le mémoire le déclare comme une limite : un biais de narration
+mesuré, non supposé.
+
+La réception d'un second codage indépendant est outillée : le script d'accord inter-codeurs ne
+fabrique rien en l'absence de donnée et attend le second jeu. Un futur travail qui ferait coder le
+même corpus en aveugle par un second lecteur produirait la mesure d'accord qui manque, et
+permettrait de dire si la direction retenue tient à la lecture ou au texte. C'est un apport modeste
+en volume mais qui porte sur le maillon le plus contesté de la chaîne.
+
+\section{Calibrer l'amplitude des liens, et non leur seul sens}
+
+Le chapitre~\ref{ch:livrable} établit un résultat qui ferme une porte et en ouvre une autre : même
+les dix directions connues, une bande de capital subsisterait, imputable à la seule amplitude des
+coefficients. Connaître le sens d'un lien ne donne pas sa force. L'identification partielle n'est
+donc pas un état provisoire que la donnée finirait par lever.
+
+Toute la valeur d'information mesurée ici, jusqu'à $66\,\%$ de resserrement si l'on retenait le
+sens documenté par les rapports publics, porte sur la direction. L'amplitude reste posée, et le mémoire
+ne s'appuie que sur l'ordre des niveaux de propagation, le capital étant croissant en eux. Un
+mémoire qui s'attaquerait à l'estimation des amplitudes, par exemple sur des séries d'incidents
+d'une même entité où la sévérité transmise est observable, traiterait la moitié du problème que
+celui-ci laisse intacte.
+
+% SOURCES-SCRIPTS: 66 55
+
+\section{La dérive d'échelle des pertes, mesurée et non modélisée}
+
+Le backtest hors échantillon couvre correctement la forme de la queue et la loi de fréquence, mais
+pas le niveau de la charge annuelle. L'écart s'explique par une dérive de l'échelle des pertes dans
+le temps, que ce mémoire mesure et signale sans la modéliser : la calibration reste stationnaire.
+
+Un mémoire portant sur la non-stationnarité de la sévérité cyber (inflation des coûts de
+remédiation, évolution des montants de rançon, effet du durcissement des garanties) corrigerait
+la seule composante du backtest que ce travail échoue à couvrir. Le diagnostic est posé et chiffré
+ici, ce qui donne à un tel travail son point de départ et son critère de réussite.
+
+\section{Le passage de l'échelle sectorielle à l'entité}
+
+Le besoin de capital produit ici est ramené à l'échelle d'une entité au moyen de rapports publics
+de solvabilité, et le mémoire publie la borne inférieure de validité de cette opération. C'est le
+point où un lecteur d'entreprise demandera légitimement davantage.
+
+Un mémoire conduit à l'intérieur d'une entité, avec son exposition réelle, son registre de
+prestataires au sens du règlement d'exécution et son propre historique d'incidents, remplacerait
+cet ancrage par une mesure directe. Il pourrait en outre traiter la question que ce travail ne fait
+qu'ouvrir : comment un besoin de capital de type ORSA, sensible à l'état de conformité,
+s'articule avec une Formule Standard qui ne comporte aucun module DORA.
+
+\section{Le coût d'un sinistre multi-piliers : d'un exposant à un mécanisme}
+
+Lorsqu'un incident touche plusieurs piliers, ce mémoire additionne les coûts des piliers atteints.
+C'est une hypothèse de construction, et la plus lourde de celles qu'il ne teste pas : il la relâche
+par un exposant sur le nombre de piliers touchés et mesure ce qu'elle coûte, plutôt que de la
+corriger (\S\ref{sec:additivite-couts}). Le signe et l'ordre de l'écart survivent à toute la plage
+d'exposants ; le \emph{sens} de l'effet, lui, ne se déclare pas, et ce n'est pas faute de mesure.
+Deux mécanismes tirent en sens contraire : la mutualisation de la remédiation rend le coût
+sous-additif, une même cellule de crise traitant plusieurs domaines à la fois, quand la saturation
+de la capacité de réponse le rend sur-additif au-delà d'un certain nombre de domaines simultanés.
+Un exposant unique ne peut pas porter les deux.
+
+Un mémoire qui remplacerait cet exposant par un modèle de coût à contrainte de capacité
+trancherait ce que celui-ci se borne à encadrer : un tel modèle produit un exposant implicite
+inférieur à un à charge faible et supérieur à un à charge élevée, donc non monotone, et le sens de
+l'effet en devient une conséquence au lieu d'un scénario. L'enjeu se mesure, l'exposant mordant
+plus fort à l'état non conforme qu'à l'état conforme, élasticités $0{,}95$ contre $0{,}39$ et
+facteur $2{,}42$, parce qu'il ne pèse que sur les sinistres multi-piliers, majoritaires au seul état
+non conforme. L'hypothèse n'est donc pas neutre entre les deux états comparés. Ce qu'il faudrait
+pour l'identifier n'existe dans aucune source publique : un registre interne d'incidents portant,
+pour chaque incident, son coût et le nombre de domaines de contrôle touchés.
+
+% SOURCES-SCRIPTS: 74
+
+\section{La contagion entre entités, par le prestataire partagé}
+
+La cascade construite ici court entre les cinq piliers d'une entité, non entre entités, et c'est
+une restriction de périmètre assumée (chapitre~\ref{ch:positionnement}). Une tension subsiste
+pourtant, et elle désigne l'extension naturelle : le canal d'accumulation par un prestataire commun
+est ancré sur la concentration du marché de l'informatique en nuage et sur les prestataires
+critiques désignés par les autorités européennes de surveillance, c'est-à-dire sur des faits
+concernant ce que les entités \emph{partagent}, employés à paramétrer un canal interne à une
+entité. Le règlement est systémique pour cette raison : son pilier des tiers existe parce que de
+nombreuses entités dépendent des mêmes fournisseurs.
+
+Une cascade à deux étages, entre piliers dans l'entité et entre entités par le prestataire partagé,
+changerait la nature de l'objet calculé, qui deviendrait un besoin de capital de place. La donnée
+existe, et ce mémoire la réclame déjà : le registre d'informations exigé par le règlement liste les
+prestataires de chaque entité, et croiser ces registres donne le graphe des fournisseurs partagés.
+Ce graphe est surtout \emph{observé}, ce qui distingue cette piste de toutes les précédentes,
+partager un fournisseur étant un fait déclaré et non une direction reconstruite d'un récit :
+l'extension n'hériterait pas du problème d'identification qui commande ce travail. Elle en
+hériterait un autre, méthodologique, car les bornes de capital s'obtiennent ici en énumérant les
+sommets de l'ensemble admissible, ce que cinq piliers rendent possible et qu'un modèle à deux
+étages mettrait hors de portée. L'identification partielle devrait y passer par une optimisation
+plutôt que par une énumération, travail de méthode indépendant de toute donnée nouvelle qui
+conditionne la réutilisation de l'approche.
+
+\begin{cle}
+\textbf{Ce qui se lègue avec ces pistes.} Les quatre premières sont exécutables avec ce qui existe
+déjà au dossier : un protocole d'élicitation rédigé et étalonné, un classement chiffré des données
+manquantes, un dispositif de second codage en attente de sa donnée, et un diagnostic de dérive posé
+avec sa mesure. Les deux suivantes demandent un accès à de la donnée d'entité, que ce mémoire n'a
+pas eu. Les deux dernières sont d'une autre nature : elles ne demandent pas de compléter ce modèle
+mais d'en modifier la structure, sur les deux points où il sait lui-même qu'il est le plus
+contraint, le coût d'un sinistre qui touche plusieurs domaines et le périmètre d'une seule entité.
+Aucune ne suppose de reprendre le travail à zéro.
+\end{cle}
+
+% =====================================================================

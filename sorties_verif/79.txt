@@ -1,0 +1,164 @@
+﻿
+========================================================================================
+1. Les trois indices, et ce que le memoire collapse
+========================================================================================
+  Le prepublie de cascade climatique distingue trois indices : un temps CALENDAIRE, une
+  POSITION, et un pas de PROPAGATION a l'interieur d'un evenement. Le present modele en
+  garde deux et en collapse un :
+    - calendaire  : l'annee, qui porte la frequence et sur laquelle le capital se mesure ;
+    - position    : le pilier, qui porte la cascade ;
+    - propagation : COLLAPSE. La cascade est instantanee, son pas n'a pas de duree.
+
+  ET LA COUCHE LENTE EST UN QUATRIEME INDICE, traite comme un PARAMETRE : l'etat de
+  conformite est fige sur toute l'annee. Deux approximations distinctes en decoulent, et
+  ce script les mesure separement parce qu'elles ne vont pas dans le meme sens.
+
+  Rappel de la loi exacte du cardinal (script 74) : 1.380 pilier par sinistre a
+  l'etat conforme, 1.931 a l'etat non conforme. Une cascade de k piliers compte
+  k - 1 pas de propagation, donc sa DUREE croit avec la non-conformite : c'est le second
+  canal du chevauchement, et c'est lui qu'on aurait manque en ne regardant que lambda.
+
+========================================================================================
+2. Collapse (A) : si la cascade a une duree, elle chevauche et elle enjambe
+========================================================================================
+  On donne une duree a la cascade et l'on compte, SANS toucher au capital : quelle part
+  des sinistres en recouvre un autre, et quelle part enjambe le 31 decembre.
+
+   lag par pas  duree moy.   chevauche (C)  chevauche (NC)   enjambe (NC)
+        1.0 h       0.9 h            0.3 %            1.3 %           0.0 %
+        6.7 h       6.2 h            1.7 %            8.0 %           0.1 %
+       24.0 h      22.4 h            5.4 %           23.1 %           0.3 %
+       72.0 h      67.1 h           13.1 %           45.4 %           0.8 %
+
+  AU LAG MESURE PAR LE SCRIPT 08h (6.7 h par pas), une cascade non conforme dure
+  6.2 h en moyenne, et 8.0 % des sinistres en recouvrent deja un autre
+  contre 1.7 % a l'etat conforme. LE RAPPORT EST DE 4.8, et il vient de
+  DEUX canaux qui se composent : la non-conformite multiplie le nombre de sinistres ET
+  allonge chaque cascade. En ne regardant que la frequence on aurait sous-estime l'effet.
+
+  CE QUE CELA DIT DE L'HYPOTHESE D'ADDITIVITE DES COUTS, ET C'EST LE LIEN QUI MANQUAIT.
+  L'exposant theta du script 74 fait jouer la non-additivite au sein d'UN sinistre, et
+  seulement la. Or a cette duree, 8 % des sinistres non conformes sont concomitants
+  d'un autre : ils partagent la meme cellule de crise, la meme equipe forensique, le meme
+  fournisseur d'astreinte. LE MECANISME DE theta S'APPLIQUE DONC A MOINS D'EVENEMENTS QUE
+  LA REALITE N'EN CONTIENT, et la plage publiee en SOUS-ESTIME l'amplitude.
+
+  DEUX PRECAUTIONS SUR CET ENONCE, parce qu'il serait facile d'en dire trop.
+  (i) Il porte sur l'AMPLITUDE, pas sur le sens. Le sens de la non-additivite reste
+      indetermine (script 74, section 4) : la concomitance amplifie la mutualisation aussi
+      bien que la saturation. Elle ELARGIT la plage des deux cotes, elle ne la deplace pas.
+  (ii) L'ASYMETRIE ENTRE ETATS, elle, est bien renforcee, et dans le sens du memoire : la
+      concomitance est 4.8 fois plus frequente a l'etat non conforme, exactement comme
+      les sinistres multi-piliers le sont. Les deux canaux d'asymetrie vont dans le meme
+      sens, donc les elasticites de 0,95 contre 0,39 ne sont pas un artefact de theta.
+
+========================================================================================
+3. Ce que l'enjambement du 31 decembre fait au capital
+========================================================================================
+  CONTROLE D'ABORD, a duree nulle, contre le moteur partage des 14 139 M :
+    conforme           6049 contre      6049   ecart 0.000 M
+    non conforme      20188 contre     20188   ecart 0.000 M
+  Bruit de l'ecart sur 4 graines appariees : +/- 734 M. Tout deplacement plus
+  petit que ce bruit n'est pas un effet.
+
+  CE BALAYAGE EST A NOMBRES COMMUNS, et c'est ce qui le rend lisible. A etat et graine
+  fixes, deux valeurs de lag partagent EXACTEMENT les memes tirages : comptages, amorces,
+  uniformes de cascade, severites, et jusqu'aux uniformes des lags, l'echelle d'une
+  exponentielle etant un simple facteur. La difference entre deux lignes est donc du
+  SIGNAL, pas du bruit de Monte-Carlo, et elle ne se lit PAS contre le +/- 734 ci-dessus,
+  qui est le bruit d'une comparaison entre deux etats de frequences differentes.
+
+   lag par pas   SCR conforme  SCR non conf.   ecart DORA    deplacement par graine   signe
+  0 (instantane)           6049          20188        14139                 reference        
+         1.0 h           6049          20188        14139               +0 +0 +0 +0     nul
+         6.7 h           6049          20188        14139               +0 +0 +0 +0     nul
+        24.0 h           6049          20240        14191            +0 +32 +0 +177    >= 0
+        72.0 h           6059          20250        14191          -28 +55 +32 +150     NON
+
+  AU LAG QUE LA DONNEE SOUTIENT, L'EFFET EST NUL, ET C'EST LA LE RESULTAT. A 6.7 h par
+  pas, l'ecart DORA vaut 14 139 M contre 14 139 pour la cascade instantanee, soit
+  +0.0 M sur les quatre graines. Comme le balayage est a nombres communs, ce
+  zero n'est pas un zero masque par le bruit : c'est une absence d'effet MESUREE. Une
+  cascade de quelques heures ne rencontre pratiquement jamais le 31 decembre.
+
+  ET AU-DELA, LE SIGNE SE DEFAIT, ce qu'il faut dire plutot que raconter un mecanisme.
+  A 24 h par pas le deplacement est positif ou nul sur les quatre graines, donc de signe
+  etabli. A 72 h il vaut +52 M en moyenne, soit +0.4 % de l'ecart, mais il CHANGE DE SIGNE
+  d'une graine a l'autre. On aurait pu ecrire que couper une cascade au 31 decembre
+  RABOTE la queue, le quantile etant porte par un sinistre unique ; on aurait pu ecrire
+  l'inverse, le partage DEPOSANT un fragment sur l'exercice suivant. Les deux mecanismes
+  existent, ils se compensent, et quatre graines ne les separent pas a cette duree.
+  LE SEUL ENONCE QUE LA MESURE PORTE est donc : a duree realiste l'effet est nul, a duree
+  d'une journee il est haussier et sous le demi-pour-cent, au-dela il n'a plus de
+  direction etablie. Le collapse est NEUTRE, et surtout pas prudent.
+
+========================================================================================
+4. Collapse (B) : la couche lente bouge en cours d'annee
+========================================================================================
+  CONTROLE AUX DEUX BOUTS, contre le moteur publie :
+    tau = 0 (tout conforme)           6091 contre      6049   ecart  0.69 %
+    tau = 1 (tout non conforme)      19911 contre     20188   ecart  1.37 %
+  Bruit moyen de simulation, 4 graines : +/- 412 M. La construction
+  Gamma-Poisson ne redonne pas les MEMES TIRAGES que la NegBin directe du moteur publie,
+  seulement la meme LOI : les deux bouts se comparent donc au bruit pres, et c'est ce
+  qu'on verifie ici avant de lire le milieu.
+
+   tau (part NC)       SCR   prorata  ecart a la droite  part du surcout
+            0.00      6091      6091                 +0               0 %
+            0.25     10616      9546              +1070              33 %
+            0.50     13898     13001               +897              56 %
+            0.75     16887     16456               +431              78 %
+            1.00     19911     19911                 +0             100 %
+
+  LE CAPITAL EST CONCAVE EN tau, et c'est bien dans ce sens-la : la courbe passe AU-DESSUS
+  de la droite, de +897 M a mi-annee, soit 2.2 fois le bruit de simulation.
+  Le capital monte vite au debut puis s'aplatit, ce qui est la signature d'une queue
+  portee par un sinistre unique : il suffit d'une FENETRE de non-conformite pour qu'un tel
+  sinistre s'y produise, et allonger la fenetre au-dela n'ajoute plus grand-chose.
+
+  DEUX LECTURES DE GESTION, ET AUCUNE N'EST CELLE QU'ON ATTEND.
+  (i) Un TRIMESTRE de non-conformite porte deja 33 % du surcout de l'annee entiere.
+      Une fenetre courte n'est donc pas une petite exposition.
+  (ii) Symetriquement, remedier a mi-exercice ne capture que 44 % du benefice annuel et
+      non la moitie. UN PLAN QUI PRORATE LE GAIN SE TROMPE, et se trompe du cote optimiste.
+
+  CE QUE CELA VALIDE DE LA SEPARATION, ET CE QUE CELA LUI COUTE. Le collapse de la couche
+  lente est LEGITIME pour ce que le memoire en fait, a savoir conditionner a un etat et
+  publier un capital par etat. Il devient FAUTIF des qu'on veut lire un calendrier de
+  remediation : un plan qui promet la moitie du gain a mi-parcours se trompe, et se
+  trompe dans le sens optimiste.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LA SEPARATION DES HORLOGES N'EST PLUS UNE ANALOGIE, elle est chiffree sur ses deux
+     approximations, et elles ne vont pas dans le meme sens.
+  2. LE CHEVAUCHEMENT N'EST PAS NEGLIGEABLE : au lag de 6.7 h du script 08h, 8 % des
+     sinistres non conformes en recouvrent un autre, contre 2 % a l'etat conforme, facteur 4.8.
+     Il monte par DEUX canaux composes, plus de sinistres et des cascades plus longues.
+  3. D'OU DEUX CONSEQUENCES POUR L'ADDITIVITE DES COUTS, ET IL FAUT LES SEPARER. L'exposant
+     theta du script 74 ne joue que DANS un sinistre, alors que des sinistres concomitants
+     partagent la meme capacite de remediation. Donc (i) la plage publiee SOUS-ESTIME
+     l'amplitude de la non-additivite, sans que cela dise rien de son SENS, la concomitance
+     amplifiant la mutualisation autant que la saturation ; et (ii) l'ASYMETRIE entre etats
+     est renforcee, la concomitance etant 4.8 fois plus frequente a l'etat non conforme,
+     donc les elasticites 0,95 contre 0,39 ne sont pas un artefact du seul theta.
+  4. LE COLLAPSE DE L'HORLOGE INTRA-SINISTRE NE COUTE RIEN AU LAG QUE LA DONNEE SOUTIENT :
+     a 6.7 h par pas l'ecart DORA vaut 14 139 contre 14 139 M, soit +0.0 M. Le balayage
+     etant a nombres communs, c'est une absence d'effet MESUREE et non un effet noye dans
+     le bruit. A 24 h par pas le deplacement devient haussier sur les quatre graines mais
+     reste sous le demi-pour-cent ; a 72 h il CHANGE DE SIGNE d'une graine a l'autre.
+     Deux mecanismes de sens contraire coexistent, le partage abaissant le maximum de
+     l'annee d'amorce et deposant un fragment sur la suivante. Le collapse est donc
+     NEUTRE, et surtout pas prudent : c'est un enonce plus faible que celui qu'on aurait
+     ecrit sans regarder les graines une par une.
+  5. LE CAPITAL EST CONCAVE EN LA FRACTION D'ANNEE NON CONFORME, et les deux lectures qui en
+     sortent vont contre l'intuition : un trimestre de non-conformite porte deja 33 % du
+     surcout annuel, et remedier a mi-exercice ne rend que 44 % du benefice, pas 50 %.
+     Le collapse de la couche lente est licite pour publier un capital par etat, FAUTIF
+     pour lire un calendrier de remediation.
+  6. RIEN N'EST IMPLEMENTE DANS LA CHAINE PUBLIEE. Le gel l'interdit et aucun nombre publie
+     ne bouge. Ce qui change est le statut de la separation : elle etait posee par analogie,
+     elle est desormais bornee dans ses deux directions et son signe est connu.
+
+figure ecrite : exploratory\vasicek_lab\figures\S35_echelles_de_temps.png

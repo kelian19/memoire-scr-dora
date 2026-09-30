@@ -1,0 +1,139 @@
+﻿
+==================================================================================
+Donnees
+==================================================================================
+evenements TIC du secteur financier, 2005-2025 : 1573
+
+==================================================================================
+(A) BIAIS DE TAILLE : elasticite de la severite a la taille de la firme
+==================================================================================
+proxy de taille             n  elasticite b               IC 95 %      R2
+actifs                   1501         0.042   [ 0.013 ;  0.071]   0.005
+chiffre d'affaires       1555         0.020   [-0.012 ;  0.052]   0.001
+effectif                 1539         0.010   [-0.025 ;  0.045]   0.000
+
+Lecture BRUTE, et pourquoi elle est trompeuse. L'elasticite est quasi NULLE sur les
+trois proxys (0,04 ; 0,02 ; 0,01) avec un R2 de l'ordre de 0,005 : sur ces donnees,
+la severite ne depend PAS de la taille de la firme. Prise au pied de la lettre,
+cette lecture refuterait l'explication que le memoire donne de l'ecart OpRisk/PRC
+(le 'biais de taille'). Mais elle est elle-meme biaisee, et dans un sens connu.
+
+==================================================================================
+(A bis) L'elasticite brute est biaisee PAR LE SEUIL DE COLLECTE
+==================================================================================
+Le mecanisme. La base ne retient que les pertes au-dessus d'un seuil de collecte.
+Une PETITE firme n'y entre donc que si elle subit une perte ANORMALEMENT grande,
+tandis qu'une grande firme y entre avec des pertes de toutes tailles. La selection
+releve artificiellement la severite observee des petites firmes et APLATIT la pente.
+C'est le meme seuil de collecte que celui qui explique l'ecart de frequence : un
+seul mecanisme, deux symptomes.
+
+seuil de collecte apparent (perte minimale de la base) : 0.103 M USD
+pertes sous 1 M USD : 45.6%   sous 5 M USD : 73.6%
+
+estimateur                          elasticite b                 IC 95 %
+MCO brut (ignore le seuil)                 0.042   [ 0.013 ;  0.071]
+EMV lognormale tronquee en u0              0.087   [ 0.026 ;  0.148]
+
+sigma residuel (tronque) = 2.767
+=> la correction RELEVE l'elasticite, comme la theorie de la selection le predit.
+
+==================================================================================
+(A ter) Ce que la correction de taille fait au niveau de severite
+==================================================================================
+proxy retenu : actifs  (n = 1501, R2 brut = 0.005)
+elasticite retenue : b = 0.087 (EMV tronquee), brute 0.042
+taille mediane des firmes sinistrees dans OpRisk : 111,986 M USD
+taille de l'entite notionnelle du memoire        : 20,000 M USD
+
+facteur d'echelle de severite = (cible/source)^b = (0.179)^0.087 = 0.861
+   bande sur l'IC de b : [0.775 ; 0.957]
+=> la severite transposee vaut 86.1% de la severite brute d'OpRisk.
+   A titre de comparaison, l'elasticite BRUTE aurait donne 0.930.
+
+==================================================================================
+(A ter) La taille deplace-t-elle l'ECHELLE ou la FORME de la queue ?
+==================================================================================
+tercile de taille             n       xi      sigma   q99,5 (M USD)
+T1 [0 ; 14,356]             501    1.012      18.51             564
+T2 [14,356 ; 695,154]       502    0.960      35.38             951
+T3 [695,154 ; 5,687,817]    501    1.287      31.60           1,938
+
+Si xi est stable entre terciles et que seul sigma bouge, la taille agit sur
+l'ECHELLE et non sur la FORME : la correction est alors un simple facteur
+multiplicatif, et l'indice de queue du memoire reste valide.
+
+==================================================================================
+(B) TRONCATURE A DROITE : triangle survenance x saisie, et chain-ladder
+==================================================================================
+evenements avec survenance ET date de saisie : 1573  (100.0%)
+annee de saisie : 2005 - 2026
+delai de remontee : median 3 an(s), moyen 3.63, p90 8
+
+Triangle cumule des COMPTES (survenance x delai de remontee), extrait :
+  surv      0      1      2      3      4      5   ultime
+  2005      7     21     31     42     50     57        73
+  2006      8     20     42     49     61     75        90
+  2007      4     25     40     61     76     84       103
+  2008     18     50     71     78     82     95       112
+  2009     16     40     50     64     73     81        97
+  2010      4     19     33     41     53     63        85
+  2011      5     14     24     29     34     39        61
+  2012     13     22     33     37     43     52        74
+  2013      6     14     26     39     40     48        70
+  2014      1      3      5     14     28     42        67
+  2015      0      7     13     19     34     46        71
+  2016      9     12     27     37     47     57        87
+  2017      2     16     25     35     47     55        74
+  2018     21     39     46     56     67     71       100
+  2019     21     30     36     46     50     58        80
+  2020     18     22     26     38     51     68        88
+  2021     10     20     34     42     57     68        91
+  2022     16     26     36     50     56      .        89
+  2023     10     18     28     34      .      .        66
+  2024     14     27     39      .      .      .        98
+  2025     17     24      .      .      .      .        90
+
+facteurs de developpement : 2.132 1.494 1.296 1.221 1.186 1.116
+
+  annee   observe   ultime CL   rehauss.
+   2020        73          88     20.4%
+   2021        68          91     34.4%
+   2022        56          89     59.4%
+   2023        34          66     94.6%
+   2024        39          98    152.2%
+   2025        24          90    276.8%
+
+2023-2025 : 97 observes -> 255 a l'ultime, soit +163%
+Les annees recentes ne montrent donc PAS une baisse du risque : elles montrent
+une remontee incomplete. Le chapitre donnees avait raison de les ecarter ; le
+chain-ladder permet de les REINTEGRER au lieu de les jeter.
+
+moyenne annuelle observee 2015-2022 : 74.1
+moyenne annuelle a l'ultime 2023-2025 : 85.0
+=> la frequence corrigee de la troncature vaut 1.15 fois
+   le niveau de la periode pleine.
+
+==================================================================================
+VERDICT : les deux biais se compensent-ils ?
+==================================================================================
+(A) taille      : severite transposee x 0.861   -> tire le niveau VERS LE BAS
+(B) troncature  : frequence recente x 1.147   -> tire le niveau VERS LE HAUT
+
+effet net multiplicatif sur la PERTE MOYENNE : 0.987
+Sur la moyenne, les deux biais se COMPENSENT presque exactement : la correction
+nette vaut 1.3%, soit moins que l'incertitude d'estimation de chacune
+des deux corrections prises separement.
+
+Sur le CAPITAL, ils ne se compensent PAS. A queue lourde, la VaR 99,5 % obeit au
+principe du grand saut unique : elle repond a la SEVERITE bien plus qu'a la
+FREQUENCE. La correction de taille (0.861) agit sur la severite et se
+transmet donc au quantile ; la correction de troncature (1.147)
+agit sur la frequence et s'y transmet mal. Le capital baisse.
+
+Ce resultat est le vrai enseignement du script : deux biais qui s'annulent sur
+l'esperance peuvent ne pas s'annuler sur le quantile, et c'est le quantile qui
+fait le SCR. Une compensation constatee en moyenne n'autorise donc PAS a ignorer
+les deux biais.
+
+figure ecrite : exploratory\vasicek_lab\figures\S20_biais_taille_troncature.png

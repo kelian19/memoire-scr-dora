@@ -1,0 +1,72 @@
+﻿Panel : 800 entites x 60 periodes x 5 piliers ; incidence moyenne 6.8%
+
+Recuperation de W (hors diagonale) :
+  probit : correlation 0.905 | pente 1.085 | sens de l'asymetrie 100%
+  logit  : correlation 0.907 | pente 2.125
+  (pente ~1 = W dans ses propres unites ; 2.13 en unites logit, soit 96 % de trop)
+
+Normalisation de W (la lecon de Leontief) :
+  TRANS brut, RECEPTION par pilier (ce que chacun recoit) [0.8 2.3 1.6 1.5 1.7], max 2.3
+  TRANS brut, EMISSION par pilier  (ce que chacun envoie) [2.6 1.5 1.4 1.7 0.7], max 2.6  <- le diviseur
+  rho de TRANS brut = 1.461 (invariant par transposition)
+     -> ce n'est PAS une matrice de parts. (I-TRANS)^-1 aurait 21 entrees
+        negatives sur 25 : erreur de categorie, pas de calibration.
+  W = g * TRANS / 2.6  avec g = 0.9 ; le diviseur est l'EMISSION maximale
+     parts recues s_j = [0.277 0.796 0.554 0.519 0.588]  (<= g : asymetrie preservee)
+     rho(W) = 0.506 = 0.562 x g   -> stable pour tout g <= 1
+  incidence de fond Phi(base) = 4.5 %  (base = -1.7)
+
+  DIVISEUR DE NORMALISATION : l'EMISSION maximale (2.6), convention du projet,
+  la ligne emet et la colonne recoit. Une version anterieure de ce script divisait par
+  la RECEPTION maximale (2.3), ce qui donnait rho(W) = 0.572 et un g critique de
+  1.57, en desaccord avec les 0.506 et 1.78 publies par le chapitre cascade.
+  CE QUI TRANCHE. La normalisation garantit que le pilier le plus prolifique engendre au
+  plus g descendants directs. Avec l'ancien diviseur il en engendrait 1.02, donc PLUS
+  que g = 0.9 : la borne etait franchie et g cessait de designer ce qu'il designe.
+  Avec celui-ci il en engendre exactement 0.90. La contrainte de reception reste
+  satisfaite au passage, la reception maximale (2.3) etant sous l'emission maximale.
+
+Lecture epidemique (processus de branchement multitype) :
+  rho(W), systeme latent SIMULTANE = 0.506  (stable)
+  R0 = rho(M), cascade d'INCIDENTS = 0.054  sous-critique : la cascade s eteint
+  R0 estime sur le panel simule    = 0.054
+
+Progeniture totale (I-M)^-1 : descendants attendus d'un incident initial
+  P1 : 0.109 descendants   (ROOT expert = 1.00)
+  P2 : 0.058 descendants   (ROOT expert = 0.60)
+  P3 : 0.054 descendants   (ROOT expert = 0.50)
+  P4 : 0.069 descendants   (ROOT expert = 0.90)
+  P5 : 0.026 descendants   (ROOT expert = 0.30)
+
+  classement progeniture : P1 > P4 > P2 > P3 > P5
+  classement ROOT expert : P1 > P4 > P2 > P3 > P5
+  correlation de rang (Spearman) = 1.000
+  => ROOT se deduit de TRANS par coherence interne (Spearman=1.00) : reduction de parametres, non validation externe.
+
+Seuils critiques, dans la parametrisation admissible g dans (0, 1] :
+  rho(W) = 1 a g = 1.78   (systeme latent simultane)  HORS DOMAINE
+  R0     = 1 a g = 8.1    (cascade d'incidents)       HORS DOMAINE
+  ratio 5x : si l'on forcait le modele hors de son domaine,
+  la forme simultanee crierait a l'emballement bien avant la cascade reelle.
+  A g = 1 (contagion maximale admissible) : rho(W) = 0.562, R0 = 0.061
+  => sur tout le domaine admissible, les DEUX lectures sont stables.
+
+  N=  50 : corr 0.38 ; sens asymetrie 69%
+  N= 100 : corr 0.54 ; sens asymetrie 85%
+  N= 200 : corr 0.69 ; sens asymetrie 83%
+  N= 400 : corr 0.87 ; sens asymetrie 89%
+  N= 800 : corr 0.90 ; sens asymetrie 98%
+  sous-declaration 0% : corr 0.82 ; sens 91%
+  sous-declaration 20% : corr 0.81 ; sens 85%
+  sous-declaration 40% : corr 0.64 ; sens 85%
+  sous-declaration 60% : corr 0.42 ; sens 67%
+
+Tests de falsification (l'asymetrie doit disparaitre / s'inverser) :
+  asymetrie sur le panel reel     = 1.408
+  asymetrie apres permutation     = 0.395  (doit tendre vers 0)
+  asymetrie en temps inverse      = 1.323
+  correlation W_avant vs W_inverse = -0.694  (proche de 1 => on capte de la co-occurrence, pas de la direction)
+
+figure ecrite : exploratory\vasicek_lab\figures\K1_calibration_W.png
+figure ecrite : exploratory\vasicek_lab\figures\K2_calibration_diagnostics.png
+figure ecrite : exploratory\vasicek_lab\figures\K3_branchement_R0.png

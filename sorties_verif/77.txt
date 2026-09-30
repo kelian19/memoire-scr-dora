@@ -1,0 +1,80 @@
+﻿
+======================================================================================
+1. Les 32 configurations, recalculees a l'identique du script 69
+======================================================================================
+  32 configurations, 40000 annees, 4 graines, a nombres communs.
+  Capital de 6015 M (tous conformes) a 17009 M (tous non conformes).
+
+  E[VaR] au modele actuel = 9739 M€  <- l'objet que mesure le script 69
+
+======================================================================================
+2. La loi MELANGEE, et son quantile
+======================================================================================
+  On tire une configuration par annee selon ses poids, et l'on prend la perte de cette
+  configuration cette annee-la. Le resultat est la loi de la charge annuelle d'une entite
+  dont l'etat de conformite est INCERTAIN, ce qui est la question posee.
+
+  E[VaR]        =      9739 M€
+  VaR(melange)  =     10643 M€
+  ecart         =       904 M€, soit +9.3 %
+
+  LES DEUX OBJETS NE COINCIDENT PAS, et l'ecart n'est pas du bruit. La raison est
+  structurelle : a 99,5 % la queue du melange est prelevee dans les composantes les plus
+  lourdes, alors que E[VaR] moyenne toutes les composantes, y compris les conformes.
+
+======================================================================================
+3. L'invariance survit-elle sur le second objet ?
+======================================================================================
+  On refait la comparaison en augmentant le surcroit de correlation sur les deux paires
+  concernees. Les MARGES sont preservees par construction : seule la structure bouge.
+
+    delta   P(tous NC)     E[VaR]    ecart   VaR(mel.)    ecart
+     0.00       0.0683       9739       +0       10643       +0
+     0.10       0.0727       9739       -0       10887     +244
+     0.20       0.0773       9739       -1       10913     +270
+     0.30       0.0827       9738       -1       10977     +334
+     0.38       0.0879       9737       -2       10837     +194
+
+  Amplitude sur le balayage : E[VaR] 2 M€, VaR(melange) 334 M€,
+  soit un rapport de 157.6.
+  En relatif : 0.022 % contre 3.136 %.
+
+  LE DEPLACEMENT N'EST PAS MONOTONE EN DELTA, ce qui trahit un bruit de tirage. On le
+  mesure en refaisant le melange a delta = 0 sous plusieurs graines de tirage.
+  8 graines de melange, delta = 0 : ecart-type 94 M€, etendue 344 M€.
+  L'amplitude du balayage (334) est-elle superieure au double de cette etendue ? False.
+
+======================================================================================
+VERDICT
+======================================================================================
+  1. L'OBJECTION EST FONDEE SUR LE PRINCIPE, et la mesure le confirme. L'argument
+     d'additivite du script 69 vaut pour une ESPERANCE, et un quantile ne dispose pas de
+     la linearite sur laquelle il repose. De fait, sur le balayage, E[VaR] ne bouge que
+     de 2 M€ quand le quantile du melange bouge de 334 : un rapport de
+     158. L'invariance DEMONTREE ne s'etend donc pas au second objet,
+     et il fallait le mesurer plutot que de l'esperer.
+
+  2. LES DEUX OBJETS DIFFERENT EN NIVEAU DE 904 M€, soit +9.3 % :
+     9739 contre 10643. Ce n'est pas un ecart de plusieurs milliards, mais il
+     depasse largement le bruit, et le memoire doit dire lequel des deux il publie. La
+     raison de l'ecart est structurelle : a 99,5 % la queue du melange est prelevee dans
+     les composantes les plus lourdes, alors que E[VaR] moyenne toutes les composantes.
+
+  3. LE DEPLACEMENT DU QUANTILE N'EST PAS RESOLU : False. Il n'est pas monotone en
+     delta, et son amplitude (334 M€) est du meme ordre que l'etendue du seul bruit
+     de tirage (344 M€ sur 8 graines). On ne peut donc PAS affirmer que
+     la structure deplace le quantile ; on peut seulement dire qu'on ne le voit pas a
+     cette resolution. C'est un enonce plus faible que l'invariance demontree sur
+     l'esperance, et il faut le presenter comme tel.
+
+  4. CE QUI RESTE VRAI ET UTILISABLE : quelle que soit la lecture, le deplacement reste
+     petit devant l'incertitude deja declaree. Les 334 M€ representent 18 % de la
+     largeur de la bande d'identification, qui vaut 1 839 M€. La conclusion de gestion ne
+     change pas ; c'est le STATUT de la conclusion qui change, de demontre a non detecte.
+
+  5. CE QU'IL FAUT ECRIRE DESORMAIS. L'argument d'additivite reste le plus fort, mais il
+     doit etre borne a l'esperance, et la mesure sur le quantile doit l'accompagner avec
+     son bruit. Annoncer l'invariance sans cette distinction expose a une objection a
+     laquelle le script 69 seul ne repond pas.
+
+figure ecrite : exploratory\vasicek_lab\figures\S33_var_melange.png

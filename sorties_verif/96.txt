@@ -1,0 +1,111 @@
+
+====================================================================================
+1. La loi du nombre de pertes, etage par etage
+====================================================================================
+  Elle n'est pas simulee : les tables de cascade l'enumerent exactement.
+
+  etat                lam     E[D]      p_u     E[K]   loi de D (0..5 piliers)
+  conforme         21.556    1.380   0.1283    3.815   0.000 0.688 0.251 0.053 0.007 0.000
+  non conforme     53.618    2.436   0.1811   23.648   0.000 0.268 0.306 0.213 0.150 0.064
+
+  CONTROLE CROISE CONTRE LE SCRIPT 74, qui publie la meme loi par un autre chemin. Le 74
+  enumere la progeniture de la cascade SEULE, donc a canal d'accumulation ferme : c'est
+  a cette configuration-la, et non a l'etat non conforme complet, que ses nombres se
+  comparent. Confondre les deux ferait lire un desaccord la ou il n'y en a pas.
+
+  conforme (g = 0,45)            E[D] = 1.3799 (publie 1.380)   P(D > 1) = 31.15 % (publie 31.15 %)
+  propagation seule (g = 0,90)   E[D] = 1.9311 (publie 1.931)   P(D > 1) = 62.31 % (publie 62.31 %)
+  Verdict : la loi reconstruite ici est CELLE du script 74.
+
+  L'etat non conforme complet ajoute le canal d'accumulation, qui fait monter E[D] de
+  1,931 a 2,436 : c'est ce canal, et non la propagation, qui multiplie les piliers
+  touches par un meme sinistre.
+
+====================================================================================
+2. Controles de la grille d'inversion
+====================================================================================
+  pas de grille                        : 1.00 M EUR
+  nombre de cases                      : 4,194,304 (portee 4,194,304 M EUR)
+  masse de severite au-dela de la grille: 1.646e-08
+  moyenne de severite, discretisee     : 163.2050 M EUR
+  moyenne de severite, analytique      : 163.3073 M EUR
+  ecart de discretisation              : -0.0627 %
+
+  BORNE DE REPLIEMENT. Par sous-exponentialite, la masse de la CHARGE au-dela de la
+  grille vaut au plus E[K] fois celle d'une severite, soit 3.893e-07, a comparer
+  a 1 - alpha = 0.0050. Rapport : 7.79e-05.
+  Verdict : negligeable.
+
+====================================================================================
+3. La reference Monte-Carlo : le moteur publie, pas une re-implementation
+====================================================================================
+  4 graines, 40,000 annees chacune, graine initiale 20260727.
+  Meme ordre de tirages que les scripts 43 et 68, donc memes nombres que le chapitre 12.
+
+  conforme       VaR 99,5 % =     6,049 M EUR  (ecart-type inter-graines    279)
+                 publie au chapitre 12 :     6,049  -> ecart -0.00 %
+  non conforme   VaR 99,5 % =    20,188 M EUR  (ecart-type inter-graines  1,001)
+                 publie au chapitre 12 :    20,188  -> ecart -0.00 %
+
+====================================================================================
+4. Les quatre chemins, cote a cote
+====================================================================================
+  etat          methode                               nature              VaR 99,5 %      ecart
+  --------------------------------------------------------------------------------
+  conforme      Monte-Carlo (moteur publie)           stochastique             6,049  reference
+                FFT (generatrice composee)            numerique exact          5,945     -1.7 %
+                SLA 2e ordre (Boecker-Sprittulla)     analytique               5,448     -9.9 %
+                SLA 1er ordre (Boecker-Klueppelberg)  analytique               4,989    -17.5 %
+  --------------------------------------------------------------------------------
+  non conforme  Monte-Carlo (moteur publie)           stochastique            20,188  reference
+                FFT (generatrice composee)            numerique exact         19,890     -1.5 %
+                SLA 2e ordre (Boecker-Sprittulla)     analytique              18,632     -7.7 %
+                SLA 1er ordre (Boecker-Klueppelberg)  analytique              14,933    -26.0 %
+  --------------------------------------------------------------------------------
+
+====================================================================================
+5. Ce que la table etablit
+====================================================================================
+  L'ECART SE LIT CONTRE LE BRUIT DE LA REFERENCE, jamais contre zero : le Monte-Carlo est
+  lui-meme une grandeur simulee, et le memoire publie toutes les siennes avec leur bruit.
+
+  etat             FFT - MC   erreur type MC   en ecarts types
+  conforme             -104              139             -0.75
+  non conforme         -298              500             -0.59
+
+  Les deux ecarts tiennent SOUS une erreur type. L'inversion exacte et le Monte-Carlo
+  ne sont donc pas distinguables a la resolution de la reference : le desaccord n'est
+  pas resolu, et c'est le meilleur resultat que ce controle pouvait rendre. Les deux
+  chemins ne partagent NI code NI alea, l'un tirant des annees et l'autre composant
+  des transformees de Fourier ; un biais structurel de l'agregation apparaitrait ici.
+  Pour memoire, l'ecart relatif vaut au plus 1.7 % en valeur, ce qui se
+  lirait comme un desaccord si on le citait sans le bruit qui l'encadre.
+
+  L'approximation analytique, elle, n'utilise ni simulation ni inversion, et elle se tient
+  a -9.9 % et -7.7 % de la reference selon l'etat, contre plus du double au premier
+  ordre. C'est l'ordre de grandeur attendu
+  d'une approximation asymptotique lue a un niveau fini : la correction de moyenne du
+  second ordre rattrape l'essentiel de l'ecart, ce qui est le comportement annonce par
+  la theorie et un troisieme temoin, exogene aux deux premiers.
+
+  CE QUE CELA NE DIT PAS. Les quatre chemins partagent la loi de frequence, la loi de
+  severite et les tables de cascade : ce controle porte sur l'AGREGATION, jamais sur la
+  verite du modele. Il se lit comme le controle a theta = 1 du script 74, un controle
+  d'instrument, et il ne remplace aucun test contre la donnee.
+
+====================================================================================
+6. Grandeurs citees
+====================================================================================
+  conforme : MC 6049 ; FFT 5945 ; SLA2 5448 ; SLA1 4989
+  conforme : ecart FFT -1.72 % ; ecart SLA2 -9.9 %
+  non conforme : MC 20188 ; FFT 19890 ; SLA2 18632 ; SLA1 14933
+  non conforme : ecart FFT -1.47 % ; ecart SLA2 -7.7 %
+  conforme : E[D] 1.380 ; E[K] 3.82
+  non conforme : E[D] 2.436 ; E[K] 23.65
+  masse residuelle de grille 1.65e-08 ; borne de repliement 3.89e-07
+  ecart de discretisation -0.0627 pourcent
+  conforme : ecart FFT en erreurs types 0.75 en valeur absolue
+  non conforme : ecart FFT en erreurs types 0.59 en valeur absolue
+  ecart de discretisation 0.0627 pourcent en valeur absolue
+
+  duree totale : 4 s

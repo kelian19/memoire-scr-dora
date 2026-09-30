@@ -1,0 +1,1037 @@
+\chapter{Résultats}
+\label{chap:resultats}
+
+Ce chapitre livre le \og combien \fg{} de la question du mémoire, sous la discipline posée
+aux chapitres~\ref{ch:identifiabilite} et~\ref{chap:partielle} : les niveaux sont
+illustratifs, les écarts et les ordres sont ce qui résiste. Les capitaux sont calculés à
+l'échelle du secteur financier, l'entité type de $15\,000$~M\euro{} de provisions servant de
+repère forfaitaire et de cible à la descente d'échelle du \S\ref{sec:ancrage}, avec
+deux périmètres de sévérité : OpRisk (grandes pertes opérationnelles, queue lourde)
+et PRC (sévérité plafonnée à $40$~M\euro). Sauf mention contraire, on lit la médiane
+et l'intervalle interquartile, la variance de la sévérité étant infinie ($\hat\xi=0{,}595$ sur
+OpRisk, $1{,}03$ sur PRC).
+
+\begin{attention}
+\textbf{Comment lire les niveaux de ce chapitre.} Les montants qui suivent sont
+\emph{illustratifs} et ne doivent pas être lus comme la mesure du capital d'une entité réelle.
+Le chapitre~\ref{chap:partielle} le démontre : en ne faisant varier que la loi de sévérité et la
+fréquence, c'est-à-dire des \emph{entrées} du modèle qui dépendent d'un périmètre de collecte
+non transposable, le niveau se déplace d'un facteur $41$, tandis que les rapports au socle
+varient d'au plus $33\,\%$ et que le groupe de tête du classement des piliers ne change pas. Le
+tableau~\ref{tab:scretat} en donne d'ailleurs l'illustration immédiate : le même état conforme
+vaut $8\,301$~M\euro{} sous OpRisk et $2\,589$~M\euro{} sous PRC en lecture~A, soit un
+facteur~$3{,}2$ pour un seul changement de périmètre de sévérité, facteur qui n'est pas une
+constante et grandit sur le socle sans contagion du chapitre~\ref{chap:partielle}. Ce chapitre établit donc des écarts, des
+rapports et des ordres ; ses conclusions reposent sur eux, jamais sur un niveau.
+\end{attention}
+
+\begin{cle}
+\textbf{Réconciliation avec le socle du chapitre~\ref{chap:partielle}.} Ce chapitre parle d'un
+SCR \emph{conforme} d'environ $5\,900$~M\euro{}, quand le chapitre~\ref{chap:partielle} parle
+d'un \emph{socle} de $5\,275$~M\euro{}. Ce ne sont pas deux mesures de la même chose, mais deux
+points d'un seul modèle : le socle est pris à contagion nulle ($W=0$), là où l'état
+conforme en conserve une. L'ordre socle $<$ conforme $<$ non conforme est donc cohérent, et le
+pont terme à terme comme l'écart résiduel de Monte-Carlo sont établis
+\matcomp.
+\end{cle}
+
+% SOURCES-SCRIPTS: 65 66 12 16 63
+
+\section{SCR par état de conformité}
+
+Le SCR croît de façon monotone de l'état conforme à l'état non conforme
+(figure~\ref{fig:multietats}). Le tableau~\ref{tab:scretat} donne les trois lectures emboîtées :
+la lecture~A porte sur la fréquence seule ; la lecture~B ajoute la
+propagation de la cascade ; la lecture~C ajoute le canal détection.
+
+\begin{table}[htbp]\centering\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l ccc c ccc@{}}
+\toprule
+& \multicolumn{3}{c}{\textbf{OpRisk} (M\euro)} & & \multicolumn{3}{c}{\textbf{PRC} (M\euro)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){6-8}
+État & A & B & C & & A & B & C \\
+\midrule
+Conforme               & 8301  & 6664  & 5932  & & 2589 & 1903 & 1642 \\
+Partiellement conforme & 11059 & 9625  & 9625  & & 3653 & 3118 & 3118 \\
+Non conforme           & 15074 & 15074 & 16595 & & 5520 & 5520 & 6577 \\
+\bottomrule
+\end{tabular}
+\caption{SCR par état, trois lectures (A~: fréquence ; B~: $+$~propagation ; C~:
+$+$~détection). Le canal détection ne joue qu'aux extrêmes (il
+% SOURCES-SCRIPTS: 16
+abaisse l'état conforme et relève le non conforme), l'état partiel n'étant pas modulé.}
+\label{tab:scretat}
+\end{table}
+
+\subsection*{Le chiffre de tête : quatre lectures emboîtées et la lecture publiée}
+\label{sec:chiffre-de-tete}
+
+Le tableau qui précède n'est pas le seul protocole du mémoire à chiffrer \og l'écart entre l'état
+conforme et l'état non conforme \fg{}. Quatre le font, et ils donnent quatre résultats. Aucun
+n'est faux : ils ne relâchent pas le même nombre de canaux entre les deux états, et rien
+d'autre ne les sépare. Les publier sans le dire reviendrait à laisser le lecteur trancher sans les éléments.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l c r r r@{}}
+\toprule
+\textbf{Lecture} & \textbf{canaux} & \textbf{conforme} & \textbf{non conf.} & \textbf{facteur} \\
+\midrule
+Score de conformité seul, $g$ figé au niveau NC & 1 & 7987 & 16\,847 & $2{,}11$ \\
+Fréquence $+$ propagation (lecture~B) & 2 & 6664 & 15\,074 & $2{,}26$ \\
+$+$ détection (lecture~C) & 3 & 5932 & 16\,595 & $2{,}80$ \\
+\textbf{$+$ accumulation P4 (les quatre canaux)} & \textbf{4} & \textbf{6049} & \textbf{20\,188}
+& $\mathbf{3{,}34}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent En M\euro, périmètre OpRisk. Les niveaux sont ceux des sorties versionnées ; les
+\emph{rapports}, eux, sont recalculés à chaque exécution plutôt que
+calculés à la lecture, faute de quoi un niveau amont pourrait bouger sans que le facteur suive.
+% SOURCES-SCRIPTS: 25 16 43 67
+
+\begin{cle}
+\textbf{Le mémoire publie la lecture à quatre canaux : $6\,049 \to 20\,188$~M\euro, soit un
+facteur $3{,}34$ et un écart de $14\,139$~M\euro.} Le motif n'est pas qu'elle donne le chiffre
+le plus grand, c'est qu'elle est la seule où l'état conforme est conforme sur tous les
+canaux que le modèle possède. Dans la première lecture, l'entité dite conforme propage encore
+comme une entité défaillante ; dans les deux suivantes, sa détection ou son accumulation tiers
+restent au niveau non conforme. Une entité conforme sur un canal et non conforme sur trois autres
+n'est pas un état conforme, c'est une \emph{remédiation partielle}, et la nommer conforme
+sous-estime l'écart par construction.
+
+\textbf{Le canal de détection y est inclus parce que son effet est résolu} : il pèse
+$2\,928 \pm 343$~M\euro{} en valeur de Shapley et
+$4\,562 \pm 819$ en marginal de fermeture, signe résolu sur seize graines.
+% SOURCES-SCRIPTS: 68
+
+\textbf{Les trois autres lectures ne sont pas retirées}, délibérément : ce sont des
+remédiations \emph{partielles}, ce qui est un objet utile en soi, et leur emboîtement chiffre ce
+que coûte de ne fermer qu'une partie des canaux.
+\end{cle}
+
+\begin{attention}
+\textbf{Le facteur se compare d'une lecture à l'autre, l'écart en euros non} : l'écart passe de $8\,860$ à $8\,410$~M\euro{}
+entre les deux premières lignes alors que le facteur monte. La cause n'est pas un effet de modèle
+mais un changement de base, l'état conforme passant de $7\,987$ à $6\,664$~M\euro{} d'un
+protocole à l'autre. Un écart en euros ne se compare qu'à base égale ; un rapport est sans
+dimension. C'est le même motif qui fait publier des élasticités plutôt que des plages au
+\S\ref{sec:sensibilite-propagation}.
+
+\textbf{Et la monotonie du facteur s'observe, elle ne se teste pas ici.} Les quatre lignes ne
+forment pas une expérience contrôlée, leurs protocoles différant aussi par la graine et par la
+base. Elle est \emph{cohérente} avec la composition des canaux mesurée sur les seize
+configurations (figure~\ref{fig:treillis-canaux}), qui partagent le même moteur et les mêmes
+graines : les canaux s'y multiplient
+presque exactement, le produit des quatre facteurs isolés valant $3{,}47$ pour un facteur publié
+de $3{,}34$, si bien que l'interaction de $5\,001$~M\euro{} en euros est l'arithmétique d'un
+produit plus qu'un effet propre de la cascade (\S\ref{sec:inverse}).
+% SOURCES-SCRIPTS: 100
+% SOURCES-SCRIPTS: 68
+\end{attention}
+
+\begin{figure}[htbp]\centering
+\figover{S33_treillis_canaux_3d.png}
+\caption{Les seize configurations de canaux, rangées par nombre de canaux relâchés. La hauteur
+est le capital, les deux extrémités étant les deux états publiés, $6\,049$ et $20\,188$~M\euro{} ;
+tout sommet intermédiaire est une remédiation partielle. Chaque arête monte, ce qui est la
+monotonie du \S\ref{sec:inverse} lue d'un coup d'\oe{}il. La couleur est l'écart à l'additivité,
+c'est-à-dire le capital observé moins la somme des quatre effets isolés : elle vaut $+5\,001$ au
+sommet complet et $-330$ sur la seule paire négative du dossier, propagation et accumulation. Le
+troisième axe sépare les configurations de même rang et ne porte aucune grandeur.}
+% SOURCES-SCRIPTS: 68 108
+\label{fig:treillis-canaux}
+\end{figure}
+
+\noindent\textbf{Où chaque lecture continue de servir.} Les trajectoires du
+\S\ref{sec:res-traj} et la priorisation du \S\ref{sec:res-prio} restent conduites en
+\emph{lecture~B}. Ce n'est pas une indécision résiduelle mais un choix d'objet : elles portent
+sur l'\emph{ordre} de remédiation, dont le chapitre~\ref{ch:robustesse} montre qu'il est
+invariant aux leviers testés, de sorte que le canal ajouté déplacerait leurs niveaux sans
+déplacer leur conclusion. Les rejouer relèverait par ailleurs de la recalibration, que le gel
+interdit.
+
+% [H] : en [htbp] cette figure derivait en tete de la page suivante et s'inserait entre les deux
+% moitiees du mot << mul-tiplicateurs >> du paragraphe ci-dessous. Fixee ici, elle ouvre la page
+% et le paragraphe la suit entier.
+\begin{figure}[H]\centering
+\figover{S10_scr_multi_etats.png}
+\caption{SCR par état de conformité (trois canaux emboîtés) et bascule des états en crise
+systémique.}
+% SOURCES-SCRIPTS: 16
+\label{fig:multietats}
+\end{figure}
+
+Le surcoût de non-conformité $\Delta_{\text{DORA}}=\mathrm{SCR}(\text{NC})-\mathrm{SCR}(\text{C})$,
+à graine Monte-Carlo commune (l'écart ne vient que du changement d'état, non du bruit),
+s'obtient par bootstrap deux niveaux (multiplicateurs $+$ sévérité), et $100\,\%$ des tirages
+sont positifs.
+
+\begin{table}[htbp]\centering\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l cc@{}}
+\toprule
+& médiane & IC90\,\% \\
+\midrule
+$\Delta_{\text{DORA}}$ NC vs C (OpRisk) & 7401 & $[2830\,;38793]$ \\
+$\Delta_{\text{DORA}}$ PC vs C (OpRisk) & 2556 & $[963\,;12768]$  \\
+$\Delta_{\text{DORA}}$ NC vs C (PRC)    & 3668 & $[3201\,;4094]$  \\
+$\Delta_{\text{DORA}}$ PC vs C (PRC)    & 1257 & $[1077\,;1466]$  \\
+\bottomrule
+\end{tabular}
+\caption{Surcoût de non-conformité en euros (M\euro), lecture B (fréquence $+$ propagation),
+bootstrap deux niveaux. Côté OpRisk la sévérité de queue est ré-échantillonnée sur les
+$91$ excès réels, non tirée dans une approximation
+% SOURCES-SCRIPTS: 14
+normale~; l'intervalle reste large parce que la queue l'est, non par artefact de méthode.}
+% SOURCES-SCRIPTS: 16
+\label{tab:delta}
+\end{table}
+
+\noindent \textbf{Lecture actuarielle.} L'intervalle très large côté OpRisk du
+tableau~\ref{tab:delta} n'est pas un défaut
+du modèle : c'est la signature d'une queue d'indice $0{,}60$, où le niveau du capital est
+intrinsèquement imprécis. L'écart typique (interquartile) est bien plus resserré que
+l'intervalle à $90\,\%$, et le \emph{signe} du surcoût, lui, est certain. On retrouve la thèse du
+mémoire : le SCR est une distribution, pas un point.
+
+\paragraph{L'intervalle PRC est étroit, et il le reste quand on cesse de croire la conversion
+exacte.} La sévérité PRC est dérivée du nombre d'enregistrements compromis par la relation
+log-log de \citet{jacobs2014}, dont le résidu vaut $0{,}523$ en logarithme naturel : à volume donné,
+le coût réel varie d'un facteur $2{,}4$ autour de la droite à $90\,\%$. Réinjecter ce résidu
+% SOURCES-SCRIPTS: 21
+enregistrement par enregistrement ne rouvre pourtant presque pas l'intervalle, le bruit se
+moyennant dans l'ajustement GPD ; il déplace le \emph{niveau} du surcoût de $7\,\%$, sans
+l'élargir \matcomp. L'étroitesse de l'intervalle PRC n'est donc pas un artefact
+de la conversion déterministe.
+
+\section{Décomposition par pilier}
+
+En basculant un pilier à la fois de conforme à non conforme, le surcoût se décompose
+(figure~\ref{fig:decomp}). Le classement obtenu, $P1>P4>P2>P3>P5$, reproduit exactement
+le classement ROOT du modèle qualitatif. La convergence n'est pas une validation
+indépendante : les amorces de la cascade sont semées selon ROOT (\S\ref{sec:allocation}), et ROOT
+se déduit de la même matrice d'expert que $W$ (\S\ref{sec:branch}). Elle atteste la cohérence
+du modèle avec son jugement d'origine.
+
+\begin{figure}[htbp]\centering
+\figover{S11_decomp_par_pilier.png}
+\caption{Décomposition du $\Delta_{\text{DORA}}$ par pilier et validation croisée avec ROOT.
+}
+% SOURCES-SCRIPTS: 16b
+\label{fig:decomp}
+\end{figure}
+
+\begin{cle}
+\textbf{Une interaction super-additive, établie là où l'estimateur est fiable.} Les surcoûts
+isolés ne somment pas au surcoût total : il reste un terme d'\emph{interaction}, signature de la
+cascade (un pilier non conforme amplifie aussi les contagions amorcées ailleurs qui le
+traversent), qu'un modèle sans propagation (un LDA à copule) ne peut pas produire.
+Sa mesure exige toutefois de la prudence : une interaction est une différence de différences,
+l'estimateur Monte-Carlo le plus fragile qui soit en queue lourde. Sur la VaR à $99{,}5\,\%$
+OpRisk, son \emph{signe n'est pas résolu} : sur six graines à résolution égale
+($60\,000$ années chacune), il va de $-137$ à $+1\,395$~M\euro{} et n'est positif que dans
+quatre cas sur six, la graine de référence donnant $+1\,395$~M\euro{}. Un estimateur
+qui change de signe avec la graine interdit d'en tirer quoi que ce soit. La super-additivité
+est en revanche robuste partout où le bruit de queue ne domine pas : en \emph{perte moyenne}
+elle est positive sur les six graines ($+532$ à $+659$~M\euro{} OpRisk, $+827$
+côté PRC, soit environ un cinquième du surcoût moyen), et jusque dans la VaR du périmètre PRC,
+dont le plafond de sévérité tronque la queue ($+905$~M\euro{}). Conséquence pratique : puisque les
+marginaux ne somment pas au total, l'attribution du surcoût aux piliers exige une règle
+principielle qui somme exactement : c'est l'objet de la valeur de Shapley
+(section~\ref{sec:allocation}). À ne pas confondre avec l'interaction entre les quatre
+\emph{canaux} de la non-conformité, qui décompose le même écart sur une autre partition, vaut
+$+5\,001$~M\euro{} et dont le signe, lui, \emph{est} résolu : elle est reprise terme par terme au
+\S\ref{sec:kpi}. Les deux ne s'additionnent pas.
+% SOURCES-SCRIPTS: 16b 20b 68
+\end{cle}
+
+\section{Allocation du capital : Shapley et Euler}
+\label{sec:allocation}
+
+La décomposition qui précède pose deux questions d'allocation distinctes. \emph{Qui porte le
+surcoût~?} appelle une attribution par pilier \emph{source} de la non-conformité, qui doit
+composer avec l'interaction (les marginaux ne somment pas au total). \emph{Où loge le
+capital~?} appelle une allocation du niveau $\mathrm{SCR}(\text{NC})$ par pilier
+\emph{touché}, cohérente au sens où les parts somment au total. La valeur de Shapley répond
+à la première, la règle d'Euler à la seconde (%
+% SOURCES-SCRIPTS: 20
+figure~\ref{fig:allocation}).
+
+\subsection{Shapley : attribuer le surcoût, interaction comprise}
+
+On munit les piliers d'une fonction caractéristique
+\[
+v(S) \;=\; \mathrm{SCR}\bigl(S \text{ en NC},\ \text{reste C}\bigr)-\mathrm{SCR}(\text{tous C}),
+\qquad S \subseteq \{P1,\dots,P5\},
+\]
+calculée par la cascade sur les $2^5$ configurations à graine Monte-Carlo commune. Le
+marginal de la section précédente est $v(\{k\})$~; la valeur de Shapley
+\[
+\varphi_j \;=\; \sum_{S \subseteq \{P1,\dots,P5\}\setminus\{j\}}
+\frac{|S|!\,\bigl(5-|S|-1\bigr)!}{5!}\,\bigl[v(S\cup\{j\})-v(S)\bigr]
+\]
+moyenne la contribution de $j$ sur tous les ordres d'arrivée. Par efficience,
+$\sum_j \varphi_j = v(\text{tous}) = \Delta_{\text{DORA}}$ \emph{exactement} : la règle
+redistribue l'interaction que les marginaux isolés laissent de côté, quel que soit son signe.
+
+La construction est celle de \citet{Shapley1953}, dont l'efficience est la propriété
+axiomatique ; son emploi en allocation de capital remonte à \citet{denault2001}, et son usage
+actuariel sous Solvabilité~II est documenté \citep{Decupere2011}. Les cinq piliers autorisent l'énumération exacte des $5!$
+ordres d'arrivée ; les algorithmes par échantillonnage des permutations
+\citep{CastroGomezTejada2009, SongNelsonStaum2016}, indispensables en grande dimension, ne
+sont donc pas nécessaires ici, et aucune approximation n'entre dans le tableau qui suit.
+
+Le classement de Shapley reproduit le classement ROOT sur les deux périmètres. Une part de
+cette convergence est mécanique : les amorces de la cascade sont semées
+proportionnellement à ROOT (parts $30/27/18/15/9\,\%$),
+% SOURCES-SCRIPTS: 20
+et le canal fréquence d'un pilier
+module sa propre part d'amorce. Le test non trivial est la \emph{déformation} : la part de
+Shapley de P1 ($34\,\%$) excède sa part d'amorce ($30\,\%$), effet propre de la propagation
+(P1 est l'émetteur le plus fort de $W$), et l'interaction redistribuée ($+1\,395$~M\euro{}
+OpRisk, $+905$ PRC à cette graine) est intégralement un produit de la cascade, absent d'un
+modèle additif.
+
+\subsection{Euler : allouer le niveau, et une limite d'estimation assumée}
+
+La règle d'Euler \citep{tasche1999} alloue $\mathrm{SCR}(\text{NC})$ par
+$C_j = \mathbb{E}\bigl[L_j \mid L \ge \VaR_{99{,}5\,\%}\bigr]$ (version TVaR, exacte
+par construction), où $L_j$ est la perte du pilier \emph{touché} $j$ dans la cascade. Côté
+PRC, l'allocation est stable et presque plate : P2 $23\,\%$, P4 $23\,\%$, P1 $20\,\%$,
+P3 $18\,\%$, P5 $17\,\%$, et les parts de capital coïncident avec les parts de perte moyenne
+parce que le plafond de sévérité tronque la queue
+($\TVaR = 6\,795 \approx \VaR = 6\,573$~M\euro). Côté OpRisk, les parts
+\emph{moyennes} sont stables (P2 $23\,\%$, P4 $22\,\%$, P1 $20\,\%$, P3 $18\,\%$,
+P5 $16\,\%$), mais l'allocation de la queue extrême ne l'est pas, et la cause en est
+théorique : avec $\xi \approx 0{,}6 > 0{,}5$, la sévérité est de variance infinie,
+l'estimateur Monte-Carlo de la TVaR converge en régime de loi stable, et le classement
+conditionnel bascule d'une résolution à l'autre (vérifié à $150$ et $240$~mille années
+simulées). On rapporte donc l'allocation de queue du périmètre PRC, régularisée par le cap,
+et l'on tient celle d'OpRisk pour indicative.
+
+\begin{table}[H]\centering\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l rrr c rrr@{}}
+\toprule
+& \multicolumn{3}{c}{OpRisk} & & \multicolumn{3}{c}{PRC} \\
+\cmidrule{2-4}\cmidrule{6-8}
+pilier & marginal & $\varphi_j$ & part & & marginal & $\varphi_j$ & part \\
+\midrule
+P1 gouvernance & 3481 & 3717 & $34{,}0\,\%$ & & 1375 & 1608 & $32{,}4\,\%$ \\
+P4 tiers       & 2658 & 2810 & $25{,}7\,\%$ & & 1075 & 1252 & $25{,}3\,\%$ \\
+P2 incidents   & 1634 & 1867 & $17{,}1\,\%$ & &  721 &  920 & $18{,}6\,\%$ \\
+P3 tests       & 1094 & 1484 & $13{,}6\,\%$ & &  571 &  738 & $14{,}9\,\%$ \\
+P5 partage     &  665 & 1048 &  $9{,}6\,\%$ & &  311 &  438 &  $8{,}8\,\%$ \\
+\midrule
+somme          & 9531 & 10\,927 & $100{,}0\,\%$ & & 4052 & 4957 & $100{,}0\,\%$ \\
+\bottomrule
+\end{tabular}
+\caption{Valeur de Shapley du surcoût $\Delta_{\text{DORA}}$ (M\euro, NC vs C, trois canaux,
+protocole des trois canaux). Les marginaux somment à $9\,531$ (OpRisk), la valeur de
+% SOURCES-SCRIPTS: 16b
+Shapley à $10\,927$, le surcoût total exactement. Cellules arrondies au million et parts au
+dixième de point, échelle à laquelle la colonne somme exactement à cent : c'est la propriété
+d'efficacité de la valeur de Shapley, et elle se lit dans le tableau plutôt que de s'y
+excuser en note.}
+% SOURCES-SCRIPTS: 20
+\label{tab:shapley}
+\end{table}
+
+\paragraph{La mesure de queue sert ici à \emph{mesurer}, jamais à couvrir.} Le besoin de capital
+publié dans ce mémoire est partout le quantile $\VaR_{99{,}5\,\%}(L)$ non centré, au niveau de
+Solvabilité~II : la perte attendue d'une non-conformité n'étant couverte par aucune provision,
+elle n'en est pas déduite ; aucune
+grandeur de couverture n'est une TVaR, ni une CTE, ni un Expected Shortfall. La mesure
+de queue intervient à deux titres, et tous deux sont des titres de \emph{diagnostic}. Comme
+noyau d'allocation d'abord, dans la règle d'Euler ci-dessus, où elle répartit un niveau déjà
+fixé sans le modifier. Comme \emph{indicateur de forme de queue} ensuite : le rapport
+$\TVaR_{99{,}5\,\%}(L)/\VaR_{99{,}5\,\%}(L) \approx 2{,}1$ se compare à son asymptote théorique
+$1/(1-\xi) = 2{,}5$. L'information est portée par ce rapport, non par les deux montants.
+% SOURCES-SCRIPTS: 67
+Ce rapport dépend de l'état et il faut
+donc dire lequel : $2{,}10$ vaut à l'état \emph{tous non conforme}, celui de cette section, tandis
+qu'il vaut $2{,}17$ sur la calibration de référence \matcomp. Les deux
+% SOURCES-SCRIPTS: 73
+valeurs sont justes, elles ne portent pas sur la même loi de perte, et l'écart entre elles est
+sans signification en soi.
+
+Deux raisons de ne pas en faire un niveau de couverture, dont la seconde est décisive. La
+première est de proportion : sur un risque aussi large, dont les queues sont plurielles selon la
+catégorie d'événement (annexe~\ref{chap:adaptations}), adosser la couverture à une moyenne de queue
+déformerait la distribution et immobiliserait un capital sans commune mesure avec le niveau
+réglementaire de référence. La seconde est d'existence : sous la calibration PRC,
+$\hat\xi=1{,}033>1$ place la sévérité en régime d'espérance infinie, et la mesure
+n'existe alors pas au sens mathématique. Une mesure de couverture qui cesse d'être définie
+selon la source de sévérité retenue ne peut pas porter un besoin de capital ; le même objet,
+lu comme un diagnostic de queue, reste au contraire parfaitement informatif, puisque sa
+divergence \emph{est} l'information.
+
+\begin{cle}
+\textbf{Sources et réceptacles.} Les deux allocations ne racontent pas la même chose, et
+c'est le résultat : Shapley, vue \emph{source}, concentre le surcoût sur P1 ($34\,\%$), là
+où naît la non-conformité~; Euler, vue \emph{réceptacle}, répartit le capital presque
+uniformément sur les piliers touchés (P2 et P4 en tête légère). La remédiation se décide
+côté source~; le capital, lui, se loge là où les cascades atterrissent.
+\end{cle}
+
+\begin{figure}[htbp]\centering
+\figover{S15_allocation_shapley_euler.png}
+\caption{Allocation du capital DORA (OpRisk). (a)~Shapley contre marginaux : l'interaction
+redistribuée. (b)~Euler : parts de capital (queue) contre parts de perte moyenne~; sur ce
+périmètre non plafonné, l'allocation fine de la queue extrême reste indicative
+($\xi \approx 0{,}6$, variance de sévérité infinie).}
+% SOURCES-SCRIPTS: 20
+\label{fig:allocation}
+\end{figure}
+
+\section{Trajectoire du capital}
+\label{sec:res-traj}
+
+Le long de la mise en conformité, le capital décroît de l'état initial vers le SCR conforme, et
+le surcoût résiduel $\Delta_{\text{DORA}}(t)$ tend vers zéro (tableau~\ref{tab:traj},
+figure~\ref{fig:traj}). Partant de l'état marginal actuel (NC~$35\,\%$, PC~$35\,\%$, C~$30\,\%$),
+le capital OpRisk passe de $\sim 10\,750$ à $\sim 7\,040$~M\euro{} sur cinq ans, vers le SCR
+conforme ($\sim 6\,925$).
+
+\begin{table}[htbp]\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c ccc@{}}
+\toprule
+$t$ (ans) & SCR($t$) médiane & bande 90\,\% & $\Delta_{\text{DORA}}(t)$ \\
+\midrule
+0 & 10752 & $[9092\,;12654]$ & 3827 \\
+1 & 9576  & $[7205\,;12040]$ & 2652 \\
+2 & 8310  & $[6194\,;11042]$ & 1385 \\
+3 & 7575  & $[5924\,;10164]$ & 650 \\
+5 & 7041  & $[5857\,;9028]$  & 116 \\
+\bottomrule
+\end{tabular}
+\caption{Trajectoire du capital DORA (M\euro, OpRisk).}
+% SOURCES-SCRIPTS: 17
+\label{tab:traj}
+\end{table}
+
+% [H] : en [htbp] cette figure derivait en tete de la page suivante et coupait en deux le
+% paragraphe de lecture actuarielle ci-dessous. Fixee ici, elle ouvre la page et le paragraphe
+% la suit entier.
+\begin{figure}[H]\centering
+\figover{S12_trajectoire_scr.png}
+\caption{Trajectoire SCR($t$) et évolution des états de conformité.}
+% SOURCES-SCRIPTS: 17
+\label{fig:traj}
+\end{figure}
+
+\noindent \textbf{Lecture actuarielle.} L'intégrale de la trajectoire, à un coût de capital
+près, est le \emph{coût de portage} de la non-conformité pendant la remédiation. La bande reste
+large et surtout haute en environnement dégradé : la vraie exposition n'est pas le capital
+médian, c'est le risque que la remédiation traîne quand la menace monte, précisément le scénario
+où le capital importe le plus.
+
+\section{Priorisation de la remédiation}
+\label{sec:res-prio}
+
+Sous budget contraint (un pilier remédié à la fois), l'énumération des $120$ ordres donne
+l'ordre optimal $P1\to P4\to P2\to P3\to P5$, égal à l'ordre ROOT et distinct de l'ordre
+glouton par valeur d'accélération (figure~\ref{fig:prio}). L'écart de capital intégré entre le
+pire ordre et l'optimal atteint $21\,\%$.
+
+\begin{figure}[htbp]\centering
+\figover{S13_priorisation.png}
+\caption{Valeur d'accélération par pilier et ordre de remédiation optimal.}
+% SOURCES-SCRIPTS: 18
+\label{fig:prio}
+\end{figure}
+
+\begin{cle}
+\textbf{Le myope n'est pas l'optimal.} Remédier au coup par coup le pilier au plus fort gain
+immédiat (l'ordre glouton) coûte plus cher que l'ordre optimal, parce que les interactions de
+cascade imposent de raisonner sur l'horizon entier. L'optimum coïncide avec le classement
+ROOT, comme la progéniture (\S\ref{sec:branch}) et la décomposition par pilier ; ces trois
+convergences attestent la cohérence du modèle avec le jugement dont il procède, non une
+validation indépendante, ROOT entrant dans les amorces.
+\end{cle}
+
+\paragraph{La question réciproque donne le classement qu'un plan de
+remédiation utilise.} Tout ce qui précède fixe un état et lit un capital. L'exercice de
+résistance \emph{inverse} fixe le capital et cherche les états qui le produisent. Un dispositif ORSA emploie un modèle sous
+cette forme. La monotonie établie au \S\ref{sec:kpi} le
+rend court : l'ensemble des configurations atteignant une cible est croissant, donc entièrement
+décrit par ses éléments minimaux, et il n'en compte jamais plus de quatre sur seize. Deux nombres
+résument alors tout le treillis. Le canal de fréquence seul atteint $10\,377$~M\euro,
+soit $1{,}72$ fois l'état conforme, tandis que les trois autres canaux \emph{réunis} n'atteignent
+que $11\,413$, soit $1{,}89$ fois. Toute cible sous le premier seuil se produit donc par un canal
+unique, et toute cible au-dessus du second exige la fréquence. Aucun autre canal, seul et
+dans sa plage déclarée, n'atteint même $8\,000$~M\euro. La lecture directe hiérarchise les canaux
+par leur contribution ; la lecture inverse désigne celui dont la maîtrise \emph{interdit} les
+scénarios sévères. L'information n'est pas la même. Détail, frontières par cible et réserves
+au \S\ref{sec:inverse}.
+% SOURCES-SCRIPTS: 92
+
+\section{Robustesse}
+\label{sec:res-robustesse}
+
+Le niveau du capital bouge fortement selon les leviers non calibrés (l'indice de queue $\xi$
+domine, facteur $\sim 6$), mais la direction ($\Delta_{\text{DORA}}>0$) et la
+\emph{priorité} (P1 en tête) tiennent sur tous les réglages testés (figure~\ref{fig:robust}).
+
+\begin{figure}[htbp]\centering
+\figover{S14_robustesse_multietats.png}
+\caption{Robustesse : le classement tient, le niveau non.}
+% SOURCES-SCRIPTS: 19
+\label{fig:robust}
+\end{figure}
+
+\begin{cle}
+\textbf{La recommandation ne dépend d'aucun paramètre non mesurable.} L'ordre de remédiation
+optimal ne dépend que des SCR par configuration, donc il est invariant aux taux de
+transition de la chaîne de Markov, pourtant les paramètres les moins calibrables. Ces taux
+fixent le calendrier de la trajectoire, jamais la séquence recommandée. Le verdict d'ensemble
+rejoint celui de toute la démarche : le classement est robuste là où le niveau ne l'est pas.
+\end{cle}
+
+\begin{attention}
+\textbf{Le périmètre exact de cette robustesse.} Les tests ci-dessus font
+varier les paramètres du modèle \emph{à matrice $W$ fixée}, celle du classeur qualitatif. Ils
+établissent donc que P1 arrive en tête \emph{si l'on admet cette direction}. Dès lors que l'on
+admet ne pas connaître la direction et que l'on balaie l'ensemble admissible
+(chapitre~\ref{chap:partielle}), P1 et P4 deviennent pratiquement à égalité : P1 arrive
+premier dans $43{,}6\,\%$ des configurations, P4 dans $37{,}7\,\%$, et l'écart de regret maximal entre
+% SOURCES-SCRIPTS: 30
+les deux n'est que de $1{,}5\,\%$. Les deux énoncés ne se contredisent pas, ils portent sur des
+sources d'incertitude différentes. Ce qui est robuste dans les deux cadres, c'est que P1 et P4
+devancent nettement P2, P3 et P5, et que P5 n'arrive \emph{jamais} en tête.
+
+\medskip
+\noindent\textbf{Une troisième source d'incertitude, et elle vise directement le corpus.} Les
+rapports post-incident sont des enquêtes officielles, mandatées pour établir une cause racine ;
+elles sur-attribuent donc structurellement à la gouvernance, ce que le
+chapitre~\ref{ch:identifiabilite} déclare sans pouvoir le lever. On peut néanmoins en chiffrer la
+conséquence, en dégradant l'émission de P1 par $W_{1k}\to(1-a)W_{1k}$ et en recalculant l'ensemble
+admissible à chaque degré. Le classement tient jusqu'à $a=0{,}25$ et bascule vers P4 à
+$a=0{,}50$ : il faut donc supposer la moitié des arêtes issues de la gouvernance
+artefactuelles pour renverser la priorité. Le niveau, lui, ne perd que $24{,}8\,\%$ même à
+$a=1$, soit $0{,}81$ fois la largeur de la bande d'identification. Le niveau résiste, le
+classement non, le seuil est connu.
+% SOURCES-SCRIPTS: 64
+\end{attention}
+
+\paragraph{Les hypothèses restantes ont leur axe de stress.} Trois entrées ne figuraient pas au
+tornado : les coefficients de la conversion Jacobs, la charge systémique $\gamma$ et l'ancrage
+des probabilités d'état. Stressées à $\pm 1{,}645$ écart-type, elles déplacent des niveaux sans
+jamais toucher la direction ni le classement : le surcoût PRC reste contenu entre $3\,125$ et
+$3\,977$~M\euro{} autour du central, $\gamma$ ne commande que la sévérité de la bascule en
+crise, et l'ancrage des probabilités d'état déplace le capital espéré actuel mais laisse
+inchangés le SCR par état et le surcoût NC contre C, qui lui sont conditionnels. Le détail du
+protocole de stress est déporté \matcomp.
+% SOURCES-SCRIPTS: 22 67
+
+\section{La sensibilité aux probabilités de propagation, prise pour elle-même}
+\label{sec:sensibilite-propagation}
+
+% SOURCES-SCRIPTS: 15 76 30 66 68
+
+Le modèle repose sur des probabilités de propagation qui ne sont pas observées. Cette section
+leur consacre un examen séparé, en
+distinguant deux questions que l'on confond volontiers : la sensibilité au \emph{niveau} de la
+propagation, qui est un facteur d'échelle posé, et la sensibilité à sa \emph{direction}, qui
+n'est pas identifiable. La première se stresse, la seconde se borne.
+
+\paragraph{Le niveau de propagation est le levier le moins sensible.} Mesurée en élasticités, à
+perturbation relative de $10\,\%$ appliquée à un paramètre à la fois, la sensibilité classe les
+leviers comme suit.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}l l r@{}}
+\toprule
+\textbf{Levier} & \textbf{Statut} & \textbf{Élasticité} \\
+\midrule
+Indice de queue $\xi$ & estimé & $3{,}79$ \\
+Échelle $\sigma$ & estimé & $0{,}97$ \\
+Taux de dépassement $p_u$ & estimé & $0{,}82$ \\
+Fréquence $\lambda$ & estimé & $0{,}45$ \\
+Sur-dispersion $\varphi$ & posé & $-0{,}44$ \\
+\textbf{Gain de propagation} $\boldsymbol{g}$ & \textbf{posé} & $\mathbf{0{,}37}$ \\
+Seuil $u$ seul & choix de méthode & $0{,}03$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent La propagation a l'élasticité la plus faible des leviers substantiels, $0{,}37$ contre
+$3{,}79$ pour l'indice de queue. L'ablation le confirme par un autre chemin : retirer la
+propagation fait tomber la VaR de $20\,\%$, retirer la queue lourde de $76\,\%$. La thèse ne
+dépend pas des trois valeurs posées de $g$, le capital étant croissant en $g$
+(\S\ref{sec:invariance-g}). La direction, elle, ne se stresse pas, elle se borne : à ignorance
+totale la largeur de l'ensemble admissible vaut $1\,839$~M\euro, soit $34{,}9\,\%$ du socle, et
+elle se paye linéairement avec le degré d'ignorance. Le motif qui écarte les indices de Sobol, la
+variance de la charge annuelle n'existant pas, le tornado brut et ses deux défauts, la gradation
+de l'ignorance, l'ablation et la comparaison avec le préprint de cascade climatique, qui classe
+les leviers à l'inverse parce que sa sévérité est bornée, sont déportés
+\matcomp.
+% SOURCES-SCRIPTS: 81
+
+\begin{cle}
+\textbf{Ce que cette section établit.} La sensibilité aux probabilités de propagation est
+\emph{bornée par construction} et non estimée : c'est la différence entre un modèle qui pose une
+direction et un modèle qui assume ne pas la connaître. Et elle n'est pas le point faible du
+dispositif : le niveau de propagation déplace le capital moins que tout autre levier, tandis que
+le seuil de la loi de queue le fait passer à lui seul de $4\,862$ à $12\,944$~M\euro. Toute vigilance sur les
+valeurs numériques du modèle doit donc se porter d'abord sur l'ajustement de valeurs extrêmes,
+et c'est là que le mémoire concentre ses réserves déclarées.
+\end{cle}
+
+\section{Comparaison de modèles : la dépendance n'est pas le mécanisme}
+\label{sec:benchmark}
+
+La cascade dirigée remplace ici l'agrégation par copule d'un modèle LDA. Ce que ce
+remplacement apporte se mesure en confrontant la cascade à des jumeaux copule construits pour lui
+ressembler (figure~\ref{fig:benchmark}, périmètre OpRisk, graines
+% SOURCES-SCRIPTS: 23
+Monte-Carlo communes). Cette section compare les modèles sur l'axe de la \emph{structure de
+dépendance}, à marges fixées ; la comparaison sur l'axe de la \emph{famille de loi} (la bande
+de modèle) est conduite en partie~\ref{part:limites}, section~\ref{sec:trois-etages}, et les
+deux se complètent.
+
+\textbf{La photo.} À marges par pilier \emph{identiques} (celles de la cascade, état
+conforme) et corrélation calée, la copule gaussienne retombe sur le SCR de la cascade
+($+0{,}1\,\%$) : en queue lourde ($\xi \approx 0{,}6$), la queue annuelle obéit au principe
+de la perte unique dominante et le \emph{niveau} de base n'identifie pas la dépendance. La
+Student ($\nu = 4$) le surestime de $17\,\%$ en forçant des co-extrêmes que le mécanisme ne
+produit pas ($2{,}28$ piliers extrêmes par année de queue contre $1{,}12$). Le choix de
+copule est donc à la fois non identifiable et conséquent~; la cascade n'a pas ce degré de
+liberté : sa dépendance est produite par le mécanisme, pas choisie.
+
+\textbf{Et ce résultat a été répliqué ailleurs, sans lien avec ce travail.} L'objection naturelle
+serait qu'une coïncidence à $+0{,}1\,\%$ entre une copule gaussienne et un mécanisme de cascade
+tient à un réglage particulier du protocole. Le préprint de cascade climatique cité au
+chapitre~\ref{ch:positionnement} \citep{ccrn2026} conduit la même expérience, à marges appariées,
+entre une gaussienne, une Student et sa propre cascade : il obtient des primes centrales
+pratiquement indiscernables et ne voit la séparation apparaître qu'en \emph{queue}. Même
+protocole, même conclusion, sur un autre péril et par une autre équipe. Ce n'est donc pas un
+artefact du réglage retenu ici, mais une propriété du principe de la perte unique dominante,
+qui rend le niveau central aveugle à la structure de dépendance.
+
+Le $+0{,}1\,\%$ est cependant un tirage : sur quatre graines, l'écart moyen vaut $+4{,}8\,\%$
+% SOURCES-SCRIPTS: 80
+et reste sous son propre bruit, et au-delà de $99\,\%$ seule la Student sort du sien. Le détail
+est déporté \matcomp.
+
+\begin{figure}[H]\centering
+\figover{S18_benchmark_copule.png}
+\caption{Benchmark copule (OpRisk). (a)~Intervention : le jumeau copule suit les marges et
+sous-estime le surcoût, la cascade suit les sources. (b)~Photo : perte unique dominante en
+queue~; la Student force des co-extrêmes que le mécanisme n'a pas.}
+% SOURCES-SCRIPTS: 23
+\label{fig:benchmark}
+\end{figure}
+
+\textbf{L'intervention.} Basculer un pilier en non-conformité est une intervention, pas un
+conditionnement. Le jumeau LDA-copule exprime les canaux fréquence et détection (les marges
+dépendent de l'état de leur pilier), mais trois manques sont structurels.
+\emph{(i)}~La propagation n'a nulle part où vivre : le surcoût total ressort à
+$6\,760$~M\euro{} contre $10\,927$ pour la cascade, une sous-estimation de $38\,\%$.
+% SOURCES-SCRIPTS: 67
+\emph{(ii)}~Les marges ne dépendant que de l'état de leur propre pilier et la copule étant
+figée, la perte moyenne totale est \emph{exactement} additive : interaction moyenne nulle
+par construction ($+0$~M\euro{} mesuré), là où la cascade en produit $+560$~M\euro{} :
+l'interaction moyenne mesurée plus haut est une signature falsifiable qu'aucun modèle
+copule-marges ne peut reproduire. \emph{(iii)}~La priorité de remédiation impliquée
+s'inverse sur P2/P3, et la dépendance ne durcit pas quand la conformité se dégrade, alors
+que c'est précisément le canal que DORA fait bouger ($g$ de $0{,}45$ à $0{,}90$).
+
+\begin{cle}
+\textbf{Le verdict du benchmark.} La copule peut imiter la photo d'un état~; elle ne
+peut imiter ni le surcoût (propagation), ni l'interaction (additivité en moyenne), ni le
+durcissement de la dépendance avec la non-conformité. La dépendance n'est pas le
+mécanisme : c'en est l'ombre portée.
+\end{cle}
+
+\section{Mise en regard réglementaire}
+\label{sec:regard-reglementaire}
+
+La question finale est celle de la portée : de l'effet de la conformité que le modèle
+mesure, quelle fraction les cadres existants savent-ils exprimer ? On confronte donc, sur
+le même écart de capital entre profil conforme et non conforme, trois dispositifs.
+% SOURCES-SCRIPTS: 27
+
+\begin{table}[H]\centering\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r@{}}
+\toprule
+\textbf{Cadre} & \textbf{$\Delta$ capital C$\to$NC} & \textbf{part de l'effet cascade} \\
+\midrule
+Formule Standard (Solvabilité~II) & $0$~M\euro{} & $0\,\%$ \\
+LDA-copule (dépendance symétrique) & $6\,760$~M\euro{} & $62\,\%$ \\
+Cascade dirigée & $10\,927$~M\euro{} & $100\,\%$ (référence) \\
+\bottomrule
+\end{tabular}
+\caption{Fraction de l'effet DORA que chaque cadre sait exprimer.}
+% SOURCES-SCRIPTS: 27 67
+\label{tab:benchmark-sf}
+\end{table}
+
+\textbf{La Formule Standard est structurellement aveugle}, et le tableau~\ref{tab:benchmark-sf}
+chiffre ce que chaque cadre sait en exprimer. La charge de risque opérationnel
+de l'équation~\eqref{reg:eq:scrop}, maximum d'une branche assise sur les primes et d'une branche
+assise sur les provisions, à coefficients distincts en vie et en non-vie, dans la limite d'un
+plafond assis sur le BSCR, ne dépend que du volume : elle est \emph{identique} pour une entité
+exemplaire et pour une entité défaillante sur DORA. Sa réponse à la conformité est nulle par
+construction. La copule en capte $62\,\%$ (les canaux fréquence et détection) mais rate la
+propagation, faute de direction. Seule la cascade exprime l'effet complet. La valeur du
+modèle se lit donc en effet DORA rendu visible, non en un niveau de SCR à
+interpréter dans l'absolu.
+
+Sur donnée ouverte, le pilotage descend jusqu'aux sous-piliers de P2 et, plus grossièrement, à
+la détection de P3, mais pas jusqu'au pilier des tiers, que seul un registre d'externalisation
+peut renseigner \matcomp.
+
+\section{Un ordre de grandeur à l'épreuve du réel}
+\label{sec:ancrage}
+
+Le niveau absolu n'ayant jamais été présenté comme une mesure, il reste à le confronter au
+réel, non pour le valider mais pour vérifier qu'il ne \emph{peut} pas l'être. Deux
+confrontations suffisent.
+
+Contre la Formule Standard, sur la même entité notionnelle, le repère forfaitaire vaut environ
+$450$~M\euro{} quand le socle de la cascade au niveau du secteur en vaut $5\,275$ ; contre le
+marché, un capital de cet ordre pour une seule entité serait invraisemblable. Au niveau du
+sinistre unique, en revanche, le quantile de sévérité ($663$~M\euro) et sa moyenne de queue
+($1\,752$~M\euro) encadrent les grandes pertes cyber réelles. Le niveau sectoriel tient donc à la
+fréquence d'amorce, et la descente d'échelle le vérifie. À matrice $W$ et moteur inchangés, une
+entité d'actifs $A$ reçoit une fréquence et une sévérité lues à sa taille :
+\begin{equation}\label{eq:descente}
+\begin{gathered}
+\lambda(A)=\lambda_c\Big(\frac{A}{A_c}\Big)^{b_\lambda},\qquad
+m(A)=\Big(\frac{A}{A_m}\Big)^{b},\\
+X=m(A)\sum_{k\in S_a}Y_k,\qquad
+\mathcal{B}(A)=\VaR_{99{,}5\,\%}\Big(\sum_{n=1}^{N}X_n\Big),
+\end{gathered}
+\end{equation}
+où $N$ suit la binomiale négative de moyenne $\lambda(A)$ et de surdispersion $\varphi$, $S_a$ est
+l'ensemble des piliers touchés depuis l'amorce $a$, et les $Y_k$ sont les sévérités GPD calibrées.
+Les deux élasticités sont estimées, $b_\lambda = 0{,}074$ par une binomiale négative à lien
+logarithmique, $b = 0{,}087$ sur la sévérité, d'où un multiplicateur $m = 0{,}854$ à la taille de
+l'entité notionnelle ; $\lambda_c$, $A_c$ et $A_m$ sont la fréquence et les tailles de référence du
+panel.
+
+\begin{table}[htbp]\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Lecture & $\lambda$ (an$^{-1}$) & sévérité & SCR $99{,}5\,\%$ & Perte moyenne \\
+\midrule
+Secteur financier mondial & $21{,}56$ & $\times 1$ & $8\,123$~M\euro & $983$~M\euro \\
+Seuil \og{}$\geq 10$ événements\fg{} & $0{,}210$ & $\times 1$ & $488$~M\euro & $9{,}7$~M\euro \\
+Seuil \og{}toutes firmes\fg{} & $0{,}100$ & $\times 1$ & $229$~M\euro & $4{,}6$~M\euro \\
+$\lambda$ lu à la taille de la cible & $0{,}092$ & $\times 1$ & $198$~M\euro & $4{,}3$~M\euro \\
+\textbf{Les deux canaux composés} & $\mathbf{0{,}092}$ & $\mathbf{\times 0{,}854}$ &
+$\mathbf{169}$~M\euro & $\mathbf{3{,}6}$~M\euro \\
+\bottomrule
+\end{tabular}
+\caption{Le même modèle lu à plusieurs échelles. La matrice $W$ et le moteur de cascade sont
+identiques partout ; seules la fréquence d'amorce et l'échelle de sévérité changent. Les deux
+dernières lignes sont la lecture cohérente, où la fréquence \emph{et} la sévérité sont prises
+à la taille de l'entité visée.}
+% SOURCES-SCRIPTS: 60
+\label{tab:echelle}
+\end{table}
+
+Diviser $\lambda$ par $235$ divise la perte moyenne par $270$ mais le capital par $48$ seulement :
+le quantile extrême est porté par le plus grand sinistre, non par le nombre. La coïncidence
+apparente avec le repère forfaitaire au seuil de dix événements ($488$ contre $450$~M\euro) ne
+survit pas à la correction, et le chiffre d'entité est une bande, $[131{,}5\,;183{,}3]$~M\euro{}
+sur les $1\,024$ sommets admissibles. Ce $169$~M\euro{} est une borne supérieure d'ordre de
+grandeur (\S\ref{sec:entites-reelles}).
+% SOURCES-SCRIPTS: 60 49
+
+\begin{cle}
+\textbf{À l'échelle d'entité, ignorer la direction coûte autant qu'ignorer la queue.} La
+bande d'identification mesure $51{,}7$~M\euro{} de large. En faisant varier le seul indice de
+queue sur son intervalle de confiance à $90\,\%$ ($\xi \in [0{,}304\,;0{,}831]$), le SCR
+d'entité va de $140{,}9$ à $191{,}6$~M\euro, soit $51{,}5$~M\euro{} de large. Les deux
+incertitudes sont du même ordre, et aucune ne domine l'autre. C'est un argument
+supplémentaire pour la spécification de reporting : réduire l'ignorance directionnelle vaut,
+en euros de capital, autant qu'affiner l'estimation de la queue.
+\end{cle}
+
+\paragraph{Ce que le forfait ne voit pas, à l'échelle d'entité.} En balayant le gain de
+propagation sur ses trois valeurs d'état ($0{,}45$, $0{,}68$, $0{,}90$) à fréquence et taille
+cibles, le SCR d'entité passe de $116$ à $143$ puis $169$~M\euro{}, soit $+45\,\%$ entre le
+profil conforme et le profil défaillant, et ce par le seul canal de contagion, les canaux
+fréquence et détection n'étant pas mobilisés ici : l'écart lu est donc un plancher. Sur les
+mêmes trois profils, le repère forfaitaire vaut $450$~M\euro{} et ne bouge pas d'un euro, pas
+plus que la charge réglementaire elle-même, qui ne dépend d'aucun état. C'est la thèse du
+mémoire, lue à l'échelle où une entité la vit.
+
+Ces trois nombres sont un scénario d'écartement, non une mesure : la correspondance
+état $\to g$ est posée et non calibrée, faute d'entité publiant son état de conformité. Ce qui
+est établi, et démontré au \S\ref{sec:invariance-g}, est plus fort et plus modeste à la fois :
+le capital étant croissant en $g$, l'écart existe et garde son signe pour \emph{toute}
+correspondance respectant l'ordre, y compris la plus étroite, quand le forfait reste plat dans
+tous les cas. Seule l'amplitude dépend de l'écartement retenu.
+
+Les deux canaux de la descente, ce que la correction d'échelle déplace, le rejet d'une mise à
+l'échelle proportionnelle et les figures sont déportés \matcomp.
+
+\section{Quatre entités réelles, et la borne inférieure de la méthode}
+\label{sec:entites-reelles}
+
+Tout ce qui précède porte sur une entité \emph{notionnelle}, posée à $20\,000$~M\$ d'actifs et
+$15\,000$~M\euro{} de provisions. La méthode est complète, l'objet est fictif : le mémoire
+démontre une faisabilité, il ne mesure pas une entité. C'est la première objection qu'un
+rapporteur formule. Elle est juste. On la lève avec la seule donnée disponible sans accès
+interne, les rapports SFCR de l'exercice 2024, qui sont des publications
+réglementaires.
+
+Trois grandeurs suffisent par entité : provisions techniques, fonds propres éligibles,
+SCR. Chaque champ porte sa provenance, \emph{publié} quand il est lu tel quel,
+\emph{déduit} quand il résulte d'une identité comptable ou d'un ratio de couverture publié.
+Aucun n'est estimé. La conversion en dollars, nécessaire parce que le panel de calibration
+exprime les actifs en \$, n'est pas un paramètre sensible : l'élasticité valant $0{,}074$, une
+erreur de $10\,\%$ sur le cours déplace $\lambda$ de $0{,}7\,\%$. Le besoin de chaque entité est
+$\mathcal{B}(A)$ de l'équation~\eqref{eq:descente} : en point à la matrice d'expert, donc au gain
+de propagation non conforme, les autres canaux restant à leur calibration de référence, et en
+bande sur les sommets admissibles. Le rapport est $\mathcal{B}(A)/\mathrm{SCR}_{\text{publié}}$.
+
+\begin{attention}
+\textbf{Deux précautions de vocabulaire, avant tout chiffre.} D'abord, il n'existe \emph{aucun}
+module DORA dans la Formule Standard : la grandeur calculée ici est un besoin de
+capital ORSA, donc de pilier~2, conformément à ce que pose le
+chapitre~\ref{chap:reglementaire}. Écrire \og le SCR DORA de telle entité\fg{} ferait
+croire à un objet réglementaire qui n'existe pas. Ensuite, le rapport de ce besoin au SCR
+publié est une mise à l'échelle et non une part : diviser un besoin de pilier~2 par le
+SCR réglementaire ne fait pas du premier une composante du second. Le rapport répond à
+\og est-ce gros ou petit pour cette entité\fg{}, et à rien d'autre. Enfin les entités sont désignées
+par leur classe de taille, non par leur nom : le modèle n'utilise que le total de bilan et les
+provisions, jamais l'identité, et il serait donc gratuit d'accoler un nom de société à un état de
+conformité \emph{supposé}. Les identités et les références SFCR exactes sont tenues hors
+du mémoire, dans le code de calcul, qui en imprime la table de correspondance à chaque exécution.
+% SOURCES-SCRIPTS: 65
+\end{attention}
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r r r r@{}}
+\toprule
+\textbf{Entité} & \textbf{Actifs} & \textbf{SCR publié} & \textbf{Besoin ORSA} &
+\textbf{Bande} & \textbf{Rapport} \\
+ & M\euro & M\euro & M\euro & M\euro & \\
+\midrule
+Assureur non-vie A & $2\,319$ & $425$ & $112$ & $[88\,;122]$ & $26{,}4\,\%$ \\
+Assureur non-vie B & $5\,305$ & $812$ & $136$ & $[104\,;146]$ & $16{,}7\,\%$ \\
+Assureur vie C & $37\,845$ & $1\,587$ & $196$ & $[149\,;213]$ & $12{,}3\,\%$ \\
+\textbf{Assureur vie D} & $\mathbf{309\,800}$ & $\mathbf{14\,800}$ & $\mathbf{294}$ &
+$\mathbf{[233\,;316]}$ & $\mathbf{2{,}0\,\%}$ \\
+\midrule
+\emph{Entité notionnelle} & $19\,231$ & --- & $169$ & $[132\,;183]$ & --- \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+\noindent \textbf{Les quatre SCR du dénominateur sont publiés, et cela a été vérifié
+pièce par pièce.} Les deux assureurs vie donnent leur SCR en synthèse ; les deux
+assureurs non-vie le donnent dans leur état quantitatif S.25.01, à $425$ et
+$812{,}5$~M\euro. Aucun n'est reconstitué à partir d'un taux de couverture, si bien que la
+colonne des rapports repose entièrement sur des grandeurs lues. Ce qui reste \emph{déduit} est
+le total d'actif de trois entités, obtenu par l'identité comptable provisions plus fonds
+propres, et l'approximation y est conservatrice : les autres passifs manquants
+minorent l'actif, donc $\lambda$, donc le capital. Sur la quatrième entité, où le total d'actif
+est publié, l'identité se vérifie au million près.
+
+\vspace{2pt}
+\noindent \textbf{Un résultat en sort, sur le repère forfaitaire lui-même.} Les deux états
+S.25.01 publient le module de risque \emph{opérationnel} de Formule Standard, ce qui
+permet de confronter le repère de $3\,\%$ des provisions employé dans ce chapitre à la charge
+effectivement calculée : il vaut $54{,}1$ contre un module publié de $59$ sur la première entité
+non-vie, et $62{,}1$ contre $39{,}7$ sur la seconde, soit des écarts de $-8\,\%$ et de
+$+56\,\%$. L'écart ne vient pas du règlement mais de l'approximation : le repère ne retient que la
+branche provisions de l'équation~\eqref{reg:eq:scrop}, sans la branche primes dont la formule prend
+le maximum, sans le plafond assis sur le BSCR, et sur une assiette qui mêle parfois provisions et
+autres passifs. Il ne se cite donc que comme un ordre de grandeur de comparaison, jamais comme la
+charge réglementaire ni comme l'une de ses bornes, et le module publié lui est préféré chaque fois
+qu'il existe.
+% SOURCES-SCRIPTS: 65
+
+\vspace{4pt}
+La première lecture est celle qu'on attendait. Sur la plus grande entité du panel, un assureur
+vie de $310$~Md\euro{} d'actifs, le besoin de capital associé à la non-conformité vaut
+$294$~M\euro{} en point et $[233\,;316]$ en bande, soit $2{,}0\,\%$ de son SCR publié :
+un ordre de grandeur défendable, obtenu sans aucune donnée interne. Et l'écart entre états de
+conformité subsiste à toutes les tailles, de $+41\,\%$ à $+49\,\%$, face à une charge forfaitaire
+qui n'en distingue aucune. La thèse ne dépendait donc pas de l'entité fictive.
+
+\begin{attention}
+\textbf{La seconde lecture n'était pas attendue, et elle contraint le mémoire.} La charge décroît
+beaucoup moins vite que la taille : un facteur $134$ sur les actifs ne divise la sévérité que par
+$1{,}53$ et la fréquence que par $1{,}44$. Rapportée au SCR publié, la charge passe donc
+de $2{,}0\,\%$ pour une grande entité à $26{,}4\,\%$ pour une petite. En posant qu'un seul risque
+de non-conformité réglementaire ne peut raisonnablement peser plus de $10\,\%$ du SCR
+total d'une entité, tous risques confondus, la bascule se situe entre $37\,845$ et
+$309\,800$~M\euro{} d'actifs. Ce n'est pas un seuil fin, quatre entités ne le déterminent pas,
+et il dépend aussi du levier propre de l'entité, dont le rapport SCR sur actifs va ici
+de $4{,}2$ à $18{,}3\,\%$. C'est un ordre de grandeur, pour la cause que le
+\S\ref{sec:ancrage} nommait sans la chiffrer : l'élasticité corrige l'\emph{échelle} de la
+sévérité, jamais sa \emph{forme}, qui reste celle de grandes institutions financières.
+\end{attention}
+
+\begin{cle}
+\textbf{Conséquence directe sur le chiffre central, qu'il faut assumer.} L'entité notionnelle
+pèse $19\,231$~M\euro{} d'actifs et se trouve donc \emph{dans} la zone que la ligne précédente
+déclare hors domaine, ce qui suffit à en tirer la conséquence : le $169$~M\euro{} doit être lu
+comme une borne supérieure d'ordre de grandeur, non comme une charge plausible. Un
+second test, celui du levier, ne l'accable pas : en imputant à cette entité le levier médian des
+quatre entités réelles ($10{,}0\,\%$), soit $1\,932$~M\euro{} de SCR, la charge en
+représenterait $9\,\%$, donc juste \emph{sous} le critère de $10\,\%$. La requalification repose
+ainsi sur le seul argument de taille. Ce que le mémoire établit n'en est pas
+affaibli, parce que sa thèse porte sur l'\emph{écart} entre états de conformité face à un
+forfait insensible, et qu'un écart est un rapport : il survit à une erreur de niveau commune aux
+trois états. Mais le \emph{niveau}, lui, cesse ici d'être présenté comme une mesure. Le lever
+demanderait une sévérité calibrée sur des incidents d'entités de cette taille, c'est-à-dire
+exactement la donnée que le chapitre~\ref{chap:donnees} déclare absente.
+\end{cle}
+
+Deux réserves enfin, à ne pas reléguer en note. Aucune de ces entités ne publie son état de
+conformité DORA : on mesure une \emph{exposition} sous un état supposé, jamais une
+non-conformité constatée : les trois états sont donc donnés côte à côte sans qu'aucun
+soit désigné. Et deux des quatre entités publient \og provisions techniques et autres passifs\fg{}
+sans les séparer, ce qui surestime l'assiette du repère forfaitaire pour elles ; pour les deux
+assureurs vie, la branche provisions de la formule applique de surcroît un coefficient plus faible
+que celui du repère, qui ne vaut donc pas pour elles. Le rapport au SCR publié, lui,
+n'est pas concerné.
+
+% SOURCES-SCRIPTS: 65
+
+\section{Ce que l'agrégation réglementaire fait de cet écart}
+\label{sec:agregation-scr}
+
+Il reste à dire ce que le capital total de l'entité retient d'un écart $D$ entre états. Sous
+Solvabilité~II, le risque opérationnel n'entre pas dans la matrice de corrélation du BSCR, selon
+l'identité $\mathrm{SCR} = \mathrm{BSCR} + \mathrm{Adj} + \mathrm{SCR}_{Op}$ du
+chapitre~\ref{chap:reglementaire}. On la compare au traitement où $D$ serait un module de plus,
+corrélé à $\rho$ avec le BSCR :
+\begin{equation}\label{eq:agregation}
+\Delta\mathrm{SCR}_{\text{additif}} = D,\qquad
+\Delta\mathrm{SCR}_{\rho}=\sqrt{\mathrm{BSCR}^2+2\rho\,\mathrm{BSCR}\,D+D^2}-\mathrm{BSCR}
+=\tau(\rho,d)\,D,
+\end{equation}
+\begin{equation}\label{eq:tau}
+\tau(\rho,d)=\frac{\sqrt{1+2\rho d+d^2}-1}{d}
+=\rho+\frac{d}{2}\bigl(1-\rho^2\bigr)+O(d^2),\qquad d=\frac{D}{\mathrm{BSCR}} .
+\end{equation}
+Un montant petit devant le BSCR n'est donc reconnu qu'à hauteur de $\rho$ sous agrégation
+corrélée, et en entier sous la convention additive : un euro d'écart DORA coûte un euro de
+capital. Le BSCR n'étant pas publié, $\mathrm{Adj}\le 0$ et le plafond
+$\mathrm{SCR}_{Op}\le 0{,}3\,\mathrm{BSCR}$ le minorent par
+$\mathrm{BSCR}\ge\max\bigl(\mathrm{SCR}/1{,}3\,;\,\mathrm{SCR}-\mathrm{SCR}_{Op}\bigr)$ ;
+$\tau$ croissant en $d$, les taux lus ci-dessous sont des majorants \matcomp.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r r r@{}}
+\toprule
+\textbf{Entité} & \textbf{Écart $D$, contagion} & \textbf{$d = D/\mathrm{BSCR}$} &
+\textbf{$\tau$ à $\rho = 0{,}25$} & \textbf{additif / corrélé} \\
+ & M\euro & & & \\
+\midrule
+Assureur non-vie A & $34{,}9$ & $0{,}0954$ & $29{,}4\,\%$ & $3{,}41$ \\
+Assureur non-vie B & $44{,}4$ & $0{,}0575$ & $27{,}7\,\%$ & $3{,}62$ \\
+Assureur vie C & $62{,}7$ & $0{,}0514$ & $27{,}4\,\%$ & $3{,}65$ \\
+Assureur vie D & $86{,}0$ & $0{,}0076$ & $25{,}4\,\%$ & $3{,}94$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+\noindent L'écart $D$ est celui du seul canal de contagion, donc un plancher
+(\S\ref{sec:entites-reelles}), et non l'écart à quatre canaux du chiffre de tête. À
+$\rho = 0{,}25$, le facteur $1/\tau$ va de $3{,}4$ à $3{,}9$, et reste dans cette bande étroite
+sur un facteur $134$ de taille de bilan, précisément parce que $\tau$ tend vers $\rho$. Lu sur le niveau plutôt
+que sur l'écart, où $d$ est plus grand, le facteur va de $2{,}6$ à $3{,}8$. Rapporté au
+SCR publié de chaque entité, l'écart entre états pèse de $0{,}58\,\%$ pour la plus grande
+à $8{,}21\,\%$ pour la plus petite, et ces points de SCR sont acquis en entier.
+
+\paragraph{Le plafond borne en outre ce qu'un forfait saurait exprimer.} La charge forfaitaire
+vaut $\mathrm{SCR}_{Op}=\min(0{,}3\,\mathrm{BSCR}\,;\,\mathrm{Op})$, et la marge restante sous le
+plafond $0{,}3\,\mathrm{BSCR}-\mathrm{SCR}_{Op}$. Sur l'assureur non-vie~A, le besoin calculé en
+vaut $2{,}21$ fois : même un forfait rendu sensible à la conformité saturerait avant de
+l'exprimer \matcomp.
+
+\begin{cle}
+\textbf{La lecture décisionnelle, et elle renverse une intuition de gestion.} Un euro économisé
+sur la non-conformité DORA vaut, en capital, davantage qu'un euro économisé sur un risque
+qui se diversifie : le premier est reconnu en entier, le second à hauteur de sa corrélation. Une
+direction des risques qui classerait ses chantiers de remédiation au seul vu de la sinistralité
+attendue sous-estimerait donc le rendement en capital de celui-ci, d'un facteur de l'ordre de
+trois à quatre. Cette conclusion ne dépend d'aucun paramètre du modèle de cascade : elle tient à
+la place que le règlement assigne au risque opérationnel, et elle survivrait à un changement
+complet de calibration.
+\end{cle}
+
+% SOURCES-SCRIPTS: 95 65
+
+\section{Détenir ou transférer : le SCR confronté au prix de marché du risque}
+\label{sec:detenir-transferer}
+
+Les trois confrontations qui précèdent portent sur le \emph{niveau}. Il en manque une sur le
+\emph{prix}. Un SCR n'est pas une perte : c'est du capital immobilisé, et le capital coûte.
+Solvabilité~II chiffre ce coût explicitement par le taux de coût du capital de la marge de
+risque, historiquement $6\,\%$ et ramené à $4{,}75\,\%$ par la directive
+(UE)~2025/2, dont la transposition est due pour janvier 2027. Détenir le risque coûte donc
+$\mathrm{CoC}\times\mathrm{SCR}$ par an. En face, le \emph{transférer} coûte une prime, que le
+marché cyber facture avec un chargement : à un ratio de sinistralité $\mathrm{LR}$ de l'ordre de
+$48{,}5\,\%$, l'assureur encaisse environ $2{,}1$ fois la prime pure. Les deux grandeurs sont
+homogènes, donc comparables. Un directeur des risques fait cette comparaison.
+
+\paragraph{Le multiple de capital, et ce qu'il coûte.} À l'échelle d'entité
+(tableau~\ref{tab:echelle}, lecture composée), le modèle donne un SCR de $169$~M\euro{} pour une
+perte attendue de $3{,}6$~M\euro, soit un multiple $\mathrm{SCR}/\E[L]$ de $47$ contre $8{,}3$
+à l'échelle du secteur. L'écart est la mutualisation, lue à l'envers : le capital d'une entité
+% SOURCES-SCRIPTS: 60
+isolée est dominé par un sinistre unique, celui d'un secteur par l'accumulation. Le coût annuel
+de détention vaut alors $8{,}0$~M\euro{} sous le régime révisé et $10{,}1$~M\euro{} sous
+l'actuel, c'est-à-dire $2{,}2$ à $2{,}8$ fois la sinistralité attendue. Immobiliser
+coûte plusieurs fois ce que le risque coûte en moyenne : c'est ce rapport qui rend le transfert
+économiquement pertinent, et il ne se lit sur aucune des comparaisons de niveau.
+
+\paragraph{Dimensionner plutôt que tout céder.} Un traité en excès de perte annuel, sans
+rétention et de portée $\ell$, cède $\min(L,\ell)$ de la charge annuelle $L$. Le coût total de
+l'entité, prime plus coût du capital résiduel, est
+\begin{equation}\label{eq:cout-transfert}
+C(\ell)=\frac{\E\bigl[\min(L,\ell)\bigr]}{\mathrm{LR}}
++\mathrm{CoC}\cdot\VaR_{99{,}5\,\%}\bigl(L-\min(L,\ell)\bigr),
+\end{equation}
+minimal en $\ell^\star=\mathrm{SCR}=169$~M\euro{} : il passe de $8{,}0$ à $2{,}9$~M\euro{} par
+an, soit $-64\,\%$. Ce gain est une borne
+supérieure, entamée par la capacité du marché, les exclusions et le risque de contrepartie, mais il
+faudrait que $78\,\%$ de la couverture soit inefficace pour que la détention redevienne
+préférable. Une entité devenue conforme voit en outre ce coût tomber de $81\,\%$, la conformité
+déplaçant le point d'équilibre entre rétention et transfert. Le calcul, ses réserves et la figure
+sont déportés \matcomp.
+% SOURCES-SCRIPTS: 58 67
+
+\begin{cle}
+\textbf{La boucle que cette section referme.} DORA impose des exigences de \emph{gestion},
+Solvabilité~II impose du \emph{capital}, et rien n'articule les deux. En passant par le prix,
+le SCR cesse d'être un
+chiffre à publier pour devenir un critère de décision entre trois leviers concurrents.
+C'est la lecture que la thèse du mémoire appelait : le niveau est illustratif, mais le
+\emph{rapport} entre le coût de détention et le prix de transfert, lui, est une grandeur
+d'entité, robuste au changement d'échelle puisque ses deux termes se rapportent au même SCR.
+\end{cle}
+
+\begin{cle}
+\textbf{Pourquoi le niveau ne peut pas être une mesure.} La confrontation ne calibre pas le
+niveau, elle le
+disqualifie comme mesure et confirme, par un chemin externe, la lecture que tout le
+mémoire adopte : ce sont le rapport au socle, la largeur de la bande
+d'ignorance et la hiérarchie des piliers qui portent les conclusions, jamais le
+montant en euros.
+\end{cle}
+
+% =====================================================================

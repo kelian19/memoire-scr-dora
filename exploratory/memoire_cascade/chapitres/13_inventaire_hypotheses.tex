@@ -1,0 +1,623 @@
+% ---------------------------------------------------------------------
+% STATUT : RÉDIGÉ (transplanté de exploratory/cascade_qualitative/
+%          chapitre_robustesse.tex, préambule retiré).
+% FAIT (août 2026) : la ligne u_ij est au tableau des paramètres, avec sa
+%          sensibilité mesurée par l'échelle de repli du ch. 10, ainsi qu'une
+%          ligne pour l'élasticité sévérité/taille calibrée au ch. 5.
+% ---------------------------------------------------------------------
+\chapter{Robustesse et incertitude du chiffre reporté}
+\label{ch:robustesse}
+
+\noindent Le chapitre~\ref{chap:resultats} a conduit les tests de robustesse eux-mêmes
+(tornado, sensibilités, invariance de l'ordre de remédiation). Ce chapitre ne les refait pas.
+Il en donne la synthèse en une table, distingue deux natures de limites, puis pose la
+question que ces tests laissent ouverte : une fois l'incertitude reconnue, \emph{quel} nombre
+reporter. L'inventaire exhaustif des
+paramètres, de leur nature et de leur sensibilité, est reporté à
+l'annexe~\ref{sec:ann-parametres}, pour qu'aucun chiffre du mémoire ne soit sans origine
+déclarée.
+
+\begin{cle}
+\textbf{Thèse.} Les conclusions du modèle ne reposent pas sur les paramètres non calibrés.
+La démonstration se fait en deux temps : (i)~elles sont insensibles aux choix de modélisation
+innocents (structure de la cascade, famille de dépendance, couche temporelle, source de
+sévérité) ; (ii)~elles ne réagissent qu'aux leviers qui doivent compter (conformité,
+contagion), ce qui est une \emph{qualité}, pas un défaut, c'est la sensibilité au risque que
+la Formule Standard n'a pas. Reste une incertitude irréductible, la queue de sévérité, qui est
+assumée en présentant le besoin de capital comme une distribution, jamais un point.
+\end{cle}
+
+\section{L'argument de robustesse, en une table}
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{4.5cm} p{4.6cm} p{4.4cm} c@{}}
+\toprule
+\textbf{Conclusion} & \textbf{Ce qu'on fait varier} & \textbf{Effet mesuré} & \textbf{Verdict} \\
+\midrule
+La non-conformité coûte cher ($\Delta_{\text{DORA}}>0$, grand) &
+source de sévérité (OpRisk / PRC), famille de copule ($\theta\in[1,4]$) &
+facteur ${\sim}1{,}9$ entre sources ; $\Delta_{\text{DORA}}$ varie $<1{,}4\,\%$ sur $\theta$ &
+\rob \\
+Priorité de remédiation P1 puis P4 (les \emph{sources}) &
+cadre de dépendance (cascade vs copule), branchement vs marche &
+P1 et P4 en tête dans tous les cadres ; SCR $\pm 4\,\%$ (branchement) &
+\rob \\
+L'\emph{asymétrie} de $W$ départage les deux piliers de tête &
+knockout de l'asymétrie (3\,000 tirages), placebo directionnel &
+sans la direction, P1 et P4 ne se distinguent plus ; l'essentiel du surcoût de contagion reste porté par la partie symétrique &
+\rob \\
+Pas de couche de Hawkes &
+noyau exponentiel puis à retard, logique two-phase &
+excitation intra-journalière (pic $3{,}3$ h) ; endogénéité de $0{,}551$ à ${\sim}0$ si les
+co-occurrences du jour passent en exogène &
+\rob \\
+Les deux lois du socle prédisent une période qu'elles n'ont pas vue &
+origine glissante, douze années notées hors échantillon &
+fréquence : couverture $91{,}7\,\%$ pour la NB contre $75{,}0\,\%$ pour le Poisson, log-score en
+sa faveur ; forme de queue non rejetée ($p=0{,}4087$) &
+\rob \\
+Le SCR \emph{réagit} à la conformité et à la contagion &
+score de conformité $q\in[0,1]$, gain $g\in[0{,}05\,;0{,}90]$ &
+facteur $3{,}34$ de C à NC sur les quatre canaux ($-53\,\%$ sur le seul score) ; $\times 1{,}6$ sur la plage de $g$ &
+\feat \\
+Le SCR est une distribution large, pas un point &
+incertitude de paramètre (bootstrap deux niveaux) &
+facteur ${\sim}2{,}5$ sur la VaR par la seule incertitude de calibration &
+\ass \\
+Le \emph{niveau} de sévérité ne tient pas hors échantillon &
+notation d'une seule année à la fois, seuil ré-estimé sur l'apprentissage &
+quantiles dépassés trois fois trop souvent ; l'échelle de queue dérive de $4{,}00\,\%$ par an,
+soit au moins $+24{,}7\,\%$ sur le quantile &
+\ass \\
+Le \emph{signe} de $\Delta_{\text{DORA}}$ ne dépend pas de l'additivité des coûts d'un sinistre &
+exposant $\theta\in[0{,}70\,;1{,}30]$ sur le nombre de piliers touchés &
+écart de $9\,706$ à $20\,487$~M\euro{} : signe et ordre conservés, \emph{amplitude} non
+($76\,\%$ de l'écart publié) &
+\ass \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\textbf{Lecture.} Les cinq premières lignes sont l'ossature : le signe et l'ordre
+de grandeur de l'effet DORA, la hiérarchie des piliers, le rôle de la direction, le statut de
+l'auto-excitation et le comportement prédictif des deux lois du socle tiennent quand on change ce
+qui pourrait sembler arbitraire. La sixième ligne
+n'est pas une fragilité mais le c\oe ur du modèle : un SCR qui ne bougerait pas avec la
+conformité serait inutile (c'est le reproche fait à la Formule Standard,
+chapitre~\ref{chap:resultats}). Les trois dernières sont des limites, et elles ne portent
+pas sur le même objet : la queue de sévérité domine l'incertitude sur le \emph{niveau}, donc toute
+lecture ponctuelle du SCR serait une surinterprétation ; la dérive de l'échelle de sévérité, seule
+limite du mémoire découverte hors échantillon, déplace ce même niveau dans un sens connu et d'une
+taille bornée (\S\ref{soc:sec:backtest}) ; l'additivité des coûts d'un sinistre
+multi-piliers domine celle qui pèse sur l'\emph{écart}, sans jamais en renverser le signe
+(\S\ref{sec:additivite-couts}).
+
+% SOURCES-SCRIPTS: 25 29 47 63 61 66 67 74 08h 89
+
+\section{Limites du domaine et limites de ce travail}
+\label{sec:deux-natures-limites}
+
+% SOURCES-SCRIPTS: 110
+
+Les trois dernières lignes de la table, et le registre du chapitre~\ref{ch:livrable}, mêlent
+deux natures de limites que rien ne distingue à la lecture. Les unes tiennent à ce qu'aucune
+source disponible aujourd'hui ne permet de calibrer, à quiconque et non au seul présent travail.
+Les autres tiennent à ce que ce travail a choisi de ne pas faire. Les confondre fait lire les
+premières comme des insuffisances, alors qu'elles sont le fait qui commande la méthode.
+
+\paragraph{Ce que la donnée cyber interdit aujourd'hui.} La direction de la contagion entre
+domaines de contrôle n'est enregistrée par aucune source, et ce constat est mesuré plutôt
+qu'affirmé : le schéma VERIS porte le champ qui l'identifierait, renseigné dans $0{,}12\,\%$ des
+incidents de sa base publique, et la chronologie qui porterait l'antériorité dans $1{,}19\,\%$ ;
+leur intersection compte un incident, aucun en secteur financier
+(chapitre~\ref{ch:livrable}). La non-identifiabilité n'est donc pas une propriété des sources
+retenues ici, c'est une propriété du reporting d'incidents tel qu'il existe. Le coût d'un
+sinistre touchant plusieurs piliers n'est davantage observé par aucune source, et la sévérité
+d'une perte cyber en euros n'est disponible à cette profondeur que sur des bases de risque
+opérationnel bancaire, ce qui fixe le périmètre de calibration du chapitre~\ref{chap:socle} et
+la borne inférieure de validité du chapitre~\ref{chap:resultats}.
+
+\paragraph{Ce que le mémoire en fait.} Devant une grandeur que la donnée ne détermine pas, deux
+conduites sont possibles : en poser une valeur et la présenter comme une estimation, ou établir
+la non-identifiabilité, énumérer l'ensemble admissible et publier des bornes. La seconde est
+retenue partout, et elle s'accompagne d'une exigence : vérifier que la conclusion survit à
+l'ensemble entier et non à un point choisi, ce que portent le lemme de monotonie en $g$ et
+l'invariance de l'ordre de remédiation. Il en résulte une lecture qui vaut pour tout le
+mémoire : l'\emph{amplitude} du surcoût est un scénario, son \emph{signe} et son \emph{ordre}
+sont des résultats. Un paramètre posé n'est alors pas une faiblesse, c'est un périmètre déclaré.
+
+\paragraph{Ce qui relève de ce travail.} Le reste du registre est d'une autre nature et
+s'arbitre. L'élicitation structurée a été préparée et diffusée, et elle est restée sans réponse
+(annexe~\ref{ch:elicitation}) ; la calibration est gelée, et les
+corrections d'erreur seules y restent admises ; une source de structure est citée sans être
+recalculable, sous un statut déclaré ; deux écarts d'estimation involontaires sont publiés avec
+leur sens plutôt que corrigés. Ces décisions appartiennent à l'auteur et auraient pu être prises
+autrement : c'est ce qui les sépare des précédentes. Une limite du domaine ne se corrige pas en
+travaillant davantage sur ce mémoire, mais par le registre d'incidents spécifié au
+chapitre~\ref{ch:livrable} ; une limite de ce travail se corrigerait en y revenant.
+
+\section{Les trois étages de l'incertitude du SCR}
+\label{sec:trois-etages}
+
+L'incertitude sur le SCR ne se réduit pas au paramètre. Elle se répartit sur trois étages, qu'il
+faut nommer plutôt que confondre (figure~\ref{fig:bande-modele}). Le premier est l'incertitude
+de paramètre : l'intervalle de confiance de $\xi$ à lui seul dilate la VaR d'un facteur
+$2{,}5$ sur la calibration figée, valeur que le bootstrap retrouve à la précision près.
+% SOURCES-SCRIPTS: 63 46
+Le deuxième est l'incertitude d'identification :
+la direction de $W$ n'étant pas identifiable, la contagion se lit en bande
+(chapitre~\ref{chap:partielle}). Le troisième, le plus souvent passé sous silence, est
+l'incertitude de modèle : le choix de la \emph{famille} elle-même.
+
+On la chiffre en recalculant le SCR sous des familles concurrentes. Sur l'axe de la
+\emph{dépendance}, à marges par pilier fixées, le SCR va de $5\,322$ M\euro{} (indépendance) à
+$9\,806$ M\euro{} (comonotone, borne de Fréchet), soit un facteur $1{,}8$, la formule standard
+Solvabilité~II et les copules gaussienne et de Gumbel se plaçant entre les deux ; la cascade
+dirigée ($8\,318$ M\euro) tombe dans cette bande, entre une dépendance gaussienne et une
+dépendance de Gumbel. Sur l'axe de la famille de queue, l'écart est bien plus large :
+d'une lognormale ($4\,330$ M\euro) à une GPD à queue lourde ($\xi=0{,}90$ ; $24\,016$ M\euro),
+un facteur $5{,}5$. C'est le choix de la loi de queue qui domine, de loin, l'incertitude de
+modèle, et c'est précisément pourquoi le plafond de réassurance ($40$ M\euro) est un levier
+distinct, qui ramène la famille lourde à $495$ M\euro : une réponse au risque de queue, non le
+risque lui-même.
+
+\begin{figure}[htbp]\centering
+\figover{J4_bande_modele.png}
+\caption{La bande de modèle, troisième étage d'incertitude. (a)~axe dépendance, à
+marges fixées : la cascade se place entre les copules gaussienne et de Gumbel, dans une bande
+$[5{,}3\,;9{,}8]$ Md\euro. (b)~axe famille de queue : la queue lourde domine
+l'incertitude ($\times 5{,}5$). (c)~les trois étages (paramètre, identification,
+modèle) tels que le script les cumule ; la bande \emph{reportée} par le mémoire n'en retient que
+les deux premiers, le troisième étant publié comme axe de sensibilité
+(\S\ref{sec:etage-modele-hors-bande}).}
+% SOURCES-SCRIPTS: 48
+\label{fig:bande-modele}
+\end{figure}
+
+\subsection{Deux étages se cumulent dans la bande reportée, le troisième en sort}
+\label{sec:etage-modele-hors-bande}
+
+Les trois étages ne peuvent pas tous entrer dans un intervalle unique. La bande reportée par ce mémoire ne cumule que les deux premiers,
+paramètre et identification. L'étage de modèle est publié, mais comme axe de
+sensibilité déclaré et non comme composante de la bande.
+
+\paragraph{Les trois étages, mis sur une seule échelle avant toute comparaison.} Comparer les
+étages exige de les lire sur la \emph{même} grandeur, première chose à faire ici :
+l'étage de paramètre est publié sur le quantile d'\emph{un sinistre} (facteur $2{,}5$) tandis que
+les deux autres vivent sur la \emph{charge annuelle agrégée}. Les rapprocher tels quels
+comparerait deux échelles, ce qui est précisément l'erreur que ce mémoire s'interdit ailleurs.
+Porté sur l'agrégat, l'intervalle bootstrap de $\xi$ donne $[3\,042\,;\,27\,152]$~M\euro, soit un
+facteur $8{,}93$ : le quantile annuel amplifie l'incertitude de paramètre, et le facteur
+$2{,}5$ ne mesure donc pas ce que le paramètre fait au \emph{capital}.
+% SOURCES-SCRIPTS: 71
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l l r@{}}
+\toprule
+\textbf{Étage, lu sur la charge annuelle} & \textbf{Bande} & \textbf{Facteur} \\
+\midrule
+Paramètre ($\xi$ sur son IC$_{90}$) & $[3\,042\,;\,27\,152]$ & $8{,}93$ \\
+Identification (direction de $W$) & $[6\,858\,;\,8\,697]$ & $1{,}27$ \\
+Modèle, axe dépendance & $[5\,322\,;\,9\,806]$ & $1{,}84$ \\
+Modèle, axe famille de queue & $[4\,330\,;\,39\,901]$ & $9{,}21$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent En M\euro. La hiérarchie ainsi rétablie n'est pas celle qu'on annonce d'ordinaire :
+\textbf{l'étage de modèle n'écrase pas les autres}, il est du même ordre que l'étage de paramètre,
+et les deux dominent largement l'identification. Le retirer ne peut donc pas se justifier par sa
+taille, et l'argument qui suit est d'une autre nature. Réserve à garder : ces largeurs de
+paramètre font varier $\xi$ seul, $\sigma$ restant à sa valeur publiée, alors que le bootstrap
+estime le couple conjointement ; ce sont donc des \emph{majorants}.
+
+\paragraph{Pourquoi l'étage de modèle sort de la bande.} Les deux étages retenus sont
+statistiques, portables par un intervalle ; le troisième est épistémique, un choix de famille ne
+se moyennant pas. Sur l'axe de la famille de queue, il pousse l'indice de queue à une valeur
+posée hors de l'intervalle bootstrap, et le cumuler mettrait un scénario et une borne de
+confiance dans le même objet. Il reste publié deux fois, comme pire cas de modèle dans l'échelle
+des postures et comme bande de dépendance ci-dessus, et l'ordre d'amorce des piliers ne bouge
+pas \matcomp.
+
+\paragraph{Sur l'auto-excitation : une équivalence observationnelle.} Une cascade sans aucune
+auto-excitation, simulée puis ajustée comme une chronologie réelle, donne au jour un ratio de
+branchement de $0{,}480$, à comparer au $0{,}551$ mesuré. Le processus de Hawkes n'est donc pas
+distinguable de la cascade à la résolution disponible, et la cascade est retenue par parcimonie
+interprétative, puisqu'elle porte en outre la structure entre piliers. Dégrader la résolution
+fait monter le ratio estimé, et le préprint de cascade climatique converge sur ce choix sans le
+tester. Le détail est déporté \matcomp.
+% SOURCES-SCRIPTS: 85
+
+\begin{cle}
+\textbf{Oui, chaque brique a des alternatives.} Fréquence (Poisson, Hawkes, Cox), sévérité
+(lognormale, splicing, EVT bayésienne), dépendance (copules, réseaux, Hawkes multivarié),
+mesure (TVaR, spectrale, robuste), agrégation (formule standard, Panjer) : on ne prétend pas
+détenir \emph{la} méthode. La discipline est ailleurs : on a testé les concurrents les plus
+sérieux, on borne l'effet du choix, et surtout le niveau bouge dans la bande mais
+l'ordre d'amorce des piliers ne bouge pas ($P1>P4>P2>P3>P5$, invariant à la famille).
+Le niveau est illustratif, l'ordre résiste : c'est, chiffrée sur un troisième axe, la thèse du
+mémoire, et la réponse à qui demanderait \og et si vous aviez pris une autre méthode~?\fg.
+\end{cle}
+
+\section{Le moteur d'agrégation, contrôlé par trois chemins indépendants}
+\label{sec:triangulation-agregation}
+
+Tout ce que les sections précédentes valident, elles le valident \emph{contre la donnée} :
+adéquation, balayage de seuil, bootstrap, transformation intégrale de probabilité, test hors
+échantillon. Aucun de ces contrôles ne regarde le moteur qui transforme une loi de fréquence et
+une loi de sévérité en un quantile annuel. Un diagnostic de convergence de Monte-Carlo n'y
+supplée pas : il établit que l'estimateur est \emph{stable}, jamais qu'il est \emph{juste}, et un
+biais systématique de l'agrégation lui resterait invisible. La charge annuelle du modèle étant
+exactement une somme composée, $S=X_1+\dots+X_K$ avec $X_i = u + \mathrm{GPD}(\xi,\sigma)$, elle
+se calcule aussi sans simuler, ce que fait cette section.
+
+Le nombre $K$ de pertes non nulles d'une année se construit en trois étages tous exacts : les
+amorces suivent la binomiale négative, chaque amorce touche un ensemble de piliers dont les
+tables de cascade énumèrent la loi, et chaque pilier touché ne produit une perte qu'avec la
+probabilité de dépassement du seuil. Sa fonction génératrice s'écrit donc en forme fermée, ce qui
+ouvre deux voies étrangères au Monte-Carlo. L'inversion par transformée de Fourier donne
+la loi agrégée sans aucun aléa : c'est la réalisation numériquement stable de la récursion de
+\citet{panjer1981} \citep{embrechtsfrei2009}, laquelle est inexploitable telle quelle à l'indice de
+queue publié, où elle demanderait une grille de plusieurs millions de points parcourue de proche en
+proche. L'\emph{approximation par perte unique} \citep{bockerkluppelberg2005} exploite la sous-exponentialité de la sévérité, sous laquelle la survie de la somme vaut
+asymptotiquement $\mathbb{E}[K]$ fois celle d'une perte isolée : elle donne une forme fermée,
+raffinée au second ordre par une correction de moyenne.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l l r r@{}}
+\toprule
+\textbf{Méthode} & \textbf{Nature} & \textbf{Conforme} & \textbf{Non conforme} \\
+\midrule
+Monte-Carlo (moteur publié) & stochastique & $6\,049$ & $20\,188$ \\
+Inversion par Fourier & numérique exacte & $5\,945$ & $19\,890$ \\
+Perte unique, second ordre & analytique & $5\,448$ & $18\,632$ \\
+Perte unique, premier ordre & analytique & $4\,989$ & $14\,933$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent En M\euro, $\VaR$ à $99{,}5\,\%$ de la charge annuelle. Écarts à la référence
+Monte-Carlo : $-1{,}7$ et $-1{,}5\,\%$ pour l'inversion, $-9{,}9$ et $-7{,}7\,\%$ au second ordre
+analytique, $-17{,}5$ et $-26{,}0\,\%$ au premier.
+
+\textbf{Lecture, et elle ne se fait pas contre zéro.} La référence est elle-même une grandeur
+simulée : sa moyenne sur quatre graines porte une erreur type de $139$ et $500$~M\euro{} selon
+l'état. L'écart de l'inversion vaut $0{,}75$ et $0{,}59$ erreur type, donc il n'est pas
+résolu. Deux chemins qui ne partagent ni code ni aléa, l'un tirant des années et l'autre
+composant des transformées, ne se séparent pas à la résolution disponible : c'est le meilleur
+résultat que ce contrôle pouvait rendre ; c'est aussi la raison de ne pas citer le $-1{,}7\,\%$
+seul, qui se lirait comme un désaccord. L'approximation analytique, qui n'utilise ni simulation
+ni inversion, reste à moins de dix pour cent au second ordre contre plus du double au premier :
+la correction de moyenne rattrape l'essentiel, comportement que la théorie annonce pour une
+approximation asymptotique lue à un niveau fini.
+
+Deux garde-fous numériques sont mesurés plutôt que supposés, parce qu'ils décideraient du
+résultat. La transformée discrète étant circulaire, la masse qui dépasse la grille revient dans
+les petits montants et gonfle le quantile : elle vaut ici $1{,}65\cdot 10^{-8}$, soit quatre ordres
+de grandeur sous le niveau de dépassement. Et la sévérité est discrétisée par les masses et non
+par la densité, ce qui laisse un écart de $0{,}063\,\%$ sur sa moyenne.
+
+\begin{cle}
+\textbf{Ce que ce contrôle établit, et ce qu'il n'établit pas.} Les quatre chemins partagent la
+loi de fréquence, la loi de sévérité et les tables de cascade : ils contrôlent
+l'\emph{agrégation}, jamais la vérité du modèle. C'est un contrôle d'instrument, du même genre
+que celui qui impose au test de l'additivité des coûts de redonner les deux capitaux publiés à
+exposant neutre, et il ne remplace aucun test contre la donnée. Sa portée est précise : le
+quantile publié n'est pas un artefact du moteur de simulation.
+\end{cle}
+
+% SOURCES-SCRIPTS: 96
+
+\section{De l'incertitude au chiffre reporté : VaR prédictive et VaR robuste}
+\label{sec:predictive-robuste}
+
+Quantifier l'incertitude (les trois étages) ne dit pas encore \emph{quel} nombre reporter.
+Prendre le quantile $99{,}5\,\%$ d'une loi estimée en un point (\emph{plug-in}) est fragile,
+car les données sont incertaines : \og{}le quantile d'un objet incertain est mauvais\fg{}
+(C.~Hillairet). Deux réponses complémentaires, selon la posture (figure~\ref{fig:robuste}),
+le détail étant déporté \matcomp.
+
+\textbf{La VaR prédictive} intègre l'incertitude de paramètre \emph{avant} de prendre le
+quantile : on prend le quantile de la loi \emph{prédictive}, mélange des GPD sur la distribution
+bootstrap de $(\xi,\sigma)$. Le résultat est instructif : à $99{,}5\,\%$ elle est \emph{quasi
+égale} au \emph{plug-in} ($645$ contre $657$~M\euro, pour un bruit de simulation de $7$~M\euro,
+donc un écart qui n'excède pas deux fois ce bruit) : le risque d'estimation n'est pas un
+biais de point à ce niveau, il ne le devient qu'en profondeur ($+4\,\%$ à $99{,}9\,\%$). La
+fragilité est dans la largeur de la bande, pas dans le point.
+
+\textbf{La VaR robuste} prend au contraire la borne haute de la VaR sur l'ensemble
+d'ambiguïté (paramètre, puis modèle) : la VaR robuste à $95\,\%$ vaut $1\,037$~M\euro{}
+($1{,}6\times$ le \emph{plug-in}), le pire-cas de famille lourde $1\,331$~M\euro. C'est la
+posture prudente, où le niveau de robustesse est un choix prudentiel explicite.
+
+\paragraph{Les six postures, et ce que chacune intègre.} La figure~\ref{fig:robuste} en affiche
+six, et les nommer ne suffit pas : une échelle dont les crans ne sont pas définis n'est pas une
+échelle, c'est une suite de nombres. La table les définit donc une fois, avec la précision que
+chacune supporte.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l p{6.6cm} r r@{}}
+\toprule
+\textbf{Posture} & \textbf{Ce qu'elle intègre} & \textbf{VaR} & \textbf{bruit} \\
+\midrule
+Point (\emph{plug-in}) & rien : le quantile d'un ajustement ponctuel $(\hat\xi,\hat\sigma)$ & $657$ & --- \\
+Prédictive & l'incertitude de paramètre, \emph{avant} le quantile, par mélange sur le bootstrap & $645$ & $\pm\,7$ \\
+Robuste $\beta=90\,\%$ & la borne haute de la VaR sur l'ambiguïté de \emph{paramètre} : le quantile $\beta$ de la loi bootstrap de la VaR & $939$ & $\pm\,13$ \\
+Robuste $\beta=95\,\%$ & idem, à un niveau de prudence plus élevé & $1\,037$ & $\pm\,9$ \\
+Robuste $\beta=99\,\%$ & idem, la plus bruitée des six & $1\,247$ & $\pm\,24$ \\
+Pire-cas de modèle & on ajoute l'ambiguïté de \emph{famille}, en poussant la queue à $\xi=0{,}90$ & $1\,331$ & --- \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent En M\euro. Le bruit est l'écart-type de simulation sur quatre rééchantillonnages
+indépendants, à $3\,000$ tirages bootstrap chacun. Deux lectures s'imposent, et la seconde
+n'était pas attendue.
+
+Les deux extrémités de l'échelle sont exactes et tout le bruit est au milieu ; la posture la
+plus prudente est la moins précise. Les deux valeurs de la VaR prédictive, $648$ et $645$~M\euro,
+sont un seul nombre à la précision du bruit. Le détail est déporté \matcomp.
+% SOURCES-SCRIPTS: 46
+
+\paragraph{Quelle posture le mémoire reporte-t-il.} La question mérite une réponse explicite,
+puisque six valeurs vont de $657$ à $1\,331$~M\euro. Tous les capitaux publiés dans ce mémoire
+sont bâtis sur la calibration figée, donc sur le \emph{plug-in}, et ils sont cités avec
+leur bande d'identification partielle. L'échelle des postures n'est pas une alternative à ce
+choix : c'est l'axe de sensibilité qui en donne le coût, et le passage du point au robuste
+$95\,\%$ multiplierait le capital par $1{,}6$. Le choix d'une posture reportée relève de la
+politique prudentielle de l'entité, non du modèle : le mémoire en retient une pour ses propres
+chiffres, avec ses motifs (\S\ref{sec:posture-retenue}), et fournit la grille qui permet à une
+entité d'en retenir une autre.
+
+\begin{figure}[htbp]\centering
+\figover{J7_scr_robuste.png}
+\caption{VaR robuste. (a)~la VaR est elle-même incertaine ; le robuste en prend la
+borne haute. (b)~l'échelle des postures, du point ($657$) au pire-cas de modèle
+($1\,331$~M\euro), chacune avec son écart-type de simulation. Les deux extrémités n'en
+portent aucun, étant déterministes ; la barre la plus longue est celle de $\beta=99\,\%$, la
+posture la plus prudente et la moins précise.}
+% SOURCES-SCRIPTS: 51
+\label{fig:robuste}
+\end{figure}
+
+\begin{cle}
+\textbf{Deux points qui intègrent l'incertitude.} La VaR prédictive est le point
+\emph{central} (il embarque l'incertitude d'estimation) ; la VaR robuste est le point
+\emph{prudent} (la borne haute sur l'ambiguïté). Le choix entre les deux relève de la politique
+prudentielle, non du calcul. L'essentiel est de ne jamais reporter le seul \emph{plug-in} : le
+SCR se cite avec sa bande, ou par un point qui assume l'incertitude, jamais nu.
+\end{cle}
+
+\subsection*{La posture retenue, et les trois raisons de ce choix}
+\label{sec:posture-retenue}
+
+% SOURCES-SCRIPTS: 46 51 63
+
+\paragraph{Un fait qui rend le choix moins tranché qu'il n'y paraît : la robuste à
+$\beta=95\,\%$ \emph{est} la borne haute de l'intervalle déjà publié.} La robuste au niveau
+$\beta$ est le quantile $\beta$ de la loi bootstrap de la VaR ; l'intervalle publié à $90\,\%$ est
+délimité par les quantiles $5$ et $95$ de cette même loi. Les deux valent donc $1\,037$~M\euro{},
+et ce n'est pas une coïncidence numérique mais la même quantité sous deux noms. Reporter le
+\emph{plug-in} avec sa bande publie donc déjà le chiffre robuste, comme une \emph{borne} et non
+comme un point. Le désaccord entre les deux postures ne porte pas sur l'information mise à
+disposition du lecteur, il porte sur ce qu'on appelle \og le \fg{} capital. La question se tranche
+pour cela par la définition réglementaire plutôt que par la prudence.
+
+Le paragraphe qui précède donne la grille ; il faut maintenant trancher, sans quoi le mémoire
+laisserait son résultat central sans convention de report. La posture retenue est le
+\emph{plug-in} accompagné de sa bande, la robuste restant publiée comme axe prudentiel déclaré.
+Trois raisons convergent, et elles ne sont pas de même nature.
+
+\textbf{La première est réglementaire, et elle vient en premier.} Le régime applicable définit le
+capital de solvabilité requis comme une valeur en risque à $99{,}5\,\%$ de la variation des fonds
+propres à un an. Une borne haute prise sur un ensemble d'ambiguïté n'est pas un quantile de la loi
+de perte : c'est un supremum sur une famille de lois. La substituer répondrait à une autre question
+que celle posée. Le risque d'estimation se traite dans le régime par la validation du modèle et par
+le récit de l'ORSA, non en gonflant le quantile, et pour une raison de cohérence d'ensemble :
+appliquée à chaque module, la même logique empilerait des marges dont le niveau de confiance global
+ne serait plus énonçable.
+
+\textbf{La deuxième est une mesure, celle qui rend le choix confortable.} La prédictive,
+qui est la réponse théoriquement préférable puisqu'elle intègre l'incertitude \emph{avant} le
+quantile, vaut $645$~M\euro{} contre $657$ pour le \emph{plug-in}, soit un écart de deux fois le
+bruit de simulation. La bonne réponse ne déplace donc pas le point. Reporter la
+prédictive remplacerait un nombre publié partout par un nombre indiscernable, au prix de la piste
+d'audit et contre le gel de la calibration : le gain serait nul et le coût réel. Cette
+coïncidence n'est pas générale et cesse en profondeur, l'écart passant à $+4\,\%$ à
+$99{,}9\,\%$ : c'est en profondeur de queue, non au niveau réglementaire, que le choix de posture
+commencerait à compter.
+
+\textbf{La troisième est une question de précision, et elle va contre l'intuition.} Les postures
+robustes sont les moins reproductibles des six, avec des écarts-types de simulation de $13$, $9$
+et $24$~M\euro{} quand les deux extrémités de l'échelle n'en portent aucun. Reporter comme chiffre
+de tête la valeur la moins précise contredirait la convention que ce mémoire s'impose par ailleurs,
+à savoir que toute grandeur simulée se publie avec son bruit.
+
+\begin{attention}
+\textbf{Ce que cette décision ne dit pas.} La robuste n'est pas écartée : elle reste publiée, et
+elle est le bon nombre pour un \emph{autre} usage. Dimensionner une couverture ou fixer une limite
+de rétention est une décision sous ambiguïté, où l'on veut précisément la borne haute et non le
+quantile central ; le \S\ref{sec:detenir-transferer} en est l'exemple. Une même grandeur peut donc
+être reportée sous une convention et utilisée sous une autre, à condition de dire laquelle et
+pourquoi, ce qui est fait ici.
+
+\textbf{Et ce qui ferait rouvrir la décision}, énoncé d'avance pour qu'elle ne dépende pas d'une
+préférence : un écart prédictive contre \emph{plug-in} qui dépasserait durablement quelques unités
+de bruit au niveau réglementaire, ou un déplacement de l'objet du travail, du capital
+\emph{reporté} vers une décision sous ambiguïté. Aucun des deux n'est le cas aujourd'hui.
+\end{attention}
+
+\section{Un défaut de calibration, chiffré plutôt que corrigé}
+\label{sec:pu-coherence}
+
+Un inventaire qui ne porterait que les hypothèses choisies serait incomplet : il doit aussi
+porter les défauts connus. Il en reste un, de nature différente des précédents, car ce n'est
+pas une hypothèse discutable mais une incohérence arithmétique.
+
+La formule des dépassements de seuil prend trois entrées, le seuil $u$, le taux de dépassement
+$p_u$ et le couple $(\xi,\sigma)$, pour deux degrés de liberté seulement : le seuil et
+l'échantillon une fois fixés, $p_u$ se \emph{compte}, il ne se choisit pas. Or la calibration
+figée publie $u=20{,}03$~M\euro{} et $p_u=0{,}1509$, quand ce seuil laisse $91$ excès sur $582$
+pertes, soit $0{,}1564$. Le $0{,}1509$ vaut $88/583$, le taux du percentile $85$ d'un filtrage
+antérieur resté dans la configuration après que le seuil eut bougé. Aucun état du monde ne rend
+les deux valeurs vraies ensemble, et un lecteur qui pose la division le voit en trente secondes.
+
+L'effet se chiffre exactement. Au taux cohérent, le quantile de sévérité à $99{,}5\,\%$ passerait
+de $662{,}78$ à $678{,}60$~M\euro, soit $+2{,}4\,\%$, ou $15{,}8$~M\euro. Deux lectures de ce signe
+doivent être distinguées, parce qu'on les confond volontiers. Du côté de la solvabilité, l'écart
+est anti-conservateur : il sous-estime le besoin de capital, et une sous-estimation ne s'excuse
+pas par la prudence, elle se déclare. Du côté de la thèse, il va dans l'autre sens, puisque le
+chiffre avancé n'est pas gonflé par ce défaut mais minoré. Les deux sont vrais, ils ne portent
+pas sur la même chose, et seul le premier engage.
+
+La valeur est néanmoins gelée et l'écart inscrit au registre des limites : rejouer le pipeline
+déplacerait des centaines de nombres publiés sans qu'aucun déplacement soit attribuable à la
+correction \matcomp.
+
+\paragraph{Le sens des écarts, en deux colonnes.} Un défaut isolé se pardonne ; une série de
+défauts qui vont tous du même côté est un biais. Il vaut donc mieux mettre les deux colonnes
+en regard une fois pour toutes, plutôt que de laisser le lecteur les rassembler lui-même.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{5.6cm} p{2.9cm} p{5.6cm}@{}}
+\toprule
+\textbf{Écart} & \textbf{Sens} & \textbf{Taille} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Défauts d'estimation, tous trois anti-conservateurs}} \\
+Taux de dépassement gelé ($p_u$) & sous-estime & $+2{,}4\,\%$ de VaR manquante \\
+Couverture réelle de l'IC$_{90}$ de $\xi$ & sous-estime & $86\,\%$ au lieu de $90\,\%$ ; demi-largeur à élargir d'environ $10\,\%$ \\
+Échelle de sévérité non stationnaire & sous-estime & dérive de $4{,}00\,\%$ par an dans la queue ($p=0{,}0386$), dont la moitié d'inflation monétaire ; au moins $+24{,}7\,\%$ sur le quantile, borne basse (\S\ref{soc:sec:backtest}) \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Choix posés, tous deux prudents}} \\
+Charge systémique $a$ & majore & $0{,}60$ posé, au-delà de la borne haute empirique $0{,}22$ \\
+Sur-dispersion du moteur $\varphi$ & majore & $9{,}20$ posé contre $2{,}24$ mesuré \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Limites de périmètre et de transposition, de sens opposés}} \\
+Attritionnel absent de la donnée & sous-estime & non chiffrable : la base est tronquée à son seuil de collecte, les petits sinistres n'y figurent pas \\
+Sévérité non plafonnée à l'échelle d'entité & majore & élasticité sévérité/taille $0{,}087$ $[0{,}026\,;0{,}148]$, presque nulle ; n'affecte que le \emph{niveau} d'entité \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Hypothèse dont le sens n'est pas déterminable}} \\
+Additivité des coûts au sein d'un sinistre multi-piliers & \textbf{indéterminé} & élasticité de l'écart $1{,}20$ ; $[9\,706\,;20\,487]$~M\euro{} pour $\theta\in[0{,}70\,;1{,}30]$, soit $76\,\%$ de l'écart publié (\S\ref{sec:additivite-couts}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent La lecture est nette sur les cinq premières lignes. Les trois écarts
+\emph{involontaires} d'estimation sous-estiment tous le capital ; les deux choix
+\emph{délibérés} le majorent. La prudence du capital publié vient donc de choix déclarés, non de ses écarts d'estimation.
+L'indice de queue n'est
+pas de ces choix : le chiffre de tête repose sur la valeur estimée, et la valeur posée
+plus lourde n'intervient que comme pire cas de modèle dans l'échelle des postures
+(\S\ref{sec:predictive-robuste}), hors du capital reporté.
+
+\vspace{2pt}
+\noindent La troisième ligne pèse un quart quand les deux premières pèsent quelques
+pour cent. Son effet sur l'écart entre états est mesuré, $-1{,}9\,\%$ et non résolu, et la moitié
+de la dérive de queue est monétaire. Les deux lignes de périmètre bornent le niveau en sens
+contraire : l'attritionnel absent de la donnée pèse peu au quantile d'entité, et le plafond de
+sévérité qui amputerait le besoin de moitié ne va que de $53$ à $74$~M\euro{} sur des entités
+dont la taille varie d'un facteur $134$. La dernière ligne, l'additivité des coûts, est la seule
+dont le sens ne se déclare pas (\S\ref{sec:additivite-couts}). Le motif du gel, la lecture de
+chaque ligne et le plafond chiffré sont déportés \matcomp.
+
+\vspace{2pt}
+% SOURCES-SCRIPTS: 08b 47 57 60 63 65 74 78 89 90 91
+
+\section{Défaillances simultanées et additivité des coûts}
+\label{sec:additivite-couts}
+
+La cascade produit, pour chaque sinistre, un \emph{ensemble} de piliers touchés, si bien que la
+défaillance simultanée n'est pas un cas particulier resté de côté mais la sortie même du modèle. La
+loi exacte de ce nombre est donnée \matcomp : à l'état non conforme, la
+défaillance multiple est majoritaire, $62{,}31\,\%$ des sinistres touchant plus d'un
+pilier contre $31{,}15\,\%$ à l'état conforme. Reste la question de l'agrégation
+des coûts, et elle demande de distinguer trois énoncés que le seul mot d'additivité recouvre.
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \textbf{Au sein d'un sinistre}, les coûts des piliers touchés \emph{s'additionnent} : c'est
+une hypothèse de construction, non testée, seul des trois que la question met en cause.
+\item \textbf{En fonction des piliers non conformes}, le capital est \emph{presque additif},
+$R^2=0{,}9945$ sur les $32$ configurations : c'est une mesure, et elle explique qu'une structure de
+dépendance entre états ne déplace pas le capital espéré \matcomp.
+\item \textbf{En fonction des quatre canaux}, il est \emph{franchement super-additif} en euros,
+$+5\,001$~M\euro{} d'interaction sur $14\,139$, soit $+35\,\%$ (chapitre~\ref{chap:resultats}) :
+c'est également une mesure, et elle traduit une composition quasi \emph{multiplicative} des
+canaux, le logarithme du capital étant, lui, presque additif (\S\ref{sec:inverse}).
+\end{enumerate}
+
+\noindent Répondre \og~le modèle est super-additif~\fg{} serait donc faux : il l'est sur les canaux
+et en euros, parce que leurs effets se multiplient, pas sur les piliers, et l'hypothèse sur les
+coûts d'un incident est un troisième objet.
+
+\paragraph{Ce que la première coûte, chiffré plutôt que supposé.} On la relâche par un exposant, la
+perte d'un sinistre touchant $k$ piliers valant $\bigl(\sum_j X_j\bigr)k^{\,\theta-1}$, de sorte que
+$\theta=1$ redonne exactement le modèle publié et que les sinistres mono-pilier restent intouchés.
+Pour $\theta$ parcourant $[0{,}70\,;1{,}30]$, l'écart entre états parcourt
+$[9\,706\,;20\,487]$~M\euro, soit $76\,\%$ de l'écart publié et $15$~fois son bruit de simulation de
+$\pm 734$~M\euro. L'effet est donc réel, et l'additivité des coûts est la plus lourde des
+hypothèses structurelles non testées du modèle. Deux précautions pour ne pas en tirer un classement
+qu'il n'établit pas : elle porte sur l'\emph{écart} là où la queue de sévérité domine l'incertitude
+sur le \emph{niveau} (\S\ref{sec:trois-etages}), et c'est une hypothèse de structure et non un choix
+de prudence, les trois choix posés du \S\ref{sec:pu-coherence} déplaçant davantage mais dans une
+direction connue.
+
+\paragraph{Elle n'est pas neutre entre les deux états, ce qui n'était pas attendu.} Les élasticités
+valent $0{,}95$ à l'état non conforme contre $0{,}39$ à l'état conforme, un facteur $2{,}42$, parce
+que l'exposant ne mord que sur les sinistres multi-piliers, majoritaires au seul état non conforme.
+L'hypothèse interagit donc avec le canal de propagation au lieu de s'ajouter à côté de lui,
+et atteint de ce fait la grandeur centrale du mémoire et non un simple niveau. Ce qui tient malgré
+tout : sur toute l'amplitude examinée l'écart garde son signe et son ordre de grandeur, jamais
+proche de zéro, si bien que la thèse ne dépend pas de l'hypothèse d'additivité et que seule son
+amplitude en dépend. C'est la structure d'argument déjà employée pour les valeurs de $g$.
+
+Le \emph{sens} de la non-additivité, lui, n'est pas déterminable : mutualisation de la remédiation
+et saturation de la capacité de réponse tirent en sens contraire, et aucune source ne les sépare. Le
+détail, la loi du nombre de piliers, la table complète des exposants et la raison pour laquelle
+l'amplitude est posée plutôt qu'estimée sont déportés \matcomp.
+
+\paragraph{Croisée avec le plafond de sévérité, elle s'efface là où il mord.} La limite de
+périmètre du \S\ref{sec:pu-coherence} tire en sens inverse : un plafond de sévérité adossé à
+l'exposition $E$ de l'entité, à une fraction $\kappa$ de celle-ci, abaisserait le besoin quand un
+exposant $\theta > 1$ le relève. Les deux réserves sont mesurées ensemble sur l'entité notionnelle,
+la perte d'un sinistre valant $\min\bigl(\kappa E,\,(\sum_j X_j)\,k^{\,\theta-1}\bigr)$
+(figure~\ref{fig:plafond-saturation-corps}). Elles ne se compensent pas : le terme d'interaction est
+positif sous $\theta = 1$ et négatif au-delà, le plafond atténuant la saturation dans les deux sens,
+jusqu'à l'effacer à $\kappa = 0{,}5\,\%$, où le besoin vaut $96{,}2$~M\euro{} pour les cinq
+exposants. Aucun couple où le plafond mord ne ramène le besoin à sa valeur libre, $179{,}1$~M\euro{}
+dans ce moteur simulé au niveau du sinistre, du même ordre que les $169$ publiés. Les deux réserves sont donc hiérarchisées et non confondues, et la bande
+conjointe, $177{,}8$~M\euro{}, reste sous la somme des deux bandes marginales, $203{,}7$ : les
+additionner surestimerait l'incertitude.
+
+\begin{figure}[H]\centering
+\figover{S34_plafond_saturation_3d.png}
+\caption{La saturation et le plafond croisés sur l'entité notionnelle. (a)~le besoin de capital,
+avec la ligne plate à $\kappa = 0{,}5\,\%$ où la sensibilité à $\theta$ est nulle. (b)~le terme
+d'interaction, nul à $\theta = 1$, positif en deçà et négatif au-delà : le plafond est un
+amortisseur et non un contrepoids. L'axe des plafonds est ordinal, son dernier cran étant l'absence
+de plafond.}
+\label{fig:plafond-saturation-corps}
+\end{figure}
+
+\vspace{2pt}
+% SOURCES-SCRIPTS: 74 68 69 86 109
+
+
+\begin{cle}
+\textbf{La double lecture.} \og Insensible aux choix innocents, sensible aux leviers réels \fg :
+le modèle n'est ni sur-ajusté ni fragile, il est piloté par ce qui doit le piloter.
+Et la seule grande incertitude, la queue, est nommée et bornée, pas cachée. C'est ce qui
+sépare un modèle dont tout n'est pas calibré d'un modèle dont on ignore de quoi il dépend :
+ici, la dépendance du capital est établie levier par levier, et son absence aussi.
+\end{cle}
+
+% =====================================================================

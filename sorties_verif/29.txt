@@ -1,0 +1,62 @@
+
+==========================================================================
+Sous-criticite : matrice moyenne W et rayon spectral
+==========================================================================
+  gain g = 0.9 | max_s = 2.60
+  nombre moyen de descendants directs e_j = g*s_j/max_s :
+     P1 : 0.900
+     P2 : 0.519
+     P3 : 0.485
+     P4 : 0.588
+     P5 : 0.242
+  rayon spectral rho(W) = 0.506  (sous-critique < 1)
+  => meme W et meme condition de stabilite que le Vasicek dirige.
+
+==========================================================================
+Marche vs branchement : portee attendue par pilier d'amorce
+==========================================================================
+  amorce     E|S| marche  E|S| branchement   envelope (I-W)^-1
+  P1                2.38              2.23                2.79
+  P2                1.71              1.68                2.02
+  P3                1.74              1.69                2.02
+  P4                1.87              1.81                2.17
+  P5                1.38              1.36                1.53
+  Lecture : marche et branchement ont le MEME nombre moyen de descendants directs
+  (e_j), donc des portees voisines, toutes deux SOUS l'envelope lineaire (I-W)^-1
+  (que l'auto-evitement empeche d'atteindre). Ils different par la FORME, pas le
+  niveau moyen : c'est la distribution de taille qui change (panneau suivant).
+
+==========================================================================
+Distribution de la taille de cascade |S| (ponderee par l'amorce ROOT)
+==========================================================================
+  taille |S|         1       2       3       4       5
+  marche          0.38    0.38    0.18    0.05    0.01
+  branchement     0.51    0.24    0.14    0.08    0.03
+  taille moyenne : marche 1.93  branchement 1.85
+
+==========================================================================
+Impact SCR (OpRisk) : marche vs branchement
+==========================================================================
+  SCR (VaR 99,5%) walk       = 8301 M
+  SCR (VaR 99,5%) branching  = 7978 M
+  ecart branchement vs marche : -4 %  (quasi inchange)
+  Le SCR ne bouge quasiment pas : au 99,5 %, la queue est portee par la perte
+  UNIQUE dominante (severite en xi~0,9, subexponentielle), pas par la LARGEUR de la
+  cascade. Passer de la chaine a l'arbre reforme la taille mais pas le capital.
+
+==========================================================================
+VERDICT
+==========================================================================
+1. La cascade est desormais un vrai BRANCHEMENT multitype (arbre) disponible, pas
+   seulement une marche (chaine) : un pilier peut en declencher plusieurs d'un coup.
+2. Reconciliation avec le Vasicek : meme matrice moyenne W, meme e_j, meme
+   sous-criticite rho(W)=0.51<1 ; (I-W)^-1 est l'esperance de la progeniture.
+   Les deux representations du modele sont enfin le meme objet.
+3. Le branchement REDISTRIBUE la taille (plus de |S|=1 car les infections
+   independantes ratent souvent toutes, ET une queue de tailles plus grosse), a
+   portee moyenne quasi identique ; le SCR est quasi inchange (-4 %).
+4. C'est un resultat de ROBUSTESSE : la marche etait une simplification inoffensive
+   pour le capital ; le branchement donne l'objet theoriquement propre, coherent
+   avec W, quasi gratuitement. Defaut inchange ailleurs (mode='walk').
+
+figure ecrite : exploratory/vasicek_lab/figures/Y_cascade_branchement.png

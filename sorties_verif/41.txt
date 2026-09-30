@@ -1,0 +1,79 @@
+﻿
+==================================================================================
+1. Reconciliation des trois representations de la surdispersion
+==================================================================================
+  Echelle du moteur euro : lam = 21.56 amorces/an (OpRisk cyber x finance, 582/27 ans).
+
+  representation                    echelle             indice Var/E
+  melange Gamma r = 0.63            firme-annee                 1.16   (micro : mu=0.099/firme, surdispersion faible)
+  charge lognormale a = 0.60        agregee (portefeuille)         10.34
+  facteur NB phi = 9.20             agregee (portefeuille)          9.20
+
+  Correspondance a <-> phi a lam = 21.6 :
+     phi = 9.20  implique  a = 0.568   (pose : A_LOAD = 0.60)
+     a   = 0.60  implique  phi = 10.34   (pose : phi = 9.20)
+  => les deux calages agreges coincident a 5 % pres sur a,
+     12 % pres sur phi. Le r firme (0,63) vit
+     a une AUTRE echelle (une seule firme), il ne se compare pas directement.
+
+==================================================================================
+2. Simulation : meme variance, queue differente (Gamma vs lognormal)
+==================================================================================
+  400,000 annees simulees, lam = 21.56 :
+
+  Poisson (sans surdispersion)          E =  21.56   Var/E =  1.00   q99,5% =     34
+  NB / melange Gamma (phi = 9.2)        E =  21.57   Var/E =  9.21   q99,5% =     74
+  Poisson-lognormal (a = 0.57, meme phi)E =  21.55   Var/E =  9.23   q99,5% =     82
+
+  A indice de dispersion egal (9.2 vs 9.2), la queue 99,5 % differe :
+     NB = 74  vs  lognormal = 82  (ecart +11 %). Appairer la variance n'appaire pas la queue.
+  La loi de melange lognormale porte la queue la plus lourde a variance egale.
+
+==================================================================================
+3. Calage du phi sur la vraie serie annuelle cyber x finance
+==================================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  Serie cyber x finance 2005-2022 (18 ans, 443 evts, moyenne 24.6/an) :
+     Var/E BRUT = 2.83  (gonfle : melange tendance + choc commun)
+     tendance ajustee : -0 %/an
+     dispersion residuelle apres tendance phi_resid = 3.27  (le vrai choc commun)
+     charge implicite a_data = 0.297  (vs A_LOAD = 0.60 pose)
+     remise a l'echelle du moteur (lam=22) : phi_implied = 2.99
+  => coherent avec 08b : la charge empirique (0.30) est BIEN INFERIEURE au
+     A_LOAD = 0,60 pose ; le phi = 9,20 de la config est donc CONSERVATEUR, non calibre.
+
+==================================================================================
+4. Effet de la loi de comptage sur le SCR euro-cascade
+==================================================================================
+  Meme moteur (severite GPD OpRisk, cascade dirigee g=0,90), seule la loi du nombre
+  annuel change. La MOYENNE de la perte est invariante par construction (E[N]=lam
+  pour les trois lois) : ce que la surdispersion deplace, c'est la VaR. On moyenne
+  sur 6 graines pour lisser le bruit d'echantillonnage de la VaR.
+
+  loi de comptage                      SCR (VaR 99,5%)     moyenne
+  Poisson (phi->1)                             7838 M      1019 M
+  NB phi = 3.0 (empirique detrende)            7981 M      1018 M
+  NB phi = 9,20 (pose)                         8553 M      1054 M
+  NB phi = 10.3 (= A_LOAD 0,60)                8534 M      1028 M
+
+  Passage Poisson -> NB pose : SCR 7838 -> 8553 M (+9 %), moyenne 1019 -> 1054 M (invariante, l'ecart 3 % est du bruit MC).
+  La surdispersion du comptage deplace la VaR (plus d'annees a forte frequence donnent
+  plus de tirages dans la queue lourde de severite), pas la moyenne. L'effet est
+  modere (+9 %) car au 99,5 % la queue reste largement
+  portee par une perte dominante (severite xi~0,60), coherent avec le fil du memoire (29).
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. Les trois surdispersions du code ne se contredisent pas : la charge lognormale
+     a = 0,60 et le facteur NB phi = 9,20 sont la MEME surdispersion agregee (a lam~22, phi<->a a 5 % pres) ;
+     le r firme (0,63) vit a l'echelle firme-annee, non comparable directement.
+  2. La NB (melange Gamma) est le bon objet AGREGE : forme close, un seul parametre
+     phi, quantiles exacts. Mais a variance egale la queue depend de la loi de melange
+     (Gamma vs lognormal : ecart de 11 % au q99,5% du comptage).
+  3. Le choix de comptage deplace la VaR (+9 %, Poisson->NB pose)
+     et laisse la moyenne invariante (E[N]=lam fixe). La charge empirique detrendee
+     (phi~3) est bien en-deca du phi=9,20 pose : le pose est un choix de
+     PRUDENCE sur la queue de frequence, a assumer comme tel, pas une calibration.
+
+figure ecrite : exploratory\vasicek_lab\figures\N2_simulation_nb.png

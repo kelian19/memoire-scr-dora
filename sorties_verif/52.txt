@@ -1,0 +1,40 @@
+﻿
+==================================================================================
+1. Le seuil z* devient un temps de premier passage
+==================================================================================
+  K_4 = 1.033 ; z*(rho) = K_4/sqrt(rho). Facteur tiers Z_t = brownien (martingale).
+      rho       z*   P(Z_1>=z*) statique    P(tau<=1 an) dynamique
+     0.10    3.265                 0.001                     0.001
+     0.25    2.065                 0.019                     0.039
+     0.50    1.460                 0.072                     0.144
+     0.75    1.192                 0.117                     0.233
+     0.90    1.088                 0.138                     0.276
+
+  La lecture dynamique (premier passage) vaut ~2x la statique : elle compte tous les
+  franchissements avant l'horizon, pas seulement la position a l'instant T. C'est le
+  'moment' de declenchement au sens propre, un temps d'arret.
+
+==================================================================================
+2. Horizon de declenchement et lien martingale
+==================================================================================
+  rho=0.25 : P(declenchement < 1 an) = 0.04 ; P(< 5 ans) = 0.36 ; mediane du delai = 9.4 an(s).
+  rho=0.50 : P(declenchement < 1 an) = 0.14 ; P(< 5 ans) = 0.51 ; mediane du delai = 4.7 an(s).
+  rho=0.75 : P(declenchement < 1 an) = 0.23 ; P(< 5 ans) = 0.59 ; mediane du delai = 3.1 an(s).
+
+  Z_t sans derive est une MARTINGALE ; tau est un temps d'arret (note 40). Le niveau est
+  atteint presque surement mais E[tau]=+inf : le brownien pur donne la forme close et le
+  lien martingale ; un facteur moyen-reversif (OU) donnerait un TAUX recurrent fini, plus
+  realiste pour un facteur systemique. C'est le raccord dynamique des items 3 et 4.
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. Le seuil z* de P4 (item 3) devient un TEMPS D'ARRET tau des que le facteur tiers est
+     un processus : le 'moment' de declenchement a un sens temporel litteral.
+  2. Forme close (principe de reflexion) : P(tau<=T)=2 Phi(-z*/sqrt(T)), ~2x la statique.
+  3. Lien martingale (item 4) : Z_t sans derive est une martingale, tau un temps d'arret ;
+     le fil des quatre pistes se referme (seuil -> temps d'arret -> martingale).
+  4. Raffinement assume : un facteur moyen-reversif (OU) pour un taux de declenchement
+     recurrent fini ; le brownien est le cas propre qui porte le lien theorique.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z16_p4_temps_arret.png

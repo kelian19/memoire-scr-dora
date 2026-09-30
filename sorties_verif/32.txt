@@ -1,0 +1,75 @@
+
+================================================================================
+PROPOSITION 1 : la criticite depend de l'ORDRE (et audit de la pretendue non-transitivite)
+================================================================================
+  1a. AUDIT des enonces de NON-TRANSITIVITE qui circulent dans le projet.
+      (i)   correlation de la forme reduite viole (T) : 0 sur 420 triplets -> NON
+      (ii)  dependance symetrisee non semi-definie positive : lambda_min = +0.4050 -> NON, elle EST une correlation valide
+      (iii) cycle de dominance sur la criticite par paire : 0 cycle(s) -> NON
+      CONCLUSION : aucun des trois sens ne tient. La revendication de
+      NON-TRANSITIVITE doit etre RETIREE du memoire. Le script 01 imprime
+      pourtant ses conclusions en dur, contredites par ses propres chiffres.
+
+  1b. PROPOSITION 1 (enonce correct). La criticite n'est PAS une fonction de
+      l'ENSEMBLE des piliers touches : elle depend de l'ORDRE de la chaine.
+      Consequence : aucune dependance symetrique (copule), aucun score additif,
+      aucune fonction d'ensemble ne peut la reproduire, puisque tous ces objets
+      sont par construction invariants par permutation.
+
+      Ensembles dont la criticite change avec l'ordre : 22/26
+      ensemble           ecart   meilleur ordre / pire ordre
+      (1, 2)                 6   P1->P2=8  /  P2->P1=2
+      (2, 4)                 5   P4->P2=8  /  P2->P4=3
+      (1, 4)                 5   P1->P4=8  /  P4->P1=3
+      (1, 2, 4)              5   P1->P4->P2=8  /  P2->P1->P4=3
+      (2, 4, 5)              4   P4->P2->P5=6  /  P5->P2->P4=2
+
+      L'ecart atteint 6 points sur une echelle de 10, soit 60 % de l'echelle,
+      pour un MEME ensemble de piliers. C'est la contribution du memoire, et elle
+      se demontre sans aucun dire d'expert sur la direction : il suffit que TRANS
+      soit asymetrique. C'est un enonce PLUS SOLIDE que la non-transitivite, et
+      il exclut exactement les memes concurrents (copules, scores additifs).
+
+================================================================================
+PROPOSITION 2 : Leontief borne le branchement, et l'ecart mesure les collisions
+================================================================================
+  rho(W) = 0.5057 < 1 : la serie geometrique converge, la cascade est
+  sous-critique PAR CONSTRUCTION (normalisation de Leontief).
+
+    amorce    E|S| exact    borne (I-W)^-1     ecart   collisions
+  P1             2.2304            2.7858    0.5555        19.9 %
+  P2             1.6759            2.0155    0.3395        16.8 %
+  P3             1.6931            2.0222    0.3291        16.3 %
+  P4             1.8106            2.1723    0.3618        16.7 %
+  P5             1.3639            1.5264    0.1625        10.6 %
+
+  Inegalite verifiee sur les 5 amorces : OUI.
+  L'ecart n'est pas une erreur : c'est exactement la part de descendance que la
+  forme lineaire compte plusieurs fois, c'est-a-dire les piliers atteints par
+  PLUSIEURS chemins. Sur 5 piliers fortement connectes, elle est loin d'etre
+  negligeable, ce qui justifie de garder le calcul exact par sous-ensembles
+  plutot que de se contenter de la forme close.
+  Sur 300 matrices de l'ensemble admissible : 0 contre-exemple(s), ecart moyen 7.7 %.
+
+================================================================================
+PROPOSITION 3 : W et sa transposee, indistinguables pour la donnee, differentes pour le capital
+================================================================================
+  Partie symetrique de W et de W^T identiques : OUI (ecart max 0.00e+00)
+  Partie antisymetrique : exactement opposee (verifie)
+
+  SCR sous W    :      8110 M   (moyenne    1032 M)
+  SCR sous W^T  :      7816 M   (moyenne     951 M)
+  ECART         :       295 M (3.6 % du SCR), et 81 M sur la moyenne (7.9 %)
+  Priorite de remediation : P1 sous W, P4 sous W^T.
+
+  Le test directionnel des donnees ne separe pas ces deux matrices (placebo
+  z = -0,33, aucune arete significative sur 18). Elles sont donc egalement
+  compatibles avec ce qu'on observe, et pourtant elles ne donnent ni le meme
+  capital ni la meme decision. C'est l'enonce le plus net de la limite
+  d'identification, et il ne repose sur aucun dire d'expert.
+
+  Sur l'ensemble admissible, l'ecart maximal entre une matrice et sa transposee
+  atteint 1173 M de SCR. C'est le prix, en capital, de ne pas savoir
+  dans quel sens la contagion circule.
+
+figure ecrite : exploratory/vasicek_lab/figures/Z3_proprietes_formelles.png

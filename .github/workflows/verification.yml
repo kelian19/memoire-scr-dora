@@ -1,0 +1,105 @@
+# Verification continue du memoire, a chaque push et a chaque pull request.
+#
+# Trois jobs, du plus rapide au plus lent :
+#   1. garde-fous  : rien de ce qui ne doit jamais etre versionne ne l'est
+#                    (donnee brute sous licence, images de signature, fichiers geants) ;
+#   2. harnais     : chaque nombre publie est confirme par la sortie versionnee du script
+#                    qui le calcule, et la version Institut est a jour de la version ENSAE ;
+#   3. compilation : la chaine complete du projet, refaire_tout.py, compile les deux versions
+#                    et controle debordements, references cassees, pages et flottants.
+#
+# La donnee brute n'est jamais necessaire ici : le harnais ne lit que sorties_verif/, et la
+# compilation que les figures versionnees. Les griffes de la couverture etant gitignorees, les
+# PDF produits par la CI n'ont pas de signature : ce sont des PDF de controle, pas de depot.
+
+name: Vérification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verification-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  garde-fous:
+    name: Garde-fous du dépôt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Aucune donnée brute ni image de signature suivie
+        run: |
+          interdits=$(git ls-files | grep -E '^data/raw/|logos/signature_' || true)
+          if [ -n "$interdits" ]; then
+            echo "::error::Fichiers qui ne doivent jamais être versionnés :"
+            echo "$interdits"
+            exit 1
+          fi
+
+      - name: Aucun fichier suivi de plus de 20 Mo
+        run: |
+          gros=$(git ls-files -z | xargs -0 stat -c '%s %n' | awk '$1 > 20971520')
+          if [ -n "$gros" ]; then
+            echo "::error::Fichiers de plus de 20 Mo :"
+            echo "$gros"
+            exit 1
+          fi
+
+  harnais:
+    name: Harnais des chiffres
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Chaque nombre publié est confirmé par la sortie de son script
+        run: python ci/harnais_strict.py
+
+      - name: La version Institut est générée depuis la version ENSAE, pas éditée
+        run: |
+          python exploratory/memoire_cascade/build_institut.py
+          git diff --exit-code -- exploratory/memoire_cascade/main_institut.tex
+
+  compilation:
+    name: Compilation et contrôles du mémoire
+    runs-on: ubuntu-latest
+    needs: harnais
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Lecture des PDF produits
+        run: pip install "pymupdf>=1.24"
+
+      # Meme version que sur le poste de travail : le paquet de polices et de classes que
+      # tectonic telecharge depend de sa version, et les debordements avec lui.
+      - uses: wtfjoke/setup-tectonic@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tectonic-version: 0.16.9
+
+      - name: Chaîne complète du mémoire (le harnais est passé au job précédent)
+        run: python exploratory/memoire_cascade/refaire_tout.py --sans-harnais
+
+      - name: PDF de contrôle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: memoire-pdf-controle
+          path: |
+            exploratory/memoire_cascade/main_ensae.pdf
+            exploratory/memoire_cascade/main_institut.pdf
+          retention-days: 30

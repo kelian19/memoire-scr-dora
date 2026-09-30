@@ -1,0 +1,144 @@
+﻿
+========================================================================================
+1. CONTROLE : sans plafond et sans saturation, on retrouve la chaine du script 78
+========================================================================================
+  Entite notionnelle, exposition 19 231 M€, 200 000 annees, 3 graines.
+  VaR libre (theta = 1, aucun plafond) : 179.1 M€.
+  Le script 78 publie 177,1 M€ pour la meme entite dans le meme moteur, et le script 65
+  publie 169 par l'evaluateur d'identification partielle. Les trois sont du meme
+  ordre, et tout ce qui suit est mesure PAR RAPPORT A CETTE valeur, dans ce seul moteur.
+
+========================================================================================
+2. LES DEUX BANDES MARGINALES, chacune l'autre reserve neutralisee
+========================================================================================
+  SATURATION SEULE (aucun plafond) :
+     theta    VaR (M€)   / libre
+      0.70       144.2      0.81
+      0.85       160.6      0.90
+      1.00       179.1      1.00
+      1.15       201.2      1.12
+      1.30       225.7      1.26
+  Bande de saturation : 81.5 M€.
+
+  PLAFOND SEUL (theta = 1) :
+     kappa    VaR (M€)   / libre
+     0,2 %        56.9      0.32
+     0,5 %        96.2      0.54
+       1 %       179.1      1.00
+       2 %       179.1      1.00
+     aucun       179.1      1.00
+  Bande de plafond : 122.2 M€.
+
+  LES DEUX BANDES VONT BIEN EN SENS CONTRAIRE, et c'est la premiere verification de
+  l'affirmation du script 78 : la saturation FAIT MONTER le capital quand theta croit, le
+  plafond le FAIT BAISSER quand kappa decroit. Leurs deux extremes defavorables ne sont donc
+  pas au meme coin du rectangle.
+
+========================================================================================
+3. LA SURFACE CONJOINTE, et le terme d'interaction
+========================================================================================
+   kappa \ theta      0.70      0.85      1.00      1.15      1.30
+           0,2 %      47.9      52.5      56.9      59.3      61.4
+           0,5 %      96.2      96.2      96.2      96.2      96.2
+             1 %     144.2     160.6     179.1     191.6     192.3
+             2 %     144.2     160.6     179.1     201.2     225.7
+           aucun     144.2     160.6     179.1     201.2     225.7
+
+  Bande conjointe sur le rectangle : 177.8 M€.
+  Somme des deux bandes marginales : 81.5 + 122.2 = 203.7 M€.
+  Rapport : 0.87.
+  LA BANDE CONJOINTE EST DONC PLUS ETROITE QUE LA SOMME DES DEUX, ce qui confirme
+  l'affirmation du script 78 : additionner les deux reserves comme si elles etaient
+  independantes SUR-ESTIMERAIT l'incertitude totale.
+
+  LE TERME D'INTERACTION, qui est la seule quantite disant si les deux se traitent
+  separement : I = V(kappa, theta) - V(kappa, 1) - V(inf, theta) + V(inf, 1).
+
+   kappa \ theta      0.70      0.85      1.00      1.15      1.30
+           0,2 %     +25.9     +14.1      +0.0     -19.8     -42.1
+           0,5 %     +34.9     +18.5      +0.0     -22.1     -46.6
+             1 %      +0.0      +0.0      +0.0      -9.6     -33.4
+             2 %      +0.0      +0.0      +0.0      +0.0      +0.0
+
+  Interaction maximale en valeur absolue : 46.6 M€, soit 26.0 % de la VaR libre
+  et 26 % de la bande conjointe.
+
+  LE SIGNE DE L'INTERACTION SUIT CELUI DE (1 - theta), ET C'EST PLUS INSTRUCTIF QU'UN SIGNE
+  CONSTANT. Il est POSITIF a theta < 1 et NEGATIF a theta > 1 : autrement dit le plafond
+  ATTENUE ce que la saturation fait, dans les DEUX directions. A theta > 1 la saturation
+  veut faire monter la perte, le plafond l'en empeche ; a theta < 1 elle veut la faire
+  baisser, mais le plafond l'a deja fait baisser davantage, si bien que l'effet propre de
+  theta est mange. LE PLAFOND N'EST DONC PAS UN CONTREPOIDS QUI S'OPPOSE A LA SATURATION,
+  C'EST UN AMORTISSEUR QUI REDUIT SA PRISE, quel que soit son sens.
+
+  On le voit directement sur la surface : a plafond de 0,5 % la VaR vaut la meme valeur
+  pour LES CINQ exposants. La sensibilite a theta y est exactement nulle, ce qui est le cas
+  extreme de l'amortissement : une perte ecretee ne porte plus l'exposant, puisqu'elle est
+  remplacee par le plafond avant d'etre comptee.
+
+========================================================================================
+4. Y A-T-IL UNE CRETE DE COMPENSATION ? Non, et c'est mieux ainsi
+========================================================================================
+  On cherchait des couples (kappa, theta) NON TRIVIAUX redonnant la VaR libre, c'est-a-dire
+  ou un plafond qui MORD serait exactement compense par une saturation. Leur existence
+  serait une non-identifiabilite : le bon chiffre obtenu avec deux hypotheses fausses.
+
+  PRECAUTION DE METHODE, ET ELLE A ETE NECESSAIRE. Une premiere version cherchait toute
+  intersection avec la VaR libre et en trouvait a kappa = 1 % et 2 %, en concluant a une
+  compensation. C'etait un artefact : a ces plafonds la contrainte NE MORD PAS, la VaR
+  libre est atteinte a theta = 1, et le « couple compensateur » n'est que le point de
+  reference. On n'accepte donc un couple que si le plafond mord vraiment, c'est-a-dire si
+  V(kappa, 1) < V(libre).
+
+       kappa   le plafond mord ?   VaR max sur theta   atteint la libre ?
+       0,2 %                 oui                61.4                  non
+       0,5 %                 oui                96.2                  non
+         1 %                 non               192.3                  oui
+         2 %                 non               225.7                  oui
+
+  IL N'EXISTE AUCUN COUPLE COMPENSATEUR NON TRIVIAL, et c'est un meilleur resultat que
+  celui qu'on cherchait. Des que le plafond mord, aucun exposant de la plage posee ne
+  ramene le capital a sa valeur libre : a 0,5 % la VaR reste a 96 M€ pour les cinq
+  exposants, tres en dessous des 179 libres. LES DEUX RESERVES NE SONT DONC PAS
+  CONFONDUES, ELLES SONT HIERARCHISEES : le plafond commande, et la saturation ne
+  s'exprime que dans l'espace qu'il lui laisse.
+
+  CE QUE CELA VAUT POUR LE MEMOIRE, ET C'EST RASSURANT : il n'y a pas ici de
+  non-identifiabilite du type de celle de la direction de W, ou deux hypotheses fausses
+  produiraient le bon chiffre. Un capital d'entite conforme a la valeur publiee
+  IMPLIQUE que le plafond ne mord pas, donc que la sevérite n'est pas bornee par
+  l'exposition dans la plage exploree. La limite declaree reste entiere, mais elle est
+  desormais SEPAREE de l'autre : on peut discuter le plafond sans discuter theta.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LES DEUX RESERVES SONT DESORMAIS MESUREES ENSEMBLE, sur la meme forme fonctionnelle :
+     perte = min(kappa x E, somme des severites x k^(theta-1)). Le script 78 affirmait
+     qu'elles agissent en sens contraire ; c'etait un raisonnement, c'est maintenant une
+     mesure.
+  2. LES MARGINALES CONFIRMENT LE SENS OPPOSE : bande de saturation 81.5 M€ vers le haut,
+     bande de plafond 122.2 M€ vers le bas.
+  3. MAIS ELLES NE S'ANNULENT PAS SUR LE RECTANGLE : bande conjointe 177.8 M€ contre
+     203.7 pour la somme des marginales, soit un rapport de 0.87. Les deux coins
+     extremes restent atteignables et ce sont eux qui fixent la bande.
+  4. CE QUI EST VRAI, ET C'EST LE TERME D'INTERACTION : 46.6 M€ au maximum, DE SIGNE
+     OPPOSE A CELUI DE (theta - 1). Le plafond n'est donc pas un contrepoids qui s'oppose
+     a la saturation, c'est un AMORTISSEUR qui reduit sa prise dans les DEUX directions.
+     Cas extreme a 0,5 % : la VaR y vaut la meme valeur pour les cinq exposants, la
+     sensibilite a theta etant exactement nulle. Une perte ecretee ne porte plus
+     l'exposant, puisqu'elle est remplacee par le plafond avant d'etre comptee.
+  5. IL N'EXISTE AUCUN COUPLE COMPENSATEUR NON TRIVIAL, apres avoir ecarte les faux
+     positifs ou le plafond ne mord pas. Les deux reserves ne sont donc pas CONFONDUES
+     mais HIERARCHISEES : le plafond commande, la saturation s'exprime dans ce qu'il
+     laisse. C'est rassurant pour le memoire, puisqu'il n'y a pas ici de
+     non-identifiabilite du type de celle de la direction de W.
+  6. CONSEQUENCE DE REDACTION, et elle nuance la formulation actuelle du script 78 : dire
+     « les traiter comme deux reserves independantes sur-estimerait l'incertitude » est
+     vrai en amplitude (rapport 0,87) mais la raison n'est pas celle qui etait donnee. Ce
+     n'est pas que les deux se compensent, c'est que l'une DESACTIVE l'autre la ou elle
+     mord.
+  7. RIEN N'EST IMPLEMENTE DANS LA CHAINE PUBLIEE. Le gel l'interdit, la VaR libre est
+     retrouvee au controle, et aucun nombre publie ne bouge.
+
+figure ecrite : exploratory\vasicek_lab\figures\S42_plafond_saturation.png

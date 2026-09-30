@@ -1,0 +1,218 @@
+﻿
+========================================================================================
+0. CONTROLE : LES DEUX COINS REPRODUISENT LES NOMBRES PUBLIES
+========================================================================================
+Un test inverse repond par des etats du monde. Si le moteur n'etait pas celui du memoire,
+il repondrait par les etats du monde d'un autre modele, ce qui est le pire des defauts
+possibles puisqu'il ne se verrait pas.
+
+  coin bas  (aucun canal relache) :   6 049 M EUR   publie 6 049
+  coin haut (les quatre relaches) :  20 188 M EUR   publie 20 188
+  ecart                           :  14 139 M EUR   publie 14 139
+
+========================================================================================
+1. LES SEIZE CONFIGURATIONS, PAR CAPITAL CROISSANT
+========================================================================================
+configuration                        capital   ecart-type de graine
+  conforme                             6 049     279
+  det                                  7 497     226
+  prop                                 7 682     113
+  accum                                7 777     386
+  prop + accum                         9 080     414
+  det + prop                           9 645     111
+  det + accum                          9 799     385
+  freq                                10 377     548
+  det + prop + accum                  11 413     245
+  freq + prop                         13 193     657
+  freq + det                          13 565     394
+  freq + accum                        13 772     690
+  freq + prop + accum                 15 626     780
+  freq + det + prop                   16 786     647
+  freq + det + accum                  17 785     887
+  freq + det + prop + accum           20 188   1 001
+
+========================================================================================
+2. TEST INVERSE DISCRET : LES CONFIGURATIONS MINIMALES DE CHAQUE CIBLE
+========================================================================================
+Pour chaque cible, les configurations MINIMALES qui l'atteignent, c'est-a-dire celles
+dont aucun sous-ensemble strict ne l'atteint. La monotonie du script 88 garantit que
+cette frontiere decrit l'ensemble entier : toute configuration contenant un element de la
+frontiere atteint la cible, et aucune autre ne l'atteint.
+
+cible 8 000 M EUR, soit x1.32 l'etat conforme
+  1 canal(aux) : freq                              10 377 (+29.7 % de la cible)
+  2 canal(aux) : det + prop                         9 645 (+20.6 % de la cible)
+  2 canal(aux) : det + accum                        9 799 (+22.5 % de la cible)
+  2 canal(aux) : prop + accum                       9 080 (+13.5 % de la cible)
+  12 configurations sur 16 atteignent la cible, 4 minimale(s)
+  NON CLASSEES, leur position depend de la graine : accum
+
+cible 10 000 M EUR, soit x1.65 l'etat conforme
+  1 canal(aux) : freq                              10 377 ( +3.8 % de la cible)
+  3 canal(aux) : det + prop + accum                11 413 (+14.1 % de la cible)
+  9 configurations sur 16 atteignent la cible, 2 minimale(s)
+  NON CLASSEES, leur position depend de la graine : freq, det + accum
+
+cible 12 000 M EUR, soit x1.98 l'etat conforme
+  2 canal(aux) : freq + det                        13 565 (+13.0 % de la cible)
+  2 canal(aux) : freq + prop                       13 193 ( +9.9 % de la cible)
+  2 canal(aux) : freq + accum                      13 772 (+14.8 % de la cible)
+  7 configurations sur 16 atteignent la cible, 3 minimale(s)
+
+cible 15 000 M EUR, soit x2.48 l'etat conforme
+  3 canal(aux) : freq + det + prop                 16 786 (+11.9 % de la cible)
+  3 canal(aux) : freq + det + accum                17 785 (+18.6 % de la cible)
+  3 canal(aux) : freq + prop + accum               15 626 ( +4.2 % de la cible)
+  4 configurations sur 16 atteignent la cible, 3 minimale(s)
+  NON CLASSEES, leur position depend de la graine : freq + prop + accum
+
+cible 18 000 M EUR, soit x2.98 l'etat conforme
+  4 canal(aux) : freq + det + prop + accum         20 188 (+12.2 % de la cible)
+  1 configurations sur 16 atteignent la cible, 1 minimale(s)
+  NON CLASSEES, leur position depend de la graine : freq + det + accum
+
+LECTURE DE GESTION. Le nombre de canaux de la configuration minimale la plus petite est
+la reponse utile : c'est le nombre MINIMAL de defaillances simultanees qui suffit a
+produire la cible. Une cible atteinte par un seul canal se lit comme une exposition a un
+point unique, une cible qui en exige trois comme une exposition a une conjonction.
+
+========================================================================================
+2bis. LES DEUX SEUILS DU CANAL DE FREQUENCE
+========================================================================================
+Les frontieres de la section 2 disent la meme chose a chaque cible, et elle se resume en
+deux nombres plutot qu'en cinq listes. Ils se lisent directement sur le treillis, sans
+balayage supplementaire, et c'est la monotonie qui les rend valides.
+
+  la frequence SEULE atteint            10 377 M EUR, soit x1.72 l'etat conforme
+  le MEILLEUR etat sans la frequence    11 413 M EUR, soit x1.89   (det + prop + accum)
+
+  toute cible sous 10 377 M EUR est donc atteinte par la FREQUENCE SEULE : un canal suffit ;
+  toute cible au-dessus de 11 413 M EUR EXIGE la frequence, aucune
+  combinaison des trois autres canaux ne l'atteignant, meme toutes ensemble ;
+  entre les deux, soit de 10 377 a 11 413 M EUR, elle n'est ni suffisante seule ni necessaire.
+
+  l'ordre des deux bornes est-il resolu ? Sur les 4 graines, l'ecart entre
+  ces deux configurations vaut 1 035 +- 617 M EUR et il est du meme signe sur 4 graine(s) sur 4.
+
+C'EST LE RESULTAT DE GESTION DE CE SCRIPT, et le memoire ne le dit nulle part. La lecture
+directe du modele hierarchise les canaux par leur contribution ; la lecture inverse dit
+autre chose, qu'un plan de remediation utilise vraiment : le canal de FREQUENCE est le
+seul dont la defaillance suffit a elle seule a un scenario severe, et le seul dont la
+maitrise interdit les scenarios les plus severes. Les trois autres reunis ne les
+atteignent pas.
+
+========================================================================================
+3. TEST INVERSE CONTINU : JUSQU'OU UN SEUL CANAL DOIT-IL SE DEGRADER ?
+========================================================================================
+Les trois autres canaux restent au niveau conforme, et l'on balaye celui-la de son niveau
+conforme a son niveau non conforme. La question inverse devient scalaire : quelle valeur
+du canal atteint la cible, et cette valeur est-elle DANS la plage declaree ?
+
+frequence : de 21.56 a 53.62
+  valeur      21.56     29.57     37.59      45.6     53.62
+  capital     6 049     7 187     8 274     9 575    10 377
+  monotonie observee sur le balayage : oui
+
+detection : de 0.1283 a 0.1811
+  valeur     0.1283    0.1415    0.1547    0.1679    0.1811
+  capital     6 049     6 313     6 799     7 351     7 497
+  monotonie observee sur le balayage : oui
+
+propagation : de 0.45 a 0.9
+  valeur       0.45    0.5625     0.675    0.7875       0.9
+  capital     6 049     6 523     6 908     7 176     7 682
+  monotonie observee sur le balayage : oui
+
+ACCUMULATION : PAS D'INVERSION CONTINUE, ET C'EST STRUCTUREL.
+A l'etat conforme P4 est un noeud de cascade ; a l'etat non conforme il devient un choc
+commun de parametre phi. Deux structures de table, non deux bouts d'un continuum. Le
+balayage de phi ci-dessous vit donc entierement dans la seconde famille, et son point
+phi = 0 N'EST PAS l'etat conforme, ce que les deux premieres lignes montrent.
+  etat conforme (P4 noeud de cascade)        6 049 M EUR
+  phi          0.00      0.17      0.34      0.51      0.68
+  capital     5 810     6 281     6 812     7 327     7 777
+
+ET LE SAUT DE STRUCTURE EST NEGATIF, CE QUI DECOMPOSE LE CANAL EN DEUX MOUVEMENTS DE SENS
+CONTRAIRES. On ne l'attendait pas, et il se lit graine par graine puisque les deux
+configurations partagent leurs tirages.
+  (i)  bascule de structure, noeud de cascade vers choc a phi = 0 :    -239 M EUR
+       4 graine(s) sur 4 du meme signe, ecart-type 43
+  (ii) montee du choc commun, phi de 0 a 0,68                      1 967 M EUR
+  net, soit l'effet isole du canal deja publie                     1 728 M EUR
+
+LE MOTIF EST INTELLIGIBLE ET IL FAUT LE DIRE. A l'etat conforme, P4 est un noeud de
+cascade : il PROPAGE vers les autres piliers. Devenu choc commun a phi = 0, il ne touche
+plus que lui-meme, ce qui RETIRE cette propagation. Le canal d'accumulation ne se contente
+donc pas d'ajouter de la co-occurrence : il retire d'abord la propagation propre de P4,
+puis la remplace par un choc plus large. Son effet isole publie est le NET de ces deux
+mouvements, non une addition, et c'est une raison de plus de ne jamais sommer les canaux.
+
+VALEUR DE CHAQUE CANAL QUI ATTEINT LA CIBLE, PAR INTERPOLATION LINEAIRE DU BALAYAGE :
+cible               frequence       detection     propagation    accumulation
+    8 000               35.57      hors plage      hors plage      hors plage
+   10 000               49.85      hors plage      hors plage      hors plage
+   12 000          hors plage      hors plage      hors plage      hors plage
+   15 000          hors plage      hors plage      hors plage      hors plage
+   18 000          hors plage      hors plage      hors plage      hors plage
+
+<< hors plage >> ne veut pas dire impossible dans le monde : cela veut dire que le canal,
+SEUL et dans la plage que le memoire declare, n'atteint pas la cible. Pour la propagation
+et l'accumulation la plage est une borne POSEE, donc l'enonce porte sur le pave declare
+et non sur une entite.
+
+========================================================================================
+VERDICT
+========================================================================================
+Ecrit APRES lecture des sorties.
+
+1. LA QUESTION INVERSE A UNE REPONSE COURTE, ET C'EST LA MONOTONIE QUI LA RACCOURCIT.
+   L'ensemble des etats du monde atteignant une cible est un ensemble croissant, donc il
+   se decrit entierement par ses elements minimaux, et il n'y en a jamais plus de quatre
+   sur les seize configurations. Le theoreme du coin superieur du script 88 cesse ainsi
+   d'etre une propriete de confort pour devenir l'instrument de l'exercice inverse.
+
+2. LE RESULTAT DE GESTION TIENT EN DEUX SEUILS, ET LE MEMOIRE NE LES DIT NULLE PART.
+   La frequence SEULE atteint 10 377 M EUR, soit x1.72 l'etat conforme ; les trois autres canaux
+   REUNIS n'atteignent que 11 413, soit x1.89. Toute cible sous le premier seuil est donc
+   atteinte par un canal unique, et toute cible au-dessus du second EXIGE ce canal.
+   L'ordre des deux bornes est du meme signe sur les quatre graines.
+   LA LECTURE INVERSE DIT AUTRE CHOSE QUE LA LECTURE DIRECTE, et c'est l'interet de
+   l'exercice : la lecture directe hierarchise les canaux par leur contribution, la
+   lecture inverse designe celui dont la maitrise INTERDIT les scenarios severes.
+
+3. AUCUN CANAL AUTRE QUE LA FREQUENCE N'ATTEINT MEME LA CIBLE LA PLUS BASSE, seul et dans
+   sa plage declaree. La detection plafonne a 7 497, la propagation a 7 682, l'accumulation
+   a 7 777, quand la cible la plus basse du balayage vaut 8 000. Une exposition a un canal
+   unique est donc, dans ce modele, une exposition a la frequence et a rien d'autre.
+
+4. ET UNE DECOUVERTE SUR LE CANAL D'ACCUMULATION, qui n'etait pas cherchee. Il n'admet
+   pas d'inversion continue, ses deux etats etant deux STRUCTURES de table et non deux
+   bouts d'un continuum. Surtout, la bascule de structure a parametre nul fait BAISSER le
+   capital de 239 M EUR, resolu sur les quatre graines, parce qu'elle retire la propagation
+   propre de P4 avant d'ajouter le choc commun. L'effet isole publie de 1 728 M EUR est donc le NET
+   d'un retrait de 239 et d'un ajout de 1 967, et non une addition.
+
+CE QUE CE SCRIPT NE DIT PAS, ET LES DEUX RESERVES SONT DE NATURE DIFFERENTE.
+  - << hors plage >> porte sur un pave DECLARE et jamais sur une entite : deux canaux sur
+    quatre sont des bornes posees, donc un etat du monde declare inatteignable ne l'est
+    qu'au regard de plages que le memoire choisit. C'est le garde-fou du script 88 sur
+    l'infaisabilite d'un coin, applique dans l'autre sens ;
+  - une configuration proche d'une cible n'est PAS classee, son appartenance dependant de
+    la graine, et la section 2 les nomme. Une frontiere non resolue est un resultat : elle
+    dit que la cible tombe dans le bruit de simulation d'une configuration, pas que le
+    modele hesite.
+
+GRANDEURS CITEES PAR LE MEMOIRE, SANS SEPARATEUR DE MILLIERS
+Les tables ci-dessus impriment les montants avec une espace, que l'extracteur du harnais
+coupe en deux. Aucun calcul nouveau ici.
+  frequence seule                      10377
+  meilleur etat sans la frequence      11413
+  detection seule                      7497
+  propagation seule                    7682
+  accumulation seule                   7777
+  choc commun a phi nul                5810
+  montee du choc commun                1967
+  effet isole net du canal             1728
+  cibles du balayage                   8000  10000  12000  15000  18000
+
+EXIT 0

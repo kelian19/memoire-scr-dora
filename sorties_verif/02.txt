@@ -1,0 +1,28 @@
+Verite : VaR99,5 de la severite declaree = 212.91 M EUR
+  (indice de queue vrai xi = 0.9)
+
+Course au capital (estimation / verite, sur 500 tirages) :
+methode           biais median       IQR      RMSE
+M1 lognormal           -63.9%      0.09      0.63
+M2 empirique           -15.7%      0.58      0.69
+M3 EVT-POT              -0.8%      0.62      0.53
+  Avec xi = 0,90 > 0,5 la VARIANCE de la severite est INFINIE : le RMSE d'un
+  estimateur de quantile n'a plus de contenu asymptotique et n'est donne que
+  pour memoire. Lire le BIAIS MEDIAN et l'ecart interquartile (IQR).
+
+Invariance de l'indice de queue a la sous-declaration (J1) :
+  xi estime sur donnees COMPLETES  = 0.902
+  xi estime sur donnees DECLAREES  = 0.886
+  (vrai xi = 0.9 : la troncature des petits ne biaise pas la queue)
+
+Recalibrer le seuil a chaque periode, ou l'estimer une fois ?
+  (a) K recalibre chaque periode : de 1.36 a 1.16 (amplitude 0.19)  -> cible mouvante
+  (b) K estime une fois           : 1.36 partout            -> comparable
+      la menace passe alors dans la SORTIE : proba de depassement 8.8% -> 12.3%
+  indice de queue EVT : de 0.91 a 0.90 (amplitude 0.06)  -> stable dans les deux cas
+
+  La derive de (a) n'est PAS une propriete de Phi^-1 : c'est ce qui arrive
+  quand on reinvertit une frequence qui monte. Le vrai message reglementaire
+  est qu'un seuil recalibre chaque trimestre detruit le benchmarking.
+
+figure ecrite : exploratory/vasicek_lab/figures/J_seuil_Ki.png

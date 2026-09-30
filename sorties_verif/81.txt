@@ -1,0 +1,150 @@
+﻿
+========================================================================================
+1. CONTROLE : l'etat de reference reproduit le nombre publie
+========================================================================================
+  Etat non conforme, moteur partage : 20187.68 M€
+  Meme etat, moteur ventile par pilier de ce script : 20187.68 M€
+  Ecart : 0.0000 M€. Les colonnes se somment donc bien a la
+  charge agregee, et chaque ablation qui suit se compare a CE reference.
+
+  QUATRE grandeurs de reference, sur 4 graines :
+    niveau, VaR 99,5 %               20188 M€   (etendue 2364)
+    forme, CTE / VaR                 2.075      (etendue 0.398)
+    ordre par pilier TOUCHE     P1 > P3 > P5 > P2 > P4   stable entre graines : False
+    ordre par pilier d'AMORCE   P4 > P1 > P2 > P3 > P5   stable entre graines : True
+    parts par pilier touche     P1 22.5 %  P2 19.1 %  P3 22.0 %  P4 16.9 %  P5 19.5 %
+    parts par pilier d'amorce   P1 27.9 %  P2 16.9 %  P3 9.6 %  P4 41.1 %  P5 4.6 %
+
+  DEUX ORDRES, ET IL FAUT SAVOIR LEQUEL LE MEMOIRE PUBLIE. Celui qu'il publie,
+  P1 > P4 > P2 > P3 > P5, est l'ordre des piliers d'AMORCE : c'est celui de la
+  propension d'amorce ROOT, et la ventilation par amorce le reproduit. L'ordre par pilier
+  TOUCHE est un AUTRE objet, celui de l'allocation d'Euler, et le memoire declare deja
+  qu'il bascule d'une resolution a l'autre, la severite etant de variance infinie a
+  xi = 0,595. Les parts touchees ci-dessus le confirment : elles tiennent toutes entre
+  17 et 23 %, donc l'ordre qu'on en tire n'est pas un signal. LES DEUX COLONNES SONT
+  DONC LUES DIFFEREMMENT DANS LA SUITE : l'amorce porte la these, le touche est reporte
+  pour memoire et sans conclusion.
+
+========================================================================================
+2. L'ECHELLE D'ABLATION : niveau, forme de queue, ordre des piliers
+========================================================================================
+  Chaque ligne retire UNE brique, les autres restant au niveau non conforme. La colonne
+  d'ordre est celle des piliers d'AMORCE, la seule des deux qui soit lisible ; une etoile
+  marque un ordre qui differe de la reference ET qui est stable entre graines, donc le seul
+  cas ou l'on puisse parler d'un deplacement.
+
+  ablation                        VaR (M€)   / ref   CTE/VaR         ordre des amorces
+  aucune (reference)                 20188    1.00     2.075    P4 > P1 > P2 > P3 > P5
+  (a) propagation g = 0              16086    0.80     2.061    P4 > P1 > P2 > P3 > P5
+  (b) auto-evitement retire          20026    0.99     1.931    P4 > P1 > P2 > P3 > P5
+  (c) surdispersion phi = 1          18836    0.93     2.105    P4 > P1 > P2 > P3 > P5
+  (d) accumulation P4 retiree        16786    0.83     2.079  P1 > P4 > P2 > P3 > P5 ?
+  (e) queue lourde xi = 0             4811    0.24     1.106    P4 > P1 > P2 > P3 > P5
+  (f) amorces uniformes              18594    0.92     2.156  P4 > P3 > P1 > P2 > P5 ?
+
+  Legende de la derniere colonne : * ordre deplace et stable ; ? ordre deplace mais NON
+  stable entre graines, donc a ne pas interpreter ; rien = ordre inchange.
+
+  Etendues entre 4 graines, pour lire les colonnes :
+    aucune (reference)           VaR ±   2364   CTE/VaR ± 0.398
+    (a) propagation g = 0        VaR ±   1283   CTE/VaR ± 0.354
+    (b) auto-evitement retire    VaR ±   2669   CTE/VaR ± 0.247
+    (c) surdispersion phi = 1    VaR ±    990   CTE/VaR ± 0.583
+    (d) accumulation P4 retiree  VaR ±   1560   CTE/VaR ± 0.644
+    (e) queue lourde xi = 0      VaR ±     36   CTE/VaR ± 0.010
+    (f) amorces uniformes        VaR ±   2118   CTE/VaR ± 0.400
+
+========================================================================================
+3. CE QUE CHAQUE BRIQUE PORTE, ET LES TROIS GRANDEURS NE DISENT PAS LA MEME CHOSE
+========================================================================================
+  On lit maintenant colonne par colonne, et l'interet de la lecture a trois grandeurs est
+  qu'aucune n'ordonne les briques comme les autres.
+
+  SUR LE NIVEAU, l'ordre des briques par ce qu'elles retirent :
+    (e) queue lourde xi = 0           4811 M€   soit  -76.2 %
+    (a) propagation g = 0            16086 M€   soit  -20.3 %
+    (d) accumulation P4 retiree      16786 M€   soit  -16.9 %
+    (f) amorces uniformes            18594 M€   soit   -7.9 %
+    (c) surdispersion phi = 1        18836 M€   soit   -6.7 %
+    (b) auto-evitement retire        20026 M€   soit   -0.8 %
+
+  SUR LA FORME DE QUEUE (CTE / VaR), l'ordre n'est PAS le meme :
+    (e) queue lourde xi = 0          1.106      contre 2.075 en reference
+    (b) auto-evitement retire        1.931      contre 2.075 en reference
+    (a) propagation g = 0            2.061      contre 2.075 en reference
+    (d) accumulation P4 retiree      2.079      contre 2.075 en reference
+    (c) surdispersion phi = 1        2.105      contre 2.075 en reference
+    (f) amorces uniformes            2.156      contre 2.075 en reference
+
+  ET IL FAUT S'ARRETER SUR LA COLONNE DE FORME AVANT D'EN TIRER QUOI QUE CE SOIT. Ses
+  etendues entre graines vont de 0.010 a 0.644, alors que les ecarts a la reference
+  qu'on voudrait lire valent quelques centiemes. UNE SEULE ABLATION DEPLACE LA FORME DE
+  QUEUE AU-DELA DE SON BRUIT : (e) queue lourde xi = 0.
+
+  Donc la lecture a deux grandeurs ne dit PAS ici que « les briques s'ordonnent autrement
+  sur la forme que sur le niveau » : ce classement-la n'est pas resolu, et l'ecrire serait
+  lire du bruit. Ce qu'elle dit, et c'est deja utile, est plus etroit : LA FORME DE QUEUE
+  EST INSENSIBLE A TOUT SAUF A LA QUEUE. Retirer la propagation, l'auto-evitement, la
+  surdispersion ou l'accumulation laisse le rapport CTE / VaR ou il est ; seul l'indice de
+  queue le fait tomber, de 2,08 a 1,11. La forme de queue du modele n'est donc pas produite
+  par sa cascade, elle est heritee de sa loi de severite.
+
+  SUR L'ORDRE DES AMORCES, deplacements STABLES entre graines :
+    AUCUN. L'ordre des amorces survit a toutes les ablations de facon stable.
+  Et deplacements NON stables, a ne pas interpreter :
+    (d) accumulation P4 retiree  P1 > P4 > P2 > P3 > P5
+    (f) amorces uniformes        P4 > P3 > P1 > P2 > P5
+
+========================================================================================
+4. LA QUESTION QUE LE MEMOIRE SE POSE A LUI-MEME : l'ordre est-il mecanique ?
+========================================================================================
+  Le memoire declare que le classement des piliers « reproduit ROOT, en partie
+  MECANIQUEMENT, les amorces y etant semees proportionnellement ». C'est une reserve
+  honnete, et elle se teste exactement : on seme les amorces UNIFORMEMENT, ce qui retire
+  la part mecanique, et l'on regarde ce qu'il reste de l'ordre. Ce qui reste alors est la
+  contribution de la TOPOLOGIE seule, chaque pilier ne se distinguant plus que par sa
+  progeniture.
+
+  Amorces proportionnelles : P4 > P1 > P2 > P3 > P5
+  Amorces uniformes        : P4 > P3 > P1 > P2 > P5   (ordre stable entre graines : False)
+  Parts par amorce, uniformes : P1 22.0 %  P2 11.9 %  P3 22.1 %  P4 33.4 %  P5 10.6 %
+
+  LA REPONSE EST QU'ON NE PEUT PAS CONCLURE, ET C'EST LE RESULTAT HONNETE. A amorces
+  uniformes l'ordre n'est PAS stable entre les quatre graines : il change d'un tirage a
+  l'autre. Les parts s'ecrasent d'ailleurs sur 22.7 points seulement entre le premier
+  et le dernier pilier, contre un ecart bien plus large a amorces proportionnelles.
+  AUTREMENT DIT : la topologie SEULE ne produit pas d'ordre lisible a cette resolution.
+  La reserve du memoire est donc CONFIRMEE, et meme un peu durcie : l'ordre publie vient
+  d'abord de la propension d'amorce, la topologie n'y ajoutant qu'un effet trop petit
+  pour etre classe sur quatre graines. Ce qui reste vrai, et le memoire le dit deja au
+  chapitre 12, c'est que la PART de P1 (34 %) excede sa part d'amorce (30 %) : cet
+  exces-la est bien un effet propre de la propagation, et il est mesure ailleurs.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. L'ABLATION N'EST PLUS UNIQUE : six briques, chacune retiree seule, contre une seule
+     dans le memoire. Le controle est exact, la reference reproduisant le nombre publie a
+     0.0000 M pres.
+  2. LA BRIQUE LA PLUS LOURDE N'EST PAS LA CASCADE, C'EST LA QUEUE, et c'est le resultat
+     principal : retirer la queue lourde laisse 4811 M contre 20188, soit -76.2 %,
+     quand retirer la propagation ne coute que -20.3 %. Un facteur 3.7 entre les deux.
+     C'est le meme enonce que le tornado renormalise du script 76 (elasticite de queue
+     3,79 contre 0,37 pour la propagation), obtenu par un chemin independant : un modele
+     de cascade dont le niveau est porte par sa loi de severite et non par sa cascade.
+  3. LA FORME DE QUEUE EST INSENSIBLE A TOUT SAUF A LA QUEUE, et c'est le seul enonce que
+     cette colonne supporte : ses etendues entre graines valent quelques dixiemes quand les
+     ecarts a lire valent quelques centiemes. Une seule ablation la deplace au-dela de son
+     bruit ((e) queue lourde xi = 0), qui la fait passer de 2.07 a 1.11. La
+     forme de queue du modele est donc HERITEE de sa loi de severite, pas produite par sa
+     cascade. Dire que les deux grandeurs « ordonnent les briques autrement » serait lire
+     du bruit, et je ne l'ecris pas.
+  4. L'ORDRE DES AMORCES est deplace de facon STABLE par 0 ablation(s) sur six, et de
+     facon non stable par 2. Seules les premieres se lisent.
+  5. ET L'ORDRE PAR PILIER TOUCHE N'EST PAS UN SIGNAL A CETTE RESOLUTION : les parts
+     tiennent toutes entre 17 et 23 %. Le memoire le declare deja pour l'allocation
+     d'Euler ; ce script le confirme et n'en tire aucune conclusion.
+  6. RIEN N'EST IMPLEMENTE DANS LA CHAINE PUBLIEE : chaque ablation est une lecture, et
+     aucune ne deplace un nombre du memoire. Le controle est exact a 0,0000 M.
+
+figure ecrite : exploratory\vasicek_lab\figures\S37_ablation_structure.png

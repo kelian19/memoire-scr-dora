@@ -1,0 +1,72 @@
+﻿
+====================================================================================
+(A) lambda_ref : les notifications PRC par an
+====================================================================================
+PRC chargée : 15,053 incidents avec total_affected > 0 (2019-2025)
+PRC chargée : 15,053 incidents avec total_affected > 0 (2019-2025)
+periode retenue                       : 2019-2025  (7 ans)
+incidents PRC a total_affected > 0    : 15,053  (config annonce 15 053)
+
+LE PERIMETRE EST DECISIF, ET LE MEMOIRE LE DECRIVAIT MAL. Sur TOUTE la base, le
+taux annuel depasse deux mille, pas 341. Le 341 correspond au seul sous-ensemble des
+organisations FINANCIERES (organization_type = BSF). Un relecteur qui recalcule sur
+la base entiere trouve six fois plus et conclut que le nombre est faux.
+
+perimetre                                       incidents    par an
+toute la base PRC (tous acteurs)                   15,053    2150.4
+  dont organisations financieres (BSF)              2,427     346.7   <<< le 341 publie
+  dont autres entreprises (BSO)                     5,635     805.0
+  dont sante (MED)                                  1,830     261.4
+
+  >>> lambda_ref (perimetre financier) = 2427/7 = 346.7 par an
+      valeur publiee dans config.py et dans le memoire : 341
+      ecart : +1.7 %
+
+  repartition annuelle du perimetre financier :
+     annee   incidents
+      2019         188
+      2020         315
+      2021         483
+      2022         447
+      2023         595
+      2024         333
+      2025          40
+
+  moyenne sur annees pleines (2019-2024) : 393.5 par an.
+  L'annee 2025 est incomplete (remontee en cours) et tire la moyenne vers le bas ;
+  sur annees pleines le 341 publie est LEGEREMENT PRUDENT.
+
+A QUOI SERT CE NOMBRE. Il ne sert QU'A repartir les incidents par vecteur
+d'attaque : il ne porte aucun niveau de capital, et ne doit jamais etre confondu
+avec le lambda du moteur de cascade (21,6 incidents TIC materiels par an, secteur
+financier mondial, base OpRisk) ni avec le lambda d'entite (0,092 ; script 60).
+
+====================================================================================
+(B) Hackmageddon : ce qui N'EST PAS verifiable, et il faut le dire
+====================================================================================
+AUCUN fichier Hackmageddon dans data/raw/. Les deux comptages publies au
+chapitre donnees ne sont donc PAS reproductibles en l'etat :
+     1 041 incidents du semestre janvier-juin 2026
+       840 avec vecteur d'acces initial identifie, soit 81 %
+
+Ce n'est pas une erreur : ce sont des comptages faits sur une source consultee
+puis non versionnee. Mais ils ne peuvent pas etre presentes comme des resultats
+du dispositif. Deux issues, a trancher :
+  (i)  verser la source dans data/raw/ et recalculer ici ;
+  (ii) les requalifier dans le memoire en CITATION EXTERNE datee, au meme titre
+       qu'un chiffre de rapport de place, avec la date de consultation.
+
+L'option (ii) est suffisante : ces deux nombres ne servent qu'a decrire la
+structure des vecteurs d'attaque, et le memoire dit deja que cette source est
+mobilisee pour la STRUCTURE et non pour le niveau.
+
+====================================================================================
+Verdict
+====================================================================================
+lambda_ref, perimetre financier       : 346.7 / an contre 341 publie (+1.7 %)  -> VERIFIABLE
+lambda_ref, toute la base PRC         : 2150.4 / an  -> ce n'est PAS
+   le nombre du memoire. La mention 'tous acteurs confondus' etait fausse et a ete
+   corrigee en 'organisations financieres'.
+1 041 et 840 (Hackmageddon)           : source non versionnee -> A REQUALIFIER
+
+EXIT 0

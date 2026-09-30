@@ -1,0 +1,68 @@
+
+========================================================================================
+108 - LE TREILLIS DES QUATRE CANAUX EN PROJECTION TRIDIMENSIONNELLE
+========================================================================================
+  lu dans sorties_verif\68.txt : 16 configurations, 4 effets isoles.
+
+  Controles :
+    coin conforme                    : 6049   (attendu 6049)
+    coin non conforme                : 20188   (attendu 20188)
+    aretes du treillis               : 32   (attendu 32)
+    aretes descendantes              : 0   (attendu 0)
+    ecart minimal de disposition     : 0.400   (doit etre > 0)
+    => controles passes, le script trace.
+
+========================================================================================
+1. ECART A L'ADDITIVITE, PAR CONFIGURATION
+========================================================================================
+  Ecart = capital observe - (conforme + somme des effets isoles des canaux relaches).
+
+    configuration              capital   additif    ecart
+    conforme                     6049      6049       +0
+    accum                        7777      7777       +0
+    det                          7497      7497       +0
+    freq                        10377     10377       +0
+    prop                         7682      7682       +0
+    det+accum                    9799      9225     +574
+    freq+accum                  13772     12105    +1667
+    prop+accum                   9080      9410     -330
+    freq+det                    13565     11825    +1740
+    det+prop                     9645      9130     +515
+    freq+prop                   13193     12010    +1183
+    freq+det+accum              17785     13553    +4232
+    det+prop+accum              11413     10858     +555
+    freq+prop+accum             15626     13738    +1888
+    freq+det+prop               16786     13458    +3328
+    freq+det+prop+accum         20188     15186    +5002
+
+  Sommet complet : +5002 M, l'interaction des quatre canaux.
+  Sommet prop+accum : -330 M, la seule paire negative du dossier.
+
+  A NE PAS PUBLIER TEL QUEL, ET C'EST LE SEUL PIEGE DE CE SCRIPT. Le sommet complet
+  ressort ici a +5002 quand le memoire publie +5001, et l'ecart d'un million est un
+  ARRONDI, pas un desaccord : les quatre effets isoles sont lus arrondis au million dans
+  68.txt, et leur somme herite de quatre arrondis. La valeur qui fait foi reste celle du
+  script 68, soit 5001, et c'est elle que le memoire cite. Ne pas << corriger >> le
+  memoire sur la foi de cette figure.
+
+  Les croises de paires se retrouvent au meme arrondi pres, ce qui est le controle qui
+  compte : le script 68 publie freq x det 1739, freq x accum 1666, freq x prop 1182,
+  det x accum 573, det x prop 515 et prop x accum -330.
+
+  figure ecrite : exploratory\vasicek_lab\figures\S33_treillis_canaux_3d.png
+
+========================================================================================
+2. GRANDEURS CITEES PAR LE MEMOIRE (sans separateur de milliers)
+========================================================================================
+  configurations du treillis                  : 16
+  aretes du treillis                          : 32
+  aretes descendantes                         : 0
+  capital a l'etat conforme                   : 6049
+  capital a l'etat non conforme               : 20188
+  ecart a l'additivite au sommet complet      : 5002
+  ecart a l'additivite sur prop+accum         : -330
+  amplitude maximale de l'ecart a l'additivite : 5002
+
+========================================================================================
+FIN 108
+========================================================================================

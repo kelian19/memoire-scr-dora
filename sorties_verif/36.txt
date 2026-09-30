@@ -1,0 +1,37 @@
+
+================================================================================
+(B) Ecart pur des deux moteurs, sur configuration IDENTIQUE
+================================================================================
+  socle W=0, frequence ref, p_u base :
+    recursion exacte (partial_id, ch.10) :    5275 M
+    Monte-Carlo (euro_cascade, ch.12)    :    5065 M
+    ecart de moteur : 210 M (4.0 %)
+  Les deux moteurs calculent le MEME nombre a l'ecart Monte-Carlo pres. Le
+  chapitre 10 utilise l'exact (deterministe, pour des bornes), le 12 le MC
+  (pour les canaux multi-etats). Ce choix n'introduit pas de divergence de fond.
+
+================================================================================
+(A) Le pont : du socle a l'etat conforme, un canal a la fois (moteur MC commun)
+================================================================================
+  etape                                               SCR   variation
+  socle : W=0, freq ref, detection neutre           5065 M            
+  + contagion a l'etat conforme (g=0,45)            6504 M     +1439 M
+  + frequence de l'etat conforme (S0)               6504 M        +0 M
+  + detection de l'etat conforme (p_u x0.85)        5936 M      -568 M
+
+  Point d'arrivee = SCR de l'etat CONFORME : 5936 M
+  C'est, au bruit MC pres, le chiffre du chapitre 12 (lecture C, ~5932 M) et du
+  benchmark (~6085 M). Les trois nombres sont donc UN modele a trois points :
+    - socle (ch.10)   : aucune contagion, frequence de reference ;
+    - conforme (ch.12): meilleur etat, mais contagion et frequence propres a l'etat ;
+    - benchmark (27)  : conforme, convention de graine et d'annees du script 27.
+
+================================================================================
+Lecture pour le memoire
+================================================================================
+  Le socle (5275) est INFERIEUR au conforme (~5900) parce que le socle n'a AUCUNE
+  contagion, alors que meme une entite conforme en garde une part (g=0,45). L'ordre
+  socle < conforme < ... < non conforme est donc coherent, pas contradictoire.
+  A ecrire : une note de passage entre les deux chapitres, renvoyant a ce pont.
+
+figure ecrite : exploratory/vasicek_lab/figures/Z7_reconciliation.png

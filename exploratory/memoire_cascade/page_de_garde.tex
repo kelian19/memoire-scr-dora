@@ -1,0 +1,193 @@
+% =====================================================================
+% PAGE DE GARDE OFFICIELLE — modèle imposé par l'Institut des Actuaires
+% et l'ENSAE Paris (filière Actuariat).
+%
+% Ce fichier reproduit le gabarit officiel « Page_de_garde_memoire.tex »
+% sans en modifier la structure ni les mentions légales : seules les
+% valeurs des champs sont renseignées, et elles sont regroupées
+% ci-dessous pour être relues d'un coup d'oeil avant le dépôt.
+%
+% CE QUI RESTE À TRANCHER, ET CELA N'APPARTIENT PAS À L'ASSISTANT :
+%   1. la DATE DE SOUTENANCE. Elle s'imprime en gras entre crochets
+%      tant qu'elle n'est pas renseignée, donc un dépôt accidentel avec
+%      une date fausse est impossible. Session de novembre 2026, semaine
+%      du 9 annoncée sous réserve de confirmation ;
+%   2. la CONFIDENTIALITÉ. Les deux cases sont livrées NON cochées, comme
+%      le gabarit. Cocher l'une des deux est obligatoire au dépôt, et le
+%      choix relève de Nexialog et non de Kélian seul. Pour cocher,
+%      remplacer le $\Box$ voulu par $\boxtimes$ ;
+%   3. les MEMBRES DU JURY DE L'INSTITUT, le SECRETARIAT et la BIBLIOTHEQUE,
+%      qui restent vides : la liste de controle de l'ecole le demande
+%      explicitement, ils ne sont pas connus a la date du depot et ces lignes
+%      sont signees en seance. Le jury de la FILIERE, lui, n'est pas dans ce
+%      cas : la meme liste exige d'y porter l'encadrant pedagogique ENSAE, et
+%      il y est.
+% =====================================================================
+
+% --- Champs renseignés ------------------------------------------------
+% Date : session de mars 2027 par defaut ; main_institut.tex (genere) la definit, a
+% "mars 2027", avant l'\input, et \providecommand la laisse alors intacte.
+\providecommand*{\pgdatesoutenance}{mars 2027}
+\newcommand{\pgauteur}{Kélian KADDOURI}
+% LE TITRE TIENT SUR DEUX LIGNES, au corps \Large du gabarit. A ce corps la
+% ligne entiere deborde la justification, et le gabarit prevoit nommement la
+% parade : << Ajouter des lignes au titre = retirer autant de \bigskip plus
+% bas >>. Le sous-titre du memoire ne figure donc PAS ici : la couverture
+% officielle porte un champ << Titre >> et un seul, et l'y faire tenir en
+% ajoutant une troisieme ligne desequilibrait le bloc. Il reste en tete du
+% document et sur la couverture de l'Institut.
+\newcommand{\pgtitre}{Quantification du SCR lié à la non-conformité}
+\newcommand{\pgtitrebis}{au règlement DORA}
+\newcommand{\pgentreprise}{Nexialog Consulting}
+\newcommand{\pgdirecteur}{Hugo RAPIOR}
+% ENCADRANTE PEDAGOGIQUE ENSAE. La liste de controle de l'ecole l'exige
+% nommement : << Que vous avez mis votre encadrant pedagogique ENSAE sous
+% "Membres presents du jury de la filliere" >>. C'est le SEUL nom de jury
+% a porter au depot ; ceux du jury de l'Institut restent vides, la meme
+% liste le demandant explicitement. IL SE POSE SUR LA LIGNE << Nom : >> de
+% la colonne de gauche, et non sur la ligne du dessus : le gabarit donne au
+% jury de la filiere une ligne << Nom : >> dediee, symetrique de celle du
+% directeur du memoire en entreprise. Pose au-dessus, il laissait ce
+% << Nom : >> vide juste en dessous de lui.
+\newcommand{\pgjuryfiliere}{Caroline HILLAIRET}
+
+% SIGNATURES ELECTRONIQUES, ET ELLES SONT FACULTATIVES AU DEPOT. La liste de
+% controle de l'ecole dit que la version electronique NON SIGNEE ne pose pas de
+% probleme, une signature electronique etant seulement << mieux >> ; ce sont les
+% exemplaires IMPRIMES qui doivent etre signes. Les deux champs restent donc
+% vides par defaut et la couverture s'imprime exactement comme le gabarit.
+%
+% POUR EN POSER UNE : deposer le scan dans logos/ (PNG a fond TRANSPARENT, la
+% griffe en sombre, recadree au plus pres), puis remplacer la ligne vide
+% correspondante par la ligne commentee juste au-dessus d'elle.
+%
+% ET C'EST LA RAISON DE PASSER PAR LATEX PLUTOT QUE PAR UN LECTEUR DE PDF. Une
+% griffe posee dans Acrobat vit dans le PDF et MEURT a la recompilation
+% suivante, or la liste de depot prevoit de refaire les deux fichiers le jour
+% meme. Posee ici, elle survit a toutes les recompilations.
+%
+\newcommand{\pgsignentreprise}{\pgsigne{logos/signature_hugo.png}}
+\newcommand{\pgsigncandidat}{\pgsigne{logos/signature_kelian.png}}
+
+% La griffe se pose SANS prendre de hauteur (les deux crochets a 0pt), sinon
+% elle agrandit la case et le tableau descend d'autant.
+% \IfFileExists ET NON UN \includegraphics NU, et c'est ce qui permet de garder
+% les griffes HORS du depot. Elles ne sont pas versionnees : le depot GitHub est
+% public, et une signature qu'on y pousse reste dans l'historique meme effacee,
+% recuperable et reutilisable par n'importe qui. Sans ce garde-fou, un clone
+% neuf ne compilerait plus, faute de trouver le fichier ; avec lui, la case sort
+% simplement vide et le document se construit partout.
+\newcommand{\pgsigne}[1]{%
+  \IfFileExists{#1}{\raisebox{-24pt}[0pt][0pt]{\includegraphics[height=30pt,keepaspectratio]{#1}}}{}}
+% ---------------------------------------------------------------------
+
+% GÉOMÉTRIE PROPRE À CETTE PAGE, et ce n'est pas une coquetterie. Le gabarit
+% officiel est calibré sur des marges de 2 cm en corps 12, quand le mémoire
+% compose sur 2,4 cm en corps 11 : posé tel quel dans la géométrie du mémoire,
+% le tableau des signatures déborde de 1,4 cm et la ligne de titre de 0,2 cm.
+% On rend donc à cette page les marges du gabarit, et on les reprend ensuite.
+\newgeometry{margin=2cm}
+
+\begin{titlepage}
+% TYPOGRAPHIE D'ORIGINE, ET C'EST UNE CONSIGNE DE KELIAN DU 28 SEPTEMBRE 2026.
+% Le gabarit officiel est un article 12pt sans paquet de police : il compose
+% donc en Latin Modern, le romain par defaut de LaTeX. Le memoire, lui, est en
+% Times via newtx, format impose par l'ecole pour le CORPS. Laisser la
+% couverture heriter du Times la reecrivait dans une fonte qui n'est pas la
+% sienne, et son titre debordait la justification parce que le Times est plus
+% large. On lui rend donc sa fonte le temps de la page, et on la reprend
+% ensuite : le corps reste en Times 12, la couverture redevient identique au
+% modele fourni. NE PAS RETIRER CETTE LIGNE.
+\fontfamily{lmr}\selectfont
+\fontsize{12}{14.5}\selectfont
+
+% Filet de cadre sur les quatre bords de la page, comme le gabarit.
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[line width=0.25mm]
+    ([yshift=-15pt,xshift=15pt]current page.north west)--
+    ([yshift=-15pt,xshift=-15pt]current page.north east)--
+    ([yshift=15pt,xshift=-15pt]current page.south east)--
+    ([yshift=15pt,xshift=15pt]current page.south west)--cycle;
+\end{tikzpicture}
+
+\begin{figure}[t]
+  \vspace{-1cm}
+  \begin{minipage}[l]{.46\linewidth}
+    \hspace{-0.5cm}\includegraphics[scale=0.3]{logos/IA}
+  \end{minipage}\hfill
+  % Le gabarit donne .1\linewidth à ce bloc, ce qui vaut 48,2 pt dans cette
+  % justification quand le logo ENSAE à l'échelle 0,1 en mesure 52,2 : il
+  % débordait de 4 pt, exactement. La boîte est élargie, l'image ne bouge pas
+  % et sa taille reste celle du gabarit.
+  \begin{minipage}[r]{.12\linewidth}
+    \includegraphics[scale=0.1]{logos/ensae}
+  \end{minipage}
+\end{figure}
+
+\begin{center}
+  {\large\bfseries Mémoire présenté devant l'ENSAE Paris\\
+   pour l'obtention du diplôme de la filière Actuariat\\
+   et l'admission à l'Institut des actuaires%
+   \ifx\pgdatesoutenance\empty\else\\ en \pgdatesoutenance\fi}
+\end{center}
+
+\bigskip
+
+\begin{tabular}{ll}
+  Par : & {\Large\bfseries \pgauteur} \\ & \\
+  Titre : & {\Large\bfseries \pgtitre} \\
+          & {\Large\bfseries \pgtitrebis}
+\end{tabular}
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+% CASE COCHEE, ET COCHER EST OBLIGATOIRE AU DEPOT. Le memoire n'est PAS
+% confidentiel, decision de Kelian du 16 septembre 2026 : la case NON porte
+% donc une croix, les trois autres restent vides. Si Nexialog revient sur ce
+% choix, deplacer la croix sur OUI et en cocher une de duree, jamais aucune.
+Confidentialité : \ \ $\boxtimes$ NON \hspace{1cm} $\Box$ OUI \ (Durée : $\Box$ 1 an \hspace{0.25cm} $\Box$ 2 ans)
+
+\bigskip
+\textit{Les signataires s'engagent à respecter la confidentialité indiquée ci-dessus}
+\medskip
+
+\begin{tabular}{p{8.4cm}l}
+  \textit{Membres présents du jury de la filière} & \textit{Entreprise :} \\
+  & \pgentreprise \\
+  \textit{Nom :} \pgjuryfiliere & \textit{Signature :} \\
+  & \\
+  \textit{Membres présents du jury de l'Institut} & \textit{Directeur du mémoire en entreprise :} \\
+  \textit{des Actuaires} & \\
+  & \textit{Nom :} \pgdirecteur \\
+  & \textit{Signature :} \\
+  & \\
+  & {\itshape\bfseries Autorisation de publication et de} \\
+  & {\itshape\bfseries mise en ligne sur un site de} \\
+  & {\itshape\bfseries diffusion de documents actuariels} \\
+  & \textit{(après expiration de l'éventuel délai de} \\
+  & \textit{confidentialité)} \\
+  & \\
+  & Signature du responsable entreprise \\[2pt] \cline{2-2}
+  Secrétariat : & \multicolumn{1}{|c|}{\pgsignentreprise} \\[32pt] \cline{2-2}\\[-8pt]
+  & Signature du candidat \\[2pt] \cline{2-2}
+  Bibliothèque : & \multicolumn{1}{|c|}{\pgsigncandidat} \\[32pt] \cline{2-2}
+\end{tabular}
+
+% LE GABARIT POSE ICI UN \vspace{1.75cm} FIXE, ET IL NE PASSE PAS. Rendue a sa
+% fonte d'origine, la page est pleine a un cheveu pres : l'adresse de l'ecole
+% partait seule sur une SECONDE page de couverture, avec son folio. Un \vfill
+% donne le meme resultat visuel, l'adresse en pied de page, sans dependre du
+% cheveu. Ne pas y remettre une valeur fixe.
+\vfill
+
+\begin{center}
+  \footnotesize{Ecole Nationale de la Statistique et de l'Administration Economique (ENSAE)\\
+  5, avenue Henry Le Chatelier - 91120 PALAISEAU, FRANCE}
+\end{center}
+
+\end{titlepage}
+
+\restoregeometry

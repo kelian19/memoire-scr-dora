@@ -1,0 +1,56 @@
+# =====================================================================================
+# Parametres de RENDU de la video, et rien d'autre.
+#
+# CE FICHIER NE PORTE AUCUN SEUIL NI AUCUNE COULEUR, ET C'EST UNE REGLE DU PROJET.
+#   - les couleurs viennent de exploratory/vasicek_lab/style_nexialog.py, source unique
+#     des couleurs des cinquante figures du memoire. Un second fichier de couleurs ferait
+#     diverger la video du memoire au premier ajustement ;
+#   - les parametres du modele (matrice TRANS, taux d'amorce, gains de propagation)
+#     viennent du moteur lui-meme, scr_engine.py. Les recopier ici creerait deux sources
+#     pour le meme nombre, ce que le harnais du memoire existe pour empecher ;
+#   - les grandeurs affichees a l'ecran sont CALCULEES par la loi exacte du moteur, puis
+#     CONTROLEES contre sorties_verif/74.txt. Elles ne sont pas saisies ici.
+# =====================================================================================
+
+# Fond de la video. Les deux teintes d'accent, turquoise et rouge Nexialog, viennent de la
+# charte dans les deux cas et ne bougent pas : seuls les NEUTRES basculent. Un fond sombre
+# tient mieux le contraste a l'ecran et en projection, un fond clair reste celui du memoire.
+theme:
+  fond: clair            # clair | sombre
+
+video:
+  largeur: 1920
+  hauteur: 1080          # mettre 1080 x 1920 pour un format vertical
+  fps: 30
+  fichier: output/cascade_deux_etats.mp4
+  debit_kbps: 6000
+
+# Duree de chaque sequence, en secondes. Le total commande la longueur du fichier.
+sequences:
+  titre: 2.5
+  mise_en_place: 2.5
+  incidents: 24.0
+  stabilisation: 3.0
+  final: 4.0
+
+incidents:
+  nombre: 24             # incidents joues pendant la sequence principale
+  pas_par_seconde: 6     # vitesse d'avancement de la marche, en pas par seconde
+  graine: 7682           # graine des tirages COMMUNS aux deux panneaux
+
+# Controle d'identite : ecart tolere entre la loi exacte du moteur et les valeurs
+# publiees par le script 74. Au-dela, le rendu s'arrete.
+controle:
+  tolerance_part: 0.0005
+  tolerance_moyenne: 0.001
+
+apercu:
+  actif: true            # rendre d'abord un apercu basse resolution
+  largeur: 854
+  hauteur: 480
+  duree: 10.0
+  fichier: output/apercu_480p.mp4
+
+frames_preview:
+  dossier: output/frames_preview
+  instants: [1.0, 4.0, 12.0, 20.0, 31.0, 34.0]   # secondes

@@ -1,0 +1,51 @@
+﻿VCDB : 10591 incidents | finance (NAICS 52) : 980
+
+==========================================================================
+P2 : sous-piliers = familles d'action (finance)
+==========================================================================
+   action Hacking      : 307
+   action Physical     : 270
+   action Error        : 210
+   action Malware      : 132
+   action Misuse       : 131
+   action Social       : 52
+   -> plusieurs centaines par famille : sous-maille P2 exploitable.
+
+==========================================================================
+P3 : sous-piliers = detection et containment (finance)
+==========================================================================
+  DECOUVERTE (n=278) : {'<= 1 jour': 131, 'semaines': 23, 'mois et +': 124, 'jamais': 0}
+  CONTAINMENT (n=104) : {'<= 1 jour': 83, 'semaines': 8, 'mois et +': 12, 'jamais': 1}
+  part de detection LENTE (mois et +, ou jamais) : 45%
+  -> detection P3 exploitable grossierement (278), containment mince (104).
+
+==========================================================================
+P4 : sous-pilier = tiers (actor.Partner, finance)
+==========================================================================
+  incidents finance avec acteur PARTENAIRE : 56 (5.7% de la finance)
+  part globale actor.Partner : 3.6%  <- VERIS SOUS-CODE le tiers
+  -> sous-maille P4 tres creuse ET sous-comptee : la donnee ouverte ne suffit pas.
+
+==========================================================================
+ENTONNOIR DE SPARSITE : ou la sous-maille se casse
+==========================================================================
+   VCDB (tous secteurs)                10591
+   finance                               980
+   finance + decouverte datee            278
+   finance + containment date            104
+   finance + tiers (partenaire)           56
+   finance + tiers + hacking               0  <- sous le seuil exploitable (~30)
+
+==========================================================================
+VERDICT
+==========================================================================
+Le praticien a raison, avec une frontiere nette : la donnee ouverte (VCDB) peuple les
+sous-piliers BIEN representes (types d'action P2, plusieurs centaines) et, plus
+grossierement, la detection P3. Mais le TIERS P4 s'effondre (56 en finance) et
+VERIS le sous-code : deux crans plus bas, on tombe sous le seuil exploitable.
+Conclusion operationnelle : open source pour P2/P3 au niveau sous-pilier ; pour
+les sous-process de P4 (registre d'externalisation, chaines de sous-traitance),
+il faut les donnees clients d'une entite. La granularite ne se decrete pas, elle se
+verifie sur la volumetrie.
+
+figure ecrite : exploratory\vasicek_lab\figures\X_vcdb_sous_piliers.png

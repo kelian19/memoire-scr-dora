@@ -1,0 +1,85 @@
+% =====================================================================
+% TABLE DES PARAMÈTRES  --  annexe.
+%
+% REMISE DANS LE MÉMOIRE LE 18 SEPTEMBRE 2026, quelques heures après le déport
+% des annexes B, D et E. Elle vivait au \S sec:ann-parametres de l'annexe D
+% (17_pieces_justificatives.tex) et elle est partie avec elle ; Kélian a demandé
+% de la remettre le jour même. Elle a été RETIRÉE du fichier déporté, pas
+% recopiée : le même tableau à deux endroits divergerait.
+%
+% POURQUOI ELLE SEULE REVIENT, quand les vingt et une autres sections de
+% l'annexe D restent dehors. C'est la table qu'un jury lit en premier pour
+% savoir ce qui est calibré, ce qui est posé et ce qui n'est pas identifié, et
+% le chapitre 11 annonce qu'elle existe « pour qu'aucun chiffre du mémoire ne
+% soit sans origine déclarée » : la laisser dehors rendait cette phrase fausse.
+%
+% ELLE EST EN longtable ET NON EN tabular, depuis le 17 août 2026. Un tabular ne
+% peut pas se couper entre deux pages : il débordait de 102 pt et hyperref
+% émettait l'annotation hors page qui accompagne toujours ce débordement.
+%
+% SES NEUF SCRIPTS SOURCES SONT NÉCESSAIRES. La ligne
+% « % SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43 » couvre les soixante et
+% quelques nombres de la table ; en retirer un sort des valeurs du contrôle.
+% =====================================================================
+
+\chapter{Table des paramètres, leur nature et leur sensibilité}
+\label{sec:ann-parametres}
+
+Trois natures sont distinguées : calibré sur données (avec son incertitude),
+\emph{posé} par jugement d'expert ou choix normatif (non identifiable, cf.\
+chapitre~\ref{ch:identifiabilite}), et semi-ancré sur un proxy externe non
+spécifique au périmètre.
+
+\vspace{0.25cm}
+% PASSEE DE tabular A longtable LE 17 AOUT 2026. Cette table tenait sur une page tant que rien
+% ne la precedait dans le chapitre ; l'ajout de la section sur le dispositif de verification l'a
+% decalee et elle a debordé de 102 pt, avec l'annotation hyperref hors page qui accompagne
+% toujours ce debordement. Un tabular NE PEUT PAS se couper entre deux pages : le piege est
+% documente et il vient de mordre. longtable le peut, et l'en-tete se repete.
+{\footnotesize
+\renewcommand{\arraystretch}{1.28}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.7cm}
+                    >{\raggedright\arraybackslash}p{2.6cm}
+                    >{\raggedright\arraybackslash}p{1.7cm}
+                    >{\raggedright\arraybackslash}p{4.0cm}
+                    >{\raggedright\arraybackslash}p{3.6cm}@{}}
+\toprule
+\textbf{Paramètre} & \textbf{Valeur} & \textbf{Nature} & \textbf{Justification} & \textbf{Sensibilité du SCR} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Paramètre} & \textbf{Valeur} & \textbf{Nature} & \textbf{Justification} & \textbf{Sensibilité du SCR} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Queue de sévérité $\xi$ & $0{,}5954$ (OpRisk, chiffre de tête) ; PRC $1{,}03$ ; $0{,}90$ posé en pire cas de modèle & calibré, incertain & GPD sur pertes réelles ; hétérogène par catégorie ($0{,}87$--$1{,}37$) & \textbf{forte} : de $0{,}60$ à $0{,}38$ quand le seuil monte au-dessus de celui retenu, dans l'IC90 $[0{,}30\,;0{,}83]$ ; pilote la queue \\
+Échelle GPD $\sigma$, seuil $u$, $p_u$ & $57{,}97$ M\euro{} ; $20{,}03$ M\euro{} ; $0{,}15$ & calibré & POT au percentile $84{,}4$ ; $p_u$ gelé et en écart de $+3{,}6\,\%$ avec ce seuil, effet chiffré au \S\ref{sec:pu-coherence} & modérée (via la queue) \\
+Fréquence $\lambda$ & ${\sim}21{,}6$/an (OpRisk) & calibré & incidents TIC matériels / 27 ans & linéaire sur le niveau \\
+Multiplicateur de fréquence par état & $\times 1{,}525$ partiel ; $\times 2{,}487$ non conforme ($\lambda$ de $21{,}56$ à $53{,}62$) & semi-ancré & parts Hackmageddon et fourchettes posées sur des effets publiés (chapitre~\ref{chap:multietats}) ; aux bornes, $\lambda$ de $41{,}7$ à $65{,}6$ & \textbf{forte} : canal dominant du chiffre de tête \\
+Sur-dispersion $\phi$ & $9{,}20$ & \textbf{posé} (prudent) & $2{,}24$ mesuré sur la série annuelle détendancée, maintenu entre scénarios & faible sur le niveau \\
+Choc commun fréquence $a$ & $0{,}60$ & \textbf{posé} (prudent) & dépasse l'IC empirique haut ($0{,}22$) : conservateur & enveloppe le modèle à paquets ($\times 2{,}5$) \\
+Structure $W = g\,\texttt{TRANS}/\max_k s_k$ & classeur qualitatif & \textbf{posé} / normatif & jugement d'expert consigné ; direction non identifiable & l'asymétrie départage les deux piliers de tête ; l'essentiel du surcoût de contagion vient de la partie symétrique \\
+Gain de propagation $g$ & $0{,}90$ base ; par état $0{,}45/0{,}68/0{,}90$ & \textbf{posé} & amplitude de $W$, bornée par Leontief $\rho(W)\le g<1$ & \textbf{levier} : $\times 1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
+Score de conformité $q$ / états & continu $[0,1]$ (ou NC/PC/C) & \textbf{posé} & décrit le profil, subsume 3 ou 5 niveaux & \textbf{levier} : $-53\,\%$ de NC à C sur le seul score ; facteur $3{,}34$ sur les quatre canaux \\
+Multiplicateur de matérialité par état & $0{,}85/1{,}00/1{,}20$ & \textbf{posé} & module $p_u$ selon la conformité & modérée (canal détection) \\
+Charge systémique $\gamma$ & $0{,}68$ & semi-ancré & proxy concentration cloud (AWS+Azure+GCP, Synergy 2025) & modérée \\
+Seuil de crise $\theta_{\text{crise}}$ & $-2{,}5$ & \textbf{posé} & déclenche le régime de co-mouvement extrême & agit sur la seule queue crise \\
+Probas d'état $P(\text{NC/PC/C})$ & $0{,}35/0{,}35/0{,}30$ & semi-ancré & enquêtes conformité DORA ${\sim}50\,\%$ non conformes (Deloitte, ESA) & déplace le mélange, pas les états \\
+Copule de dépendance $\theta$ & Gumbel $1{,}8$ & \textbf{posé} & queue supérieure entre briques & \textbf{négligeable} : $\Delta_{\text{DORA}}$ $<1{,}4\,\%$ sur $[1,4]$ \\
+Excès de source $u_{ij}$ & $\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ & \textbf{non identifié} & la direction elle-même ; normalisation $\sum_i u_{ij}=0$ (repérage, non information) & mesurée par l'échelle de repli (ch.~\ref{chap:partielle}) : rang~$1$ capte $74\,\%$ et resserre les bornes de $25\,\%$ ; à $u=0$ P1 et P4 deviennent indiscernables \\
+Élasticité sévérité/taille $b$ & $0{,}087$ $[0{,}026\,;0{,}148]$ & calibré, tronqué & EMV lognormale tronquée au seuil de collecte (ch.~\ref{chap:donnees}) & faible : $\times 0{,}86$ sur la sévérité transposée \\
+Plafond de sévérité & $40$ M\euro{} & \textbf{posé} & capacité de réassurance ($\xi\ge 1$) & borne la queue extrême \\
+\end{longtable}
+}
+
+\vspace{4pt}
+% SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43
+
+\textbf{Ce que la table rend visible.} Les seuls paramètres à forte sensibilité sont
+soit calibrés sur données (la queue $\xi$, dont on assume et chiffre l'incertitude), soit des
+\emph{leviers voulus} ($g$, $q$, le multiplicateur de fréquence) qui traduisent précisément l'objet du mémoire, l'effet de
+la conformité et de la contagion sur le capital. Les paramètres purement posés qui
+ne sont pas des leviers ($\theta$ de copule, $\gamma$, $\theta_{\text{crise}}$, probas d'état,
+matérialité) ont une influence faible à modérée et documentée. Aucune conclusion ne
+repose sur un paramètre à la fois non calibré \emph{et} déterminant hors de son rôle attendu.

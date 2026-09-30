@@ -1,0 +1,153 @@
+﻿
+========================================================================================
+0. LES TROIS BRANCHES DE SEVERITE
+========================================================================================
+La derive est estimee par le module partage derive_severite.py, celui-la meme que lit la
+section 1ter du script 89 : les deux scripts ne peuvent donc pas s'ecarter d'une decimale.
+
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+Exces : 91 au-dessus du seuil publie de 20.03 M EUR, sur 582 incidents.
+Derive de l'echelle de queue : b = +4.00 % par an (ecart-type 1.84 %, rapport de vraisemblance p = 0.0386).
+
+branche          xi      sigma   role
+  publiee       0.5954    57.97   controle : doit redonner le chiffre du memoire
+  stationnaire  0.5979    55.75   reference de la comparaison
+  derivee       0.5273    81.95   echelle evaluee a 2025
+
+========================================================================================
+0bis. CONTROLE 1 : LA FONCTION DE PERTE LOCALE EST CELLE DU MODULE
+========================================================================================
+ecart maximal sur les 40000 annees simulees de l'etat non conforme : 0.00e+00
+lecture : identique a la precision machine, le moteur est bien celui du memoire
+
+========================================================================================
+1. LES DEUX ETATS DE CONFORMITE SOUS CHAQUE BRANCHE DE SEVERITE
+========================================================================================
+Seule la severite de base change d'une ligne a l'autre. Les quatre canaux, les graines, le
+nombre d'annees et l'ordre des tirages sont ceux du chiffre publie.
+
+branche          SCR conforme      SCR non conforme     facteur   ecart DORA
+  publiee         6 049 +- 279     20 188 +- 1 001     3.337    14 139
+  stationnaire    5 888 +- 279     19 689 +- 993       3.344    13 801
+  derivee         6 376 +- 259     19 918 +- 679       3.124    13 542
+
+CONTROLE 2 : la branche publiee doit redonner 6 049 et 20 188 M EUR, donc 3,34 et 14 139.
+  elle donne 6 049 et 20 188, facteur 3.34, ecart 14 139.
+
+========================================================================================
+2. LA DERIVE SE SIMPLIFIE-T-ELLE DANS LE RAPPORT ?
+========================================================================================
+Si la derive agit sur les deux etats par le MEME facteur multiplicatif, alors le rapport
+entre etats ne bouge pas et l'affirmation du memoire est exacte. Les deux facteurs :
+
+  effet de la derive sur l'etat CONFORME      : x1.0829  (+8.3 %)
+  effet de la derive sur l'etat NON CONFORME  : x1.0116  (+1.2 %)
+  rapport des deux effets                     : 0.9342  (1 = simplification exacte)
+
+  facteur entre etats, branche stationnaire : 3.344
+  facteur entre etats, branche derivee      : 3.124
+  deplacement du facteur                    : -0.220 (-6.6 %)
+
+ET IL FAUT LE COMPARER AU BRUIT, sans quoi un deplacement non nul ne veut rien dire.
+Le facteur est calcule graine par graine, les deux etats partageant la graine :
+  ecart-type du facteur entre graines : 0.050 (stationnaire), 0.053 (derivee)
+  deplacement en ecarts-types         : 4.43
+
+MEME LECTURE SUR L'ECART EN EUROS, qui est la grandeur que le memoire publie :
+  ecart, branche stationnaire : 13 801 +- 731 M EUR
+  ecart, branche derivee      : 13 542 +- 455 M EUR
+  deplacement                 : -259 M EUR, soit -1.9 %, et 0.35 ecart-type(s)
+
+========================================================================================
+3. LE DEPLACEMENT VIENT-IL DE LA FORME OU DE L'ECHELLE ?
+========================================================================================
+L'ajustement derive ne fait pas que monter l'echelle : il fait aussi BAISSER l'indice de
+queue, de 0.5979 a 0.5273. Les deux mouvements vont en sens contraire sur le capital, et
+un seul des deux peut expliquer le deplacement du facteur. On les separe au lieu de le
+supposer : deux branches intermediaires, un parametre a la fois.
+
+branche            xi      sigma  |  SCR conf.   SCR non conf.  facteur   ecart
+  forme seule     0.5273    55.75  |    4 387     13 781      3.141    9 393
+  echelle seule   0.5979    81.95  |    8 570     28 611      3.338   20 041
+
+DEPLACEMENT DU FACTEUR PAR RAPPORT A LA BRANCHE STATIONNAIRE, en ecarts-types de graine :
+  forme seule    -0.203  soit   -6.1 %  ( 4.09 ecart-type(s))
+  echelle seule  -0.005  soit   -0.2 %  ( 0.11 ecart-type(s))
+  derivee        -0.220  soit   -6.6 %  ( 4.43 ecart-type(s))
+
+EFFET MULTIPLICATIF SUR CHAQUE ETAT, qui est la lecture qui dit si le rapport survit :
+  forme seule    conforme x0.7452   non conforme x0.6999   rapport 0.9393
+  echelle seule  conforme x1.4556   non conforme x1.4532   rapport 0.9984
+  derivee        conforme x1.0829   non conforme x1.0116   rapport 0.9342
+
+SOMME DES DEUX EFFETS SEPARES CONTRE L'EFFET CONJOINT, pour savoir si les deux
+mouvements interagissent :
+  somme des deplacements separes : -0.208
+  deplacement conjoint           : -0.220
+  residu d'interaction           : -0.012 (0.23 ecart-type(s))
+
+========================================================================================
+VERDICT
+========================================================================================
+Ecrit APRES lecture des sorties, et non en meme temps que le code qui les produit. La
+premiere redaction de ce bloc annoncait l'inverse des mesures sur les deux premiers
+points : c'est la sortie qui tranche.
+
+1. L'ARGUMENT DU MEMOIRE EST JUSTE, MAIS IL PORTE SUR L'ECHELLE ET SUR ELLE SEULE, ET
+   IL EST DESORMAIS MESURE. Une variation de la seule ECHELLE de severite multiplie les
+   deux etats par le meme facteur, x1.4556 en conforme et x1.4532 en non
+   conforme : le rapport des deux effets vaut 0.9984, donc le facteur entre etats est
+   invariant d'echelle a 0.16 % pres, alors que les niveaux montent de 46 %.
+   C'est la forme forte de l'affirmation, et elle tient.
+
+2. MAIS LA DERIVE MESUREE N'EST PAS UN PUR CHANGEMENT D'ECHELLE, ET C'EST CE QUI DEPLACE
+   LE FACTEUR. Modeliser la derive REATTRIBUE a l'echelle ce que l'ajustement
+   stationnaire lisait comme de la forme : l'indice de queue tombe de 0.5979 a 0.5273.
+   Or c'est la forme qui compte : la composante de forme deplace seule le facteur de
+   -6.1 % (4.09 ecarts-types) quand la composante d'echelle ne le deplace que de
+   -0.2 % (0.11 ecart-type, non resolu). Les deux sont additives, le residu
+   d'interaction valant 0.23 ecart-type. Au total le facteur passe de 3.344 a 3.124,
+   soit -6.6 % et 4.43 ecarts-types : le deplacement est RESOLU.
+
+3. L'ECART EN EUROS BOUGE A PEINE, ET IL NE FAUT SURTOUT PAS Y LIRE UNE ROBUSTESSE.
+   Il passe de 13 801 a 13 542 M EUR, soit -1.9 % pour un bruit de 731, donc
+   non resolu. Mais cette quasi-invariance est une COMPENSATION et non une insensibilite :
+   la composante de forme seule donnerait 9 393 et celle d'echelle seule 20 041 M EUR.
+   L'ecart est donc tres sensible a la severite prise composante par composante, et
+   presque insensible a la seule combinaison que la derive produit. L'annoncer comme
+   robuste a la severite serait faux.
+
+4. CE QUE LE MEMOIRE DOIT EN RETENIR, ET LE SENS COMPTE. Le signe et l'ordre de l'ecart
+   survivent avec une marge large. La direction est favorable : sous la severite derivee
+   l'ecart est PLUS PETIT (-1.9 %) et le facteur AUSSI (-6.6 %), donc le chiffre publie
+   n'est pas gonfle par la derive. C'est la meme structure a deux sens que le p_u gele :
+   la derive rend le NIVEAU anti-conservateur (+24,7 % sur le quantile, script 89) et
+   rend la THESE legerement conservatrice. Seul le premier engage la solvabilite.
+
+CE QUE CE SCRIPT NE DIT PAS, ET IL Y A DEUX RESERVES.
+  - il teste UNE severite alternative, celle que la derive mesuree produit a l'annee de
+    reference, non toute la famille des severites possibles. L'invariance d'echelle du
+    point 1, elle, vaut pour toute amplitude d'echelle, ce qui est plus fort ;
+  - la separation forme / echelle est une REPARAMETRISATION, non deux mecanismes
+    physiques independants. Elle dit d'ou vient le deplacement dans le modele, elle ne
+    dit pas que la queue s'est allegee dans le monde reel.
+
+========================================================================================
+GRANDEURS CITEES PAR LE MEMOIRE, SANS SEPARATEUR NI SIGNE
+========================================================================================
+Les tables ci-dessus impriment les montants avec une espace de milliers, lisible pour un
+humain et coupee en deux par l'extracteur du harnais de verification. Les memes valeurs
+sont donc reprises ici en clair, ainsi que les amplitudes que le memoire cite en valeur
+absolue. Ce bloc n'ajoute aucun calcul : il rend citables des nombres deja imprimes.
+
+  ecart branche stationnaire            13801
+  ecart branche derivee                 13542
+  ecart composante de forme seule       9393
+  ecart composante d'echelle seule      20041
+  bruit de graine sur l'ecart           731
+  baisse du facteur, en valeur absolue  6.6 %
+  part de forme, en valeur absolue      6.1 %
+  part d'echelle, en valeur absolue     0.2 %
+  baisse de l'ecart, en valeur absolue  1.9 %
+
+EXIT 0

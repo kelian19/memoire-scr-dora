@@ -1,0 +1,27 @@
+﻿
+==========================================================================
+Trajectoire SCR(t) : Markov (Erlang-2) empile sur le moteur du 16
+==========================================================================
+  Etats NC->PC->C, C absorbant. Sejours moyens : NC 1.5 an, PC 1.5 an.
+  Init (marginale du 16) : NC 35%  PC 35%  C 30%
+  Couplage Theta : beta_rem=0.35 (vitesse), beta_casc=0.1 (cascade).
+
+  OPRISK : SCR_C=6925  SCR_PC=9451  SCR_NC=15340 M EUR
+   t (ans)   SCR(t) med           bande 90%   Delta_DORA(t)
+         0        10752      [9092 ; 12654]            3827
+         1         9576      [7205 ; 12040]            2652
+         2         8310      [6194 ; 11042]            1385
+         3         7575      [5924 ; 10164]             650
+         5         7041       [5857 ; 9028]             116
+  Delta_DORA(t) = surcout residuel de non-conformite ; -> 0 quand tout devient C.
+
+  PRC : SCR_C=1906  SCR_PC=3150  SCR_NC=5527 M EUR
+   t (ans)   SCR(t) med           bande 90%   Delta_DORA(t)
+         0         3608       [3051 ; 4246]            1703
+         1         3099       [2229 ; 3982]            1194
+         2         2542       [1771 ; 3548]             636
+         3         2210       [1644 ; 3162]             304
+         5         1961       [1612 ; 2652]              56
+  Delta_DORA(t) = surcout residuel de non-conformite ; -> 0 quand tout devient C.
+
+figure ecrite : exploratory\vasicek_lab\figures\S12_trajectoire_scr.png

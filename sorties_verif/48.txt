@@ -1,0 +1,44 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+==================================================================================
+AXE 1 : structure de dependance (marges OpRisk par pilier fixees)
+==================================================================================
+  SCR (VaR 99,5 %) selon la structure de dependance, marges identiques :
+    independance                   5322 M€
+    copule gaussienne              8223 M€
+    copule de Gumbel               8911 M€
+    comonotone (Frechet)           9806 M€
+    formule standard SII           7632 M€
+  Bande de dependance : [5322 ; 9806] M€ (facteur 1.8).
+  soit, en milliards  : [5.3 ; 9.8] Md€
+  Repere : notre cascade dirigee (mecanisme generatif) = 8318 M€.
+
+==================================================================================
+AXE 2 : famille de severite (agregation en independance)
+==================================================================================
+  SCR (VaR 99,5 %) selon la famille de queue, agregation en independance :
+    lognormale (queue fine)        4330 M€
+    GPD OpRisk (xi=0,60)           5335 M€
+    GPD lourde (xi=0,90)          24016 M€
+  Bande de severite : [4330 ; 24016] M€ (facteur 5.5). La queue lourde
+  fait exploser le quantile : c'est le choix de FAMILLE qui pese le plus, de loin.
+  Levier distinct : plafonner la severite a 40 M€ (reassurance) ramene la famille lourde
+  de 24016 a 495 M€ — c'est une reponse au risque de
+  queue, pas le risque lui-meme (d'ou le plafond sur la source PRC, xi>1, du memoire).
+
+  Ordre des piliers par propension d'amorce (ROOT, w) : P1 > P4 > P2 > P3 > P5 — fixe, invariant a la famille.
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. Le SCR se deplace dans une BANDE DE MODELE [4330 ; 24016] M€ (facteur 5.5)
+     selon la famille choisie : c'est le troisieme etage d'incertitude, apres le
+     parametre (bootstrap) et l'identification (bornes W).
+  2. Axe dependance : facteur 1.8 (independance -> comonotone). Axe severite :
+     facteur 5.5 (lognormale -> GPD lourde xi=0,90). La queue lourde domine.
+  3. La structure QUALITATIVE (ordre d'amorce ROOT) ne bouge pas : le niveau est
+     illustratif, l'ordre resiste. C'est, chiffree, la these du memoire.
+  4. Reponse a la question : oui, chaque brique a des alternatives ; on ne pretend pas
+     avoir LA methode, on borne l'effet du choix et on le lit en bande, comme le reste.
+
+figure ecrite : exploratory/vasicek_lab/figures/J4_bande_modele.png

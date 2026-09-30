@@ -1,0 +1,171 @@
+﻿Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+========================================================================================
+0. LE SEUIL PUBLIE, SITUE DANS SON ECHANTILLON
+========================================================================================
+Echantillon : 582 incidents du perimetre cyber x finance, convention de severite du projet.
+Seuil publie : 20.03 M EUR, soit le percentile 84.4, laissant 91 exces.
+Grandeur cible du balayage : le quantile de severite a 99.5 %, que le memoire
+publie a 662.78 M EUR.
+
+========================================================================================
+1. BALAYAGE DES SEUILS CANDIDATS : ADEQUATION, ESTIMATION, PRECISION
+========================================================================================
+Pour chaque percentile candidat : ajustement GPD libre sur les exces, taux de depassement
+COMPTE, p-value d'Anderson-Darling par bootstrap parametrique, puis quantile a 99,5 % et
+son ecart-type par re-echantillonnage non parametrique des exces.
+
+perc.    seuil  n exc.      xi    sigma   p AD    q 99,5 %   ecart-type
+   70.0     5.52    174  1.0581    16.95   0.044     1204.3       519.8
+   75.0     8.62    146  0.9818    22.36   0.043     1050.0       460.6
+   80.0    12.88    115  0.7497    37.93   0.400      758.9       250.9
+   82.5    16.90    102  0.6978    44.57   0.285      717.2       240.2
+   84.4    19.87     91  0.5925    56.21   0.971      654.5       182.1  <- seuil publie
+   85.0    22.03     88  0.6012    56.59   0.841      658.7       185.5
+   87.5    31.82     73  0.5410    69.05   0.954      633.7       175.9
+   90.0    47.42     59  0.5344    78.12   0.800      631.3       159.5
+   92.5    73.81     44  0.5981    83.68   0.237      644.1       190.5
+   95.0   105.39     30  0.3819   139.06   0.709      628.8       150.3
+
+REGLE (C), ET LE COMPROMIS ATTENDU N'EXISTE PAS SUR CES DONNEES. On ecrit par habitude que
+descendre le seuil gagne des exces donc de la precision, et que le remonter reduit le
+biais mais paye en variance. La colonne d'ecart-type dit l'inverse :
+  ecart-type du quantile au percentile 70.0 : 519.8 M EUR sur 174 exces
+  ecart-type du quantile au percentile 95.0 : 150.3 M EUR sur 30 exces
+  soit une DIVISION par 3.5 en remontant le seuil, alors que le nombre
+  d'exces est divise par presque six.
+
+LE MOTIF EST INTELLIGIBLE ET IL EST PROPRE A LA GRANDEUR VISEE. Le quantile a 99,5 % est
+exponentiellement sensible a l'indice de queue, et descendre le seuil GONFLE cet indice :
+  il passe de 0.3819 au percentile 95.0 a 1.0581 au percentile 70.0, donc au-dessus de UN,
+  ou l'esperance de la severite n'existe plus. Les exces gagnes en descendant sont des
+  pertes qui n'appartiennent pas encore a la queue : ils ajoutent du BIAIS, et le biais
+  se propage dans l'ecart-type par le levier de l'indice.
+
+CONSEQUENCE POUR LE CHOIX. Il n'y a donc rien a arbitrer entre biais et precision sur cette
+grandeur : les deux vont dans le meme sens et le seuil doit se choisir sur l'ADEQUATION et
+la STABILITE, non sur la precision. C'est ce que font les regles (A) et (B).
+
+========================================================================================
+2. REGLE (A) : LA PLUS BASSE VALEUR NON REJETEE PAR L'ADEQUATION
+========================================================================================
+La GPD n'est justifiee qu'au-dessus d'un seuil assez haut. On descend donc tant que le
+test ne rejette pas, puisque descendre gagne des exces. La regle retient le plus BAS
+seuil dont la p-value depasse 5 %, ET dont tous les seuils superieurs passent aussi :
+un unique passage isole serait un accident d'echantillon, non une frontiere.
+
+  seuil retenu par (A) : 12.88 M EUR, percentile 80.0, 115 exces
+  quantile a 99,5 %    : 758.9 M EUR, ecart-type 250.9
+  p-value d'Anderson-Darling : 0.400
+  nombre de seuils du balayage non rejetes : 8 sur 10
+
+========================================================================================
+3. REGLE (B) : LA FENETRE DE STABILITE DE L'INDICE DE QUEUE
+========================================================================================
+Un seuil est admissible si l'indice de queue cesse de deriver au-dessus de lui. On
+retient donc le plus BAS seuil tel que tous les indices estimes au-dessus tombent dans
+l'intervalle de confiance a 90 % de celui-la, obtenu par re-echantillonnage des exces.
+
+perc.  xi     IC90 de xi        xi superieurs dedans ?
+   70.0  1.0581  [0.8168 ; 1.2870]   non
+   75.0  0.9818  [0.7215 ; 1.2350]   non
+   80.0  0.7497  [0.4585 ; 0.9936]   non
+   82.5  0.6978  [0.4145 ; 0.9958]   non
+   84.4  0.5925  [0.3275 ; 0.8183]   oui   <- retenu par (B)
+   85.0  0.6012  [0.3176 ; 0.8436]   oui
+   87.5  0.5410  [0.2479 ; 0.8413]   oui
+   90.0  0.5344  [0.1862 ; 0.7679]   oui
+   92.5  0.5981  [0.1737 ; 0.9964]   oui
+   95.0  0.3819  [-0.0162 ; 0.7346]   oui
+
+========================================================================================
+4. LE SEUIL PUBLIE CONTRE LES DEUX REGLES
+========================================================================================
+seuil publie : 20.03 M EUR (ligne du balayage la plus proche : percentile 84.4, 19.87)
+  regle (A), plus bas non rejete     :   12.88 M EUR, percentile 80.0
+    ecart au seuil publie              :   -7.15 M EUR, soit -35.7 %
+    quantile a 99,5 % qui en resulte   :   758.9 contre 654.5 au seuil publie, soit +16.0 %
+    et contre le chiffre PUBLIE (662.78) : +14.5 %
+  regle (B), fenetre de stabilite    :   19.87 M EUR, percentile 84.4
+    ecart au seuil publie              :   -0.16 M EUR, soit -0.8 %
+    quantile a 99,5 % qui en resulte   :   654.5 contre 654.5 au seuil publie, soit +0.0 %
+    et contre le chiffre PUBLIE (662.78) : -1.2 %
+
+LES DEUX DERNIERES LIGNES NE MESURENT PAS LA MEME CHOSE, et il ne faut pas les confondre.
+La comparaison au quantile du seuil publie isole l'effet du SEUIL, les deux etant calcules
+par la meme regle avec un taux de depassement COMPTE. La comparaison au chiffre publie y
+ajoute le defaut du taux de depassement gele, deja declare au chapitre 13. Melanger les
+deux ferait porter au seuil un ecart qui ne lui appartient pas.
+
+========================================================================================
+5. LA REGLE REFUSEE : LE DOUBLE BOOTSTRAP D'ERREUR QUADRATIQUE ASYMPTOTIQUE
+========================================================================================
+Les regles de reference pour choisir le nombre d'exces minimisent une erreur quadratique
+ASYMPTOTIQUE par double bootstrap, sur deux sous-echantillons emboites. Elles ne sont pas
+employees ici, et le motif n'est ni le temps de calcul ni la difficulte de mise en oeuvre.
+
+  exces disponibles au seuil publie : 91
+  taille de l'echantillon complet   : 582
+  ces regles reposent sur un regime ou le nombre d'exces tend vers l'infini plus
+  lentement que la taille de l'echantillon, et leurs sous-echantillons emboites sont
+  d'ordre n puissance 3/4 puis son carre divise par n, soit ici
+  118 puis 24 observations.
+  A cette taille l'estimateur du minimum est lui-meme tres bruite, et la regle rendrait
+  un nombre AYANT L'APPARENCE D'UNE REGLE SANS EN AVOIR LA GARANTIE.
+
+C'EST LE MEME ARBITRAGE QUE DEUX AUTRES DEJA RENDUS DANS CE PROJET, et la coherence
+compte : l'elicitation a ete ecartee parce qu'un panel faiblement calibre introduirait une
+incertitude NON DECLARABLE en echange d'une ignorance mesuree, et l'ancrage de la
+propagation sur les publications prudentielles a ete refuse parce que le resultat aurait
+l'apparence d'un calibrage sans en etre un. Une regle dont les conditions d'application ne
+sont pas reunies est moins bonne qu'un choix declare et confronte.
+
+========================================================================================
+VERDICT
+========================================================================================
+Ecrit APRES lecture des sorties. Le commentaire de la section 1 annoncait un compromis
+biais-variance : la colonne d'ecart-type l'a dementi, et c'est elle qui tranche.
+
+1. LA REGLE DE STABILITE SELECTIONNE EXACTEMENT LE SEUIL PUBLIE, et c'est le resultat
+   principal. Elle retient 19.87 M EUR quand le memoire publie 20.03, soit
+   -0.8 %, et le quantile qui en resulte est identique au
+   centieme de pour cent. Le seuil publie est donc precisement le plus bas au-dessus
+   duquel l'indice de queue cesse de deriver. Ce n'est pas un critere fabrique apres coup :
+   c'est le balayage de seuil que le chapitre 06 publie deja, employe comme regle de
+   selection au lieu d'etre seulement decrit.
+
+2. ET C'EST AUSSI LE SEUIL LE MIEUX AJUSTE DU BALAYAGE. Sa p-value d'Anderson-Darling vaut
+   0.971, la plus haute des 10 candidats (le suivant est 0.954).
+   L'adequation et la stabilite designent donc le meme point, ce qui n'etait pas garanti :
+   deux criteres independants pouvaient parfaitement se contredire.
+
+3. LA REGLE LA PLUS PERMISSIVE DESCENDRAIT PLUS BAS ET DONNERAIT DAVANTAGE DE CAPITAL, ce
+   qui est l'argument le plus fort contre un soupcon de choix opportuniste. La regle (A)
+   retient 12.88 M EUR, soit 35.7 % SOUS le seuil publie, et le quantile y vaut 758.9
+   contre 654.5, soit +16.0 %. Le seuil publie n'est donc PAS celui qui
+   maximise le chiffre du memoire : parmi les candidats acceptables, il est du cote qui le
+   minore. Une assurance verbale ne vaudrait pas cette comparaison.
+
+4. LE COMPROMIS BIAIS-VARIANCE N'EXISTE PAS SUR CETTE GRANDEUR, contre l'attente. L'ecart-
+   type du quantile est divise par 3.5 en remontant le seuil, alors que le nombre d'exces
+   est divise par presque six : descendre degrade a la fois le biais et la precision,
+   parce que l'indice de queue gonfle et que le quantile en depend exponentiellement. Il
+   n'y a donc rien a arbitrer, et le seuil se choisit sur l'adequation et la stabilite.
+
+5. LES REGLES D'ERREUR QUADRATIQUE ASYMPTOTIQUE SONT REFUSEES AVEC LEUR MOTIF, section 5,
+   et le motif est de coherence : une regle dont les conditions d'application ne sont pas
+   reunies rendrait un nombre ayant l'apparence d'une regle sans en avoir la garantie.
+   Meme arbitrage que celui qui a ecarte l'elicitation et l'ancrage de la propagation.
+
+CE QUE CE SCRIPT NE DIT PAS, ET IL Y A TROIS RESERVES.
+  - le balayage porte sur UN echantillon. Les deux regles s'accordent ici, mais rien ne
+    garantit qu'elles s'accorderaient sur un autre tirage, et leur concordance est un
+    constat, non une propriete ;
+  - le faible ecart-type du percentile 95.0 ne doit PAS se lire comme de la precision : il
+    est estime sur 30 exces, donc lui-meme mal connu. Un ecart-type est connu a environ
+    la racine de deux fois le nombre d'observations pres, ce qui interdit de comparer les
+    deux extremites du balayage sur cette seule colonne ;
+  - et rien de ceci ne change le seuil publie, que le gel interdit de toucher. Le livrable
+    est la CONFRONTATION, pas un nouveau seuil.
+
+EXIT 0

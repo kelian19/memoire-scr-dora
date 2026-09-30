@@ -1,0 +1,70 @@
+
+====================================================================================
+P1. Decomposition unique et orthogonale
+====================================================================================
+  reconstruction |W - (S+A)|_max      = 1.39e-17
+  symetrie de S   |S - S^T|_max       = 0.00e+00
+  antisymetrie de A |A + A^T|_max     = 0.00e+00
+  orthogonalite <S,A>_F = tr(S^T A)   = 3.47e-18
+  => la separation identifie/non-identifie est EXACTE et orthogonale : la donnee
+     contraint S, l'ignorance porte sur A, et les deux ne se recouvrent pas.
+
+====================================================================================
+P2. Le pave admissible est exactement |A_jk| <= S_jk
+====================================================================================
+  points hors du pave restant a coefficients positifs : 0 / 2000
+  => aucun : la positivite de W equivaut bien au pave |A| <= S. L'ensemble d'ignorance
+     est un PAVE, donc enumerable et convexe. C'est ce qui rend les bornes calculables.
+
+====================================================================================
+P3. Stabilite de Leontief garantie par la normalisation
+====================================================================================
+       g   max somme de ligne    rho(W)  rho <= g ?
+    0.10               0.1000    0.0562         oui
+    0.45               0.4500    0.2528         oui
+    0.68               0.6800    0.3821         oui
+    0.90               0.9000    0.5057         oui
+    0.99               0.9900    0.5563         oui
+  => rho(W) <= max somme de ligne = g, pour tout g. La sous-criticite ne depend d'aucun
+     reglage : elle est une consequence de la normalisation. La cascade s'eteint p.s.
+
+====================================================================================
+P4. Rappel : la fluctuation ne voit que S (script 40)
+====================================================================================
+  La forme de Dirichlet ne depend que de la partie reversible : verifie au script 40
+  a 1e-15 pres, avec la production d'entropie qui s'annule a la symetrisation.
+  Consequence portable : toute statistique invariante par renversement du temps est
+  aveugle a la direction. C'est le fondement THEORIQUE de la non-identifiabilite.
+
+====================================================================================
+AUDIT. Les bornes sont-elles atteintes aux sommets du pave ?
+====================================================================================
+  Rappel du probleme : a_jk augmente W_jk mais DIMINUE W_kj. La reponse n'est donc pas
+  monotone en a_jk, et l'argument 'les extremes vivent aux sommets' est incomplet.
+
+  bornes aux sommets : SCR [6858 ; 8697] M   |   moyenne [849 ; 1100] M
+
+  3000 points interieurs admissibles evalues.
+  SCR     : 0 sous la borne basse, 0 au-dessus de la borne haute
+  moyenne : 0 sous la borne basse, 0 au-dessus de la borne haute
+  amplitude interieure SCR : [7378 ; 8431] M
+
+  AUCUN contre-exemple. L'hypothese d'atteinte aux sommets n'est pas refutee sur
+  3000 tirages : les bornes publiees sont defendables. A ecrire toutefois comme une
+  hypothese VERIFIEE NUMERIQUEMENT, non comme un theoreme : la non-monotonie en
+  a_jk empeche de l'etablir par le seul argument de monotonie coordonnee par coordonnee.
+
+====================================================================================
+VERDICT
+====================================================================================
+  1. Quatre proprietes de la classe « Vasicek-cascade » sont portables hors du cas DORA :
+     decomposition unique et orthogonale, pave admissible exact, stabilite de Leontief
+     garantie, et aveuglement des statistiques reversibles a la direction.
+  2. La plus citable est P3 : la sous-criticite est une CONSEQUENCE de la normalisation,
+     pas une hypothese. C'est ce qui separe cette construction d'un W pose au hasard.
+  3. AUDIT : l'atteinte des bornes aux sommets, utilisee par les scripts 30 et 55, ne
+     decoule PAS d'un argument de monotonie (a_jk joue en sens contraire sur W_jk et
+     W_kj). Elle resiste toutefois a 3000 tirages interieurs sans contre-exemple :
+     a presenter comme une hypothese verifiee numeriquement, honnetement nommee.
+
+figure ecrite : exploratory/vasicek_lab/figures/Z21_proprietes_portables.png

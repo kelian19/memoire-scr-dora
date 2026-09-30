@@ -1,0 +1,54 @@
+
+==========================================================================
+Cascade : la distribution des ensembles S est-elle propre ? (somme = 1)
+==========================================================================
+  gain de base g = 0.9
+  amorce     nb ensembles   somme proba    E[|S|]   P(|S|=1)
+  P1                   16      1.000000     2.376      0.100
+  P2                   16      1.000000     1.712      0.481
+  P3                   16      1.000000     1.745      0.515
+  P4                   16      1.000000     1.870      0.412
+  P5                   16      1.000000     1.382      0.758
+
+==========================================================================
+Effet du gain g sur la taille de cascade (E[|S|] moyenne sur les amorces)
+==========================================================================
+  g=0 => aucun incident ne se propage (|S|=1). g monte => cascades plus larges.
+  g = 0.0   E[|S|] (pondere amorce) = 1.000
+  g = 0.3   E[|S|] (pondere amorce) = 1.237
+  g = 0.6   E[|S|] (pondere amorce) = 1.542
+  g = 0.9   E[|S|] (pondere amorce) = 1.931
+  g = 1.0   E[|S|] (pondere amorce) = 2.083
+
+==========================================================================
+SCR chiffre (cas de base : g=0,90, xi=0,70, a=0,60)
+==========================================================================
+  annees simulees        : 300,000
+  perte annuelle moyenne :     896.73  (unites normalisees)
+  ecart-type             :    2790.59
+  VaR 99,5 %             :    5705.96   IC95% [5568.3 ; 5852.6]
+  TVaR 99,5 % (indicatif):   14856.32   (finie car xi<1 ; non retenue)
+  SCR = VaR - E[perte]   :    4809.22   (capital economique)
+  P(perte = 0)           :     0.0047
+
+==========================================================================
+Quantiles de la perte annuelle
+==========================================================================
+  q0.5    =     635.20
+  q0.9    =    1744.09
+  q0.99   =    4245.32
+  q0.995  =    5705.96
+  q0.999  =   13477.36
+
+==========================================================================
+Ce qui fait le SCR : contribution moyenne par pilier a la perte annuelle
+==========================================================================
+  contribution annuelle esperee = E[N_j] * E[severite d'un incident amorce en j].
+  P1 : lambda= 3.64  E[sev|amorce]=   94.95  contrib=  345.29  (38.7 %)
+  P2 : lambda= 2.18  E[sev|amorce]=   37.22  contrib=   81.21  ( 9.1 %)
+  P3 : lambda= 1.82  E[sev|amorce]=   34.76  contrib=   63.21  ( 7.1 %)
+  P4 : lambda= 3.27  E[sev|amorce]=  117.35  contrib=  384.04  (43.0 %)
+  P5 : lambda= 1.09  E[sev|amorce]=   17.47  contrib=   19.06  ( 2.1 %)
+  total contributions (= E[perte]) :   892.81   (MC : 896.73)
+
+figure ecrite : exploratory/vasicek_lab/figures/S3_agregation.png

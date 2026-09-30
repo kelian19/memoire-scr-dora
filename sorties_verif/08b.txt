@@ -1,0 +1,64 @@
+﻿
+==============================================================================
+Donnees : secteur financier, sous-categories TIC, 2005-2022
+==============================================================================
+evenements du secteur financier   : 12702
+dont TIC (5 sous-categories)      : 1476
+firmes du secteur financier       : 5230
+firmes avec au moins un TIC       : 919
+
+==============================================================================
+(A) Taux par entite : panel firme-annee
+==============================================================================
+observations firme-annee : 14944  (5230 firmes)
+moyenne empirique  = 0.0988 evenement TIC / firme / an
+variance empirique = 0.1179
+indice de dispersion Var/E = 1.19   (Poisson = 1)
+part de zeros = 91.2%
+
+Poisson          : lambda = 0.0988                 logL = -5,023.8
+Binomiale neg.   : mu = 0.0988 | r = 0.632   logL = -4,958.5
+test LR Poisson vs NB : LR = 130.5, p = 1.57e-30  -> la NB l'emporte
+forme Gamma melangeante r = 0.632
+   ATTENTION : r n'est PAS entier et il est INFERIEUR A 1. Une Erlang exige une
+   forme entiere >= 1 ; l'Erlang la plus proche est l'Erlang-1 (melange
+   exponentiel), mais c'est une APPROXIMATION, pas un ajustement exact. La loi
+   melangeante reellement ajustee est une Gamma de forme 0,63, plus dissymetrique
+   qu'une exponentielle. A dire tel quel : le melange Gamma est le bon objet,
+   'Erlang' n'en est qu'un cas particulier a forme entiere.
+
+Sensibilite a la taille (le panel melange TPE et G-SIB) :
+   toutes firmes (14944 obs)          : lambda = 0.0988
+   firmes >=10 evenements (2631 obs) : lambda = 0.2102  <- profil plus proche d'une entite soumise a DORA
+
+==============================================================================
+(B) Choc systemique commun : serie agregee, apres retrait de tendance
+==============================================================================
+comptes annuels agreges TIC-FS : moyenne = 82.0 / an  (18 annees)
+tendance log-lineaire ajustee  : -2.4 % / an
+dispersion de Pearson residuelle phi = 2.24   (Poisson pur = 1)
+   IC 95 % de phi : [1.24 ; 5.18]  <- large, 18 points seulement
+
+charge systemique impliquee a = 0.122   IC 95 % : [0.054 ; 0.223]
+   valeur posee dans frequence_model : A_LOAD = 0.60
+   => A_LOAD depasse meme la BORNE HAUTE de l'IC (0.223). La conclusion
+      'le calage pose est conservateur' resiste a l'incertitude d'estimation.
+
+==============================================================================
+VERDICT
+==============================================================================
+lambda pose = 12.0 / an ; lambda observe = 0.099 (toutes firmes) a 0.210 (grandes firmes).
+L'ecart n'est PAS une erreur de calage : la base ne retient que les pertes AU-DESSUS
+d'un seuil de collecte. On calibre donc la frequence des evenements TIC MATERIELS
+(generateurs de perte), qui est la bonne maille pour un modele de capital, et non
+la frequence de tous les incidents au sens du reporting DORA.
+
+Surdispersion confirmee (LR p = 1.6e-30) : le Poisson simple est rejete.
+La loi melangeante ajustee est une Gamma de forme r = 0.63. C'est bien la
+famille evoquee sous le nom 'Erlang', mais la forme n'est pas entiere : l'Erlang
+est le cas particulier a forme entiere, ici seulement une approximation (Erlang-1).
+Point important : cette brique se calibre SANS AUCUN HORODATAGE, contrairement a W.
+
+Charge systemique : a = 0.122 [0.054 ; 0.223] contre A_LOAD = 0.60 pose.
+
+figure ecrite : exploratory\vasicek_lab\figures\N_frequence_entree.png

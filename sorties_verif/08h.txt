@@ -1,0 +1,51 @@
+﻿
+==============================================================================
+Donnees : Data Breach Chronology, financier (BSF), 2016-2023 : 4614 evts
+==============================================================================
+jours distincts : 1611 | horizon T = 2922 jours
+
+==============================================================================
+(1) Noyau A RETARD (kernel 3 de Bessy-Roland) sur nos donnees
+==============================================================================
+  exponentiel : n=0.551  beta=3.06/j  demi-vie=5.4 h   logL=-506.7
+  a retard    : n=0.517  beta=7.16/j  pic=3.3 h  lag moyen=6.7 h   logL=-566.3
+  meilleur logL : l'exponentiel.
+  -> l'excitation du noyau retarde vit ENTIEREMENT dans la journee
+     (pic a 3.3 h, lag moyen 6.7 h), comme chez Bessy-Roland
+     (leur beta~5-6/j => pic ~4-5 h). Leur meilleur noyau ne sauve pas le Hawkes ici :
+     il ajuste la meme co-occurrence intra-journaliere (ex-aequo MOVEit).
+
+==============================================================================
+(2) Logique TWO-PHASE (Boumezoued, Cherkaoui, Hillairet 2023) : ties = exogene
+==============================================================================
+  Hawkes standard (ex-aequo intra-jour presents)     : n = 0.551
+  Hawkes 1 evt/jour (co-occurrences traitees exogenes): n = ~0 (auto-excitation negligeable)
+  -> en isolant les co-occurrences du meme jour comme exogenes, l'endogeneite
+     passe de 0.55 a ~0 (reduction de 100 %).
+     Le two-phase 2023 isole un terme exogene PARTIEL et 'divise presque par deux'
+     l'endogeneite ; ici on traite TOUTES les co-occurrences du jour en exogene, donc
+     l'effondrement est TOTAL, pas seulement de moitie. Meme diagnostic, plus tranche :
+     le clustering apparent etait porte par la cause commune, pas par une contagion.
+
+==============================================================================
+VERDICT
+==============================================================================
+Le rejet du Hawkes tient face aux variantes de la reference du domaine :
+  1. Leur MEILLEUR noyau (a retard) ajuste, sur nos donnees, une excitation dont le
+     pic (3 h) et le lag moyen (7 h) sont INTRA-JOURNALIERS,
+     comme le leur (beta~5-6/j) : meme signature, aucune dependance d'un jour a l'autre.
+  2. Traiter les co-occurrences du meme jour comme EXOGENES fait chuter l'endogeneite
+     (0.55 -> ~0). C'est le diagnostic du two-phase 2023, en plus tranche.
+On ne CONTREDIT donc pas Bessy-Roland/Boumezoued/Hillairet : on prolonge leur cadre.
+Eux modelisent la frequence des breches pour TARIFER (multivarie, 15 ans, toute
+l'industrie) ; nous testons si la FREQUENCE D'ENTREE d'une cascade DORA (finance,
+fenetre recente dominee par une cause commune) exige une couche d'auto-excitation
+pour le SCR. Reponse : non, un choc commun a arrivees groupees (Poisson compose)
+est plus fidele, et c'est la lecture exogene que leur propre two-phase 2023 privilegie.
+
+NUANCE HONNETE a assumer : sur des dates au JOUR, une echelle d'excitation estimee
+a 4-5 h (la leur comme la notre) reflete de la co-occurrence intra-journaliere, non
+resolue par la donnee. Endogene vs exogene n'y est pas identifiable sans horodatage
+fin ; nous choisissons l'exogene car la cause (MOVEit, un tiers) est, elle, identifiee.
+
+figure ecrite : exploratory\vasicek_lab\figures\O2_hawkes_variantes.png

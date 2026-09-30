@@ -1,0 +1,125 @@
+
+========================================================================================
+1. Controle : les lois recalculees ici sont celles du moteur
+========================================================================================
+  matrice publiee : g = 0.90, diviseur d'emission max_s = 2.60, rho(W) = 0.506
+  marche (moteur publie)           ecart maximal au moteur sur les cinq amorces : 1.1e-16  -> OK
+  branchement (definition 6.1)     ecart maximal au moteur sur les cinq amorces : 0.0e+00  -> OK
+  Les deux fonctions ecrites pour une matrice quelconque reproduisent le moteur : ce qui
+  suit est une propriete du modele publie, pas d'un autre.
+
+========================================================================================
+2. La loi complete distingue W de sa transposee
+========================================================================================
+  W et W^T ont la meme partie symetrique S. Si la co-occurrence ne dependait que de S,
+  les deux colonnes de chaque table seraient egales.
+
+  marche (moteur publie), amorce du modele (proportionnelle a ROOT)
+  paire        P(co-occ | W)   P(co-occ | W^T)   ecart relatif
+  P1-P2               0.1719            0.1487          -13.5 %
+  P1-P3               0.1453            0.1365           -6.0 %
+  P1-P4               0.1450            0.1618          +11.6 %
+  P1-P5               0.1145            0.0654          -42.9 %
+  P2-P3               0.1332            0.1069          -19.8 %
+  P2-P4               0.1739            0.1360          -21.8 %
+  P2-P5               0.1268            0.0663          -47.7 %
+  P3-P4               0.1099            0.1001           -9.0 %
+  P3-P5               0.0789            0.0519          -34.2 %
+  P4-P5               0.1127            0.0669          -40.6 %
+  taille moyenne de l'ensemble atteint : 1.931 sous W, 1.746 sous W^T
+  part des sinistres touchant plus d'un pilier : 62.31 % sous W, 50.77 % sous W^T
+  plus grand ecart relatif sur une paire : 47.7 %
+
+  marche (moteur publie), amorce uniforme
+  paire        P(co-occ | W)   P(co-occ | W^T)   ecart relatif
+  P1-P2               0.1326            0.1566          +18.1 %
+  P1-P3               0.1171            0.1443          +23.3 %
+  P1-P4               0.1087            0.1412          +29.9 %
+  P1-P5               0.0902            0.0918           +1.8 %
+  P2-P3               0.1351            0.1216          -10.0 %
+  P2-P4               0.1469            0.1403           -4.5 %
+  P2-P5               0.1300            0.0939          -27.8 %
+  P3-P4               0.0999            0.1010           +1.1 %
+  P3-P5               0.0901            0.0747          -17.0 %
+  P4-P5               0.1009            0.0859          -14.9 %
+  taille moyenne de l'ensemble atteint : 1.817 sous W, 1.817 sous W^T
+  part des sinistres touchant plus d'un pilier : 54.69 % sous W, 54.69 % sous W^T
+  plus grand ecart relatif sur une paire : 29.9 %
+
+  branchement (definition 6.1), amorce du modele (proportionnelle a ROOT)
+  paire        P(co-occ | W)   P(co-occ | W^T)   ecart relatif
+  P1-P2               0.1617            0.1484           -8.3 %
+  P1-P3               0.1383            0.1441           +4.2 %
+  P1-P4               0.1382            0.1696          +22.7 %
+  P1-P5               0.1104            0.0734          -33.5 %
+  P2-P3               0.1498            0.1072          -28.5 %
+  P2-P4               0.1819            0.1339          -26.4 %
+  P2-P5               0.1458            0.0675          -53.7 %
+  P3-P4               0.1230            0.1071          -12.9 %
+  P3-P5               0.1021            0.0561          -45.1 %
+  P4-P5               0.1244            0.0699          -43.9 %
+  taille moyenne de l'ensemble atteint : 1.855 sous W, 1.694 sous W^T
+  part des sinistres touchant plus d'un pilier : 48.55 % sous W, 41.48 % sous W^T
+  plus grand ecart relatif sur une paire : 53.7 %
+
+  branchement (definition 6.1), amorce uniforme
+  paire        P(co-occ | W)   P(co-occ | W^T)   ecart relatif
+  P1-P2               0.1271            0.1570          +23.5 %
+  P1-P3               0.1128            0.1521          +34.8 %
+  P1-P4               0.1057            0.1566          +48.2 %
+  P1-P5               0.0899            0.0956           +6.3 %
+  P2-P3               0.1446            0.1213          -16.1 %
+  P2-P4               0.1531            0.1401           -8.5 %
+  P2-P5               0.1428            0.0931          -34.8 %
+  P3-P4               0.1093            0.1103           +0.8 %
+  P3-P5               0.1058            0.0760          -28.2 %
+  P4-P5               0.1112            0.0872          -21.6 %
+  taille moyenne de l'ensemble atteint : 1.755 sous W, 1.755 sous W^T
+  part des sinistres touchant plus d'un pilier : 43.60 % sous W, 44.20 % sous W^T
+  plus grand ecart relatif sur une paire : 48.2 %
+
+  LECTURE. Sous l'amorce du modele, les deux cascades distinguent W de sa transposee sur
+  toutes les paires, et jusque dans la taille moyenne des sinistres et la part des
+  sinistres multi-piliers. Sous l'amorce uniforme, la taille moyenne ne bouge pour aucune
+  des deux cascades (pour la cascade independante, 'a atteint k' sous W^T equivaut a
+  'k atteint a' sous W, et la somme sur les couples est invariante) ; la loi des paires,
+  elle, bouge encore. La proposition 6.7 sous sa forme d'origine est donc fausse pour les
+  deux cascades du projet.
+
+========================================================================================
+3. Ce qui reste vrai : au premier ordre et sous amorce uniforme, seul S compte
+========================================================================================
+  eps            marche / modele     marche / uniforme      branch. / modele    branch. / uniforme
+  1.00                   47.74 %               29.87 %               53.71 %               48.19 %
+  0.50                   45.63 %               17.11 %               47.76 %               29.09 %
+  0.10                   48.17 %                4.12 %               46.68 %                6.53 %
+  0.02                   48.70 %                0.86 %               48.39 %                1.39 %
+
+  LECTURE. Sous amorce uniforme l'ecart s'efface proportionnellement a eps : la
+  co-occurrence d'ordre un ne voit que S, et c'est ce qui subsiste de la proposition.
+  Sous l'amorce du modele il ne s'efface pas, le terme d'ordre un etant deja asymetrique.
+
+========================================================================================
+4. Le contre-exemple minimal, a la main
+========================================================================================
+  Trois piliers, W12 = W13 = 0.5 et rien d'autre ; la transposee est un collisionneur
+  (P2 et P3 entrainent P1). Meme partie symetrique. Cascade independante, amorce uniforme.
+  fourche W            P(P2 et P3 touches ensemble) = 0.0833
+  collisionneur W^T    P(P2 et P3 touches ensemble) = 0.0000
+  Sous la fourche, une amorce en P1 touche P2 et P3 avec la probabilite 0.5^2 ; sous le
+  collisionneur, P2 et P3 ne sont jamais touches par un meme sinistre. C'est la structure
+  en V de l'identification des graphes causaux (Verma et Pearl, 1990).
+
+========================================================================================
+5. Grandeurs citees, sans separateur
+========================================================================================
+  marche, amorce du modele         paire P2-P5 : 0.1268 sous W, 0.0663 sous W^T, ecart -47.7 %
+                                   taille moyenne 1.931 sous W, 1.746 sous W^T
+  branchement, amorce du modele    paire P2-P5 : 0.1458 sous W, 0.0675 sous W^T, ecart -53.7 %
+                                   taille moyenne 1.855 sous W, 1.694 sous W^T
+  branchement, amorce uniforme     paire P1-P4 : 0.1057 sous W, 0.1566 sous W^T, ecart +48.2 %
+                                   taille moyenne 1.755 sous W, 1.755 sous W^T
+  marche, amorce uniforme          paire P1-P4 : 0.1087 sous W, 0.1412 sous W^T, ecart +29.9 %
+                                   taille moyenne 1.817 sous W, 1.817 sous W^T
+  marche       a eps = 0.02 : ecart maximal 0.86 % sous amorce uniforme, 48.70 % sous l'amorce du modele
+  branchement  a eps = 0.02 : ecart maximal 1.39 % sous amorce uniforme, 48.39 % sous l'amorce du modele

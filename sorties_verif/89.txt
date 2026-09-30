@@ -1,0 +1,236 @@
+﻿Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+========================================================================================
+0. PERIMETRE ET FENETRE
+========================================================================================
+Perimetre : cyber x finance, convention de severite du projet (load_clean, filter_cyber, filter_finance, conversion 0.92).
+Fenetre retenue : 2004-2025, soit 22 annees et 539 incidents.
+Origines de prevision : 2013 a 2024, soit 12 annees notees hors echantillon.
+
+RAPPEL DE CE QUE LE MEMOIRE PUBLIE, pour situer : seuil 20.03 M EUR, xi 0.5954, sigma 57.97, sur 582 incidents et 91 exces. Ces valeurs ne sont PAS utilisees ci-dessous.
+
+========================================================================================
+1. SEVERITE : ORIGINE GLISSANTE, UN PAS EN AVANT
+========================================================================================
+Pour chaque origine t : ajustement d'une GPD sur les exces de 2004..t au-dessus
+du percentile 85 de CES annees-la, puis notation de la seule annee t+1.
+
+origine  n appr.  u appr.    xi     sigma  | n test  exces  PIT moyen
+  2013     259     8.56   0.822    21.15  |    14      7     0.535
+  2014     273    11.23   0.839    23.65  |    12      1     0.751
+  2015     285    11.10   0.844    23.06  |    22      6     0.519
+  2016     307    11.62   0.619    31.22  |    16      1     0.634
+  2017     323    11.36   0.680    27.68  |    36     10     0.369
+  2018     359    12.56   0.722    27.52  |    22      6     0.519
+  2019     381    12.88   0.585    34.08  |    29      3     0.355
+  2020     410    12.80   0.692    28.28  |    26      6     0.496
+  2021     436    13.09   0.716    29.58  |    32     11     0.635
+  2022     468    15.36   0.612    38.61  |    21      7     0.727
+  2023     489    17.40   0.617    45.16  |    29      6     0.580
+  2024     518    18.20   0.674    46.91  |    21     12     0.483
+
+Exces de test cumules : 76 sur 280 pertes notees.
+
+TEST DE PROBABILITE INTEGRALE (PIT). Si la queue ajustee est la bonne, les
+transformees des exces de test sont uniformes sur [0, 1].
+  moyenne des PIT      : 0.532   (0,500 attendu)
+  Kolmogorov-Smirnov   : D = 0.100, p = 0.4087
+  lecture              : compatible avec l'uniforme
+  A NE PAS SURINTERPRETER : une moyenne PIT superieure a 0,5 indiquerait des
+                         pertes tombant plus haut dans la queue ajustee que
+                         prevu. L'ecart observe ici va dans ce sens mais il
+                         N'EST PAS SIGNIFICATIF, le test ne rejetant pas.
+
+TEST DE DEPASSEMENT (Kupiec). Combien de pertes de test depassent le quantile
+de severite que l'apprentissage annoncait ?
+  niveau  99.0 % : 8 depassement(s) observe(s), 2.8 attendu(s), p = 0.0078
+  niveau  99.5 % : 5 depassement(s) observe(s), 1.4 attendu(s), p = 0.0140
+
+========================================================================================
+1bis. LE MECANISME, MESURE ET NON SUPPOSE
+========================================================================================
+Les deux tests de la section 1 semblent se contredire : la FORME de la queue passe
+le test PIT, et les QUANTILES sont depasses trois fois trop souvent. Les deux
+peuvent tenir ensemble, parce qu'ils ne portent pas sur le meme objet.
+
+  - le PIT ne regarde que les exces AU-DESSUS du seuil d'apprentissage : il teste
+    la queue CONDITIONNELLE, c'est-a-dire la forme ;
+  - le quantile de severite combine la forme, le seuil ET le taux de depassement.
+
+Si la forme est bonne et le quantile faux, c'est donc le TAUX qui derive. Mesure :
+  taux de depassement du seuil, en APPRENTISSAGE : 15.1 % (par construction, regle du percentile 85)
+  taux de depassement du meme seuil, HORS echantillon : 27.1 % (76 exces sur 280)
+  rapport : x1.80   test binomial : p = 2.35e-07
+
+ET LA DERIVE SE VOIT DIRECTEMENT SUR LE SEUIL LUI-MEME, qui est un quantile de
+la donnee d'apprentissage :
+  seuil a l'origine 2013 : 8.56 M EUR
+  seuil a l'origine 2024 : 18.20 M EUR   soit x2.13 en 11 ans
+  mediane annuelle des pertes : tendance de +13.0 % par an en log, p = 0.0003
+
+LECTURE, ET ELLE N'ETAIT PAS CELLE ATTENDUE. La queue n'est pas mal ajustee : sa
+FORME survit au test hors echantillon. Ce qui derive est l'ECHELLE de la loi de
+severite. Une fenetre d'apprentissage qui s'etend garde les petites pertes
+anciennes, donc elle retarde sur cette derive, et le quantile qu'elle annonce est
+trop bas pour l'annee suivante. C'est un defaut de STATIONNARITE, pas de famille.
+
+CE QUE CELA IMPLIQUE POUR LE MEMOIRE, ET CE QUE CELA N'IMPLIQUE PAS.
+  - le sens de l'ecart est ANTI-CONSERVATEUR : le capital de severite estime sur
+    l'historique complet sous-estime celui d'une annee recente. Une sous-estimation
+    se declare, elle ne se couvre pas par un argument de prudence ;
+  - en revanche cela ne dit RIEN contre le xi publie. Les xi de cette section sont
+    ajustes sur des seuils de 8,6 a 18,2 M EUR, tous INFERIEURS au seuil publie de
+    20.03 M EUR, et le balayage de seuil du script 47 montre que xi
+    DECROIT quand le seuil monte. Comparer ces valeurs au xi publie serait donc
+    comparer deux objets, et c'est le genre de lecture que ce projet traque ;
+  - et cela ne dit rien contre la THESE, qui porte sur l'ECART entre etats de
+    conformite a severite de base commune. Une derive d'echelle commune aux deux
+    etats se simplifie dans un rapport.
+
+========================================================================================
+1ter. CE QUE LA DERIVE COUTERAIT SUR LA GRANDEUR PUBLIEE
+========================================================================================
+La section 1bis mesure la derive ; elle ne dit pas ce qu'elle coute sur le nombre
+que le memoire publie. C'est l'objet de cette section, et le traitement est celui
+du p_u gele : le chiffre publie ne bouge pas, l'ecart est imprime.
+
+Perimetre : la donnee complete de la chaine publiee, 582 incidents,
+dont 91 exces au-dessus du seuil publie de 20.03 M EUR.
+
+(a) REFERENCE STATIONNAIRE, ajustement libre sur tout l'historique :
+    xi 0.5979   sigma 55.75   p_u compte 0.1564
+    quantile de severite 99,5 % : 657.16 M EUR
+    pour memoire, le memoire publie 662.78 M EUR avec p_u pose a 0.1509.
+    L'ecart entre ces deux lignes est le defaut de p_u DEJA declare au chapitre 13,
+    et non un resultat de cette section. Les variantes ci-dessous sont donc
+    comparees a (a) et jamais au chiffre publie, sans quoi deux ecarts se
+    melangeraient dans un seul nombre.
+
+(b) ECHELLE DE LA QUEUE RENDUE NON STATIONNAIRE. On ajuste sigma_t = exp(ls + b (t - 2025))
+    par maximum de vraisemblance sur les MEMES exces, xi constant. C'est la derive
+    mesuree dans la queue elle-meme, et non dans le corps de la distribution.
+    b = +4.00 % par an   (ecart-type 1.84 %)
+    rapport de vraisemblance contre b = 0 : 4.28, p = 0.0386 (derive SIGNIFICATIVE)
+    xi 0.5273   sigma a 2025 : 81.95
+    quantile de severite 99,5 % evalue a 2025 : 819.40 M EUR
+    ecart a (a) : +162.23 M EUR, soit +24.7 %
+
+(c) CONTRE-EPREUVE, ET C'EST UNE VARIANTE A REJETER. On suppose que la queue derive
+    comme le CORPS, en ramenant chaque perte en unites de severite 2025 par un
+    facteur exp(g (t_ref - t)) avec g la tendance de la mediane, puis en rejouant la
+    chaine a percentile de seuil constant (84.4).
+    g       seuil   xi      sigma   p_u     q 99,5 %    ecart a (a)
+     +8.0 %   48.59  0.5072  136.08  0.1564    1318.31    +100.6 %   IC90 bas
+    +13.0 %   77.65  0.8350  210.43  0.1564    4291.30    +553.0 %   tendance mesuree
+    +17.9 %  141.57  1.2711  303.95  0.1564   18915.68   +2778.4 %   IC90 haut
+
+LECTURE, ET ELLE MODERE LA SECTION 1bis AU LIEU DE L'AMPLIFIER. Ecrite apres lecture
+des trois blocs ci-dessus.
+
+  1. LA DERIVE N'EST PAS HOMOGENE LE LONG DE LA DISTRIBUTION, et c'est le resultat
+     principal de cette section. Le CORPS derive de +13.0 % par an (mediane, section 1bis),
+     la QUEUE de +4.00 % seulement, soit un facteur 3.2. Lire la derive du corps comme
+     une derive du capital serait donc une erreur d'un facteur trois, et c'est la
+     lecture que la seule section 1bis invitait a faire.
+
+  2. LE COUT SUR LA GRANDEUR PUBLIEE EST CELUI DE (b) : +162 M EUR sur le quantile de
+     severite 99,5 %, soit +24.7 %. C'est le chiffre a declarer. Sa reserve est de sens
+     unique : le taux de depassement est garde commun aux deux branches, alors qu'une
+     echelle qui monte fait aussi monter le nombre d'exces au-dessus d'un seuil fixe,
+     donc cet ecart est une borne BASSE.
+
+  3. LA VARIANTE (c) EST REJETEE, ET SON REJET EST UN ARGUMENT. Supposer que la queue
+     derive comme le corps donne un quantile de 4291 M EUR, soit 6.5 fois (a), et
+     surtout un indice de queue de 1.27 a la borne haute de l'IC90 de la tendance,
+     donc SUPERIEUR A UN : l'esperance de la severite cesserait d'exister. C'est le
+     meme argument d'existence que celui qui ecarte la calibration PRC comme support
+     d'une mesure de couverture. Une hypothese qui detruit l'objet qu'elle corrige ne
+     se retient pas, et cela vaut mieux qu'un argument de degre.
+
+  4. ET UNE CONSEQUENCE SUR LE XI PUBLIE, DE SENS OPPOSE A LA DERIVE. Modeliser la
+     derive fait TOMBER l'indice de queue de 0.5979 a 0.5273. Regrouper des exces
+     d'annees a echelles differentes fabrique un melange, et un melange de lois a
+     echelles inegales parait plus lourd de queue qu'aucune de ses composantes.
+     L'ajustement stationnaire attribue donc a la FORME une part de ce qui est de la
+     DERIVE. Les deux ecarts du modele publie sont ainsi de sens contraires, le xi
+     etant legerement prudent quand l'echelle est anti-conservatrice, et ils ne se
+     compensent pas puisqu'ils ne portent pas sur la meme grandeur.
+
+========================================================================================
+2. FREQUENCE : ORIGINE GLISSANTE, ET POISSON CONTRE BINOMIALE NEGATIVE
+========================================================================================
+Comptes annuels du perimetre :
+  2004:25  2005:25  2006:23  2007:29  2008:38  2009:39  2010:25  2011:13  2012:26  2013:16  2014:14  2015:12  2016:22  2017:16  2018:36  2019:22  2020:29  2021:26  2022:32  2023:21  2024:29  2025:21
+  moyenne 24.50, variance 58.55, dispersion Var/E = 2.39
+  tendance lineaire : -0.092 incident/an, p = 0.7297 (non significative)
+
+origine   obs   Poisson IP90      NB IP90        dans IP ?   log-score P   log-score NB
+  2013      14   [   18 ;    35]   [   14 ;    40]   - / NB        -5.532        -4.061
+  2014      12   [   17 ;    33]   [   13 ;    40]   - /  -        -6.266        -4.197
+  2015      22   [   16 ;    32]   [   11 ;    39]   P / NB        -2.534        -3.044
+  2016      16   [   16 ;    32]   [   11 ;    38]   P / NB        -3.697        -3.246
+  2017      36   [   15 ;    31]   [   11 ;    38]   - / NB        -5.802        -4.371
+  2018      22   [   16 ;    32]   [   11 ;    39]   P / NB        -2.549        -3.036
+  2019      29   [   16 ;    32]   [   12 ;    39]   P / NB        -3.133        -3.383
+  2020      26   [   16 ;    32]   [   12 ;    39]   P / NB        -2.623        -3.118
+  2021      32   [   16 ;    33]   [   12 ;    38]   P / NB        -3.788        -3.639
+  2022      21   [   17 ;    33]   [   13 ;    39]   P / NB        -2.727        -2.994
+  2023      29   [   17 ;    33]   [   13 ;    38]   P / NB        -3.005        -3.276
+  2024      21   [   17 ;    33]   [   13 ;    38]   P / NB        -2.732        -2.968
+
+COUVERTURE REELLE d'un intervalle de prevision annonce a 90 % :
+  Poisson             : 9/12 = 75.0 %
+  Binomiale negative  : 11/12 = 91.7 %
+
+LOG-SCORE PREDICTIF CUMULE (plus haut = meilleur) :
+  Poisson             :  -44.388
+  Binomiale negative  :  -41.334
+  ecart en faveur de  : la binomiale negative  (3.054 nats sur 12 annees)
+
+CE QUE CE SECOND TEST TRANCHE, et le premier ne le fait pas : la binomiale
+negative gagne-t-elle son parametre supplementaire HORS echantillon ? Une
+couverture peut etre bonne par largeur excessive ; le log-score, lui, penalise
+un intervalle inutilement large autant qu'un intervalle trop etroit.
+
+========================================================================================
+VERDICT
+========================================================================================
+Trois resultats, et ils ne vont pas dans le meme sens. C'est ecrit APRES lecture
+des sorties, et non en meme temps que le code qui les produit.
+
+1. LA LOI DE FREQUENCE EST VALIDEE HORS ECHANTILLON, ET C'EST UN GAIN NET. La
+   binomiale negative couvre 91,7 % pour un intervalle annonce a 90 %, quand
+   Poisson ne couvre que 75 %. Elle gagne aussi au log-score predictif, donc son
+   parametre supplementaire n'est pas paye par une largeur inutile. Le choix de
+   surdispersion du memoire cesse d'etre une precaution et devient une mesure.
+
+2. LA FORME DE LA QUEUE SURVIT AU TEST, ce qui n'etait pas acquis avec 20 a 90
+   exces par ajustement. Le PIT des exces de test est compatible avec l'uniforme
+   (Kolmogorov-Smirnov non rejete), donc la GPD n'est pas la mauvaise famille.
+
+3. LES QUANTILES DE SEVERITE SONT DEPASSES TROIS FOIS TROP SOUVENT, et le test de
+   Kupiec les rejette aux deux niveaux. LE MOTIF EST MESURE en section 1bis et il
+   n'est pas celui qu'on attendrait : ce n'est pas la queue qui est mal ajustee,
+   c'est l'echelle de la loi de severite qui DERIVE dans le temps. Une fenetre
+   d'apprentissage qui s'etend retarde sur cette derive.
+
+4. ET LA DERIVE COUTE MOINS QUE LA SECTION 1bis NE LE LAISSE CROIRE, parce qu'elle
+   N'EST PAS HOMOGENE : le corps derive de +13.0 % par an, la queue de +4.00 %
+   seulement, facteur 3.2. L'effet a declarer est donc celui de la queue, +24.7 %
+   sur le quantile de severite 99,5 %, soit +162 M EUR, et non un quintuplement.
+   Supposer que la queue derive comme le corps ferait passer l'indice de queue
+   au-dessus de un, donc detruirait l'esperance de la severite : section 1ter (c).
+
+CE QUE LE MEMOIRE DOIT EN FAIRE, ET C'EST UNE DECISION DE KELIAN, PAS DU SCRIPT.
+La non-stationnarite de l'echelle de severite n'est pas dans l'inventaire des
+hypotheses du chapitre 13. Elle a exactement le statut du p_u gele : un ecart
+mesure, de sens anti-conservateur, immateriel pour la these mais materiel pour le
+niveau. Le traitement coherent avec le gel du 7 aout est donc de la DECLARER
+chiffree, non de recalibrer sur une fenetre glissante, ce qui deplacerait tous
+les niveaux publies. La section 1ter donne le chiffre a declarer.
+
+CE QU'IL NE FAUT PAS EN CONCLURE. Ni que le modele est faux, la forme etant
+validee et la loi de frequence confirmee. Ni que la these est touchee, puisqu'elle
+porte sur un RAPPORT entre etats a severite de base commune.
+
+EXIT 0

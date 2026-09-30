@@ -1,0 +1,65 @@
+tirage commun : 40000 annees, 865674 incidents, lambda=21.56/an
+
+==============================================================================
+1. Ce que chaque regime peut affirmer AUJOURD'HUI, sans elicitation
+==============================================================================
+  REGIME A (W pose) : SCR = 8110 M, priorite = P1.
+    Un point et un ordre. Aucun enonce sur ce que ce point aurait pu etre.
+  REGIME B (couches) : socle = 5275 M (ne depend d'AUCUN parametre non
+    identifiable), contagion bornee, SCR dans [6858 ; 8697] M.
+    En perte moyenne : socle 583 M, bornes [849 ; 1100] M.
+  Le point du regime A tombe dans la bande du regime B (oui), a 68 % de la borne basse.
+
+==============================================================================
+2. Quelle part du resultat est deja fixee sans elicitation ?
+==============================================================================
+  Sur la borne haute (8697 M) :
+    -  60.7 %  socle calibre, insensible a W et donc a l'elicitation
+    -  18.2 %  contagion CERTAINE (le plancher de la bande au-dessus du socle)
+    -  21.1 %  bande d'ignorance directionnelle, la SEULE part que l'elicitation peut deplacer
+  Autrement dit, 79 % du capital est deja determine avant que le
+  moindre expert ait repondu. L'elicitation ne joue que sur le solde.
+
+==============================================================================
+3. L'elicitation peut-elle trancher la DECISION ? (priorite de remediation)
+==============================================================================
+  Sur 150 matrices admissibles tirees de l'ensemble, pilier arrivant en tete :
+    P1 :  45.3 %
+    P4 :  36.0 %
+    P2 :  13.3 %
+    P3 :   5.3 %
+    P5 :   0.0 %
+
+  ACQUIS SANS ELICITATION :
+    - P5 n'arrive JAMAIS en tete, sur aucune matrice admissible.
+    - P3 y arrive dans moins de 10 % des cas.
+  OUVERT, ET C'EST LE TRAVAIL DE L'ELICITATION :
+    - departager P1 et P4 (81 % des cas a eux deux)
+    - avec un residu pour P2 (13 %)
+
+==============================================================================
+4. TEST DE BIAIS DU PANEL : que devient chaque regime si le panel derape ?
+==============================================================================
+  Balayage du biais de b = -1.67 a b = 1.67 (bord du pave admissible).
+  REGIME A : le SCR publie suit le panel de 7392 a 8169 M,
+    soit une amplitude de 777 M (10 % du point actuel), et
+    la priorite bascule entre 3 pilier(s) : P1, P2, P4.
+    Rien dans le regime A ne signale ce deplacement au lecteur.
+  REGIME B : la bande [6858 ; 8697] ne bouge pas d'un euro, puisqu'elle ne
+    depend d'aucun dire d'expert. Tous les paniques du panel y sont contenus (verifie).
+  C'est l'argument decisif : le regime B est publiable AVANT l'elicitation et
+  reste vrai APRES, quel que soit son resultat. Le regime A, lui, est un pari
+  sur une seance qui n'a pas encore eu lieu.
+
+==============================================================================
+5. Verdict compare
+==============================================================================
+                                  REGIME A (W pose)                     REGIME B (couches)
+  Sortie sur le capital           un point (8110 M)                     socle 5275 + bande [6858 ; 8697]
+  Opposable sans elicitation      non, tout repose sur le classeur      oui, 79 % du capital est deja fixe
+  Sensibilite a un panel biaise   deplace le SCR de 777 M               aucune, la bande est invariante
+  Priorite de remediation         P1, sans marge d'erreur               groupe de tete P1, P4, ordre interne ouvert
+  Role de l'elicitation           fournit LE resultat                   resserre la bande et departage la tete
+  Si l'elicitation echoue         le modele n'a plus de parametre       le resultat tient, en bornes
+
+figure ecrite : exploratory/vasicek_lab/figures/Z2_comparaison_regimes.png

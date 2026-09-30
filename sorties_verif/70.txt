@@ -1,0 +1,80 @@
+﻿
+========================================================================================
+1. Les deux canaux, lus a chaque taille
+========================================================================================
+  elasticite frequence / taille : b_lambda = +0.0744
+  elasticite severite / taille  : b = 0.087 [0.026 ; 0.148]
+  taille de reference du multiplicateur de severite : 121 894 M USD
+
+  taille        actifs (M USD)   lambda / an  mult. severite
+  petite                 2 000        0.0772          0.6994
+  moyenne               20 000        0.0917          0.8545
+  grande               200 000        0.1088          1.0440
+
+========================================================================================
+2. Le rapport de capital entre tailles : proportionnelle contre deux canaux
+========================================================================================
+  Reference : entite moyenne (20 000 M USD d'actifs). Rapports au capital de cette entite.
+
+  taille         proportionnelle    deux canaux (C)    deux canaux (NC)   facteur d ecart
+  petite                   0.100              0.633               0.666               0.2
+  moyenne                  1.000              1.000               1.000               1.0
+  grande                  10.000              1.621               1.490               6.2
+
+  LE RAPPORT NE DEPEND PRATIQUEMENT PAS DE L'ETAT DES CANAUX, conforme ou non : les
+  deux colonnes du milieu se suivent. La question de la mise a l'echelle est donc bien
+  separable de celle de la conformite, ce qui n'allait pas de soi et rend le test propre.
+
+  ELASTICITE IMPLICITE DU CAPITAL A LA TAILLE, par regression log-log sur les trois
+  tailles : 0.204 a l'etat conforme et 0.175 a l'etat non conforme, contre
+  1,000 que la proportionnalite suppose.
+
+========================================================================================
+3. Ce que la proportionnalite ferait, et dans quel sens
+========================================================================================
+  Sur la petite entite, la proportionnalite donne un rapport de 0.100 quand
+  les deux canaux donnent 0.633 : elle SOUS-ESTIME d'un facteur 6.3.
+  Sur la grande, elle donne 10.0 contre 1.621 : elle
+  SUR-ESTIME d'un facteur 6.2.
+  Sur toute la plage, de la petite a la grande, la proportionnalite ecarte les deux
+  entites d'un facteur 100 quand la mesure les ecarte de 2.56.
+
+  LE MECANISME, ET IL EST DEJA DANS LE MEMOIRE. La severite ne se met presque pas a
+  l'echelle de la taille (elasticite 0,087), et l'effet de la frequence sur un quantile
+  de queue lourde n'est pas lineaire : par le principe du grand saut unique, multiplier
+  lambda par un facteur multiplie le quantile par ce facteur puissance xi, soit une
+  elasticite de frequence deja amortie. Les deux canaux composent donc en une elasticite
+  d'un ordre de grandeur sous l'unite, et c'est ce que la regression ci-dessus retrouve.
+
+========================================================================================
+4. Ce que le test tranche, et ce qu'il ne tranche pas
+========================================================================================
+  TRANCHE. L'elasticite unitaire que suppose la proportionnalite est incompatible avec
+  les deux elasticites mesurees : +0.0744 sur la frequence, significative a
+  z = 7.59 et pourtant tres loin de 1, et 0.087 sur la
+  severite, d'intervalle [0.026 ; 0.148] qui exclut 1 de tres
+  loin. Adopter la proportionnalite reviendrait a poser une elasticite que la donnee
+  rejette sur les deux canaux separement.
+
+  NE TRANCHE PAS. Que la descente a deux canaux soit juste. Une elasticite de severite
+  quasi nulle affirme qu'une entite de quelques milliards subit a peu pres la severite
+  d'une institution mondiale, ce qui est la limite que le memoire declare et qui lui fait
+  publier le chiffre d'entite comme une BORNE SUPERIEURE. Les deux methodes se trompent
+  donc en sens OPPOSES, et le test dit seulement laquelle est rejetee par la mesure.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. Elasticite du capital a la taille : 0.204 mesuree, 1,000 supposee par la
+     proportionnalite. L'ecart n'est pas de degre, il est d'ordre de grandeur.
+  2. Entre la petite et la grande entite, la proportionnalite ecarte les capitaux d'un
+     facteur 100 quand la mesure les ecarte de 2.56.
+  3. Le sens de l'erreur s'inverse avec la taille : la proportionnalite sous-estime les
+     petites entites et sur-estime les grandes.
+  4. Le rapport est insensible a l'etat des canaux, donc la mise a l'echelle et la
+     conformite sont bien deux questions separees.
+  5. A dire a Caroline : la proportionnalite est rejetee par la mesure, mais la methode
+     retenue a sa propre limite, declaree, et de sens contraire. Le desaccord n'est pas
+     sur la prudence, il est sur le canal par lequel la taille agit.
+
+figure ecrite : exploratory\vasicek_lab\figures\S26_test_renormalisation.png

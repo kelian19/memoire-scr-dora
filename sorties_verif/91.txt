@@ -1,0 +1,202 @@
+﻿Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+========================================================================================
+0. PERIMETRE ET OBJET NOTE
+========================================================================================
+Perimetre : cyber x finance, convention de severite du projet, 539 incidents sur 22 annees (2004-2025).
+Origines de prevision : 2013 a 2024, soit 12 annees notees hors echantillon.
+Observable : la somme annuelle des sinistres DEPASSANT le seuil d'apprentissage, qui est
+l'objet que la chaine publiee produit (severite nulle sous le seuil).
+Predictive : 200000 annees simulees par origine, comptage puis amincissement au taux de
+depassement, puis severite de queue u + GPD. Graine fixee, sortie deterministe.
+
+========================================================================================
+1. LA CHARGE ANNUELLE AGREGEE, ORIGINE GLISSANTE
+========================================================================================
+origine   observe   mediane pred.       IP90 predictif        dans IP ?   PIT   CRPS
+  2013       534           174   [   14 ;   1 162]       oui    0.850    214.4
+  2014        74           189   [   14 ;   1 306]       oui    0.219     90.2
+  2015       353           176   [   12 ;   1 267]       oui    0.734    105.2
+  2016        55           191   [   13 ;     962]       oui    0.164     95.6
+  2017       737           177   [   12 ;     978]       oui    0.918    373.2
+  2018       427           193   [   14 ;   1 116]       oui    0.780    132.9
+  2019       145           207   [   15 ;     981]       oui    0.373     62.3
+  2020       829           198   [   15 ;   1 079]       oui    0.921    425.6
+  2021     1 268           212   [   17 ;   1 184]       NON    0.956    789.2
+  2022     1 772           258   [   21 ;   1 219]       NON    0.977   1209.8
+  2023     1 399           297   [   24 ;   1 438]       oui    0.947    790.7
+  2024     2 115           320   [   26 ;   1 694]       NON    0.966   1387.6
+
+COUVERTURE REELLE de l'intervalle annonce a 90 % : 9/12 = 75.0 %
+UNIFORMITE DES PIT : moyenne 0.734 (0,500 attendu), D = 0.484, p = 0.0042
+  lecture : INCOMPATIBLE
+  A NE PAS SURINTERPRETER : sur 12 annees, le test de Kolmogorov-Smirnov ne
+  detecte qu'un ecart grossier. Une non-uniformite moderee resterait invisible.
+
+CRPS CUMULE (plus bas = meilleur), sur les MEMES tirages de severite :
+  comptage binomiale negative :    5676.7
+  comptage Poisson            :    5694.0
+  ecart en faveur de la binomiale negative : 17.3, soit 0.3 %
+  CE QUE CE SCORE AJOUTE au log-score du script 89 : celui-la notait le COMPTAGE, celui-ci
+  note la CHARGE. Le choix de loi de comptage se juge donc sur la grandeur qui porte le
+  capital, et non seulement sur le nombre d'incidents.
+
+========================================================================================
+1bis. LE REJET EST-IL STRUCTUREL, OU EST-CE LA DERIVE DEJA MESUREE ?
+========================================================================================
+Un rejet du PIT ne dit pas d'ou il vient. Deux causes possibles et elles n'appellent pas
+le meme traitement : une mauvaise structure de composition, qui condamnerait le modele, ou
+la derive d'echelle du script 89, qui est deja declaree. La derive laisse une signature
+reconnaissable : elle ne desaligne pas les premieres annees notees, seulement les
+dernieres, l'apprentissage prenant du retard a mesure que la derive s'accumule.
+
+  PIT moyen des 6 PREMIERES annees notees (2014-2019) : 0.611
+  PIT moyen des 6 DERNIERES (2020-2025)        : 0.857
+  test de Mann-Whitney, premieres < dernieres : p = 0.0130
+
+  charge observee, moyenne des 6 premieres annees : 363 M EUR
+  charge observee, moyenne des 6 dernieres         : 1 255 M EUR
+  mediane predictive, meme decoupage : 183 puis 248 M EUR
+
+LECTURE. L'observe et la predictive montent tous deux, mais pas au meme rythme : c'est le
+retard d'une fenetre qui s'etend sur une echelle qui derive, et non un defaut de la
+composition frequence x severite. Le rejet du PIT est donc la MEME limite que celle du
+script 89, vue sur l'objet qui porte le capital, et il ne s'y ajoute pas.
+
+========================================================================================
+2. CE QUE DOUZE ANNEES PERMETTENT, ET CE QU'ELLES NE PERMETTENT PAS
+========================================================================================
+Un backtest qui ne declare pas sa puissance laisse croire qu'une absence de rejet vaut
+validation. Le calcul est elementaire et il doit etre ecrit.
+
+  niveau  90.0 % :  1.20 depassement(s) attendu(s) sur 12 annees ;    11 annees pour en esperer un ;
+                      78 annees pour detecter un taux DOUBLE du nominal a 80 % de puissance
+  niveau  99.0 % :  0.12 depassement(s) attendu(s) sur 12 annees ;   100 annees pour en esperer un ;
+                     905 annees pour detecter un taux DOUBLE du nominal a 80 % de puissance
+  niveau  99.5 % :  0.06 depassement(s) attendu(s) sur 12 annees ;   200 annees pour en esperer un ;
+                    1811 annees pour detecter un taux DOUBLE du nominal a 80 % de puissance
+
+LECTURE, ET C'EST UNE LIMITE DU BACKTEST ET NON DU MODELE. Le quantile a 99,5 % qui porte
+le capital N'EST PAS testable sur un historique de cette longueur, et il ne le serait sur
+aucun historique de risque operationnel existant. Ce que ce script teste est donc le
+CENTRE et le CORPS de la loi de l'agregat, a 90 %, pas sa queue extreme. Le capital reste
+adosse a l'ajustement parametrique, dont la queue est validee par la section 1 du script
+89, par Anderson-Darling et Kolmogorov-Smirnov, et bornee par l'IC de xi. Aucun de ces
+chemins n'est un backtest du quantile lui-meme, et il ne faut pas le presenter comme tel.
+
+========================================================================================
+3. L'INDEPENDANCE ENTRE FREQUENCE ET SEVERITE, TESTEE
+========================================================================================
+Tout modele compose la suppose : le montant d'un sinistre ne depend pas du nombre de
+sinistres de l'annee. Rien ne la testait dans ce projet. Si elle etait fausse dans le sens
+positif, les annees chargees porteraient aussi des sinistres plus gros, et la queue de
+l'agregat serait plus lourde que celle que le modele produit.
+
+(a) AU NIVEAU DU SINISTRE, regression du logarithme du montant sur le compte de l'annee.
+    sans controle : pente -0.03711 par incident, ecart-type 0.01250, p = 0.0031
+    AVEC controle d'annee : pente -0.02397, ecart-type 0.01175, t = -2.04, p = 0.0419
+    le controle est indispensable : la severite DERIVE de +11.8 % par an en log (script 89),
+    et une annee chargee est aussi une annee datee. Sans controle, la pente melange les
+    deux effets.
+
+(b) AU NIVEAU DE L'ANNEE, correlations de rang, robustes a la queue lourde.
+    compte contre mediane annuelle   : rho de Spearman -0.257, p = 0.2489
+    compte contre maximum annuel     : rho de Spearman +0.084, p = 0.7115
+    UNE CORRELATION DE RANG PLUTOT QU'UN TEST DE VARIANCE, et le motif n'est pas le gout :
+    a xi voisin de 0,6 la variance de la severite est INFINIE, donc un test adosse a la
+    variance de l'agregat n'aurait pas d'objet. C'est le meme argument d'existence qui
+    ecarte la TVaR sous la calibration PRC.
+
+(c) LE CONTROLE QUI TRANCHE : L'EFFET SURVIT-IL SUR LES SEULS SINISTRES DE QUEUE ?
+    Une annee a beaucoup d'incidents enregistres peut etre une annee ou la collecte
+    descend plus bas, ce qui abaisse mecaniquement le montant moyen SANS qu'aucune
+    propriete du risque ne change. C'est un artefact de base, non une dependance. Or le
+    modele ne tire que des severites de QUEUE : si l'effet vient du bas de la
+    distribution, il doit s'affaiblir en restreignant aux exces.
+    sur les 81 exces au-dessus du percentile 85 (20.52 M EUR), avec controle d'annee :
+    pente -0.00331, ecart-type 0.01610, t = -0.21, p = 0.8378
+    rapport a la pente sur toute la distribution : 0.14
+
+========================================================================================
+3bis. CE QUE CETTE DEPENDANCE DEPLACERAIT SUR LE QUANTILE DE L'AGREGAT
+========================================================================================
+Un signe ne suffit pas : il faut la taille. On relache l'independance en faisant dependre
+l'echelle de queue du compte de l'annee, sigma_n = sigma exp(beta (n - n moyen)), avec le
+beta estime sur les seuls exces, puis on compare les quantiles de l'agregat.
+L'independance est le cas beta = 0, et elle sert de reference.
+
+origine 2024, 21 annees d'apprentissage, compte moyen 24.67.
+beta        q 90 %      q 99 %     q 99,5 %    ecart a l'independance
+  0 (independance)        1 142     4 215      6 432   reference
+  -0.00331 (mesure)       1 130     4 173      6 355   -1.2 % sur le quantile a 99,5 %
+  +0.00331 (signe oppose)  1 156     4 270      6 511   +1.2 % sur le quantile a 99,5 %
+
+LECTURE, ET ELLE N'EST PAS CELLE QUI ETAIT ANNONCEE AVANT D'AVOIR LU LE CONTROLE (c). Le
+signe negatif trouve en (a) sur toute la distribution NE SURVIT PAS sur les exces : la
+pente y tombe a 0.14 de sa valeur et cesse d'etre significative (p = 0.84). L'explication la
+plus simple est donc un artefact de collecte au bas de la distribution, une annee a
+beaucoup d'incidents enregistres etant une annee ou l'on descend plus bas, et non une
+dependance du risque. Et meme prise au pied de la lettre sur les exces, sa consequence est
+de l'ordre de 1 % sur le quantile a 99,5 % de l'agregat, symetrique en signe.
+L'hypothese d'independance n'est donc plus non testee : elle est testee sur la population
+que le modele tire vraiment, et elle y tient.
+
+========================================================================================
+VERDICT
+========================================================================================
+Ecrit APRES lecture des sorties. Le commentaire de la section 3bis annoncait avant lecture
+une dependance conservatrice : le controle (c) l'a dementi, et c'est la sortie qui tranche.
+
+1. LA CHARGE AGREGEE EST REJETEE LA OU LES DEUX MARGINALES PASSAIENT, et c'est exactement
+   la raison d'etre de ce test. Le PIT de l'agregat vaut 0.734 pour 0,500 attendu et
+   Kolmogorov-Smirnov le rejette (p = 0.0042) ; la couverture de l'intervalle a 90 % n'est
+   que de 75.0 %, avec 3 depassements de la borne haute, tous dans les quatre
+   dernieres annees notees. Deux marginales correctes ne font donc pas un agregat correct,
+   et le script 89 seul ne pouvait pas le voir.
+
+2. MAIS LE REJET N'EST PAS STRUCTUREL : C'EST LA DERIVE DU SCRIPT 89, VUE SUR L'OBJET QUI
+   PORTE LE CAPITAL. Le PIT vaut 0.611 sur les 6 premieres annees notees contre 0.857 sur les
+   6 dernieres (Mann-Whitney p = 0.0130), et la charge observee passe en moyenne de
+   363 a 1 255 M EUR quand la mediane predictive ne passe que de 183 a 248.
+   AUCUNE LIMITE NOUVELLE NE S'AJOUTE donc a l'inventaire du chapitre 13 : la meme s'y lit
+   plus fort, parce que l'agregat cumule la derive de l'ECHELLE et celle du TAUX de
+   depassement, quand chaque marginale n'en portait qu'une.
+
+3. LE CHOIX DE LA LOI DE COMPTAGE EST DECISIF SUR LES COMPTES ET PRESQUE IMMATERIEL SUR LA
+   CHARGE, ce qui n'etait pas attendu. Le script 89 donne un avantage net a la binomiale
+   negative sur les comptes, couverture 91,7 % contre 75,0 % et 3,054 nats de log-score.
+   Au CRPS sur la CHARGE, son avantage tombe a 0.3 %. Le motif est celui que le memoire avance
+   deja pour son quantile : la charge annuelle est portee par un sinistre unique, donc par
+   la queue de severite et non par la surdispersion du comptage. La binomiale negative
+   reste le bon choix, mais elle cesse d'etre un determinant du capital.
+
+4. L'INDEPENDANCE FREQUENCE / SEVERITE N'EST PLUS UNE HYPOTHESE NON TESTEE, ET ELLE TIENT.
+   Sur toute la distribution la pente est negative et significative (-0.02397, p = 0.0419 avec
+   controle d'annee), mais sur les seuls EXCES elle tombe a -0.00331 (p = 0.84), soit 0.14 de sa
+   valeur. L'effet vit donc dans le BAS de la distribution, ou il s'explique par la
+   profondeur de collecte, et il est absent de la population que le modele tire. Sa
+   consequence sur le quantile de l'agregat est de l'ordre de 1 %, symetrique en signe.
+
+5. ET CE QUE CE BACKTEST NE PEUT PAS FAIRE, DIT EN ANNEES PLUTOT QU'EN PRECAUTION DE STYLE.
+   Detecter un taux de depassement DOUBLE du nominal a 80 % de puissance demanderait 1 811
+   annees a 99,5 %, 905 a 99 % et 78 meme a 90 %. Le quantile qui porte le capital n'est
+   donc testable sur AUCUN historique de risque operationnel existant. Ce script teste le
+   centre et le corps de la loi de l'agregat ; le presenter comme une validation du
+   quantile a 99,5 % serait faux, et c'est la formulation qu'il faut tenir devant un jury.
+
+========================================================================================
+GRANDEURS CITEES PAR LE MEMOIRE, SANS SEPARATEUR DE MILLIERS
+========================================================================================
+Les tables ci-dessus impriment les montants avec une espace de milliers, que l'extracteur
+du harnais de verification coupe en deux. Les memes valeurs sont reprises ici en clair.
+Ce bloc n'ajoute aucun calcul.
+
+  charge observee, moyenne des 6 premieres annees notees   363
+  charge observee, moyenne des 6 dernieres              1255
+  mediane predictive, memes decoupages                    183 puis 248
+  charge observee la plus forte (2025)                 2115
+  quantile 99,5 % de l'agregat sous independance           6432
+  quantile 90 % de l'agregat sous independance             1142
+  quantile 99 % de l'agregat sous independance             4215
+
+EXIT 0

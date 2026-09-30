@@ -1,0 +1,127 @@
+﻿
+========================================================================================
+1. LES TROIS CANDIDATES, calculees EXACTEMENT et sans aucune simulation
+========================================================================================
+  COMPARAISON PRINCIPALE A L'ETAT CONFORME, et il faut dire pourquoi. A l'etat non
+  conforme, le pilier des tiers tire un ENSEMBLE de piliers par choc commun, sans ordre :
+  il n'y a donc pas de « dernier pilier » et la part de fin n'y est pas definie. A l'etat
+  conforme les cinq amorces sont des marches, et les trois candidates portent sur le meme
+  objet. La section 5 revient sur l'etat non conforme avec la seule candidate qui y garde
+  un sens.
+
+  Controle : la loi de fin somme a 1.000000 (toute marche s'arrete quelque part).
+  Nombre moyen de piliers touches : 1.380 (le script 74 publie 1,380 a cet etat).
+
+  Pilier     part d amorce   part de FIN   part de PASSAGE
+  P1                 30.3 %         18.8 %             24.2 %
+  P2                 18.2 %         22.5 %             21.4 %
+  P3                 15.2 %         18.2 %             16.8 %
+  P4                 27.3 %         24.5 %             24.7 %
+  P5                  9.1 %         16.0 %             12.9 %
+
+  Lecture des trois colonnes. La part d'amorce est ROOT. La part de FIN est celle qu'Hugo
+  propose : le pilier ou la marche s'arrete. La part de PASSAGE compte un pilier des qu'il
+  est touche, quel que soit son rang, et c'est la troisieme candidate.
+
+========================================================================================
+2. LES PARTS D'EULER MESUREES, sur le meme etat
+========================================================================================
+  Etat CONFORME, le meme que celui des trois candidates ci-dessus.
+  Pilier     Euler (VaR)   Euler (CTE)   etendue CTE
+  P1               22.9 %         23.3 %         12.3
+  P2               25.5 %         26.0 %         23.0
+  P3               17.6 %         16.6 %          7.6
+  P4               22.6 %         23.4 %         18.0
+  P5               11.4 %         10.8 %          7.0
+
+  RAPPEL DE PRUDENCE, deja publie : les parts d'Euler bougent d'une graine a l'autre, et
+  leur CLASSEMENT n'est pas un resultat. On compare donc les NIVEAUX, pas l'ordre, et l'on
+  garde les etendues en tete pour juger si un ecart est significatif.
+
+========================================================================================
+3. LA REPONSE : quelle candidate colle a Euler ?
+========================================================================================
+  Ecart a Euler, en points de pourcentage. On donne l'ecart MOYEN sur les cinq piliers et
+  l'ecart MAXIMAL, contre les deux versions d'Euler.
+
+  candidate                  moyen / Euler VaR   moyen / Euler CTE   max / CTE
+  part d'amorce (ROOT)                    4.8                 4.3         7.8
+  part de FIN (Hugo)                      2.9                 3.2         5.3
+  part de PASSAGE                         2.0                 1.8         4.6
+
+  LA CANDIDATE LA PLUS PROCHE D'EULER EST : part de PASSAGE, a 1.8 point(s) d'ecart moyen.
+
+  Pilier     Euler (CTE)    amorce       FIN    PASSAGE
+  P1               23.3 %     30.3 %     18.8 %      24.2 %
+  P2               26.0 %     18.2 %     22.5 %      21.4 %
+  P3               16.6 %     15.2 %     18.2 %      16.8 %
+  P4               23.4 %     27.3 %     24.5 %      24.7 %
+  P5               10.8 %      9.1 %     16.0 %      12.9 %
+
+========================================================================================
+4. POURQUOI, et le mecanisme est simple une fois vu
+========================================================================================
+  LES SEVERITES SONT TIREES DANS LA MEME LOI POUR TOUS LES PILIERS, et independamment les
+  unes des autres. La perte moyenne apportee par un pilier vaut donc simplement
+      (probabilite que ce pilier soit touche) x (severite moyenne d'un pilier touche),
+  et le second facteur est LE MEME pour les cinq. En moyenne, la part d'un pilier dans la
+  perte est donc exactement sa PART DE PASSAGE. C'est une identite, pas une coincidence.
+
+  CE QUI EN ECARTE EULER EST LE CONDITIONNEMENT DE QUEUE, et lui seul : Euler ne moyenne
+  pas sur toutes les annees mais sur les annees de queue, ou la composition des sinistres
+  n'est pas tout a fait celle d'une annee ordinaire. C'est ce residu qu'on lit dans le
+  tableau ci-dessus.
+
+  LA PART DE FIN, ELLE, MESURE AUTRE CHOSE. Un pilier peut etre traverse souvent sans etre
+  souvent terminal, et l'inverse. Le corpus le montre deja de facon extreme (script 75) :
+  P2 n'emet jamais, donc des qu'il est atteint la marche s'y arrete, ce qui gonfle sa part
+  de fin ; P1 n'est jamais atteint, donc il n'est terminal que lorsqu'il est amorce ET que
+  la cascade s'arrete tout de suite. La part de fin est donc une mesure de PUITS, pas une
+  mesure d'exposition.
+
+  ET L'IDEE DE PRENDRE LE MEME CALCUL « DANS L'AUTRE SENS » EST EXACTEMENT LA BONNE, elle
+  s'arrete seulement un cran trop loin. La part d'amorce compte le pilier au rang 1, la
+  part de fin le compte au DERNIER rang. La part de passage le compte a TOUS LES RANGS, et
+  c'est elle qui correspond a Euler, parce qu'Euler ne demande ni ou le sinistre commence
+  ni ou il finit : il demande quels piliers ont PAYE. Un pilier paye des qu'il est touche,
+  qu'il soit premier, dernier ou au milieu.
+
+========================================================================================
+5. L'ETAT NON CONFORME, ou la part de fin n'a plus de sens
+========================================================================================
+  A l'etat non conforme, le pilier des tiers tire un ENSEMBLE par choc commun, sans ordre :
+  il n'y a ni premier ni dernier pilier pour cette part-la des sinistres, donc la part de
+  fin cesse d'etre definie. La part de PASSAGE, elle, garde un sens : c'est la probabilite
+  d'etre touche, que la cascade soit une marche ou un choc.
+
+  Pilier     Euler (CTE), non conf.   part de PASSAGE     ecart
+  P1                          22.5 %             21.9 %     -0.7
+  P2                          19.1 %             22.3 %     +3.2
+  P3                          22.0 %             19.9 %     -2.2
+  P4                          16.9 %             17.8 %     +1.0
+  P5                          19.5 %             18.2 %     -1.3
+
+  Ecart moyen : 1.7 point. La correspondance tient donc aux DEUX etats, y compris
+  quand une partie des sinistres n'est plus une marche du tout.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. L'INTUITION EST BONNE DANS SA FORME : il existe bien une grandeur combinatoire, sans
+     aucune simulation, qui explique les parts d'Euler comme la part d'amorce explique
+     Shapley. Elle existe, elle est exacte, et c'est une identite.
+  2. MAIS CE N'EST PAS LA PART DE FIN, c'est la PART DE PASSAGE : la probabilite qu'un
+     pilier soit TOUCHE, quel que soit son rang. Ecart moyen a Euler : 1.8 point contre
+     3.2 pour la part de fin et 4.3 pour la part d'amorce.
+  3. LE MECANISME EST UNE IDENTITE : les severites etant tirees dans la meme loi pour tous
+     les piliers, la part d'un pilier dans la perte MOYENNE est exactement sa part de
+     passage. Le seul ecart residuel vient du conditionnement de queue d'Euler.
+  4. LA PART DE FIN MESURE AUTRE CHOSE, et c'est instructif : elle mesure un PUITS, pas une
+     exposition. Un pilier qui n'emet jamais arrete toute marche qui l'atteint, donc sa
+     part de fin est forte sans que son exposition le soit.
+  5. CLASSEMENTS : Euler P2 > P4 > P1 > P3 > P5, passage P4 > P1 > P2 > P3 > P5,
+     fin P4 > P2 > P1 > P3 > P5, amorce P1 > P4 > P2 > P3 > P5.
+     A LIRE AVEC LA PRUDENCE DEJA PUBLIEE : le classement d'Euler n'est pas stable entre
+     graines, donc c'est la coincidence des NIVEAUX qui vaut, pas celle des ordres.
+
+figure ecrite : exploratory\vasicek_lab\figures\S43_part_de_fin.png

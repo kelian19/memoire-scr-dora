@@ -1,0 +1,48 @@
+
+==========================================================================
+Modele mecaniste : pertes annuelles ventilees par pilier d'amorce
+==========================================================================
+  200,000 annees ; cas de base g=0.9, xi=0,70, a=0,60.
+  pilier     E[perte]  part moyenne    P(=0)
+  P1           345.76         38.9%    0.090
+  P2            80.98          9.1%    0.198
+  P3            63.51          7.1%    0.246
+  P4           380.89         42.8%    0.108
+  P5            18.83          2.1%    0.401
+
+==========================================================================
+Matrice de correlation des scores normaux (copule gaussienne implicite du mecaniste)
+==========================================================================
+              P1      P2      P3      P4      P5
+  P1       1.000   0.313   0.284   0.377   0.253
+  P2       0.313   1.000   0.236   0.309   0.207
+  P3       0.284   0.236   1.000   0.287   0.192
+  P4       0.377   0.309   0.287   1.000   0.254
+  P5       0.253   0.207   0.192   0.254   1.000
+
+==========================================================================
+SCR (VaR 99.5%) selon la structure de dependance, marges identiques
+==========================================================================
+  structure                    VaR 99,5%  TVaR 99,5%  vs gaussienne
+  independance                      5070       12571         -12.9%
+  copule gaussienne                 5822       13957               
+  mecaniste (reel)                  5606       13021          -3.7%
+  copule Student (nu=4)             6169       14725          +6.0%
+
+  Lecture : mecaniste ~ copule gaussienne (controle de coherence) ;
+  Student > gaussienne = PRIME DE DEPENDANCE DE QUEUE (les extremes co-occurrent).
+
+==========================================================================
+Allocation d'Euler : repartir le SCR mecaniste entre piliers (somme = total)
+==========================================================================
+  pilier    part perte moy.  part SCR (VaR)  part SCR (TVaR)
+  P1                  38.9%           35.7%            39.3%
+  P2                   9.1%            8.9%             8.3%
+  P3                   7.1%            6.5%             7.1%
+  P4                  42.8%           47.2%            43.6%
+  P5                   2.1%            1.7%             1.7%
+  controle somme           890.0          5751.9          13020.8
+  (VaR mecaniste = 5606.0 ; TVaR = 13020.8 ; les sommes doivent coller)
+  Interet : la part de CAPITAL (queue) differe de la part de perte MOYENNE.
+
+figure ecrite : exploratory/vasicek_lab/figures/S5_copules_allocation.png

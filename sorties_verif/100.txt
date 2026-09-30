@@ -1,0 +1,82 @@
+
+========================================================================================
+1. Le produit des facteurs isoles contre le facteur publie
+========================================================================================
+  frequence      facteur isole 1.7155  (10377 M / 6049 M)
+  detection      facteur isole 1.2394  (7497 M / 6049 M)
+  propagation    facteur isole 1.2700  (7682 M / 6049 M)
+  accumulation   facteur isole 1.2857  (7777 M / 6049 M)
+
+  produit des quatre facteurs isoles : 3.4715
+  facteur publie (non conforme / conforme) : 3.3374
+  rapport publie / produit : 0.9614, soit -3.9 %
+
+  somme des effets isoles : 9137 M ; interaction publiee : 5002 M
+  interaction qu'un modele PUREMENT multiplicatif produirait : 5813 M
+  l'interaction publiee vaut, en part de cette interaction multiplicative : 86 %
+
+========================================================================================
+2. La decomposition de Mobius en logarithme : l'interaction propre
+========================================================================================
+  ecart en log : ln(3.3374) = 1.2052
+  ordre 1 : +1.2446  soit +103.3 % de l'ecart en log
+  ordre 2 : +0.0315  soit +2.6 % de l'ecart en log
+  ordre 3 : -0.1138  soit -9.4 % de l'ecart en log
+  ordre 4 : +0.0429  soit +3.6 % de l'ecart en log
+
+  interaction propre (ordres 2 a 4 en log) : -0.0394, soit un facteur 0.9614
+
+  croises de paires en log :
+    frequence x detection      +0.0533  (facteur 1.055)
+    frequence x accumulation   +0.0318  (facteur 1.032)
+    detection x accumulation   +0.0165  (facteur 1.017)
+    detection x propagation    +0.0129  (facteur 1.013)
+    frequence x propagation    +0.0011  (facteur 1.001)
+    propagation x accumulation   -0.0841  (facteur 0.919)
+
+========================================================================================
+3. Les seize configurations contre la prediction multiplicative
+========================================================================================
+  configuration                publie   produit   rapport
+  conforme                       6049      6049     1.000
+  freq                          10377     10377     1.000
+  det                            7497      7497     1.000
+  prop                           7682      7682     1.000
+  accum                          7777      7777     1.000
+  freq+det                      13565     12861     1.055
+  freq+prop                     13193     13178     1.001
+  freq+accum                    13772     13341     1.032
+  det+prop                       9645      9521     1.013
+  det+accum                      9799      9639     1.017
+  prop+accum                     9080      9876     0.919
+  freq+det+prop                 16786     16333     1.028
+  freq+det+accum                17785     16535     1.076
+  freq+prop+accum               15626     16943     0.922
+  det+prop+accum                11413     12241     0.932
+  freq+det+prop+accum           20188     20999     0.961
+
+  ecart maximal a la prediction multiplicative : 8.1 %
+  LECTURE. L'arithmetique du produit explique toute l'interaction publiee et au-dela : le
+  residu propre est une legere SOUS-multiplicativite, portee par la paire propagation x
+  accumulation, les deux canaux qui font tomber plusieurs piliers sur un meme sinistre.
+
+========================================================================================
+4. Les deux canaux calibrables en forme fermee
+========================================================================================
+  indice de queue xi = 0.5954
+  frequence : (lambda_NC / lambda_C)^xi = (53.62 / 21.56)^0.5954 = 1.7204 ; simule 1.7155 ; ecart -0.3 %
+  detection : (p_u,NC / p_u,C)^xi = (0.1811 / 0.1283)^0.5954 = 1.2279 ; simule 1.2394 ; ecart +0.9 %
+
+  LECTURE. Le canal de frequence et celui de detection suivent la loi de puissance de la
+  perte unique a moins de 1 % pres : ils deplacent le quantile comme ils deplacent le nombre
+  de sinistres qui depassent le seuil, eleve a la puissance xi. Leur effet ne doit presque rien a
+  la cascade ; les canaux de propagation et d'accumulation en dependent, eux, directement.
+
+========================================================================================
+5. Grandeurs citees, sans separateur
+========================================================================================
+  produit des facteurs isoles 3.47 ; facteur publie 3.34 ; rapport 0.961
+  interaction multiplicative 5813 ; interaction publiee 5002 ; part 86 %
+  interaction propre en log -0.0394 ; facteur 0.961 ; soit -3.9 %
+  ecart maximal a la prediction multiplicative 8.1 %
+  frequence forme fermee 1.720 simule 1.715 ; detection forme fermee 1.228 simule 1.239

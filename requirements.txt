@@ -1,0 +1,22 @@
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.11.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+openpyxl>=3.1.2
+pyreadstat>=1.2.4
+statsmodels>=0.14.0
+scikit-learn>=1.3.0
+jupyter>=1.0.0
+ipykernel>=6.26.0
+tqdm>=4.66.0
+# Ajoute le 10 septembre 2026 pour fabriquer le support de soutenance par script,
+# de facon a inserer les vraies figures du depot et a passer le harnais sur les
+# chiffres du support. Tire lxml et XlsxWriter comme dependances transitives.
+python-pptx>=1.0.2
+
+# Ajoute le 21 septembre 2026. Le controle documente des references non resolues
+# (« 0 ?? comptes SUR LE PDF PRODUIT ») importe fitz, c'est-a-dire PyMuPDF, qui
+# n'etait declare nulle part : un poste reconstruit depuis le depot ne pouvait pas
+# executer ce controle sans l'installer a la main.
+pymupdf>=1.24.0

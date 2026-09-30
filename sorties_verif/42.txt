@@ -1,0 +1,71 @@
+﻿
+==================================================================================
+1. La marge : franchissement K_j (la normale y est une simple normalisation)
+==================================================================================
+  Pilier j declenche  <=>  X_j >= K_j,  K_j = F^-1(1 - p_j).
+  p_4 = 0.1509  =>  K_4 = 1.033. La loi F fixe l'echelle, pas p_4 :
+  K_j = F^-1(1-p_j) reproduit p_j quelle que soit F. La normale ne coute rien ICI,
+  et ne remet pas de queue fine dans le capital : la queue lourde est dans la SEVERITE
+  (GPD xi ~ 0,60), objet separe du declenchement (scripts 02/04).
+
+==================================================================================
+2. La dependance : la ou la normale est un MAUVAIS choix (accumulation)
+==================================================================================
+  A dependance moyenne EGALE (tau de Kendall = 1 - 1/theta = 0.444) :
+    copule gaussienne : correlation rho = 0.643,  lambda_U = 0        (plancher)
+    copule de Gumbel  : theta = 1.8,         lambda_U = 0.530   (haut)
+
+  Co-depassement P(U2>q | U1>q), a tau egal :
+         q    gaussienne    Gumbel
+     0.900         0.424     0.562
+     0.950         0.341     0.548
+     0.990         0.215     0.545
+     0.995         0.184     0.560
+  La gaussienne s'effondre vers 0 dans la queue (asymptote lambda_U = 0) ; la Gumbel
+  plafonne vers 0.53. A dependance moyenne identique, l'extreme joint differe du
+  tout au tout : c'est precisement la ou l'accumulation se joue.
+
+==================================================================================
+3. L'accumulation bornee : nombre de piliers co-declenches, plancher a haut
+==================================================================================
+  Frequence MARGINALE de declenchement d'un pilier : gaussienne 0.151, Gumbel 0.151
+  (~ p_4 = 0.151 pour les deux : la copule ne change PAS combien un pilier
+   bascule seul, elle change s'ils basculent ENSEMBLE.)
+
+  Loi du nombre de piliers declenches SACHANT P4 :
+        copule  P(=1)  P(=2)  P(=3)  P(=4)  P(=5)   P(>=3)  E[nb|P4]
+    gaussienne  0.204  0.216  0.211  0.194  0.175    0.580      2.92
+        Gumbel  0.211  0.150  0.122  0.124  0.394    0.639      3.34
+
+  A tau egal, les deux copules s'accordent sur le co-declenchement MODERE (P(>=3|P4)
+  dans [0.58 ; 0.64]), mais divergent sur le CO-EXTREME :
+  P(les 5 piliers | P4) = 0.17 (gaussien) contre 0.39 (Gumbel), un
+  facteur 2.3. C'est la que lambda_U mord : la queue gaussienne rate le
+  basculement simultane de tous les piliers, l'exact scenario MOVEit. phi_cs = P(un
+  autre pilier | P4) dans [0.48 ; 0.58], sous la borne gamma = 0.68 du 38.
+
+==================================================================================
+4. Reperes : le seuil, le statut, la borne du 38
+==================================================================================
+  Le SEUIL de declenchement de P4 (le 'moment' de Hugo) est le franchissement
+  X_4 >= K_4 = 1.03 : c'est la marge, family-free. Ce qui n'est PAS identifie,
+  c'est la DEPENDANCE de queue (la copule), donc l'accumulation : on la BORNE.
+  La borne phi_cs <= gamma = 0.68 du script 38 est un repere : le plancher gaussien
+  (0.48) et le haut de Gumbel (0.58) l'encadrent par en dessous, coherent.
+  Meme discipline que W et xi : ce qui est identifie (la marge p_4) est pose ; ce qui
+  ne l'est pas (la dependance de queue) est lu en bande, jamais en point.
+  Perimetre : nombre de piliers de l'entite, PAS une fraction de portefeuille ; la vue
+  inter-clients (Vasicek en dimension entite) est hors du SCR par entite.
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. La MARGE (quand P4 bascule) = franchissement X_4 >= K_4 ; la loi normale y est une
+     normalisation inoffensive, la queue du capital etant dans la severite (GPD).
+  2. La DEPENDANCE (combien de piliers ensemble) NE doit pas etre gaussienne : lambda_U=0
+     sous-estime l'accumulation et contredit la Gumbel (theta=1,8) du memoire.
+  3. On BORNE l'accumulation a tau egal : le CO-EXTREME P(les 5 piliers | P4) va de 0.17 (gaussien) a 0.39 (Gumbel), la ou lambda_U mord (MOVEit).
+  4. La marge est invariante d'une copule a l'autre ; seule la co-occurrence de queue
+     bouge. Meme discipline d'identification partielle que W et xi.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z12_seuil_declenchement_p4.png

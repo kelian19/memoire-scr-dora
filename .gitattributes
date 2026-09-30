@@ -1,0 +1,17 @@
+# Fichiers binaires : ni conversion de fin de ligne, ni diff texte.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.pptx  binary
+*.docx  binary
+*.xlsx  binary
+*.mp4   binary
+
+# Fichiers generes : replies dans les diffs de GitHub et exclus des statistiques de langage.
+exploratory/memoire_cascade/main_institut.tex  linguist-generated=true
+sorties_verif/*.txt                            linguist-generated=true
+
+# Premiere version du memoire, abandonnee et conservee pour l'histoire du projet.
+memoire/**                                     linguist-vendored=true

@@ -1,0 +1,131 @@
+﻿
+========================================================================================
+1. VaR et CTE agregees sur la calibration publiee, a trois niveaux
+========================================================================================
+  Perimetre OpRisk, calibration figee, 200000 annees par graine, 4 graines.
+  Plafond de severite : None (aucun) ; indice de queue xi = 0.5954 < 1,
+  donc l'esperance de la severite existe et la CTE agregee est bien definie.
+
+  niveau beta        VaR (M)     CTE (M)   CTE / VaR
+  0.950                 3055        5734        1.88
+  0.990                 6078       12607        2.07
+  0.995                 8374       18183        2.17
+
+  Le capital publie par le memoire est la VaR a 99,5 %, soit 8374 M. La CTE au meme
+  niveau vaut 18183 M, soit 2.17 fois plus : c'est la moyenne des annees qui
+  DEPASSENT le capital, donc une grandeur de queue et non un niveau de couverture.
+
+========================================================================================
+2. Le niveau equivalent : a quel beta la CTE egale-t-elle la VaR reglementaire ?
+========================================================================================
+  CTE_beta(L) = VaR_99,5%(L) = 8374 M  pour  beta = 0.9773, soit 97.73 %.
+
+  CONSEQUENCE DIRECTE, ET ELLE TRANCHE LA QUESTION. Une CTE a 95 % vaut 5734 M, donc
+  MOINS que la VaR reglementaire (8374 M) : rapportee comme capital, elle serait
+  MOINS prudente, dans un rapport de 1.46. Il faudrait monter le niveau de la
+  CTE a 97.73 % pour retrouver l'exigence de Solvabilite II.
+
+  C'est pourquoi la CTE est publiee ici comme DIAGNOSTIC et non comme mesure de capital :
+  changer de mesure changerait le niveau d'exigence sans que personne l'ait decide, et le
+  niveau de 99,5 % est celui que le regime prudentiel fixe.
+
+========================================================================================
+3. Le rapport CTE / VaR comme diagnostic de forme de queue
+========================================================================================
+  Asymptote theorique du rapport pour une GPD d'indice xi : 1/(1-xi) = 2.47.
+  Rapport mesure sur l'AGREGAT a 99,5 %                    : 2.17.
+  Rapport mesure sur l'AGREGAT a 95 %                      : 1.88.
+
+  LECTURE, ET LA PRUDENCE EST DE MISE. L'asymptote vaut pour le quantile d'UN sinistre
+  quand le niveau tend vers un ; l'agregat s'en approche par le principe du grand saut
+  unique, mais a niveau fini le rapport agrege reste EN DESSOUS. C'est le rapport, et non
+  les deux montants, qui informe : il dit de combien la moyenne de queue depasse le
+  quantile, donc a quel point la queue est epaisse au-dela du capital.
+
+========================================================================================
+4. L'existence de la CTE, DEMONTREE et non invoquee
+========================================================================================
+  Protocole : meme moteur, SANS plafond, a deux indices de queue, et l'on regarde la
+  DISPERSION de la CTE a 99,5 % entre 6 graines quand le nombre d'annees croit.
+  Une esperance finie rend l'estimateur consistant, donc sa dispersion relative decroit
+  comme 1/racine(n). Une esperance infinie ne lui donne rien vers quoi converger, donc la
+  dispersion NE DECROIT PAS. La tendance du niveau, elle, n'est pas lisible et ne doit pas
+  etre invoquee : a esperance infinie la CTE empirique est dominee par un tirage unique.
+
+     annees   CTE (xi fini)  disp. rel.   CTE (xi infini)  disp. rel.
+      50000           18084        7.4 %            998016       51.4 %
+     200000           18263        4.5 %           1203706       44.4 %
+     800000           18023        4.2 %           1182736       38.6 %
+
+  CE QUI TRANCHE EST LE NIVEAU DE LA DISPERSION :
+    a xi = 0.5954 elle va de 7.4 a 4.2 % : la CTE se cite a deux chiffres ;
+    a xi = 1.0328 elle reste entre 38.6 et 51.4 % : la CTE ne se cite PAS,
+      meme a un chiffre significatif, quelle que soit la taille de l'echantillon.
+  Un ordre de grandeur separe les deux, et ce contraste-la resiste au bruit d'une
+  dispersion estimee sur six graines.
+
+  LA VITESSE, ELLE, N'EST PAS CONCLUANTE, et il faut le dire : les facteurs valent
+  0.57 et 0.75 sur seize fois plus d'annees, quand un estimateur classique donnerait 0.25.
+  AUCUNE des deux series n'atteint cette reference, et c'est attendu : a xi = 0.5954
+  la VARIANCE de la severite est deja infinie meme si son esperance existe, donc aucun
+  estimateur de ce modele ne converge au rythme classique. Ce n'est donc pas un defaut de
+  la mesure, c'est une propriete de la queue, et elle vaut aussi pour la VaR.
+
+  CONCLUSION, ET ELLE PORTE SUR LA BONNE QUANTITE. Au-dela de xi = 1 la CTE empirique
+  n'est pas reproductible : deux echantillons de huit cents mille annees en donnent des
+  valeurs qui different de deux cinquiemes. Le niveau atteint, de l'ordre du million de
+  millions d'euros, est d'ailleurs sans interpretation : il mesure la taille du plus grand
+  tirage de l'echantillon, pas un risque. Une mesure de capital ne peut pas etre cela.
+
+========================================================================================
+5. Et sous PRC, la CTE ne survit que par le plafond
+========================================================================================
+  Le perimetre PRC porte un plafond de severite de 40 M, et un indice de
+  1.0328 > 1. Le plafond rend donc l'esperance finie ARTIFICIELLEMENT. On le
+  verifie en le faisant varier : si la CTE en depend, elle mesure le plafond et non le
+  risque.
+
+     plafond (M)    VaR 99,5 % (M)    CTE 99,5 % (M)   CTE / VaR
+              40              2594              2734        1.05
+              80              3390              3581        1.06
+             160              4315              4578        1.06
+
+  Quadrupler le plafond multiplie la CTE par 1.67 et la VaR par 1.66.
+  LES DEUX BOUGENT DU MEME FACTEUR, et c'est instructif autrement que prevu : le plafond
+  agit comme une ECHELLE sur toute la loi, il ne distingue pas la CTE de la VaR. Ce n'est
+  donc pas le niveau qui porte l'information.
+
+  CE QUI LA PORTE EST LE RAPPORT, et il vaut 1.05 sous PRC contre 2.17 sur
+  la calibration publiee. Autrement dit, sur le perimetre plafonne la moyenne de queue est
+  a peine au-dessus du quantile : le plafond a retire la queue que la CTE est censee
+  mesurer, et la mesure se retrouve VIDEE DE SON CONTENU. Elle n'apporte alors presque
+  rien de plus que la VaR.
+
+  D'OU L'ARGUMENT CONTRE SON USAGE COMME NIVEAU DE COUVERTURE, et il tient en une
+  alternative : sur un perimetre d'indice superieur a 1, ou bien on ne plafonne pas et la
+  CTE n'a pas de valeur (section 4), ou bien on plafonne et elle n'apporte plus
+  d'information au-dela de la VaR. Dans les deux cas elle ne peut pas porter le capital.
+  La ou l'indice est inferieur a 1, elle est parfaitement legitime comme diagnostic, et
+  c'est exactement l'usage que le memoire en fait.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. CTE agregee, calibration publiee : 5734 M a 95 %, 12607 M a 99 %, 18183 M a 99,5 %.
+  2. NIVEAU EQUIVALENT : la CTE egale la VaR reglementaire a beta = 97.73 %.
+     Une CTE a 95 % vaut donc 5734 M contre 8374 : moins prudente que
+     l'exigence de Solvabilite II. Changer de mesure changerait le niveau d'exigence.
+  3. Rapport CTE/VaR agrege a 99,5 % : 2.17, sous l'asymptote 2.47 de la
+     severite. C'est le rapport qui informe, pas les montants.
+  4. EXISTENCE DEMONTREE PAR LE NIVEAU DE LA DISPERSION, non par sa vitesse ni par une
+     tendance du niveau : 7.4 a 4.2 % a xi = 0.5954 contre 38.6 a 51.4 % a
+     xi = 1.0328. Un ordre de grandeur. Les VITESSES (0.57 et 0.75 contre 0.25 pour un
+     estimateur classique) ne concluent pas, la variance de la severite etant deja infinie
+     a l'indice publie : aucun estimateur de ce modele ne converge au rythme classique.
+  5. Sous PRC le plafond agit comme une ECHELLE : il multiplie la CTE et la VaR du meme
+     facteur (1.67 contre 1.66). L'information est dans le RAPPORT, qui vaut
+     1.05 contre 2.17 sur la calibration publiee : le plafond a vide la mesure de
+     son contenu. Ou la CTE n'a pas de valeur, ou elle n'apporte rien de plus que la VaR.
+  6. Conclusion pour le report : CTE publiee comme DIAGNOSTIC, capital reste la VaR 99,5 %.
+
+figure ecrite : exploratory\vasicek_lab\figures\S29_cte_agregee.png

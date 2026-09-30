@@ -1,0 +1,50 @@
+﻿
+================================================================================
+1. La courbe de survie observee, et le multiplicateur qu'elle implique
+================================================================================
+  VCDB (finance, n=278) : <=1j 47 %  |  semaines 8 %  |  mois et + 45 %
+  bimodal : detecte tout de suite, ou tard. pi_slow de reference = 0,45.
+
+     eta  pi_slow C  pi_slow NC   mult C   mult NC
+     0.2      0.401       0.500     0.89      1.11
+     0.4      0.354       0.550     0.79      1.22
+     0.6      0.310       0.599     0.69      1.33
+     0.8      0.269       0.646     0.60      1.43
+     1.0      0.231       0.690     0.51      1.53
+
+  Le multiplicateur grossier (0,85 / 1,20) correspond a eta ~ 0.36 :
+    survie -> mult C = 0.81, mult NC = 1.20. Il n'est donc pas arbitraire,
+    c'est un point de la courbe de survie ancree sur le VCDB.
+
+================================================================================
+2. Delta_DORA du canal detection, borne sur l'elasticite eta
+================================================================================
+  (frequence et propagation neutres : on isole ce que P2/P3 achetent par la detection)
+
+     eta   SCR conforme  SCR non conf.  Delta detection
+     0.2          7754 M          9530 M           1775 M
+     0.4          7337 M          9350 M           2013 M
+     0.6          7326 M         10618 M           3293 M
+     0.8          5912 M         10864 M           4952 M
+     1.0          5080 M         11534 M           6454 M
+     1.2          4789 M         12841 M           8052 M
+
+  SCR etat median (PC) = 8304 M (point d'ancrage, ne depend pas de eta).
+  Delta_DORA du SEUL canal detection : de 1775 a 8052 M selon eta.
+  C'est une bande, comme le reste : le point observe (pi_slow=0,45) est fixe,
+  l'elasticite de la detection a la maturite ne l'est pas, donc on la borne.
+
+================================================================================
+3. Verdict
+================================================================================
+  1. Le canal detection de P2/P3 n'est pas un multiplicateur pose : c'est une
+     courbe de survie, dont UN point (45 % de decouverte lente) est observe au VCDB.
+  2. Le multiplicateur grossier actuel (0,85/1,20) est retrouve a eta ~ 0.36 :
+     il est donc dans la bande, pas arbitraire.
+  3. L'elasticite de la detection a la maturite reste non identifiee : le Delta
+     detection est borne (1775-8052 M), pas un point. Meme discipline que W et xi.
+  4. La donnee necessaire pour l'identifier : des delais de detection PAR PILIER et
+     PAR NIVEAU DE MATURITE, que le registre DORA pourrait porter. Meme conclusion
+     que partout : la limite est une specification de reporting.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z10_detection_survie.png

@@ -1,0 +1,115 @@
+\chapter{Le cadre prudentiel de capital et son articulation avec DORA}
+\label{chap:reglementaire}
+
+% HARNAIS-HORS-SCRIPT: cadre reglementaire : numeros d'articles, delais de notification et seuils cites des textes (DORA, Solvabilite II, Bale). Ce sont des donnees de droit, pas des resultats.
+
+% MIGRÉ depuis memoire/main.tex (plages 349-617).
+% Hiérarchie descendue d'un cran, labels préfixés "reg:".
+% RELECTURE FAITE (août 2026). Un résidu de l'ancien modèle a été trouvé et
+% corrigé : l'introduction annonçait la non-conformité « comme une variable
+% latente », formulation de l'ancien modèle à briques, remplacée par l'état de
+% conformité par pilier du ch. 11. Aucune autre phrase du chapitre n'annonce la
+% copule ni la latente comme LE modèle.
+%==============================================================
+
+Le risque modélisé ici, risque opérationnel d'origine technologique et manquement aux
+exigences de résilience numérique, se situe à l'intersection de trois cadres construits
+successivement selon des philosophies distinctes : le dispositif bancaire de Bâle, la directive
+Solvabilité~II propre à l'assurance, et le règlement transsectoriel DORA. Leur articulation
+ouvre un \emph{pont quantitatif} entre exigence de capital et résilience opérationnelle, et
+permet de poser la non-conformité comme un état par domaine de contrôle, gradué et évolutif,
+dont le chapitre~\ref{chap:multietats} tire la dynamique et le chapitre~\ref{chap:resultats}
+le coût en capital.
+
+%--------------------------------------------------------------
+
+%--------------------------------------------------------------
+
+\paragraph{Le risque opérationnel : une définition partagée, des traitements divergents.}
+Le risque opérationnel reçoit la même définition dans les secteurs bancaire et
+assurantiel. Défini par le Comité de Bâle puis repris par la directive Solvabilité~II,
+il désigne le risque de perte résultant de l'inadaptation ou de la défaillance de
+procédures internes, de personnels et de systèmes, ou d'événements extérieurs. Cette
+définition inclut le risque juridique mais exclut les risques stratégiques et de
+réputation.
+
+Si la définition est partagée, les modes de quantification ont divergé. Le secteur bancaire a
+abandonné les modèles internes au profit d'une approche standardisée, tandis que l'assurance a
+conservé une liberté méthodologique. Cette asymétrie commande le choix méthodologique du
+mémoire : Solvabilité~II laisse subsister un espace de modélisation interne, où la
+quantification du risque cyber par une distribution de pertes reste recevable.
+
+\paragraph{Bâle III/IV.} Le secteur bancaire a retiré en $2022$ les modèles internes de mesure
+avancée au profit d'une approche standardisée, sans invalider l'approche par distribution des
+pertes comme outil de modélisation : le mémoire en reprend les deux marges, fréquence et
+sévérité, et en remplace l'agrégation par une cascade dirigée. Le détail est déporté
+\matcomp.
+
+\paragraph{Solvabilité II : l'asymétrie réglementaire et le maintien du choix méthodologique.}
+Contrairement au secteur bancaire, le secteur de l'assurance conserve sous Solvabilité~II
+une liberté de choix pour la quantification du risque opérationnel : formule standard,
+paramètres propres à l'entreprise (USP), ou modèle interne, partiel ou global, approuvé
+par l'autorité de contrôle. Dans la formule standard, l'exigence pour risque opérationnel
+($SCR_{Op}$) s'ajoute au capital de solvabilité requis de base
+($BSCR$), ajusté de la capacité d'absorption des pertes :
+\begin{equation}
+SCR = BSCR + Adj + SCR_{Op},
+\qquad
+SCR_{Op} = \min(0{,}3 \times BSCR,\ Op) + 0{,}25 \times Exp_{ul},
+\label{reg:eq:scrop}
+\end{equation}
+où $Op = \max(Op_{premiums}, Op_{provisions})$ est calculé à partir de coefficients
+forfaitaires appliqués aux primes et provisions, vie et non-vie. La forme donnée ici est
+simplifiée ; la formule complète de l'Article~204 du règlement délégué~2015/35
+comporte en outre des termes de croissance, sous la forme
+$\max\!\left(0;\, 0{,}04 \times \Delta\!\right)$, pénalisant les hausses de primes
+supérieures à $20\,\%$ d'un exercice à l'autre.
+
+Fondée sur les seuls indicateurs de volume, cette approche pose que deux assureurs gérant le
+même volume de primes ont la même exposition au risque opérationnel, quelles que soient la
+qualité de leur infrastructure informatique, l'automatisation de leurs processus ou leur
+dépendance à des prestataires d'externalisation critiques. C'est cette dépendance
+technologique que DORA encadre, et dont le mémoire mesure l'effet sur le capital.
+
+\paragraph{Pilier 1 et Pilier 2.} Le $SCR_{Op}$ relève du Pilier~1, quantitatif et
+forfaitaire. Mais Solvabilité~II comporte un second pilier, l'évaluation interne des
+risques et de la solvabilité (\emph{Own Risk and Solvency Assessment}, ORSA), qui impose
+à l'assureur une évaluation prospective de l'adéquation entre son profil de risque réel
+et ses besoins de solvabilité. C'est dans le cadre de l'ORSA, et non du forfait de
+Pilier~1 plafonné à $30\,\%$ du $BSCR$, que se situe la modélisation du
+mémoire : l'ORSA admet, et encourage, les scénarios de stress stochastiques que la formule
+standard ne sait pas produire.
+
+L'additivité que l'équation ci-dessus donne à la charge opérationnelle n'est pas un détail
+de présentation. Elle décide de ce que le capital total retient d'un besoin de nature
+opérationnelle, et elle le fait dans un sens qui n'est pas neutre pour l'entité : le
+\S\ref{sec:agregation-scr} le chiffre sur les quatre bilans réels, et montre que le plafond
+lui-même borne ce qu'un forfait saurait exprimer.
+
+\paragraph{DORA, rappelé en une ligne et non réexposé.} Le règlement sur la résilience
+opérationnelle numérique du secteur financier, ses cinq domaines de maîtrise et son dispositif de
+surveillance des prestataires tiers critiques sont présentés au \S\ref{sec:dora}. Ce chapitre ne
+les redit pas : il traite de ce que le chapitre~\ref{chap:cadre-cyber-dora} laisse ouvert, à
+savoir l'articulation du règlement avec les exigences de capital qui, elles, préexistent.
+
+\paragraph{Position dans l'écosystème.} La progression Bâle~$\rightarrow$~Solvabilité~II
+$\rightarrow$~DORA traduit un déplacement du centre de gravité prudentiel : de la
+\emph{couverture financière} du risque (détenir assez de capital) vers la \emph{continuité
+opérationnelle} (rester capable d'opérer). DORA ne remplace pas les exigences de capital ;
+il en révèle l'angle mort, à savoir la dynamique propre des défaillances technologiques,
+que ni le $SCR_{Op}$ forfaitaire ni l'ORSA qualitatif ne savaient capturer.
+
+%--------------------------------------------------------------
+
+%--------------------------------------------------------------
+
+\paragraph{ORSA et DORA.} Les deux cadres partagent un objet, le risque opérationnel d'origine
+technologique, et une exigence d'évaluation prospective, mais pas leur finalité : Solvabilité~II
+vise la continuité financière, DORA la continuité opérationnelle. La contribution du mémoire se
+loge dans leur recouvrement, en utilisant les artefacts produits par DORA pour quantifier dans
+l'ORSA ce que celui-ci ne savait que décrire. Les limites de l'ORSA traditionnel, la table
+comparative des deux cadres et leurs zones de divergence sont déportées \matcomp.
+
+%--------------------------------------------------------------
+
+% =====================================================================

@@ -1,0 +1,158 @@
+
+==================================================================================
+0. Statut des deux sources
+==================================================================================
+  Cartographie : France Assureurs, Cartographie prospective des risques de la profession de l'assurance et de la réassurance, édition 2026
+  Barometre    : OpinionWay pour le CESIN, 11e Baromètre de la Cybersécurité des Entreprises, janvier 2026, portant sur l'exercice 2025
+  Statut des deux : CITATION EXTERNE NON RECALCULABLE. Les valeurs sont transcrites,
+  pas recalculees. Aucune n'entre dans une calibration et aucune ne porte un capital.
+  Leurs figures sont EXTRAITES des rapports et vivent dans figures_externes/.
+
+==================================================================================
+1. Quatre controles de fidelite de la recopie
+==================================================================================
+  (1) parts de vecteurs dans [0,1] et somme = 3.28 > 1 (reponses multiples)   -> OK
+  (2) chaque vecteur 'grandes entreprises' depasse bien sa part globale                 -> OK
+  (3) impact + absence d'impact = 1.00                                          -> OK
+  (4) somme des quatre cadrans = 1.01, arrondi de la source tolere        -> OK
+
+  VERDICT : les quatre controles passent.
+
+==================================================================================
+2. Le barometre : ce que les organisations constatent
+==================================================================================
+  Entreprises declarant au moins une attaque : 40%  (base 159 repondants attaques)
+  Vecteurs par entreprise attaquee          : 3.3  contre 4.0 a la vague precedente,
+                                              et 3.9 chez les grandes entreprises
+  Part avec impact sur le business          : 81%
+  Part sans impact sur le business          : 19%
+
+  Les deux premiers vecteurs :
+    hameçonnage                        55%
+    exploitation d'une faille          41%
+
+  LE VECTEUR QUI PORTE LA THESE : 'attaque indirecte par un tiers'
+    part globale             : 35%  (3e vecteur sur 19)
+    part grandes entreprises : 43%
+    Plus l'entite est grande, plus son exposition passe par ses prestataires. C'est le
+    canal P4 du memoire, mesure de l'exterieur par une source sans lien avec lui.
+
+  Les autres vecteurs dont la part monte avec la taille, et ils relevent tous de P1 :
+    fuite par erreur humaine ou de configuration 27% -> 36%
+    activation d'un composant malveillant        16% -> 22%
+    exfiltration par un accès légitime           14% -> 21%
+    hypertrucage                                 5% -> 9%
+
+  Les quatre premieres consequences :
+    perturbation de la production      28%
+    perte d'image                      26%
+    compromission de savoir-faire      18%
+    perte de chiffre d'affaires        18%
+    sanction d'une autorité            3%   (le canal reglementaire est reel,
+                                              mais minoritaire dans le cout total)
+
+  LA PROPAGATION EN SENS INVERSE : 'déconnexion par les tiers' figure a 12% des impacts.
+    L'entite n'est pas seulement atteinte PAR ses partenaires, elle est aussi coupee
+    PAR eux quand elle est atteinte. La dependance joue dans les deux sens, ce qu'une
+    dependance symetrique ne saurait pas distinguer.
+
+==================================================================================
+3. La cartographie : le risque sature au sommet et change de regime
+==================================================================================
+  Score du risque de cyberattaques : 4.48 en 2022, maximum de la serie,
+                                     4.10 en 2026, et premier rang depuis 8 exercices.
+
+  Classement 2026 :
+    1. Cyberattaques                      4.1
+    2. Environnement économique           4.0
+    3. Dérèglement climatique             3.9
+    4. Environnement politique            3.9
+    5. Événement naturel exceptionnel     3.3
+  Classement 2025, pour memoire :
+    1. Cyberattaques                      4.1
+    2. Dérèglement climatique             4.1
+    3. Environnement économique           3.8
+    4. Environnement politique            3.6
+    5. Événement naturel exceptionnel     3.3
+
+  Deplacement 2026 du cyber : frequence -0.45, severite +0.25
+    Le risque ne monte plus en score : il se stabilise au sommet en changeant de
+    regime, moins frequent et plus grave.
+  Plus forte hausse de severite, tous risques : environnement politique, +0.32 point
+    (mais sa frequence monte aussi, +0.30 : ce n'est pas le regime du cyber)
+  Risques du MEME REGIME que le cyber (severite en hausse, frequence en baisse) : 2
+    Qualité des données et conformité des processus IT   frequence -0.20  severite +0.30
+    Cyberattaques                                        frequence -0.45  severite +0.25
+  Dans ce regime, la plus forte hausse est : qualité des données et conformité des processus it, +0.30 point.
+    La preoccupation de la profession se deplace de la menace vers sa GOUVERNANCE,
+    ce qui est l'objet meme de DORA.
+  Repartition des cadrans : sud-ouest 50%, nord-est 25%,
+                            nord-ouest 13%, sud-est 13%
+
+==================================================================================
+4. Premier bilan des incidents majeurs DORA declares a l'AMF (exercice 2025)
+==================================================================================
+  Source : AMF, Rapport sur les incidents majeurs DORA déclarés à l'AMF en 2025, 24 septembre 2026
+  Statut : CITATION EXTERNE NON RECALCULABLE. Perimetre : societes de gestion (SGP).
+  (5) cyber + operationnels = 31, et chaque sous-total se partitionne                -> OK
+  (6) chaque part publiee se retrouve a l'unite depuis les comptes                  -> OK
+  (7) tiers cyber + tiers accidentel = 0.87, egal a la part d'origine tierce  -> OK
+  (8) SGP + hors SGP = 33, total publie par l'AMF                   -> OK
+
+  VERDICT : les quatre controles passent.
+
+  Notifications initiales : 47, confirmees majeures : 31  (taux 66%)
+  Origine prestataire tiers : 27 sur 31, soit 87.1%
+    dont cyberattaque 68%, defaillance accidentelle 19%
+  Nature : 22 cyberattaques (dont 15 exfiltrations, 7 usurpations), 9 operationnels
+  Lecture : l'ecart entre notifications et incidents confirmes est celui d'un seuil de
+  materialite ; un incident est compte PAR SGP declarante, et la compromission d'un meme
+  prestataire en touche plusieurs. La part tierce mesure une ORIGINE, pas une probabilite
+  de transfert entre domaines de controle : elle ne calibre aucun parametre du modele.
+
+==================================================================================
+GRANDEURS CITEES (sans separateur de milliers, pour le harnais)
+==================================================================================
+  part entreprises attaquees        : 40
+  base repondants attaques          : 159
+  vecteurs moyens                   : 3.3
+  vecteurs moyens vague precedente  : 4.0
+  vecteurs moyens grandes           : 3.9
+  hameconnage                       : 55
+  exploitation d une faille         : 41
+  attaque indirecte par un tiers    : 35
+  idem grandes entreprises          : 43
+  fuite par erreur, grandes         : 36
+  composant malveillant, grandes    : 22
+  acces legitime, grandes           : 21
+  part avec impact business         : 81
+  part sans impact business         : 19
+  perturbation de la production     : 28
+  perte d image                     : 26
+  compromission de savoir-faire     : 18
+  perte de chiffre d affaires       : 18
+  sanction d une autorite           : 3
+  deconnexion par les tiers         : 12
+  score cyber maximum               : 4.48
+  annee du maximum                  : 2022
+  score cyber 2026                  : 4.10
+  annees consecutives premier rang  : 8
+  score environnement economique    : 4.0
+  score dereglement climatique      : 3.9
+  deplacement cyber frequence       : -0.45
+  deplacement cyber severite        : 0.25
+  deplacement qualite donnees sev   : 0.30
+  deplacement qualite donnees freq  : -0.20
+  deplacement politique severite    : 0.32
+  deplacement politique frequence   : 0.30
+  nombre de vecteurs recenses       : 19
+  AMF notifications initiales SGP   : 47
+  AMF incidents majeurs SGP         : 31
+  AMF incidents origine tiers       : 27
+  AMF part origine tiers            : 87
+  AMF part tiers cyber              : 68
+  AMF part tiers accidentel         : 19
+  AMF incidents cyber               : 22
+  AMF dont exfiltration             : 15
+  AMF incidents operationnels       : 9
+  AMF part SGP non conformes        : 23

@@ -1,0 +1,39 @@
+﻿PRC chargée : 15,053 incidents avec total_affected > 0 (2019-2025)
+
+==========================================================================
+1. Ce que le residu de Jacobs fait a la queue de severite PRC
+==========================================================================
+  ln(L) = 7.68 + 0.76 ln(X) + eps,  eps ~ N(0, 0.523)  (RSE Jacobs 2014)
+  facteur de cout a 90 % autour de la droite : x0.42 a x2.36
+
+                               sans residu   avec residu
+  xi (queue)                         1.033         1.072
+  sigma (M EUR)                      6.505         6.611
+  p_u = P(L > u)                     0.150         0.157
+  (config figee : xi=1.033, sigma=6.507, p_u=0.150 ; seuil u=4.176 M fixe)
+  Lecture : le bruit lognormal multiplicatif epaissit la queue derivee ;
+  la conversion deterministe sous-estimait la dispersion de severite.
+
+==========================================================================
+2. Delta_DORA PRC bootstrap 2 niveaux, residu ON/OFF (lecture B, CRN)
+==========================================================================
+  60 tirages x 3,000 annees x 3 etats x 2 variantes. Meme reechantillonnage de
+  records et memes frequences dans les deux variantes : l'ecart isole le residu.
+
+  variante OFF - records seuls (conversion exacte)  (60 tirages) :
+    Delta_DORA(PC vs C) : median =    1226 M EUR   IC90% [930 ; 1453]  (facteur 1.56)   part > 0 : 100%
+    Delta_DORA(NC vs C) : median =    3600 M EUR   IC90% [2969 ; 4234]  (facteur 1.43)   part > 0 : 100%
+
+  variante ON - records + residu Jacobs (honnete)  (60 tirages) :
+    Delta_DORA(PC vs C) : median =    1283 M EUR   IC90% [987 ; 1559]  (facteur 1.58)   part > 0 : 100%
+    Delta_DORA(NC vs C) : median =    3861 M EUR   IC90% [3197 ; 4496]  (facteur 1.41)   part > 0 : 100%
+
+  p_u avec residu : moyenne 0.157 (config 0.150, seuil u fixe)
+  reference 16 (approx normale)   : NC 3668 [3201 ; 4094]   PC 1257 [1077 ; 1466]
+  reference memoire (NC vs C, 07) : 2015 IC90 [1607 ; 2366]
+
+  Verdict : l'IC PRC s'elargit de facteur 1.43 a facteur 1.41 quand on
+  cesse de traiter la conversion Jacobs comme exacte. Le verdict directionnel
+  (Delta > 0) doit tenir ; le niveau PRC etait sur-precis, pas plus sur.
+
+figure ecrite : exploratory\vasicek_lab\figures\S16_prc_jacobs_residu.png

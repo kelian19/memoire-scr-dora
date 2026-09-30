@@ -1,0 +1,148 @@
+% =============================================================================
+%  VERSION INSTITUT DES ACTUAIRES
+%
+%  FICHIER GENERE. Ne pas editer a la main : editer main_ensae.tex, puis
+%  relancer  python build_institut.py  depuis ce dossier.
+%
+%  Il ne differe de la version ENSAE que par UN point : il n'appelle pas le
+%  chapitre de recul sur le stage, que l'Institut ne demande nulle part. La page
+%  de garde, le format et tout le reste du corps sont identiques, sur decision
+%  du 21 septembre 2026.
+%
+%  FICHIER A DEPOSER : KADDOURI_Kelian_institut.pdf
+% =============================================================================
+
+\documentclass[12pt,a4paper]{report}
+
+% FORMAT IMPOSE PAR L'ECOLE : Times New Roman 12 et interligne 1,5. La commande ci-dessous
+% active, dans le preambule partage, la branche Times et 1,5 ; les autres versions ne la
+% definissent pas et gardent Palatino 11. L'ecole a leve la limite de trente pages le
+% 16 septembre 2026, pas la police ni l'interligne.
+\newcommand{\formatensae}{}
+
+% Meme preambule que la version 2, qui est la reference de style du projet.
+\input{preambule_v2}
+
+\begin{document}
+
+% COUVERTURE : LE GABARIT OFFICIEL, ET RIEN D'AUTRE. Bascule du 28 septembre
+% 2026, sur la liste de controle << Les choses a verifier avant de rendre votre
+% memoire >>, dont le premier point exige la page de garde FOURNIE par l'ecole
+% << sans en modifier sa structure ni ajoute d'images / logos non prevus >>.
+% page_de_garde_ensae.tex, la couverture dessinee pour l'ancien rapport de stage
+% de trente pages, ne repondait a aucun de ces deux criteres : structure libre,
+% et logo d'entreprise pose en bandeau de tete, la ou le gabarit ne le prevoit
+% que dans la cellule << Entreprise >> du tableau des signatures. Elle omettait
+% en outre les quatre mentions que la liste exige nommement, la date de
+% soutenance, les cases de confidentialite, le tableau du jury et les deux
+% cadres de signature. Elle reste au depot, orpheline, comme page_de_garde.tex
+% l'etait jusqu'a ce jour. NE PAS REVENIR EN ARRIERE.
+\newcommand*{\pgdatesoutenance}{mars 2027}
+\input{page_de_garde}
+
+% Exergue et remerciements. Fichier PARTAGE par les quatre versions.
+\input{remerciements}
+
+\input{chapitres/01_resume}   % Résumé, abstract, table des matières
+\input{chapitres/00_glossaire}        % Sigles, sur le modèle du mémoire Dountio (ENSAE, 2026)
+\input{chapitres/20_notes_synthese}   % Note de synthèse et executive summary, en tête
+
+% =====================================================================
+\part{Contexte et problématique}
+\label{part:contexte}
+% =====================================================================
+\input{chapitres/02b_cadre_cyber_dora}      % Ch.1 : risque cyber, marche, DORA, problematique
+% 02_introduction.tex EST ABSORBE par le chapitre ci-dessus (problematique, plan, lecture de
+% marche LUCY). Ne pas le rebrancher : le lecteur lirait deux fois la meme section marche.
+% 04_cadre_reglementaire reste appele, son label chap:reglementaire etant cite par cinq
+% chapitres, mais son expose des cinq piliers fait desormais doublon avec la section 4 du
+% chapitre 1 : a reduire a la seule articulation avec Solvabilite II.
+\input{chapitres/04_cadre_reglementaire}     % DORA et Solvabilité II
+\input{chapitres/03_etat_art_positionnement} % État de l'art et positionnement
+
+% =====================================================================
+\part{Les données et leurs limites}
+\label{part:donnees}
+% =====================================================================
+\input{chapitres/05_donnees_limites}         % Sources, périmètres, retraitements, limites
+
+% =====================================================================
+\part{Modélisation}
+\label{part:modele}
+% =====================================================================
+\input{chapitres/06_socle_mecaniste}         % Fréquence et sévérité : théorie et calibration
+\input{chapitres/07_cascade_dirigee}         % La cascade dirigée, sa formalisation et ses vérifications
+\input{chapitres/11_conformite_multietats}   % La conformité multi-états (Markov)
+\input{chapitres/09_identifiabilite}         % Ce qui est identifiable, et ce qui ne l'est pas
+
+% =====================================================================
+\part{Résultats}
+\label{part:resultats}
+% =====================================================================
+\input{chapitres/10_identification_partielle} % Le capital en bornes sur l'ensemble admissible
+\input{chapitres/12_resultats}                % Surcoût DORA, attribution, benchmarks
+
+% =====================================================================
+\part{Robustesse, limites et perspectives}
+\label{part:limites}
+% =====================================================================
+\input{chapitres/13_inventaire_hypotheses}        % Hypothèses, sensibilité, étages d'incertitude
+\input{chapitres/13b_donnee_manquante_livrable}   % La donnée manquante, chiffrée et hiérarchisée
+\input{chapitres/14_conclusion}                   % Conclusion
+
+
+% =====================================================================
+\appendix
+% PAS DE \addcontentsline ICI : preambule_v2 redefinit \part par titlesec en
+% style [display], et dans cette configuration titlesec ecrit LUI-MEME l'entree
+% de sommaire d'un \part*. La ligne explicite en ajouterait une seconde, defaut
+% constate sur la v2 le 9 septembre 2026.
+\part*{Annexes}
+
+% -----------------------------------------------------------------------------
+% NOTICE D'ORGANISATION DES ANNEXES. Les annexes B (demonstrations du socle EVT),
+% D (pieces justificatives) et E (complements aux chapitres du corps) ont ete
+% deportees le 18 septembre 2026 vers materiel_complementaire/ et ne sont plus
+% appelees. Leurs 78 etiquettes sont donc mortes : tous les renvois du corps qui
+% pointaient vers elles ont ete remplaces par la macro \matcomp, definie dans
+% preambule_v2.tex. Ne pas remettre un \ref vers ces etiquettes.
+% -----------------------------------------------------------------------------
+\chapter*{Organisation des annexes et matériel complémentaire}
+\addcontentsline{toc}{chapter}{Organisation des annexes et matériel complémentaire}
+
+Afin d'en faciliter la lecture, ce mémoire ne conserve en annexe que les démonstrations de la
+contribution principale (le modèle de cascade), les adaptations spécifiques aux piliers DORA,
+le protocole d'élicitation et ses retours de praticiens, les tables des paramètres et des
+notations, ainsi que les deux annexes demandées par l'Institut des actuaires.
+
+L'ensemble du \emph{matériel complémentaire}, comprenant les démonstrations des théorèmes
+standards des valeurs extrêmes, les pièces justificatives et les diagnostics de robustesse,
+ainsi que les compléments de chapitres, a été déporté hors de ce document.
+
+Il est déposé de façon pérenne sur Zenodo, où il porte l'identifiant d'objet numérique
+\texttt{10.5281/zenodo.22874524}, et il est consultable à l'adresse suivante :
+\url{https://doi.org/10.5281/zenodo.22874524}
+
+% =====================================================================
+\input{chapitres/15b_demonstrations_cascade}  % Démonstrations : cascade
+\input{chapitres/12b_adaptations_pilier}      % Adaptations par pilier et cas d'usage
+\input{chapitres/18_elicitation_protocole}    % Protocole de Cooke, préparé et non exécuté
+\input{chapitres/17b_table_parametres}       % Table des paramètres : nature et sensibilité
+\input{chapitres/16_notations}                % Table des notations
+
+% ANNEXES EXIGEES PAR L'INSTITUT DES ACTUAIRES (Recommandations Jury du
+% 1er avril 2026, § 5.1.h : << Deux annexes sont exigees >>). Placees en
+% dernier, apres les annexes de contenu : le referentiel les introduit dans
+% cet ordre et un jury les y cherche. Les ajouter ICI ne deplace aucune des
+% lettres A a E, donc aucun \ref existant.
+\input{chapitres/22_pistes_futurs_memoires}   % Annexe F : pistes pour de futurs mémoires
+\input{chapitres/23_inventaire_ia}            % Annexe G : inventaire de l'usage de l'IA générative
+
+\bibliographystyle{plainnat-fr}
+{\NoAutoSpacing\bibliography{references}}
+
+% LES NOTES DE SYNTHESE SONT EN TETE DEPUIS LE 16 SEPTEMBRE 2026, apres le sommaire
+% et le glossaire, sur le modele du memoire Dountio (ENSAE, 2026). Motif dans l'en-tete
+% de chapitres/20_notes_synthese.tex. Pour revenir a la fin, deplacer la ligne ici.
+
+\end{document}

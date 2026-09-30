@@ -1,0 +1,62 @@
+% =============================================================================
+%  NOTE DE SYNTHÈSE SÉPARÉE — français puis anglais
+%
+%  POURQUOI CE DOCUMENT EXISTE. Le § 6.5 des Recommandations Jury de l'Institut
+%  des actuaires (1er avril 2026) : << Le mémoire doit faire l'objet d'une note
+%  de synthèse SÉPARÉE, en 2 versions : français et anglais. Cette note de
+%  synthèse va permettre l'indexation et le référencement du mémoire sur le site
+%  de l'institut des actuaires. >> Les deux notes figurent déjà EN TÊTE du
+%  mémoire, mais un texte inclus dans le document ne tient pas lieu du livrable
+%  séparé que ce paragraphe demande.
+%
+%  IL N'Y A AUCUNE DUPLICATION, ET C'EST LA RÈGLE DU PROJET. Ce fichier
+%  \input chapitres/20_notes_synthese.tex, exactement le même fichier que les
+%  deux maîtres appellent. Corriger une note se fait donc LÀ et nulle part
+%  ailleurs : les trois documents ne peuvent pas diverger. Ne jamais recopier
+%  le texte ici.
+%
+%  MÊME FORMAT QUE LE MÉMOIRE : Times 12 et interligne 1,5 par \formatensae,
+%  de sorte que le jury lise la même page qu'au document déposé.
+%
+%  FICHIER À DÉPOSER : KADDOURI_Kelian_note_synthese.pdf
+%
+%  Créé le 22 septembre 2026.
+% =============================================================================
+
+\documentclass[12pt,a4paper]{report}
+
+\newcommand{\formatensae}{}
+\input{preambule_v2}
+
+% Pas de sommaire, pas de bibliographie : les deux notes ne portent aucun renvoi
+% ni aucune citation, vérifié le 22 septembre (0 \ref, 0 \cite).
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{center}
+  {\large\bfseries Note de synthèse}\\[14pt]
+  {\Large\bfseries Quantification du SCR lié à la non-conformité\\[3pt]
+   au règlement DORA}\\[6pt]
+  {\large Une cascade dirigée entre les cinq piliers}\\[22pt]
+  {\large Kélian Kaddouri}\\[5pt]
+  ENSAE Paris, filière Actuariat\\[3pt]
+  Nexialog Consulting\\[3pt]
+  2026
+\end{center}
+
+\vspace{16pt}
+\noindent\hrulefill
+
+\vspace{10pt}
+\noindent\small Ce document reprend, à l'identique et sans ajout, les deux notes
+de synthèse qui ouvrent le mémoire. Il est fourni séparément pour l'indexation et
+le référencement prévus au § 6.5 des Recommandations Jury. Chaque nombre qui y
+figure est une valeur publiée dans le corps du mémoire, où il porte la citation du
+script qui la produit ; la note n'en calcule aucun.\normalsize
+
+\clearpage
+
+\input{chapitres/20_notes_synthese}
+
+\end{document}

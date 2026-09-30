@@ -1,0 +1,28 @@
+
+==========================================================================
+Delta_DORA par la cascade, bootstrap 2 niveaux (canal FREQUENCE, g fixe = 0,90)
+==========================================================================
+  g_nc = g_c = 0,90 : conformite agit sur la frequence (S2 vs S0), comme le memoire.
+
+  OPRISK (120 tirages x 20,000 annees) :
+    Delta_DORA median =     5552 M EUR   IC90% [1750 ; 42639]
+    memoire (07)      =     3879 M EUR   IC90% [1497 ; 22249]
+
+  PRC (60 tirages x 3,000 annees) :
+    Delta_DORA median =     2865 M EUR   IC90% [2436 ; 3558]
+    memoire (07)      =     2015 M EUR   IC90% [1607 ; 2366]
+
+==========================================================================
+Canal PROPAGATION : la conformite contient la contagion (g_c < g_nc), OpRisk
+==========================================================================
+  g_nc = 0,90 fixe (non-conforme) ; on baisse g_c (conforme mieux contenu).
+     g_c   SCR non-conf.   SCR conforme   Delta_DORA
+    0.90           14788           8564         6224
+    0.70           14788           7464         7325
+    0.50           14788           6555         8234
+    0.30           14788           6003         8786
+    0.00           14788           5113         9676
+  g_c=0,90 : conformite agit sur la seule frequence (canal 1).
+  g_c<0,90 : la conformite CONTIENT aussi la propagation -> Delta_DORA plus grand.
+
+figure ecrite : exploratory/vasicek_lab/figures/S7_delta_dora_cascade.png

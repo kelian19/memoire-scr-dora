@@ -1,0 +1,25 @@
+
+==========================================================================
+Cas de base (OpRisk, u=percentile 85, lam_ref=21,6/an, phi=9,2, g=0,90)
+==========================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  fit base : xi=0.598  sigma=55.7  p_u=0.156  (config 0,595 / 58,0 / 0,151)
+  Delta_DORA de base = 6640 M€
+
+==========================================================================
+Tornado : deplacement du Delta_DORA par levier (bas / haut)
+==========================================================================
+  base = 6640 M€
+
+  levier                               bas                        haut
+  seuil u       p80 (u=13, xi=0.75): 12944   p90 (u=47, xi=0.53): 4862
+  lambda_ref                    x0.5: 4056                  x1.5: 8684
+  phi                              5: 6834                    15: 6449
+  gain g                         0.5: 5517                   1.0: 6579
+
+  Delta_DORA sur toutes les variantes : min 4056, max 12944 M€
+  Toutes > 0 : True ; toutes pluri-milliard : True
+  Verdict robuste : le seuil u domine la sensibilite (fragilite EVT), mais le
+  surcout de non-conformite reste pluri-milliard et positif sur tous les leviers.
+
+figure ecrite : exploratory/vasicek_lab/figures/S9_tornado_robustesse.png

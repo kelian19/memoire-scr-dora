@@ -1,0 +1,353 @@
+﻿
+========================================================================================
+1. Quantile de severite et moyenne de queue, par les formes fermees de la GPD
+========================================================================================
+Le chapitre socle donne ces deux valeurs comme resultats de ses propositions, mais
+aucun script ne les imprimait : elles etaient calculees a la main a partir de la
+calibration. On les reproduit ici depuis la configuration figee.
+
+  OPRISK : u = 20.03, sigma = 57.97, xi = 0.5954, zeta_u = 0.1509
+      p = 0.995   VaR = 663.0 M EUR    TVaR = 1752.4
+      p = 0.999   VaR = 1852.8 M EUR    TVaR = 4693.1
+
+  PRC : u = 4.176, sigma = 6.507, xi = 1.0328, zeta_u = 0.15
+      p = 0.995   VaR = 209.2 M EUR    TVaR = INDEFINI (xi >= 1)
+      p = 0.999   VaR = 1111.7 M EUR    TVaR = INDEFINI (xi >= 1)
+      xi = 1.0328 > 1 : esperance infinie, l'Expected Shortfall est
+      mathematiquement INDEFINI. C'est ce qui justifie le plafond de severite.
+
+  Les deux valeurs citees au chapitre socle sont la ligne OPRISK a p = 0,995.
+
+========================================================================================
+1bis. Le pont entre le quantile UNITAIRE et le besoin de capital AGREGE
+========================================================================================
+POURQUOI CETTE SECTION. Le quantile de severite a 99,5 % (663 M EUR) et le besoin de
+capital (8 123 M EUR au secteur, 169 a l'entite) sont des objets differents, et le
+memoire les citait cote a cote sans imprimer ce qui les relie. Un lecteur y voit une
+incoherence ; il n'y en a pas, il y a une agregation. Le rapport a ete calcule a la
+main pendant la redaction, donc verifiable par personne : il est calcule ici.
+
+LE PONT, ET SON APPROXIMATION. A queue lourde le quantile annuel est porte par UN
+sinistre (principe du grand saut unique). Atteindre le quantile annuel au niveau alpha
+demande donc, PAR SINISTRE, le niveau 1 - (1 - alpha)/lambda, et le rapport des deux
+quantiles vaut asymptotiquement lambda^xi. C'est une APPROXIMATION et non une identite :
+elle ignore le cumul de plusieurs sinistres dans une meme annee, et elle ne contient ni
+la surdispersion ni la contagion. Ces deux effets sont dans le RESIDU de la derniere
+colonne, qui n'est donc pas une erreur mais leur empreinte multiplicative.
+
+  quantile de severite a 0.995 sur UN sinistre : 662.99 M EUR
+  (c'est le 663 du chapitre socle, et ce n'est pas un capital)
+
+  echelle     lambda  x sev  niveau/sinistre  q(niveau)  SCR publie  residu  SCR/q unit
+  secteur     21.556  1.000          99.977 %     4529.7      8122.9    1.79       12.25
+  entite       0.092  0.855          94.546 %       86.4       169.0    1.96        0.30
+
+  controle analytique au secteur : rapport exact des quantiles = 6.832,
+  asymptote lambda^xi = 6.223. L'ecart de 10 % n'est pas du bruit :
+  la forme fermee porte un terme additif u - sigma/xi = -77.3, negatif ici, et
+  le rapport tend vers son asymptote PAR VALEURS SUPERIEURES. lambda^xi est donc une
+  borne basse du facteur d'agregation, pas son approximation centree.
+
+CE QU'IL FAUT LIRE, ET C'EST LE POINT.
+  1. Au SECTEUR, le capital vaut 12.3 fois le quantile unitaire.
+     A l'ENTITE, il n'en vaut plus que 0.30 fois, donc il passe
+     EN DESSOUS. Le sens de l'inegalite s'inverse avec l'echelle : aucun rapport fixe
+     ne relie les deux objets, et comparer un quantile unitaire a un SCR ne conclut
+     jamais, dans un sens comme dans l'autre.
+  2. La raison est dans la colonne « niveau/sinistre » : a lambda = 21.6 le
+     quantile annuel exige un niveau par sinistre bien PLUS HAUT que 99,5 %, alors qu'a
+     lambda = 0.092 il n'exige qu'un niveau BIEN PLUS BAS, la plupart des annees
+     n'ayant aucun sinistre.
+  3. Le residu vaut 1.79 au secteur et 1.96 a l'entite, soit le meme ORDRE
+     a 9 % pres, et non la meme valeur. C'est ce qu'on attend : la surdispersion et
+     la contagion sont des facteurs multiplicatifs independants de l'echelle, donc le
+     residu doit etre stable, mais le pont lui-meme est approche et son erreur n'est
+     pas la meme aux deux frequences (le cumul de plusieurs sinistres compte au
+     secteur, ou lambda = 21.6, et pas a l'entite, ou il est rarissime). L'ecart
+     residuel mesure donc la qualite du pont, pas un desaccord du pipeline.
+  4. Ce pont ne remplace pas le moteur : il explique un ordre de grandeur, il ne
+     produit aucun chiffre publie. Les SCR restent ceux du script 60.
+
+========================================================================================
+2. Les parts de vecteur, en pourcentage autant qu'en fraction
+========================================================================================
+Le script 63 imprime ces parts en FRACTION, le memoire les cite en POURCENTAGE : le
+harnais ne pouvait apparier ni l'un ni l'autre. On imprime les deux formes.
+
+  vecteur                     fraction   pourcentage
+  phishing_social_eng            0.388         38.8 %
+  exploit_vuln                   0.338         33.8 %
+  supply_chain_tiers             0.158         15.8 %
+  identifiants                   0.063          6.3 %
+  autres                         0.053          5.3 %
+  surface TLPT (art. 26)         0.496         49.6 %
+  surface tiers (art. 28-44)     0.158         15.8 %
+
+  somme des parts : 1.000 (100.0 %)
+  RAPPEL : citation externe datee, non recalculable (cf. scripts 62 et 63). Ces parts
+  ne servent qu'a repartir par vecteur et ne portent aucun niveau de capital.
+
+========================================================================================
+3. Les rapports derives que la redaction citait sans les tracer
+========================================================================================
+Chacun de ces rapports se deduit d'une valeur imprimee ailleurs. Les tracer ici evite
+qu'une valeur amont bouge sans que le rapport suive, ce qui est arrive une fois.
+
+  multiplicateur de severite (script 60)     : 0.8545
+  soit, en variation                         : -14.5 %
+     le memoire arrondissait a -14 % ; la valeur imprimee est -14.5 %
+
+  les trois frequences du chapitre donnees :
+     lambda_ref, notifications PRC (BSF)     : 341 /an
+     lambda, secteur financier mondial       : 21.56 /an
+     lambda, entite lue a sa taille          : 0.09168 /an
+  rapport entre les extremes (ref / entite)  : 3719
+  rapport secteur / entite                   : 235
+
+  indice de queue OpRisk                     : 0.5954
+  1 / xi (indice de regularite de la queue)  : 1.680
+  xi > 0,5 : variance infinie                : True
+  xi < 1   : esperance finie, TVaR defini    : True
+
+  VaR 99,5 % OpRisk tous NC (script 20)      : 16942 M EUR
+  TVaR correspondante                        : 35645 M EUR
+  rapport TVaR / VaR                         : 2.10
+     a comparer a l'asymptote 1/(1-xi)       : 2.47
+
+  surcout total, cascade (script 23)         : 10927 M EUR
+  surcout total, copule de dependance        : 6760 M EUR
+  sous-estimation du modele sans mecanisme   : 38.1 %
+
+  cout total annuel, lambda = 0,092 (58)     : 2.89 M EUR/an
+  cout total annuel, lambda = 0,046          : 0.54 M EUR/an
+  variation apportee par la conformite       : -81.3 %
+
+  P1 en tete de priorite (script 30)         : 43.6 %
+  P4 en tete                                 : 37.7 %
+  P1 ou P4 en tete, cumule                   : 81.3 %
+
+========================================================================================
+3bis. L'echelle des lectures de l'ecart entre etats, et laquelle le memoire publie
+========================================================================================
+Quatre protocoles chiffrent le meme enonce et donnent quatre resultats. Ils different
+par le NOMBRE DE CANAUX qu'ils relachent entre les deux etats, et par rien d'autre.
+
+  lecture                                          can.   conforme  non conf.   facteur     ecart  src
+  score de conformite seul, g fige au niveau NC       1       7987      16847      2.11      8860   25
+  frequence + propagation (lecture B)                 2       6664      15074      2.26      8410   16
+  + detection (lecture C)                             3       5932      16595      2.80     10663   16
+  + accumulation P4 (les quatre canaux)               4       6049      20188      3.34     14139   43
+
+  le facteur croit-il avec le nombre de canaux relaches ? True
+  amplitude du facteur, d'un canal a quatre  : 2.11 -> 3.34
+  soit un ecart de                           : +1.23
+
+  et la colonne ECART en euros, croit-elle ? False
+  Non, et il faut le dire plutot que de laisser le lecteur le remarquer seul : elle
+  passe de 8 860 a 8 410 entre la premiere et la deuxieme lecture. La raison n'est pas
+  un effet de modele mais un changement de BASE, l'etat conforme passant de 7 987 a
+  6 664 d'un protocole a l'autre. Un ecart en euros n'est comparable qu'a base egale ;
+  le rapport, lui, est sans dimension et se compare. C'est le meme motif qui fait
+  publier les elasticites plutot que les plages dans le tornado renormalise.
+
+CE QUE LA MONOTONIE DIT, ET CE QU'ELLE NE DIT PAS. Elle est coherente avec la
+super-additivite mesuree sur une autre partition (les seize configurations du script 68,
++5 001 M EUR d'interaction) : relacher un canal de plus ajoute son effet propre ET les
+croises qu'il porte. Mais les quatre lignes ne sont PAS une experience controlee, leurs
+protocoles differant aussi par la graine et par la base. La monotonie s'observe, elle ne
+se teste pas ici ; le test, lui, est dans le script 68, ou les seize configurations
+partagent le meme moteur et les memes graines.
+
+CE QUE LE MEMOIRE PUBLIE, ET POURQUOI. La lecture retenue est celle des QUATRE CANAUX.
+Motif principal : c'est la seule ou l'etat conforme est conforme sur TOUS les canaux que
+le modele possede. Dans la premiere lecture, l'entite dite conforme propage encore comme
+une entite defaillante ; dans les deux suivantes, sa detection ou son accumulation tiers
+restent au niveau non conforme. Une entite conforme sur un canal et non conforme sur
+trois autres n'est pas un etat conforme, c'est une remediation partielle, et la nommer
+« conforme » sous-estime l'ecart par construction.
+Motif secondaire : c'est deja la lecture dont depend tout l'aval, la table des quatre
+canaux, la decomposition de Mobius, les colonnes de fermeture et de Shapley, et le
+calcul de portage. Publier un autre chiffre en tete obligerait a rejouer cet aval.
+
+LES TROIS AUTRES LECTURES NE SONT PAS RETIREES. Elles restent publiees comme des
+remediations PARTIELLES, ce qu'elles sont, et leur emboitement est un resultat : il
+chiffre ce que coute de ne fermer qu'une partie des canaux.
+
+========================================================================================
+3ter. Le rapport detention / transfert, et pourquoi il resiste mieux que le NIVEAU
+========================================================================================
+Definitions, echelle d'entite, script 58 :
+  cout annuel de DETENTION = CoC x SCR, avec SCR = 169 M EUR
+  prix de TRANSFERT        = cout total du traite au L* optimal = 2.89 M EUR/an
+  portee optimale L*       = 170 M EUR, soit L* / SCR = 1.006
+
+  CoC                                detention   transfert   rapport   taux moyen
+  -------------------------------------------------------------------------------
+  regime actuel (6.00 %)                 10.14        2.89      3.51       0.0170
+  directive (UE) 2025/2 (4.75 %)          8.03        2.89      2.78       0.0170
+
+POURQUOI CE RAPPORT EST PLUS ROBUSTE QUE LE NIVEAU, ET C'EST UNE IDENTITE.
+  rapport = (CoC x SCR) / (taux moyen x L*),  et a l'optimum L* = SCR
+         => rapport = CoC / taux moyen,  le SCR se SIMPLIFIE.
+  Le niveau, lui, traverse les deux elasticites estimees de la descente d'echelle
+  (frequence 0,0744 et severite 0,087) : c'est la qu'il devient illustratif. Le
+  rapport n'en herite pas au premier ordre, parce que ses deux termes sont
+  proportionnels au MEME SCR. L'optimum L* = SCR est verifie ici a 0.6 % pres.
+
+CE QUI RESTE, ET QU'IL NE FAUT PAS ANNONCER COMME NUL. La simplification vaut pour un
+changement d'echelle PUR. Or la descente d'echelle ne rescale pas la loi de perte : elle
+deplace la frequence et la severite separement, donc elle change la FORME. L'effet de
+forme, lui, n'est pas nul, et le seul balayage disponible le borne par le haut.
+
+  balayage du script 58 a CoC = 4.75 % (lambda reduit) :
+    lambda     SCR   detention   transfert   rapport
+  --------------------------------------------------
+     0.092     169        8.03        2.89      2.78
+     0.064      97        4.61        1.39      3.31
+     0.046      43        2.04        0.54      3.78
+
+  le rapport va de 2.78 a 3.78, soit +36 %, quand le SCR
+  varie d'un facteur 3.9. C'est une BORNE SUPERIEURE de l'effet de forme :
+  ce balayage deplace la frequence, donc il cumule l'effet d'echelle et celui de forme.
+
+  L'ENONCE PUBLIABLE est donc : le rapport est invariant a un changement d'echelle pur,
+  par simplification du SCR, et l'effet de forme residuel est borne par +36 % sur une
+  plage de SCR d'un facteur quatre. PAS « il garde plus de 89 % de sa valeur », qui
+  n'est reproduit par aucun calcul, et pas « il tombe a 11 % », qui dit le contraire de
+  ce que la phrase soutenait.
+
+  NON MESURE, et a ne pas combler par un chiffre : le deplacement de ce rapport ENTRE
+  le secteur et l'entite. Le traite en exces de perte n'est optimise qu'a l'echelle
+  d'entite ; aucun script ne calcule son equivalent sectoriel. La comparaison des deux
+  echelles sur ce rapport n'existe pas, et l'identite ci-dessus est ce qui la remplace.
+
+========================================================================================
+4. Statistiques de severite de la population EFFECTIVEMENT utilisee
+========================================================================================
+POURQUOI CETTE SECTION EXISTE, ET CE QU'ELLE A TROUVE. Le chapitre donnees publie une
+table de statistiques de severite (mediane 1.50 M USD, moyenne 26.4, P90 51.5, P99 402,
+maximum 1500, total cumule 15.4 Md USD). Cette table a ete MIGREE AUTOMATIQUEMENT depuis
+la version pre-cascade du memoire, et AUCUN filtre du pipeline actuel ne la reproduit :
+ni la base entiere, ni le secteur financier, ni le sous-ensemble TIC, ni aucune
+combinaison de fenetres. Sa moyenne et son total impliquent n = 583 observations, effectif
+qu'aucun sous-ensemble courant ne presente. Elle decrit donc une population que le memoire
+n'utilise plus nulle part ailleurs.
+
+CE SCRIPT NE TENTE PAS DE LA RETROUVER. Il imprime les statistiques de la population que
+le memoire utilise REELLEMENT partout ailleurs, c'est-a-dire celle de la descente
+d'echelle et de la calibration de frequence : secteur financier, categories TIC, fenetre
+2005-2022. C'est cette table qui doit figurer au chapitre donnees, faute de quoi le
+chapitre decrit un echantillon et calibre sur un autre.
+
+  filtre : secteur financier x categories TIC x annees 2005-2022
+  observations                  1476
+  mediane                       1.20 M USD
+  moyenne                       33.8 M USD
+  P90                           25.3 M USD
+  P99                          419.3 M USD
+  maximum                    10970.8 M USD
+  total cumule                  49.8 Md USD
+
+  concentration de la queue, sur la meme population :
+  part du decile superieur              92.3 %
+  part du centile superieur             65.1 %
+
+  Le memoire annoncait 82.7 % et 31 % pour ces deux parts, sur la population non
+  reproductible. Les valeurs ci-dessus sont celles de la population qu'il calibre.
+
+L'ECART DE HILL AU MLE (chapitre socle, 138,7 % a k = 86) N'EST PAS RECALCULE ICI, et
+c'est deliberé. Cet ecart porte sur les excedents CONVERTIS EN EUROS au-dessus du seuil
+de collecte, objet construit par le pipeline du script 47. Le recalculer ici sur les
+pertes brutes en dollars donne un tout autre nombre, et publier deux valeurs sous le
+meme nom creerait la contradiction que ce script est cense eviter. C'est au script 47
+de l'imprimer, puisque c'est lui qui possede la conversion.
+
+========================================================================================
+5. La table des queues par categorie Bale, et son effectif le plus faible
+========================================================================================
+POURQUOI CETTE SECTION EXISTE. Le chapitre des adaptations par pilier ouvre son
+argument sur deux valeurs : les cinq queues observees par categorie Bale
+(0,92 / 0,98 / 1,03 / 1,27 / 1,37) et les 105 observations de la categorie la plus
+proche du TIC, qui la rendent non estimable. Le script 37 porte les deux dans son
+en-tete, en commentaire, et n'en imprime aucune : elles ne sont donc verifiables par
+personne, alors qu'elles portent tout le raisonnement d'heterogeneite de queue.
+
+  filtre : secteur financier (Industry Sector Name), toutes annees, colonne Loss Amount (22139 lignes)
+  seuil par categorie : percentile 75 ; xi par MLE GPD a seuil libre
+
+  categorie Bale (Event Risk Category)                n      xi
+  Clients, Products & Business Practices          10475   1.031
+  External Fraud                                   4712   1.038
+  Internal Fraud                                   4550   1.355
+  Execution, Delivery & Process Management         1604   1.368
+  Employment Practices and Workplace Safety         541   0.865
+  Damage to Physical Assets                         146   1.217
+  Business Disruption and System Failures           111   0.552
+
+  LES CINQ QUEUES RETENUES (n >= 150), triees :
+     0.865 | 1.031 | 1.038 | 1.355 | 1.368
+  dispersion (max - min) : 0.503
+  categorie la plus proche du TIC : 111 observations, sous le seuil de 150.
+  Damage to Physical Assets (146) est exclue pour la meme raison.
+
+  CE QUE CETTE TABLE A REMPLACE, ET POURQUOI. Le memoire citait auparavant
+  0,92 / 0,98 / 1,03 / 1,27 / 1,37 et 105 observations, valeurs heritees d'une sonde
+  dont le filtre n'a pas ete conserve. Aucune combinaison du pipeline ne les
+  reproduisait : ni le secteur financier seul, ni les fenetres 2000-2026 et
+  2005-2022, ni la base entiere, ni les seuils q75 et q85. Elles ont donc ete
+  remplacees par la table ci-dessus, qui a un filtre ecrit et un script qui
+  l'imprime. Le script 37 en est le consommateur et en recopie les cinq valeurs.
+
+  CE QUE LE REMPLACEMENT CHANGE, ET CE QU'IL NE CHANGE PAS. L'argument du chapitre
+  12b ne porte pas sur le niveau des queues mais sur leur DISPERSION et sur le
+  sous-echantillonnage de la categorie TIC : les deux tiennent, et la dispersion est
+  meme un peu plus large (0,50 contre 0,45). La borne du SCR sur les 120
+  assignations passe donc de +38 / +82 % a +55 / +96 %, et le classement des piliers
+  reste domine par P1 dans 83 % des assignations, inchange. La conclusion du
+  chapitre, supposer une queue commune SOUS-ESTIME le capital, en sort renforcee.
+
+========================================================================================
+6. Les parametres POSES, et les constantes, en un seul endroit
+========================================================================================
+POURQUOI CETTE SECTION EXISTE. Le harnais confrontait chaque nombre publie aux
+sorties des scripts cites par sa section, et signalait tout ce qui n'y figurait pas.
+Restait une classe qu'aucun script n'imprimait parce qu'elle n'est le RESULTAT de
+rien : les entrees posees du modele et les constantes standard. Elles sont pourtant
+ce qu'un relecteur veut verifier en premier, puisque ce sont les hypotheses. On les
+liste donc ici, avec, en regard, le script qui les consomme.
+
+  parametre                                                               valeur  statut                  scripts
+  --------------------------------------------------------------------------------------------------------------------
+  g par etat de conformite (C / PC / NC)                      0.45 / 0.68 / 0.90  pose, non calibre       16, 20, 66
+  grille tres etroite de g, test d'invariance                0.85 / 0.875 / 0.90  pose                    66
+  multiplicateur de materialite p_u par etat                  0.85 / 1.00 / 1.20  pose                    20, 36, 39
+  quantile de stress, loi normale a 95 %                                   1.645  constante standard      19, 22, 30
+  formule standard, plafond operationnel (art. 204)                 0.30 du BSCR  reglementaire           27, 28
+  formule standard, part des primes                                         0.03  reglementaire           27, 28
+  ratio de sinistralite du traite en exces                                 0.485  pose, prix de marche    58
+  minimum d'exces pour une estimation GPD fiable                              30  regle de l'art          07, 47, 63
+  points de lecture du graphe de Hill                          k = 30 et k = 200  lecture graphique       47
+  fourchette d'estimations de place, cout DORA                    25 a 150 M EUR  source externe          50
+  regression Jacobs 2014, effectif et ajustement             115 obs., R2 = 0.51  source externe          21
+  resolutions Monte-Carlo employees                 60 / 150 / 240 / 600 mille annees  resolution, pas un resultat16b, 20, 58, 60
+  sur-dispersion de la frequence phi                                        9.20  semi-calibre, maintenu  06, 08b, 17
+  copule de dependance, parametre de Gumbel theta                            1.8  pose                    23, 42, 48
+  seuil de crise de la latente theta_crise                                  -2.5  pose                    16, 30
+  probabilites d'etat P(NC / PC / C)                          0.35 / 0.35 / 0.30  semi-ancre, enquetes de conformite16, 20, 36
+
+  AUCUN de ces nombres n'est un resultat, et c'est le point. Les trois premiers sont
+  les hypotheses que le memoire assume et dont il montre, script 66, que sa these ne
+  depend pas ; les deux suivants sont reglementaires ; les autres sont des conventions
+  de lecture ou des sources externes. Les publier ici les rend verifiables sans
+  laisser croire qu'ils sont estimes.
+
+========================================================================================
+VERDICT
+========================================================================================
+Ce script ne produit aucun resultat nouveau : il rend VERIFIABLES des valeurs qui
+etaient publiees sans l'etre. C'est la quatrieme classe du residu du harnais, la seule
+qui soit un defaut. Les trois autres (separateur, unite, valeur legitimement hors
+script) se traitent respectivement dans le harnais, en imprimant les deux unites, et
+en assumant la valeur dans le texte.
+
+A RELANCER sur un poste disposant de data/raw/ pour completer la section 4.

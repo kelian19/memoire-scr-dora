@@ -1,0 +1,69 @@
+
+==========================================================================
+0. Controle d'identite : la base est-elle celle du memoire ?
+==========================================================================
+  incidents               : 10591 (attendu 10591)
+  dont secteur financier  : 980 (attendu 980)
+  => base conforme, les taux publies restent valides.
+
+==========================================================================
+1. control_failure : le champ qui nomme le domaine de controle defaillant
+==========================================================================
+  renseigne dans          : 13 incidents sur 10591 (0.12 %)
+  dont secteur financier  : 1
+  Ce champ est la taxonomie PAR DOMAINE DE CONTROLE que W exige, et le schema
+  la prevoit. Elle n'est pas remplie : le defaut porte sur le REMPLISSAGE, jamais
+  sur la conception.
+
+==========================================================================
+2. La chronologie en quatre etapes : ce qui porte l'anteriorite
+==========================================================================
+  etape             valeur  + unite reelle   valeur sans unite
+  compromission         25              23                   2
+  exfiltration          29              27                   2
+  decouverte          1434            1434                   0
+  confinement          297             297                   0
+
+  etapes datees           definition lache  definition STRICTE
+  au moins 1                           1646                1645
+  au moins 2                            127                 126
+  au moins 3                             11                  10
+  au moins 4                              1                   0
+
+  LE MEMOIRE PUBLIE LA COLONNE STRICTE. Une duree sans unite ne date rien,
+  donc elle ne porte aucune anteriorite : c'est la seule lecture defendable.
+
+  datee sur au moins deux etapes : 126 (1.19 %)
+  datee sur au moins trois etapes : 10
+
+==========================================================================
+3. L'intersection, qui est ce qu'identifier W exigerait SIMULTANEMENT
+==========================================================================
+  control_failure renseigne ET chronologie datee sur >= 2 etapes : 1
+  dont secteur financier                                        : 0
+
+  C'est le resultat qui ferme la troisieme echappatoire. Identifier W demande
+  la taxonomie ET l'anteriorite sur le MEME incident. Toute la base publique en
+  porte un seul exemplaire, et aucun dans le secteur qui nous interesse.
+
+==========================================================================
+VERDICT
+==========================================================================
+  La specification existe, elle est publiee, elle est adoptee par la profession,
+  et elle n'est pas remplie. Le probleme n'est donc pas de savoir QUOI collecter,
+  question a laquelle VERIS repond deja, mais d'en rendre le remplissage
+  obligatoire. C'est ce qu'une notification d'incident majeur sous DORA peut
+  imposer, et qu'une base declarative volontaire ne peut pas.
+
+==========================================================================
+Grandeurs citees
+==========================================================================
+  incidents de la base                      10591
+  incidents en secteur financier            980
+  control_failure renseigne                 13
+  part de control_failure en pourcent       0.12
+  chronologie datee sur >= 2 etapes         126
+  part de la chronologie en pourcent        1.19
+  chronologie datee sur >= 3 etapes         10
+  intersection des deux conditions          1
+  intersection en secteur financier         0

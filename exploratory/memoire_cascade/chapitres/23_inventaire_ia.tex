@@ -1,0 +1,135 @@
+% =====================================================================
+% INVENTAIRE DE L'UTILISATION DE L'INTELLIGENCE ARTIFICIELLE GENERATIVE
+%
+% ANNEXE EXIGEE PAR L'INSTITUT DES ACTUAIRES. Recommandations Jury du
+% 1er avril 2026, § 5.1.h : la seconde des deux annexes exigees est
+% << L'inventaire, le cas echeant, de l'utilisation de l'intelligence
+% artificielle generative >>, et << cet inventaire se doit d'etre exhaustif et
+% doit comprendre les mesures prises pour verifier la validite des resultats
+% par l'utilisation de l'intelligence artificielle generative >>.
+%
+% LE § 4.5 FIXE L'ENJEU : << La transparence quant a l'usage de l'intelligence
+% artificielle doit etre totale. Tout manquement a cette regle conduira
+% l'etudiant a etre ajourne par le jury, sans besoin d'une autre motivation. >>
+% C'est le seul manquement du referentiel dont la sanction soit automatique.
+% Le meme § 4.5 rappelle que l'usage lui-meme n'est PAS interdit, sous trois
+% conditions : fondements theoriques et references maitrises, explicabilite
+% identique a celle d'un travail sans assistance, transparence totale.
+%
+% CREE LE 21 SEPTEMBRE 2026, RESSERRE LE 22.
+%
+% RESSERRAGE DU 22 SEPTEMBRE, demande de Kelian : meme registre que la
+% declaration de F. Dountio, sobre et brave. Six pages ramenees a deux. CE QUI A
+% ETE RETIRE EST DE LA MISE EN SCENE, PAS DE LA DECLARATION : l'encadre qui
+% reexposait le referentiel, l'encadre d'avertissement, les titres de section
+% narratifs et trois tetes de paragraphe qui annoncaient ce que la phrase
+% suivante disait. L'INVENTAIRE RESTE EXHAUSTIF et les mesures de verification
+% restent decrites, parce que le § 5.1.h exige les deux et qu'une declaration
+% incomplete vaut absence de declaration.
+%
+% LA LIMITE DU DISPOSITIF EST CONSERVEE, et elle a meme GAGNE en visibilite :
+% elle vivait dans un encadre au milieu d'une section, elle a desormais sa
+% propre section. La note d'honnetete du projet interdit de rendre une reserve
+% moins visible ; resserrer le texte autour d'elle ne la rend pas moins visible,
+% la supprimer l'aurait fait.
+%
+% TROIS COMPTES ETAIENT PERIMES et sont releves le 22 septembre sur le harnais
+% lui-meme : 1 824 nombres (c'est 1 881), 22 chapitres (19 en publient), 112
+% sorties versionnees (111). Les recompter avant toute nouvelle compilation
+% finale : ils bougent a chaque chapitre touche.
+%
+% KELIAN : CETTE ANNEXE EST UN SOCLE A RELIRE, PAS UN TEXTE FINI.
+% Elle decrit l'usage tel que le depot en porte la trace : CLAUDE.md, le journal
+% de session REPRISE.md, les quatre agents de .claude/agents/, les commits
+% co-signes. Ce que seul toi peux trancher :
+%   - le perimetre reel de l'aide a la redaction, chapitre par chapitre si
+%     l'usage a varie ;
+%   - s'il y a eu recours a d'autres outils que celui dont le depot garde la
+%     trace ;
+%   - la formulation de la derniere section, qui engage ta responsabilite
+%     d'auteur.
+% Dans le doute, declarer plus.
+%
+% HARNAIS : cette annexe cite des comptes qui decrivent le DISPOSITIF DE
+% VERIFICATION lui-meme (nombres controles, chapitres, sorties) et non des
+% resultats du modele. Aucun script ne les produit, d'ou la declaration hors
+% script ci-dessous, posee AVANT la premiere \section pour couvrir tout le
+% fichier.
+% =====================================================================
+
+\chapter{Inventaire de l'utilisation de l'intelligence artificielle générative}
+\label{ann:ia}
+
+% HARNAIS-HORS-SCRIPT: inventaire de l'usage de l'IA generative : les nombres y decrivent le dispositif de verification du memoire (nombres sous controle, chapitres balayes, sorties versionnees, erreurs semantiques trouvees), pas des grandeurs du modele. Ils ne sortent d'aucun script d'analyse et se constatent sur le depot.
+
+Le référentiel de l'Institut des actuaires n'interdit pas l'usage de l'intelligence artificielle
+générative. Il le soumet à trois conditions : la maîtrise des fondements théoriques et des
+références sous-jacentes, une explicabilité des résultats identique à celle d'un travail sans
+assistance, et une transparence totale. Cet inventaire déclare l'usage effectué, les mesures
+prises pour vérifier la validité des résultats, et ce que ces mesures ne couvrent pas.
+
+\section{Usage déclaré}
+
+L'appui d'outils d'intelligence artificielle générative a porté sur quatre points.
+
+\begin{enumerate}[itemsep=3pt]
+\item \textbf{Rédaction et reformulation du manuscrit} : mise en forme, resserrement, et
+      harmonisation du registre et de la terminologie entre chapitres écrits à des moments
+      différents.
+
+\item \textbf{Écriture et relecture des scripts d'analyse}, ceux qui produisent les calibrations,
+      les simulations, les tests et les figures. Leur sortie est versionnée au dépôt, de sorte
+      qu'une réexécution redonne le même fichier.
+
+\item \textbf{Construction de quatre agents de relecture automatique} du manuscrit : cohérence
+      actuarielle, cohérence des données au regard du règlement, cohérence des figures avec les
+      données qu'elles affichent, et registre d'écriture. Ils signalent des écarts à corriger à la
+      main et ne produisent aucun résultat.
+
+\item \textbf{Construction du dispositif de vérification} décrit à la section suivante, qui est
+      lui-même un programme écrit avec assistance.
+\end{enumerate}
+
+\section{Mesures prises pour vérifier la validité des résultats}
+
+Aucun nombre publié n'est écrit à la main. Chaque bloc du manuscrit déclare en commentaire les
+scripts dont il tire ses nombres ; un programme relit le manuscrit, en extrait tout nombre publié,
+et le cherche dans les sorties versionnées des scripts que ce bloc déclare, à la tolérance
+d'arrondi d'écriture près. Au dernier passage, les $1\,885$ nombres vérifiables des $18$ chapitres
+qui en publient sont confirmés, sur $117$ sorties de référence versionnées au dépôt.
+
+Une section sans source déclarée est traitée comme un défaut plus grave qu'un nombre non confirmé :
+un taux de confirmation se règle en retirant une citation, la couverture non. Le programme imprime
+donc les deux, et les exemptions sont comptées et motivées plutôt que silencieuses. Toute grandeur
+issue d'une simulation est enfin publiée avec son bruit, de sorte que la précision affichée ne
+dépasse jamais celle que le calcul soutient.
+
+\section{Limite du dispositif}
+
+Un taux de confirmation ne mesure pas la justesse du texte. Une relecture des chapitres conduite au
+filtre des superlatifs, des comptages et des renvois a mis au jour huit erreurs sémantiques que le
+dispositif confirmait \emph{toutes} : chaque nombre sortait bien du script cité, seule la phrase qui
+l'entourait était fausse. Cinq portaient sur une affirmation de relation, une sur un renvoi vers une
+section qui ne disait pas ce qu'on lui prêtait, une sur un superlatif portant sur un ensemble
+calculé, une sur un comptage d'éléments.
+
+Deux de ces huit provenaient d'un message écrit en dur dans un script, c'est-à-dire d'une
+affirmation rédigée avant que le calcul ne la confirme. La règle qui en a été tirée, appliquée
+depuis à tout le manuscrit, est qu'un superlatif ou un comptage se calcule et ne s'écrit pas, au
+même titre qu'un nombre. La relecture des énoncés qui comparent, comptent ou renvoient reste
+manuelle : c'est la zone que l'automatisation ne couvre pas. Cette limite est énoncée plutôt que
+tue, un taux de confirmation de $100\,\%$ affiché sans elle rassurant à tort.
+
+\section{Ce qui n'a pas été délégué}
+
+La problématique et sa délimitation, le choix de porter la dépendance par une cascade dirigée
+plutôt que par une copule, la décision de ne pas poser de matrice arbitraire et de publier le
+capital en bornes, le traitement d'une élicitation diffusée et restée sans réponse, la qualification des
+sources de données et de leurs biais, la hiérarchisation des limites et l'interprétation des
+résultats relèvent de l'auteur, qui en répond.
+
+Le mémoire réfute au demeurant l'hypothèse qui lui avait donné son titre initial et requalifie son
+chiffre central en borne supérieure. Ces deux décisions vont contre le sens d'une rédaction
+assistée, qui tend à conforter la thèse annoncée plutôt qu'à la démentir.
+
+% =====================================================================

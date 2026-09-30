@@ -1,0 +1,284 @@
+﻿
+============================================================================================
+0. Les entites, leurs chiffres publies, et la provenance de chaque champ
+============================================================================================
+entite                      perimetre            actifs  provisions       SCR   couv.
+                                                  M EUR       M EUR     M EUR        
+Identite A        solo, non-vie          2319        1804       425    121%
+Identite B  solo, non-vie          5305        2071       812    398%
+Identite C      solo, vie             37845       33484      1587    275%
+Identite D           solo, vie            309800      275000     14800    235%
+Entite notionnelle (ch. 12) fictive               19231       15000         -       -
+
+CORRESPONDANCE AVEC LES ETIQUETTES PUBLIEES AU MEMOIRE :
+  Assureur non-vie A     = Identite A
+  Assureur non-vie B     = Identite B
+  Assureur vie C         = Identite C
+  Assureur vie D         = Identite D
+  Le memoire ne publie que la colonne de gauche. Voir l'en-tete de ce script pour
+  la raison : le modele n'utilise que le bilan, jamais l'identite.
+
+PROVENANCE DE CHAQUE CHAMP, a ne pas confondre a la lecture :
+  Identite A
+      actifs  : deduit (provisions + fonds propres, borne inferieure)
+      of      : publie
+      scr     : publie
+      source  : SFCR 2024, Identite A : provisions techniques 1 804 M EUR (+14,8 %), fonds propres eligibles 515 M EUR (T1 425 + T2 90), couverture du SCR 121 %, SCR 425 M EUR et risque operationnel 59 M EUR lus dans l'etat S.25.01 (p. 79 du rapport)
+  Identite B
+      actifs  : publie
+      of      : publie
+      scr     : publie
+      source  : SFCR 2024, Identite B : total actif Solvabilite II 5 305 M EUR, provisions techniques et autres passifs 2 071 M EUR, fonds propres eligibles 3 234 M EUR, couverture 398 % (synthese p. 5) ; SCR 812,5 M EUR et risque operationnel 39,7 M EUR (section E.2, p. 57)
+  Identite C
+      actifs  : deduit (provisions + fonds propres, borne inferieure)
+      of      : publie
+      scr     : publie
+      source  : SFCR 2024, Identite C : provisions techniques et autres passifs 33 484 M EUR, fonds propres eligibles 4 361 M EUR, SCR 1 587 M EUR
+  Identite D
+      actifs  : deduit (provisions + fonds propres, borne inferieure)
+      of      : publie
+      scr     : publie
+      source  : SFCR solo 2024, Identite D : provisions techniques brutes de reassurance 275 Md EUR, fonds propres eligibles 34,8 Md EUR, SCR 14,8 Md EUR (formule standard), couverture solo publiee 236 %
+
+DEUX RESERVES A ECRIRE TELLES QUELLES.
+  (1) Aucune de ces entites ne publie son etat de conformite DORA. On mesure une
+      EXPOSITION sous un etat suppose, jamais une non-conformite constatee.
+  (2) Deux entites publient « provisions techniques ET AUTRES PASSIFS » sans les
+      separer. Pour celles-la l'assiette de la charge forfaitaire est SURESTIMEE,
+      donc le rapport besoin ORSA / forfait est SOUS-estime :
+        - Identite B
+        - Identite C
+      Le rapport au SCR PUBLIE, lui, n'est pas concerne par ce defaut d'assiette.
+  L'ecart de taille couvert va de 2319 a 309800 M EUR, soit un facteur 134.
+
+============================================================================================
+1. La conversion de devise ne pese presque rien, et il faut le montrer
+============================================================================================
+panel : 14,944 observations firme-annee, 5230 firmes
+elasticite frequence / taille b_lambda = +0.0744 (ET 0.0098, z = +7.59)
+elasticite severite / taille  b        = +0.0870 (IC [0.026 ; 0.148])
+
+CONTROLE DE REPRODUCTION DU SCRIPT 60, sur l'entite notionnelle :
+  lambda a 20 000 M USD   = 0.091684   (script 60 : 0,091684)
+  multiplicateur severite = 0.8545       (script 60 : 0,8545)
+  reproduction exacte : True
+
+Sensibilite au cours de change retenu (1.04 USD par EUR) :
+  0.95 USD/EUR -> lambda(Identite D) = 0.11199   mult = 1.0797
+  1.00 USD/EUR -> lambda(Identite D) = 0.11242   mult = 1.0845
+  1.04 USD/EUR -> lambda(Identite D) = 0.11275   mult = 1.0882
+  1.10 USD/EUR -> lambda(Identite D) = 0.11322   mult = 1.0936
+  1.15 USD/EUR -> lambda(Identite D) = 0.11360   mult = 1.0978
+  Une erreur de 10 % sur le cours deplace lambda de 0.71 % et la severite de 0.83 %.
+  Le cours n'est donc pas un parametre du resultat, et le presenter comme une
+  hypothese sensible serait une fausse precaution.
+
+============================================================================================
+2. Les deux lectures d'echelle, entite par entite
+============================================================================================
+entite                        actifs M USD    lambda        bande lambda  x severite
+Identite A                  2412    0.0783   [0.0745 ; 0.0824]      0.7109
+Identite B            5517    0.0833   [0.0805 ; 0.0862]      0.7639
+Identite C               39359    0.0964   [0.0961 ; 0.0967]      0.9063
+Identite D                   322192    0.1128   [0.1079 ; 0.1178]      1.0882
+Entite notionnelle (ch. 12)          20000    0.0917   [0.0908 ; 0.0926]      0.8545
+
+La frequence varie peu d'une entite a l'autre parce que l'elasticite est faible :
+  un facteur 134 sur les actifs ne donne qu'un facteur 1.44 sur lambda
+  et un facteur 1.53 sur la severite. C'est la propriete centrale a retenir, et c'est aussi
+  ce qui limite la transposition vers les petites tailles (section 5).
+
+============================================================================================
+3. Le besoin ORSA par entite : un point, une bande, un socle
+============================================================================================
+La direction de W n'etant pas identifiee, le resultat d'une entite est une BANDE.
+On enumere les 1024 sommets du pave admissible a t = 1, comme au
+chapitre resultats, en plus du point a la matrice d'expert et du socle sans
+contagion. Les trois grandeurs sont donnees, jamais le seul point.
+
+sommets admissibles : 1024 / 1024
+
+entite                           point  bande basse  bande haute    socle     E[X]
+Identite A             112.1         88.0        122.2     49.0     2.46
+Identite B       135.5        103.8        145.8     57.4     2.89
+Identite C           195.8        148.7        212.5     89.0     3.79
+Identite D                294.4        232.6        316.0    139.9     5.78
+Entite notionnelle (ch. 12)      169.0        131.5        183.3     78.1     3.64
+
+en M EUR. Controle : l'entite notionnelle doit redonner les chiffres publies au
+chapitre resultats, soit 169,0 et [131,5 ; 183,3] : 169.0 et [131.5 ; 183.3].
+
+============================================================================================
+4. Les deux reperes de l'entite : le forfait, et le SCR publie
+============================================================================================
+Le premier repere est la charge operationnelle de Formule Standard, 3 % des
+provisions. Le second, plus parlant pour une direction des risques, est le SCR
+TOTAL publie de l'entite : il dit quelle part du capital reglementaire la
+non-conformite DORA representerait si elle etait chargee.
+
+entite                           ORSA  forfait 3%  ORSA/forfait  SCR publie / SCR pub.
+Identite A            112.1        54.1          2.07         425     26.4%
+Identite B      135.5        62.1          2.18         812     16.7%
+Identite C          195.8      1004.5          0.19        1587     12.3%
+Identite D               294.4      8250.0          0.04       14800      2.0%
+Entite notionnelle (ch. 12)     169.0       450.0          0.38           -         -
+
+en M EUR. Le rapport DORA / forfait de l'entite notionnelle vaut 0,38, chiffre
+deja publie : les entites reelles s'en ecartent parce que leur ratio provisions
+sur actifs n'est pas celui pose au chapitre 12.
+
+STATUT DU DENOMINATEUR, apres lecture des quatre rapports :
+  Identite A        publie                  26.4% du SCR publie
+  Identite B  publie                  16.7% du SCR publie
+  Identite C      publie                  12.3% du SCR publie
+  Identite D           publie                   2.0% du SCR publie
+
+  AUCUN SCR N'EST PLUS DEDUIT. La reserve qui accompagnait cette colonne, et la
+  borne sous stress qui la compensait, sont sans objet : les quatre denominateurs
+  sont des chiffres publies. C'est un gain net sur la version precedente, et il
+  vient de la lecture des rapports, pas d'un calcul.
+
+LE REPERE FORFAITAIRE CONFRONTE AU MODULE PUBLIE (etats S.25.01) :
+entite                        forfait 3%  module publie  ecart du forfait
+Identite A                54.1           59.0              -8%
+Identite B          62.1           39.7              56%
+
+en M EUR. LE FORFAIT N'EST PAS UNE BORNE : il se trompe DANS LES DEUX SENS, de
+-8% sur une entite et de +56% sur l'autre. Il faut donc
+le citer comme un ORDRE DE GRANDEUR de comparaison, jamais comme un majorant ni
+comme un minorant de la charge operationnelle reglementaire. Deux entites ne
+determinent pas un biais, elles suffisent a refuter la monotonie.
+Releve sur les deux entites NON-VIE seulement : les deux entites vie ne sont pas
+comparables sur ce repere, leur assiette de provisions etant d'une autre nature.
+
+============================================================================================
+5. Ou la transposition cesse d'etre credible, et pourquoi
+============================================================================================
+C'est le resultat que ce script n'avait pas ete ecrit pour trouver, et c'est le
+plus utile. La part du SCR publie attribuee a la non-conformite DORA est :
+
+  Identite A         actifs      2319 M EUR  ->   26.4% du SCR publie
+  Identite B   actifs      5305 M EUR  ->   16.7% du SCR publie
+  Identite C       actifs     37845 M EUR  ->   12.3% du SCR publie
+  Identite D            actifs    309800 M EUR  ->    2.0% du SCR publie
+
+La charge decroit BEAUCOUP moins vite que la taille. La cause est mecanique et
+elle est deja nommee au chapitre 12 : l'elasticite de severite vaut 0.087, donc
+  diviser les actifs par 134 ne divise la severite que par 1.53,
+  et la frequence que par 1.44.
+L'elasticite corrige l'ECHELLE de la severite ; la FORME de la queue reste celle de
+grandes institutions financieres, et c'est elle qui porte un quantile a 99,5 %.
+
+CE QU'IL FAUT EN CONCLURE, sans le contourner. La descente d'echelle est utilisable
+la ou la taille de l'entite reste dans l'ordre de grandeur du panel de calibration,
+et elle produit une charge non credible en dessous.
+
+LE CRITERE EST POSE, PAS MESURE : on juge invraisemblable qu'un seul risque de
+non-conformite reglementaire pese plus de 10 % du SCR total d'une entite, tous
+risques confondus (marche, souscription, credit, operationnel). Le seuil de 10 % est
+un jugement d'ordre de grandeur, et il est explicite pour pouvoir etre contredit.
+
+  entite                        actifs M EUR  SCR/actifs / SCR pub.   verdict
+  Identite A                  2319       18.3%     26.4%   HORS DOMAINE
+  Identite B            5305       15.3%     16.7%   HORS DOMAINE
+  Identite C               37845        4.2%     12.3%   HORS DOMAINE
+  Identite D                   309800        4.8%      2.0%   credible
+
+  La bascule se situe entre 37845 et 309800 M EUR d'actifs. Ce n'est pas un
+  seuil fin : quatre entites ne le determinent pas, et le rapport depend aussi du
+  levier propre de l'entite (colonne SCR/actifs, qui va de 4.2% a 18.3%).
+  C'est un ordre de grandeur, et il doit etre presente comme tel.
+
+  ET LE CHIFFRE CENTRAL DU MEMOIRE, DANS TOUT CELA. L'entite notionnelle du
+  chapitre 12 pese 19231 M EUR d'actifs, donc elle tombe DANS la zone
+  hors domaine. Elle ne publie pas de SCR, mais on peut lui en imputer un au levier
+  MEDIAN des quatre entites reelles (10.0%) : 1932 M EUR. La charge de
+  169.0 M EUR en representerait alors 9%.
+  C'est SOUS le critere de 10 %, donc ce test ne condamne PAS l'entite notionnelle.
+  Il est devenu NEUTRE apres la correction des chiffres de l'identite B, et il ne faut pas
+  continuer a le citer comme accablant. La requalification du 169 en borne
+  superieure repose desormais sur le SEUL argument de TAILLE, qui tient par
+  lui-meme : 19 231 M EUR se situe sous la bascule, laquelle est entre 37 845 et
+  309 800 M EUR d'actifs. Un argument sur deux, et on le dit.
+
+  IL FAUT DONC LE DIRE AU CHAPITRE 12. Le chiffre de 169 M EUR n'est pas une
+  charge plausible pour une entite de cette taille : c'est une BORNE SUPERIEURE
+  d'ordre de grandeur, heritee d'une severite calibree sur de grandes institutions
+  financieres. Ce que le memoire etablit n'en est pas affaibli, parce que sa these
+  porte sur l'ECART entre etats de conformite face a un forfait insensible, et que
+  cet ecart est un RAPPORT : il survit a une erreur de niveau commune aux trois
+  etats. Mais le NIVEAU, lui, doit cesser d'etre presente comme une mesure.
+
+========================================================================================
+PISTE D'AUDIT : les valeurs PERIMEES du 2 septembre, imprimees pour etre citables
+========================================================================================
+Ces quatre valeurs sont FAUSSES et le memoire ne les publie plus. Elles sont imprimees
+ici parce qu'un deck ou une note qui documente la correction doit pouvoir les citer, et
+que tout nombre cite doit sortir d'un script. Ne JAMAIS les reutiliser comme donnees.
+
+  grandeur                                  avant (FAUX)    apres (publie)
+  total d'actif, assureur non-vie B                 3234              5305
+  SCR, assureur non-vie B                            292             812.5
+  part du SCR attribuee a DORA, non-vie B          41.3 %            16.7 %
+  part imputee a l'entite notionnelle                13 %               9 %
+
+MOTIF DE CHAQUE ECART. Le 3234 avait ete saisi en TOTAL D'ACTIF alors que le rapport le
+donne en FONDS PROPRES ELIGIBLES ; l'identite comptable le confirme, 5305 - 2071 = 3234.
+Le SCR de 292 en decoulait par un taux de couverture, alors que la section E.2 du rapport
+PUBLIE 812,5. Les deux parts suivent mecaniquement. La part imputee de 13 % venait d'un
+levier median de 6,9 %, devenu 10,0 %, ce qui fait passer le test du levier SOUS son
+critere : c'est ce qui l'a rendu neutre.
+
+Une charge de plusieurs dizaines de pourcents du SCR total pour une entite de
+quelques milliards d'actifs n'est pas un resultat, c'est le signe que la brique de
+severite est hors de son domaine. Le dire est plus utile que de publier le chiffre.
+Ce que cela demande pour etre leve : une severite calibree sur des incidents
+d'entites de cette taille, c'est-a-dire la donnee que le chapitre 5 declare absente.
+
+============================================================================================
+6. Par etat de conformite, sur les entites ou la transposition tient
+============================================================================================
+Le gain de propagation g est le canal que la conformite fait bouger (0,45 conforme,
+0,68 partiel, 0,90 non conforme). Seul le canal CONTAGION varie : l'ecart lu est
+donc un PLANCHER. Le forfait, lui, est identique aux trois etats par construction.
+
+entite                         conforme   partiel  non conf.    ecart       %   forfait
+Identite A               77.2      93.6      112.1     34.9   +45.3      54.1
+Identite B         91.1     113.0      135.5     44.4   +48.7      62.1
+Identite C            133.1     162.1      195.8     62.7   +47.1    1004.5
+Identite D                 208.4     250.4      294.4     86.0   +41.3    8250.0
+Entite notionnelle (ch. 12)       116.4     143.2      169.0     52.6   +45.2     450.0
+
+en M EUR. La lecture est la meme a toutes les tailles : le modele ecarte les trois
+etats de conformite, le forfait ne bouge pas d'un euro. C'est la these du memoire,
+et elle est ici verifiee sur des bilans reels et non sur une entite posee.
+
+============================================================================================
+VERDICT
+============================================================================================
+1. Le besoin ORSA au titre de DORA est calculable sur des entites reelles a partir
+   chiffres SFCR publies. La methode n'exige aucune donnee interne, ce qui est
+   precisement ce qu'on lui demandait de demontrer.
+2. Sur la plus grande entite du panel, Identite D (Assureur vie D), soit
+   310 Md EUR d'actifs, la charge vaut
+   294.4 M EUR en point, [232.6 ; 316.0] en bande, soit 2.0% de son SCR publie
+   de 14800 M EUR. C'est un ordre de grandeur defendable devant un jury.
+3. L'ecart entre etats de conformite subsiste a toutes les tailles, face a un
+   forfait qui n'en distingue aucune. La these ne dependait pas de l'entite fictive.
+4. LIMITE TROUVEE ICI, et c'est le principal apport. La bascule du credible a
+   l'invraisemblable se situe entre 37845 et 309800 M EUR d'actifs : en dessous,
+   la charge depasse 10 % du SCR total, parce que la severite est presque
+   invariante a la taille. Le domaine de validite de la descente d'echelle a une
+   borne INFERIEURE, que le memoire doit publier.
+   Consequence directe sur le chapitre 12 : l'entite notionnelle de 19231 M EUR se
+   trouve DANS cette zone, et son SCR de 169 M EUR doit etre requalifie en
+   BORNE SUPERIEURE d'ordre de grandeur. La these, qui porte sur un ECART entre
+   etats face a un forfait insensible, n'en depend pas ; le niveau, si.
+5. Ce qui reste hors de portee sans donnee d'entite : l'etat de conformite reel,
+   et la forme de la queue a la taille de l'entite.
+
+============================================================================================
+Figure
+============================================================================================
+
+figure ecrite : exploratory\vasicek_lab\figures\S22_entites_reelles.png

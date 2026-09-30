@@ -1,0 +1,168 @@
+
+========================================================================================
+107 - IDENTIFIABILITE DE RHO_IJ ET STATUT DU COMPROMIS HIERARCHIQUE
+========================================================================================
+  Modele teste (generalisation A, chapitre de la cascade) :
+    X_ij = sqrt(rho_ij) Y_j + sqrt(1 - rho_ij) eps_ij,  non conforme si X_ij >= K.
+  Le facteur Y_j est celui du PILIER : dans cette generalisation le groupe qui partage
+  un alea commun est le pilier, pas l'entite. C'est ce qui commande tout ce qui suit.
+
+  charge systemique gamma            : 0.6800   (script 69, script 16)
+  part du systemique rho = gamma^2   : 0.4624   (publie : 0.462)
+  ancrage marginal P(non conforme)   : 0.3500
+  seuil en convention de stress K    : +0.3853   (= -Phi^-1(0.35) du script 69)
+  entites du perimetre reel          : 4        (bilans SFCR, script 65)
+
+  Controles :
+    ecart a la correlation publiee   : 0.000400   (tolere 0.001)
+    somme de la loi du compte a un   : 1.04e-13   (tolere 1e-9)
+    marge recalculee a rho publie    : 0.350000000
+    ecart max de la marge sur rho    : 3.66e-14   (tolere 1e-9)
+    => controles passes, le script continue.
+
+  Convention du test : rapport de vraisemblance a 5%, puissance 80%, 1 ddl.
+    valeur critique 3.8415, non-centralite requise 7.8489 (calculee).
+
+========================================================================================
+1. CE QUE LE COMPTE DE PARAMETRES DIT, ET CE QU'IL NE DIT PAS
+========================================================================================
+      4 entites :     20 bits observes par periode,     25 parametres libres (5N sensibilites + 5 seuils)
+     20 entites :    100 bits observes par periode,    105 parametres libres (5N sensibilites + 5 seuils)
+    100 entites :    500 bits observes par periode,    505 parametres libres (5N sensibilites + 5 seuils)
+   1000 entites :   5000 bits observes par periode,   5005 parametres libres (5N sensibilites + 5 seuils)
+
+  Le compte est donc perdant a toute taille, ce que le memoire ecrivait deja. Mais il
+  est perdant PAR CONSTRUCTION, quelle que soit la duree d'observation : ajouter des
+  periodes ajoute des bits sans ajouter de parametres, donc le compte finit par passer
+  alors que le probleme, lui, demeure. Le compte n'est pas le bon instrument.
+
+========================================================================================
+2. LE MECANISME : LA MARGE EST AVEUGLE A LA SENSIBILITE
+========================================================================================
+  P(entite non conforme) recalcule a plusieurs sensibilites, tout le reste fixe :
+
+    rho       P(non conforme)
+    0.0000    0.350000000
+    0.2000    0.350000000
+    0.4624    0.350000000
+    0.8000    0.350000000
+    0.9500    0.350000000
+
+  C'est une identite, pas une coincidence : integrer le facteur redonne la marge quel
+  que soit son poids. Une sensibilite ne se lit donc JAMAIS sur un taux de conformite,
+  elle ne se lit que sur la CO-VARIATION entre cellules qui partagent un facteur. D'ou
+  la question qui suit : combien de fois faut-il voir le systeme pour la lire ?
+
+========================================================================================
+3. RHO_IJ D'UNE ENTITE, FACTEUR SUPPOSE CONNU (CAS LE PLUS FAVORABLE)
+========================================================================================
+  Une entite, un pilier : une cellule rend UN BIT par periode. On accorde en plus au
+  test le facteur Y_j exactement connu, ce qu'aucune donnee ne donne. Les annees ci-
+  dessous sont donc une BORNE BASSE.
+
+    u_ij     rho_ij     KL par periode    periodes pour 80 % de puissance
+    +0.05     0.5124     1.206e-03                3 255
+    +0.10     0.5624     4.829e-03                  813
+    +0.20     0.6624     1.975e-02                  199
+    +0.30     0.7624     4.684e-02                   84
+
+  Lecture inverse, sur UNE periode : l'ecart maximal admissible u_ij = +0.5276
+  (rho_ij = 0.99, le bord du domaine) ne porte que 2 KL = 0.4711, contre
+  3.8415 requis.
+  AUCUNE valeur de u_ij dans le domaine admissible n'est separable de zero sur une
+  seule observation transversale. Le rho_ij libre n'est donc pas estime avec peu de
+  precision : il n'est pas estime du tout.
+
+========================================================================================
+4. RHO_J D'UN PILIER, ET CE QUE LA MISE EN COMMUN RACHETE
+========================================================================================
+  Meme ecart a detecter, u = +0.10, mais porte par TOUTES les entites du
+  pilier a la fois. Le pilier est le groupe : ses entites partagent le facteur Y_j.
+
+    entites du pilier    KL par periode    periodes pour 80 % de puissance
+            4            8.286e-03                  474
+           20            2.548e-02                  154
+          100            3.807e-02                  103
+         1000            4.556e-02                   86
+    population            4.819e-02                   81   (forme fermee)
+    idem, seuil estime    4.630e-02                   85
+
+  Controle de la forme fermee : la quadrature a 1000 entites donne 0.0456,
+  la limite de population 0.0482, soit 94.5 % de la limite.
+
+  LA SATURATION EST LE RESULTAT. Elargir le pilier ne rachete que jusqu'a un plafond,
+  parce qu'une periode ne livre qu'UN tirage du facteur, si large que soit la
+  population. Ce qui identifie une sensibilite n'est donc pas le nombre d'entites,
+  c'est la REPETITION DANS LE TEMPS. C'est le meme enonce que celui du script 03 sur
+  l'asymetrie de W, atteint ici par un autre chemin.
+
+========================================================================================
+4bis. CE QUI CHANGE QUAND LE GROUPE EST L'ENTITE ET NON LE PILIER
+========================================================================================
+  Le modele publie au chapitre des etats de conformite ne regroupe pas dans le meme
+  sens : sa latente est C*_j = gamma Theta_i + sqrt(1 - gamma^2) eps_ij, ou Theta_i est
+  propre a l'ENTITE et partage par ses cinq piliers. Une entite y forme donc un groupe
+  de cinq, et deux entites sont independantes. La consequence est tranchee :
+
+    KL par entite et par periode (groupe de 5 piliers) : 1.050e-02
+    entites necessaires sur UNE seule periode          : 374
+
+  Sous ce regroupement, la sensibilite s'identifie donc EN COUPE, par le nombre
+  d'entites, et l'ordre de grandeur est celui d'un marche national. Sous la
+  generalisation A, elle ne s'identifie QUE par le temps. Le sens du regroupement
+  n'est pas un detail d'ecriture : il decide de ce qui serait observable.
+
+========================================================================================
+5. RHO_IJ LIBRE ET RHO_J + U_IJ NE SONT PAS LE MEME OBJET
+========================================================================================
+  Pour le meme ecart u = +0.10, et en accordant a la cellule le facteur
+  connu, il faut 813 periodes au niveau de l'entite contre 474 au niveau
+  du pilier a 4 entites, soit un rapport de 1.7.
+
+  Le terme u_ij du compromis n'est donc pas un parametre estime avec peu de precision :
+  c'est un parametre que la donnee laisse a sa valeur a priori, zero. Sur tout panel
+  realiste, rho_j + u_ij se CONFOND numeriquement avec rho_j, et le compromis
+  hierarchique n'est pas une approximation du rho_ij libre : c'en est la seule version
+  que la donnee soutienne. Ecrire l'un pour l'autre n'est donc pas une commodite, c'est
+  ce que l'information disponible impose.
+
+  UNE ECRITURE A SURVEILLER, ET LE POINT EST DE NATURE AVANT D'ETRE DE DEGRE. Une
+  sensibilite est une PART : rho_ij doit rester dans [0 ; 1], sans quoi sqrt(1 - rho_ij)
+  n'existe pas. Un terme additif gaussien en sort avec probabilite strictement positive,
+  quelle que soit sa dispersion, et le degre se lit sur cette dispersion :
+
+    ecart-type de u_ij    P(rho_ij hors de [0 ; 1])
+              0.05        1.144e-20
+              0.10        1.920e-06
+              0.20        1.398e-02
+              0.30        9.818e-02
+
+  La variante qui ferme le point porte le terme aleatoire sur une echelle transformee,
+  logit(rho_ij) = logit(rho_j) + u_ij, admissible par construction. LE MEMOIRE GARDE
+  L'ECRITURE ADDITIVE ET PUBLIE LA VARIANTE A COTE : le pipeline posant une sensibilite
+  unique, le choix entre les deux ne deplace aucun chiffre publie, et le declarer vaut
+  mieux que le corriger en silence.
+
+========================================================================================
+6. GRANDEURS CITEES PAR LE MEMOIRE (sans separateur de milliers)
+========================================================================================
+  rho publie (gamma au carre)                        : 0.4624
+  ancrage marginal, invariant a rho                  : 0.3500
+  ecart de sensibilite de reference u                : 0.10
+  2 KL au bord du domaine, une cellule, une periode  : 0.4711
+  valeur critique du test a 5 pourcent               : 3.8415
+  non-centralite pour 80 pourcent de puissance       : 7.8489
+  periodes, une entite, facteur connu, u = 0.10      : 813
+  periodes, un pilier de 4 entites, u = 0.10         : 474
+  periodes, un pilier de 100 entites, u = 0.10       : 103
+  periodes, population entiere, u = 0.10             : 81
+  periodes, population entiere, seuil estime         : 85
+  rapport entite sur pilier de 4 entites             : 1.7
+  part de la limite atteinte a 1000 entites          : 94.5
+  entites pour identifier en coupe, groupe = entite  : 374
+  P(rho hors de 0 1), u additif d'ecart-type 0.20    : 0.0140
+  la meme, en pourcent                               : 1.40
+
+========================================================================================
+FIN 107
+========================================================================================

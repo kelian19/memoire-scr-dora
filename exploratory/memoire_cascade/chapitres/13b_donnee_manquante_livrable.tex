@@ -1,0 +1,148 @@
+\chapter{La donnée manquante comme livrable, hiérarchisé}
+\label{ch:livrable}
+
+\begin{cle}
+\textbf{Idée directrice.} Le chapitre~\ref{ch:identifiabilite} a montré que la direction de la
+contagion n'est pas identifiable sur les sources agrégées. Cette limite n'est pas un point final :
+elle se retourne en spécification de reporting, et cette spécification se chiffre
+puis se hiérarchise. C'est la contribution réglementaire du travail, et elle ne dépend
+d'aucun prior.
+\end{cle}
+
+\section{Ce qu'un registre devrait contenir}
+
+Puisque les trois sources agrégées échouent pour des raisons \emph{distinctes} (la première
+manque de taxonomie et de volume informatif, la deuxième de résolution temporelle, la troisième
+possède les bons champs mais ne les renseigne pas), la donnée qui identifierait $W$ se déduit
+par complémentarité, et la proposition~\ref{prop:nonid} y ajoute une exigence. Un registre
+d'incidents TIC l'identifiant devrait :
+\begin{enumerate}[itemsep=2pt]
+\item horodater la survenance (et non la seule déclaration) au mois ou à la
+      semaine, afin de porter une antériorité que le pas annuel efface ;
+\item catégoriser par domaine de contrôle (les piliers DORA), et non par vecteur
+      d'attaque, afin qu'une transition soit interprétable comme un lien $k \to j$ ;
+\item consolider une cause commune comme \emph{un} événement à $N$ victimes, pour ne pas
+      confondre un lot de déclaration avec une contagion séquentielle ;
+\item consigner, pour chaque incident, l'ensemble des piliers qui ont cédé, y compris ceux qui
+      n'ont rien entraîné. Même sans horodatage, la loi jointe des piliers touchés distingue une
+      matrice de sa transposée : sur la matrice publiée, la part des sinistres touchant plus d'un
+      pilier vaut $62{,}31\,\%$ sous $W$ et $50{,}77\,\%$ sous $W^\top$.
+\end{enumerate}
+
+Ces exigences ne sont pas hors d'atteinte, mais elles ne relèvent pas du même instrument. Le
+registre d'information du règlement d'exécution \citep{eu2024_2956} porte sur les accords
+contractuels avec les prestataires : il identifie les prestataires, la chaîne de sous-traitance et
+la criticité des fonctions, ce qui sert la troisième exigence en permettant de rattacher des
+incidents à un même prestataire. Les trois autres relèvent de la notification des incidents
+majeurs, dont il s'agit de fixer le \emph{format} de l'horodatage et le \emph{choix de la
+taxonomie} plutôt que d'organiser une collecte nouvelle.
+
+\begin{cle}
+\textbf{La spécification n'est même pas à écrire : elle existe et n'est pas remplie.} Les deux
+premières exigences ci-dessus sont déjà des champs du schéma VERIS, standard ouvert de
+description d'incidents et support du \emph{Data Breach Investigations Report} : le champ
+\texttt{control\_failure} porte le domaine de contrôle défaillant, et une chronologie en quatre
+étapes (compromission, exfiltration, découverte, confinement) porte l'antériorité. Sur les
+$10\,591$ incidents de la base publique associée, le premier est renseigné dans $0{,}12\,\%$ des
+cas et la seconde, sur au moins deux étapes, dans $1{,}19\,\%$ ; leur intersection ne
+compte qu'un seul incident, et aucun en secteur financier
+(chapitre~\ref{ch:identifiabilite}). La recommandation change alors de nature. Elle ne demande
+pas d'inventer une taxonomie, ce qui serait long et contestable, mais de rendre
+obligatoires deux champs déjà normalisés dans un dispositif, la notification
+d'incident majeur sous DORA, qui a précisément le pouvoir de l'imposer là où une base
+déclarative volontaire ne l'a pas. C'est un coût de conception nul et un gain d'identification
+chiffré à la section suivante.
+\end{cle}
+
+% SOURCES-SCRIPTS: 28 52 08b 98 110
+
+% SOURCES-SCRIPTS: 52 08b
+
+
+\section{Ce que cette information vaut, en capital}
+
+Une recommandation de reporting reste un v\oe u tant qu'elle n'est pas chiffrée. On la chiffre en
+restreignant l'ensemble admissible du chapitre~\ref{chap:partielle} aux configurations compatibles
+avec l'information acquise, puis en mesurant le rétrécissement de la bande de capital.
+
+\begin{definition}[Valeur d'information d'une contrainte]\label{def:voi}
+Soit $\mathcal{W}$ l'ensemble admissible et $\mathrm{SCR}:\mathcal{W}\to\R_+$ la fonctionnelle de
+capital. La largeur de bande associée à un sous-ensemble $\mathcal{V}\subseteq\mathcal{W}$ est
+\begin{equation}
+  L(\mathcal{V}) \;=\; \sup_{W\in\mathcal{V}}\mathrm{SCR}(W)\;-\;\inf_{W\in\mathcal{V}}\mathrm{SCR}(W).
+  \label{eq:largeur-bande}
+\end{equation}
+Une information $\mathcal{I}$ qui restreint l'ensemble à $\mathcal{W}_{\mathcal{I}}\subseteq
+\mathcal{W}$ a pour valeur le rétrécissement relatif qu'elle produit :
+\begin{equation}
+  V(\mathcal{I}) \;=\; 1-\frac{L(\mathcal{W}_{\mathcal{I}})}{L(\mathcal{W})} \;\in\;[0,1].
+  \label{eq:voi}
+\end{equation}
+\end{definition}
+
+Cette définition a deux propriétés utiles. Elle est monotone : si
+$\mathcal{I}'$ implique $\mathcal{I}$, alors $\mathcal{W}_{\mathcal{I}'}\subseteq
+\mathcal{W}_{\mathcal{I}}$ et donc $V(\mathcal{I}')\ge V(\mathcal{I})$, une information plus
+riche ne pouvant pas valoir moins. Et elle est sans dimension, donc indépendante du
+niveau de capital, ce qui la rend comparable d'une source de sévérité à l'autre alors même que
+ce niveau, lui, varie d'un facteur quarante.
+
+Les sept premiers rapports post-incident du corpus du chapitre~\ref{ch:identifiabilite} documentent le
+\emph{sens} de six des dix dépendances entre piliers, sens que le \S\ref{sec:bayes} ne revendique
+paire par paire que sur deux d'entre elles. Retenu sur les six, il ferait tomber la largeur de la
+bande de $66\,\%$. Ce chiffre est donc la valeur, en capital, d'une information de sens de cette
+étendue, non un acquis du mémoire, et il donne l'ordre de grandeur de ce qu'un registre
+correctement spécifié apporterait.
+
+\begin{attention}
+\textbf{Ce qu'aucune information de sens ne donnera.} Même les dix directions établies, une bande
+subsisterait, imputable à la seule amplitude des coefficients : connaître le sens d'un
+lien ne donne pas sa force. L'identification partielle n'est donc pas un état provisoire que la
+donnée finirait par lever, elle est structurelle. C'est une raison de plus de lire le
+capital en bande, et de ne pas promettre à un superviseur davantage que ce qu'un registre peut
+tenir.
+\end{attention}
+
+% SOURCES-SCRIPTS: 66 55
+
+
+\section{Quelle dépendance documenter en priorité}
+
+\begin{figure}[htbp]
+  \centering
+  \figover{Z18_valeur_information.png}
+  \caption{La valeur de l'information, chiffrée et hiérarchisée : la
+contribution réglementaire du travail. (a)~l'information rétrécit la bande de capital, de
+$66\,\%$ si l'on retenait le sens que documentent sept rapports publics, tandis qu'une bande
+d'amplitude subsisterait \emph{même les dix sens connus} : l'identification partielle est
+structurelle, non provisoire. (b)~quelle dépendance documenter en priorité ; en bleu,
+celles que le corpus couvre déjà. L'écart va de $28{,}9\,\%$ d'ambiguïté levée
+pour la paire gouvernance-incidents à zéro pour tests-tiers, et la dépendance la plus précieuse
+est précisément celle que le corpus ne couvre pas.}
+  \label{fig:voi}
+\end{figure}
+
+L'apport le plus actionnable est ailleurs que dans le total. En fixant le sens d'\emph{une seule}
+dépendance à la fois, on obtient un classement des données manquantes par valeur
+d'information (figure~\ref{fig:voi}). Le classement est très inégal : documenter la seule dépendance
+entre gouvernance et gestion des incidents lèverait $28{,}9\,\%$ de
+l'ambiguïté de capital, tandis que documenter le lien entre tests et tiers n'en lèverait
+\emph{rien}.
+
+Deux conséquences pratiques. D'abord, un superviseur qui ne pourrait exiger qu'une seule
+dépendance sait désormais laquelle demander, et une entité qui ne pourrait instrumenter qu'un seul
+lien sait lequel instrumenter. Ensuite, un fait qui oriente la recommandation : la
+dépendance la plus précieuse est précisément celle que le corpus documentaire ne couvre pas. La
+lecture de rapports publics a livré ce qu'elle pouvait livrer ; le reste exige la donnée d'entité.
+
+% SOURCES-SCRIPTS: 55
+
+\begin{cle}
+\textbf{La limite devenue contribution.} Un mémoire qui se contenterait de constater qu'il ne
+peut pas calibrer $W$ laisserait le lecteur sans suite. En spécifiant la donnée qui manque, en
+chiffrant ce qu'elle vaut et en la hiérarchisant, on transforme une frontière d'identification en
+\emph{recommandation opposable}, adressée au cadre de reporting que DORA met précisément en
+place. C'est le seul endroit du mémoire où une limite produit un livrable.
+\end{cle}
+
+% =====================================================================

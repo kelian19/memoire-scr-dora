@@ -1,0 +1,60 @@
+
+==========================================================================
+Allocation Shapley du surcout Delta_DORA (NC vs C) aux 5 piliers
+==========================================================================
+  phi_j : part principielle du pilier j dans le surcout total, interaction comprise.
+  Reference classement ROOT (qualitatif) : P1 > P4 > P2 > P3 > P5
+  Parts d'amorce (ROOT normalise, entree du modele) : P1 30.3 %, P4 27.3 %, P2 18.2 %, P3 15.2 %, P5 9.1 %
+
+  OPRISK  (base tous C = 6085 M ; Delta total NC vs C = 10927 M)
+  pilier              marginal 16b   Shapley phi   redistrib.  part phi
+  P1 gouvernance             3481M         3717M        +236M    34.0%
+  P4 tiers                   2658M         2810M        +152M    25.7%
+  P2 incidents               1634M         1867M        +233M    17.1%
+  P3 tests                   1094M         1484M        +391M    13.6%
+  P5 partage                  665M         1048M        +383M     9.6%
+  somme marginaux 16b = 9531 M  (NE somme PAS au total)
+  somme Shapley       = 10927 M  (= Delta total, exact)
+  somme des parts     = 100.0%  (partition exacte)
+  interaction super-additive redistribuee = +1395 M
+  classement Shapley : P1 > P4 > P2 > P3 > P5   == ROOT
+
+  PRC  (base tous C = 1654 M ; Delta total NC vs C = 4957 M)
+  pilier              marginal 16b   Shapley phi   redistrib.  part phi
+  P1 gouvernance             1375M         1608M        +233M    32.4%
+  P4 tiers                   1075M         1252M        +178M    25.3%
+  P2 incidents                721M          920M        +199M    18.6%
+  P3 tests                    571M          738M        +167M    14.9%
+  P5 partage                  311M          438M        +128M     8.8%
+  somme marginaux 16b = 4052 M  (NE somme PAS au total)
+  somme Shapley       = 4957 M  (= Delta total, exact)
+  somme des parts     = 100.0%  (partition exacte)
+  interaction super-additive redistribuee = +905 M
+  classement Shapley : P1 > P4 > P2 > P3 > P5   == ROOT
+
+==========================================================================
+Allocation d'Euler du NIVEAU SCR_DORA(NC) : contribution au capital vs a la moyenne
+==========================================================================
+  TVaR exacte : C_j = E[L_j | L_total >= VaR 99,5 %]. Somme des C_j = TVaR.
+
+  OPRISK  (VaR 99,5 % tous NC = 16942 M ; TVaR = 35645 M)
+  pilier              part CAPITAL  part MOYENNE     ecart
+  P3 tests                    24%          18%      +5%
+  P4 tiers                    24%          22%      +1%
+  P1 gouvernance              20%          20%      +0%
+  P2 incidents                19%          23%      -4%
+  P5 partage                  14%          16%      -3%
+  classement capital (Euler) : P3 > P4 > P1 > P2 > P5   != ROOT
+  Lecture : l'ecart capital - moyenne mesure la contribution PROPRE a la QUEUE (au-dela du poids moyen).
+
+  PRC  (VaR 99,5 % tous NC = 6573 M ; TVaR = 6795 M)
+  pilier              part CAPITAL  part MOYENNE     ecart
+  P2 incidents                23%          23%      -0%
+  P4 tiers                    23%          22%      +0%
+  P1 gouvernance              20%          20%      +0%
+  P3 tests                    18%          18%      -0%
+  P5 partage                  17%          17%      -0%
+  classement capital (Euler) : P2 > P4 > P1 > P3 > P5   != ROOT
+  Lecture : l'ecart capital - moyenne mesure la contribution PROPRE a la QUEUE (au-dela du poids moyen).
+
+figure ecrite : exploratory/vasicek_lab/figures/S15_allocation_shapley_euler.png

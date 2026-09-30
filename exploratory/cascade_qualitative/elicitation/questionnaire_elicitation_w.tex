@@ -1,0 +1,258 @@
+% =====================================================================================
+% QUESTIONNAIRE D'ELICITATION -- version 3, 19 septembre 2026
+%
+% CE QUI CHANGE EN VERSION 3, ET C'EST LA PARTIE A EN ENTIER. Les neuf graines de la v2 etaient
+% justes mais elles n'etaient pas CONTROLEES : rien ne verifiait qu'une graine soit bien une
+% grandeur realisee, qu'elle ne soit pas devinable, ni qu'elle n'en double pas une autre. Le
+% script 105 les recalcule sur les deux bases et leur applique QUATRE controles : caractere
+% realise, non-degenerescence, respect des bornes naturelles, pouvoir de separation entre
+% experts. Trois consequences :
+%   - le GINI de concentration (A7 en v2) est ECARTE : il fait doublon avec la graine qui compte
+%     les incidents portant la moitie du volume, et sa valeur vraie de 0,97 se devine sans rien
+%     connaitre du dossier. Une graine se juge sur ce qu'elle separe, pas sur ce qu'elle mesure ;
+%   - trois graines de la v2 portaient sur des grandeurs que le depot ne calcule PAS directement
+%     (cause commune par jour, nombre maximal de victimes en une journee, incidents TIC materiels
+%     par an d'une grande entite). Elles sont remplacees par des grandeurs que le script 105
+%     imprime, faute de quoi la notation reposerait sur un chiffre invérifiable, ce que la
+%     consigne du formulaire promet pourtant au repondant ;
+%   - la partie A passe de neuf a DIX graines, le retrait de la graine sur xi en v2 ayant laisse
+%     le dispositif sous le seuil que le protocole annonce.
+% Les valeurs vraies vivent dans sorties_verif/105.txt et ne sont JAMAIS imprimees ici.
+%
+% VERSION 2, 13 aout 2026
+%
+% CE QUI A CHANGE PAR RAPPORT A LA VERSION DE JUILLET, ET POURQUOI. Le paquet est destine a
+% etre soumis a un actuaire de l'Institut avant tout envoi. Six defauts le rendaient
+% refusable en l'etat :
+%
+%  1. LA GRAINE SUR xi ETAIT FAUSSE, et c'est le defaut le plus grave. Elle annoncait 0,90
+%     comme valeur vraie, or 0,90 est la valeur POSEE du pire cas ; la calibration figee du
+%     memoire donne xi = 0,5954, avec un IC90 de [0,30 ; 0,83]. Dans la methode de Cooke une
+%     graine fausse ne degrade pas le resultat a la marge : elle INVERSE les poids, un expert
+%     juste etant penalise. Et meme corrigee a 0,5954 la question resterait invalide comme
+%     graine, une graine devant avoir une valeur REALISEE et non une estimation assortie d'un
+%     intervalle deux fois plus large que la valeur elle-meme. Elle est donc retiree de la
+%     partie A. Les neuf autres graines ont ete verifiees une par une contre les sorties de
+%     scripts versionnees : toutes justes.
+%  2. LA CONVENTION DE DIRECTION ETAIT INVERSEE par rapport au memoire. Le formulaire disait
+%     « lien de k vers j » quand le memoire ecrit W_jk avec j la SOURCE et k la CIBLE (la
+%     ligne emet, la colonne recoit). Une saisie fidele au formulaire aurait TRANSPOSE W.
+%     Aligne : partout j -> k, j emet.
+%  3. Aucune mention d'usage, de conservation ni d'anonymat, ce qu'aucun repondant externe
+%     n'accepte aujourd'hui.
+%  4. Aucune logistique : ni version, ni retour, ni delai, ni contact.
+%  5. Aucun exemple traite, alors que le malentendu sur les quantiles est le premier facteur
+%     de mauvaises reponses.
+%  6. La graine sur xi portait un indice entre parentheses qui soufflait l'ordre de grandeur.
+%     Le retrait de la question regle aussi ce point.
+% =====================================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+% longtable et non tabular : la table de la partie A compte neuf lignes et un tabular, qui est
+% insecable, ne tenait pas dans le reste de la premiere page. Il partait donc en entier sur la
+% suivante en laissant une demi-page blanche, et le formulaire passait a trois pages.
+\usepackage{longtable}
+
+\definecolor{navy}{HTML}{1F3864}
+\definecolor{lightblue}{HTML}{D6E0F0}
+\definecolor{accent}{HTML}{C0491F}
+\definecolor{softgray}{HTML}{F2F2F2}
+
+\newtcolorbox{cle}[1][]{colback=lightblue!40,colframe=navy,boxrule=0.6pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+\newtcolorbox{mention}[1][]{colback=softgray,colframe=black!35,boxrule=0.5pt,
+  arc=2pt,left=8pt,right=8pt,top=5pt,bottom=5pt,#1}
+
+% 1,75 et non 2,0 : a 2,0 la table de la partie A ne tenait plus sur la premiere page et y
+% laissait une demi-page blanche, le formulaire passant a trois pages. La hauteur de cellule
+% reste suffisante pour une reponse manuscrite.
+\renewcommand{\arraystretch}{1.42}
+\newcolumntype{A}{>{\centering\arraybackslash}m{1.7cm}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lfoot{\footnotesize Élicitation $W$ --- version 3.0 du 19 septembre 2026}
+\rfoot{\footnotesize page \thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\usepackage{lastpage}
+
+\title{\vspace{-1.3cm}\color{navy}\bfseries Questionnaire d'élicitation de $W$\\[2pt]
+  \large Méthode de Cooke --- une séance d'environ 30 minutes}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}   % sinon \maketitle repasse la premiere page en style plain
+\vspace{-1.4cm}
+
+\noindent\textbf{Expert :} \underline{\hspace{4.2cm}} \quad
+\textbf{Fonction :} \underline{\hspace{4.2cm}} \quad
+\textbf{Date :} \underline{\hspace{2.6cm}}
+
+\vspace{0.25cm}
+\begin{cle}
+\textbf{Comment répondre.} Pour chaque quantité, donnez \textbf{trois nombres} : une valeur
+\textbf{basse (5\,\%)}, une valeur \textbf{médiane (50\,\%)} et une valeur \textbf{haute
+(95\,\%)}, telles que vous estimiez à \textbf{$90\,\%$ de chances} que la vraie valeur tombe
+entre votre $5\,\%$ et votre $95\,\%$. On mesure votre jugement, pas vos connaissances, et il
+n'y a pas de réponse attendue. \textbf{Répondez même très incertain} : un intervalle large est
+une réponse honnête et exploitable, une case vide ne l'est pas. Écrivez la \textbf{haute
+d'abord}, puis la \textbf{basse}, et la \textbf{médiane en dernier} : commencer par la médiane
+ancre les deux autres autour d'elle et produit des intervalles trop étroits, seul défaut que la
+méthode sanctionne réellement.
+\end{cle}
+
+\vspace{0.2cm}
+\begin{mention}
+\footnotesize
+\textbf{Exemple traité, sur une question sans rapport avec le sujet.} \emph{Quelle est la
+hauteur de la tour Montparnasse, en mètres ?} Une réponse possible : haute $=260$
+(\og je serais surpris, une chance sur vingt, que ce soit plus haut \fg), basse $=150$
+(\og de même en dessous \fg), médiane $=200$ (\og autant de chances au-dessus qu'en
+dessous \fg). L'intervalle $[150\,;260]$ est large, et c'est bien ainsi : il annonce
+franchement ce que l'on ignore.
+\end{mention}
+
+\section*{Partie A --- Questions d'étalonnage}
+\footnotesize\emph{Dix quantités effectivement mesurées dans les données de l'étude. Leur
+valeur est connue de l'analyste et n'est pas affichée ici ; chacune est reproductible par un
+script versionné, de sorte qu'aucune notation ne repose sur un chiffre invérifiable. Ces
+questions servent à \textbf{pondérer} les experts, non à les départager sur leurs
+connaissances : le périmètre est celui d'une base publique d'incidents du secteur financier,
+et personne n'est censé en connaître les valeurs de mémoire. Répondez à l'intuition, sans
+chercher : c'est exactement ce que la méthode mesure.}
+\normalsize
+
+\vspace{0.2cm}
+\begin{longtable}{|p{9.6cm}|A|A|A|}
+\hline
+\rowcolor{lightblue!50}
+\textbf{Quantité} & \textbf{5\,\%} & \textbf{50\,\%} & \textbf{95\,\%} \\ \hline
+\endfirsthead
+\hline
+\rowcolor{lightblue!50}
+\textbf{Quantité \emph{(suite)}} & \textbf{5\,\%} & \textbf{50\,\%} & \textbf{95\,\%} \\ \hline
+\endhead
+A1. Délai médian entre la survenance d'un incident et sa déclaration, en jours & & & \\ \hline
+A2. Part des incidents déclarés plus de quatre-vingt-dix jours après leur survenance, en \% & & & \\ \hline
+A3. Délai médian de déclaration pour les seuls incidents de type \emph{piratage}, en jours & & & \\ \hline
+A4. Durée médiane entre le début et la fin d'exposition d'un incident, en jours & & & \\ \hline
+A5. Nombre médian d'enregistrements touchés par incident & & & \\ \hline
+A6. Nombre d'incidents qui portent à eux seuls la moitié du volume touché sur sept exercices & & & \\ \hline
+A7. Part des incidents dont l'exposition a duré plus de trente jours, en \% & & & \\ \hline
+A8. Part des incidents de type \emph{piratage} parmi ceux dont le vecteur est renseigné, en \% & & & \\ \hline
+A9. Part des lignes de la base qui sont des doublons de notification d'un même incident, en \% & & & \\ \hline
+A10. Rapport du quatre-vingt-dix-neuvième centile à la médiane des pertes cyber du secteur financier & & & \\ \hline
+\end{longtable}
+
+\section*{Partie B --- Liens dirigés entre piliers}
+\footnotesize\emph{\textbf{Force du lien dirigé de $j$ vers $k$}, notée $W_{jk}$, entre
+$\mathbf{0}$ et $\mathbf{1}$. La \textbf{première} lettre est celle du pilier qui
+\textbf{défaille en premier}, la seconde celle du pilier \textbf{entraîné}. Lecture :
+$W_{jk}=0$ signifie qu'une défaillance de $j$ n'entraîne \emph{jamais} celle de $k$ ;
+$W_{jk}=1$ qu'elle l'entraîne \emph{quasi certainement} dans la foulée. Donnez là aussi
+$5\,\% / 50\,\% / 95\,\%$. \textbf{Les deux sens d'une même paire sont posés séparément et
+n'ont aucune raison d'être égaux} : c'est précisément l'asymétrie que l'étude cherche à
+mesurer, donc ne cherchez pas à les faire correspondre.}\\[3pt]
+\textbf{Les cinq piliers :} P1 gouvernance et gestion du risque TIC \textbullet{} P2 gestion
+des incidents et réponse \textbullet{} P3 tests de résilience et détection \textbullet{}
+P4 risque lié aux prestataires tiers \textbullet{} P5 partage d'information.
+\normalsize
+
+\vspace{0.2cm}
+\begin{longtable}{|p{9.6cm}|A|A|A|}
+\hline
+\rowcolor{lightblue!50}
+\textbf{Lien dirigé $j \to k$, force entre $0$ et $1$} & \textbf{5\,\%} & \textbf{50\,\%} & \textbf{95\,\%} \\ \hline
+\endfirsthead
+\hline
+\rowcolor{lightblue!50}
+\textbf{Lien dirigé $j \to k$ \emph{(suite)}} & \textbf{5\,\%} & \textbf{50\,\%} & \textbf{95\,\%} \\ \hline
+\endhead
+B1. \textbf{P1 $\to$ P2} : une défaillance de gouvernance entraîne un incident mal géré & & & \\ \hline
+B2. \textbf{P2 $\to$ P1} : \emph{le sens inverse du précédent} --- un incident mal géré entraîne une défaillance de gouvernance & & & \\ \hline
+B3. \textbf{P4 $\to$ P2} : la défaillance d'un prestataire tiers entraîne un incident mal géré & & & \\ \hline
+B4. \textbf{P1 $\to$ P4} : une défaillance de gouvernance entraîne une défaillance côté prestataires & & & \\ \hline
+B5. \textbf{P3 $\to$ P1} : un défaut de tests et de détection entraîne une défaillance de gouvernance & & & \\ \hline
+B6. \textbf{P5 $\to$ P2} : un défaut de partage d'information entraîne un incident mal géré & & & \\ \hline
+\end{longtable}
+
+\vspace{0.05cm}
+\footnotesize\emph{Le modèle compte $20$ liens dirigés ; six seulement sont élicités ici pour
+tenir la séance en trente minutes, à savoir les quatre que le corpus documentaire atteste et la
+paire P1\,/\,P2 dans ses deux sens, qui porte la question d'asymétrie. Les quatorze autres
+restent bornés par l'identification partielle, et les éliciter serait une extension du même
+formulaire, sans changement de méthode.}
+\normalsize
+
+\vspace{0.18cm}
+\begin{cle}
+\textbf{Ce qui est fait de vos réponses.} La partie A mesure votre \emph{calibration} (vos
+intervalles contiennent-ils la vraie valeur à la fréquence annoncée) et votre \emph{information}
+(leur finesse) ; ces deux scores fixent votre poids. La partie B, pondérée par ce poids et
+croisée avec les autres répondants, produit chaque lien de $W$ sous forme d'\textbf{intervalle},
+jamais de point. Le traitement est automatique (\texttt{26\_elicitation\_cooke.py},
+\texttt{26b\_elicitation\_reelle.py}). Aucune donnée d'incident propre à votre organisation
+n'est demandée, uniquement votre jugement.
+\end{cle}
+
+\vspace{0.18cm}
+\begin{mention}
+\footnotesize
+\textbf{Usage, conservation et anonymat.} Ce questionnaire s'inscrit dans un mémoire d'actuariat
+(ENSAE Paris, Institut des Actuaires, promotion 2026) sur la quantification du besoin de capital
+lié à la non-conformité au règlement DORA, et vos réponses servent à cette seule fin. Elles sont
+enregistrées sous un \textbf{identifiant anonyme} : ni votre nom ni celui de votre organisation
+n'apparaissent dans le mémoire, dans les fichiers versionnés, ni dans aucune restitution ; seuls
+les intervalles agrégés sont publiés, et les poids individuels sous cet identifiant. Aucune
+donnée personnelle autre que votre fonction n'est collectée. Vous pouvez demander le retrait de
+vos réponses jusqu'à la remise du mémoire, sans avoir à le motiver : elles seront alors détruites
+et exclues de l'agrégation. Conservation jusqu'à la soutenance, puis destruction.
+\textbf{Retour} à \underline{\hspace{4.6cm}} avant le \underline{\hspace{2.4cm}}. Une séance
+accompagnée de trente minutes est proposée et améliore sensiblement la qualité des intervalles,
+mais un envoi rempli seul reste exploitable. Le protocole détaillé, même version, est joint.
+\end{mention}
+
+\vspace{0.45cm}
+\section*{Accord du répondant}
+\vspace{-0.15cm}
+
+\noindent\framebox[0.42cm]{\rule{0pt}{0.32cm}}\; J'accepte que mes réponses soient utilisées,
+sous identifiant anonyme, dans le cadre du mémoire décrit ci-dessus.
+
+\vspace{0.18cm}
+\noindent\framebox[0.42cm]{\rule{0pt}{0.32cm}}\; Je souhaite recevoir la synthèse des résultats
+agrégés une fois l'agrégation faite.
+
+\vspace{0.18cm}
+\noindent\framebox[0.42cm]{\rule{0pt}{0.32cm}}\; Je souhaite relire la façon dont mes réponses
+sont citées avant toute diffusion.
+
+\vspace{0.5cm}
+\noindent\textbf{Fait à} \underline{\hspace{4.4cm}} \quad
+\textbf{le} \underline{\hspace{3.2cm}} \quad
+\textbf{Signature} \underline{\hspace{4.4cm}}
+
+\vspace{0.7cm}
+\noindent\rule{\linewidth}{0.4pt}
+
+\vspace{0.2cm}
+\footnotesize\emph{Réservé à l'analyste, à ne pas remplir par le répondant.} Identifiant
+attribué : \underline{\hspace{2.4cm}} \quad Date de réception : \underline{\hspace{2.4cm}}
+\quad Saisi dans \texttt{elicitation\_reponses.csv} : \framebox[0.34cm]{\rule{0pt}{0.26cm}}
+\quad Séance accompagnée : \framebox[0.34cm]{\rule{0pt}{0.26cm}}
+\normalsize
+
+\end{document}

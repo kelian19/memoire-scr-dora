@@ -1,0 +1,469 @@
+\chapter{La cascade dirigée}
+\label{chap:cascade}
+
+\begin{cle}
+\textbf{Idée directrice.} La dépendance entre les cinq piliers n'est pas ajoutée après coup par
+une copule : elle est \emph{produite} par la propagation d'un incident le long d'une matrice
+d'influence dirigée. La cascade est ainsi la vue structurelle (bottom-up) de la
+dépendance, en regard de la vue par copule (top-down). Le fil du
+chapitre part du Vasicek à un facteur, l'ouvre en deux temps (systémique par pilier, puis
+propagation dirigée), et remplace le seuil de défaut du crédit par un seuil ancré sur la barre
+de matérialité du règlement.
+\end{cle}
+
+\section{Le point de départ : le Vasicek à un facteur et ses limites}
+
+Le modèle structurel de Merton-Vasicek associe à chaque entité une variable latente. On retient
+la convention où $X$ mesure le stress et non la santé (un $X$ élevé est une mauvaise
+nouvelle), de sorte qu'une contagion positive encode bien une contamination :
+\begin{equation}
+X_i \;=\; \sqrt{\rho}\;Y \;+\; \sqrt{1-\rho}\;\varepsilon_i, \qquad \Var(X_i)=1,
+\end{equation}
+où $Y\sim\mathcal N(0,1)$ est le facteur systémique commun, $\varepsilon_i\sim\mathcal N(0,1)$ le
+choc idiosyncratique, et $\rho\in[0,1]$ la part du systémique, commune à toutes les entités.
+L'incident survient lorsque le stress franchit un seuil, $D_i=\mathbf 1\{X_i\ge K_i\}$, avec dans
+le modèle classique $K_i=\Phi^{-1}(1-\mathrm{PD}_i)$.
+
+\begin{attention}
+\textbf{Deux hypothèses de ce modèle sont fausses pour le cyber sous DORA.} D'abord, la
+dépendance y est symétrique (un seul $Y$, un seul $\rho$) : le modèle ne peut pas dire
+\og P1 entraîne P2 plus que l'inverse\fg{}, alors que les données d'expert mobilisées ici
+sont dirigées à $81\,\%$. Ensuite, le seuil $\Phi^{-1}(\mathrm{PD})$ suppose une PD stable, mesurable et
+une valeur de firme sous-jacente, dont rien n'existe en cyber. Les deux généralisations qui
+suivent lèvent ces deux limites.
+\end{attention}
+
+% SOURCES-SCRIPTS: 01 03
+
+\section{Généralisation A : la structure systémique dépend du pilier}
+
+On indexe désormais par entité~$i$ et pilier~$j\in\{1,\dots,5\}$, et l'on remplace le facteur
+unique par un facteur systémique par pilier $Y_j$ et une sensibilité propre
+$\rho_{ij}$ :
+\begin{equation}
+X_{ij} \;=\; \sqrt{\rho_{ij}}\;Y_j \;+\; \sqrt{1-\rho_{ij}}\;\varepsilon_{ij}.
+\end{equation}
+Chaque pilier a sa \og météo systémique\fg{} propre (l'état de la menace sur la chaîne
+d'approvisionnement pour P4, l'état réglementaire pour P1), et les $Y_j$ sont corrélés entre eux
+par une matrice $\Sigma_Y$ : c'est là que vivent proprement les dépendances croisées, au niveau
+systémique.
+
+\paragraph{Un $\rho_{ij}$ par entité ne se calibre pas, et l'argument n'est pas le compte de
+paramètres.} Un modèle peut porter plus de paramètres que d'observations et rester utile. Ce qui
+tranche est l'information que la donnée porte sur une sensibilité, et elle se mesure en périodes
+d'observation d'un panel entité $\times$ pilier. Une sensibilité n'apparaît d'abord jamais sur un
+taux de conformité : la marge vaut $0{,}35$ quelle que soit sa valeur, de sorte qu'elle ne se lit
+que sur la co-variation entre cellules qui partagent un facteur. Or une cellule $(i,j)$ ne rend
+qu'un état binaire par période. En accordant même au test le facteur $Y_j$ exactement connu, ce
+qu'aucune donnée ne fournit, séparer un écart de $0{,}10$ de la valeur de son pilier demanderait
+$813$ périodes ; sur une seule coupe transversale, aucun écart du domaine admissible n'en est
+séparable, la statistique de test plafonnant à $0{,}47$ pour un seuil de $3{,}84$. Le même écart
+lu au niveau du pilier, où les entités se mettent en commun, demande $474$ périodes à quatre
+entités et encore $81$ sur une population entière : élargir sature, une période ne livrant qu'un
+tirage du facteur. Ce qui identifie une sensibilité est la répétition dans le temps et non le
+nombre d'entités, comme l'asymétrie de $W$ ne s'identifie que par l'ordre temporel.
+
+On retient donc le compromis hiérarchique $\rho_{ij}=\rho_j+u_{ij}$, où la sensibilité de chaque
+entité gravite autour de la moyenne de son pilier $\rho_j$ (\emph{pooling} partiel). Il n'est pas
+une approximation du $\rho_{ij}$ libre : sur tout panel réaliste, $u_{ij}$ reste à sa valeur
+\emph{a priori}, et les deux écritures ne diffèrent alors par aucun nombre. Une variante
+admissible par construction s'écrit sur l'échelle transformée,
+$\mathrm{logit}\,\rho_{ij}=\mathrm{logit}\,\rho_j+u_{ij}$, une sensibilité étant une part qu'un
+terme additif porté directement sur $\rho_{ij}$ fait sortir de $[0\,;\,1]$ avec une probabilité
+strictement positive, $1{,}40\,\%$ pour une dispersion de $0{,}20$. Le pipeline posant une
+sensibilité unique, le choix entre les deux écritures ne déplace aucun chiffre publié.
+
+\begin{attention}
+\textbf{Le sens du regroupement décide de ce qui serait observable.} Ici le facteur est celui du
+pilier, partagé par les entités, et l'identification passe par le temps. Dans le modèle
+effectivement publié au chapitre~\ref{chap:multietats}, il est celui de l'entité et ses cinq
+piliers le partagent, de sorte qu'une entité forme un groupe et que deux entités sont
+indépendantes : le même écart s'y sépare avec $374$ entités observées une seule fois, soit
+l'ordre de grandeur d'un marché national. La même équation sous deux regroupements n'appelle pas le même
+dispositif d'observation.
+\end{attention}
+
+\begin{cle}
+\textbf{La partie A n'est pas une contribution.} Le Merton-Vasicek multifacteur à
+matrice de corrélation générale est celui de \citet{Li2000}, employé tel quel en risque de
+crédit de portefeuille. La contribution propre ne commence qu'en partie~B, avec
+la contagion dirigée. Le revendiquer clairement évite de se voir opposer une
+littérature qu'on aurait ignorée.
+\end{cle}
+
+% SOURCES-SCRIPTS: 107
+
+\section{Généralisation B : la propagation dirigée}
+
+\begin{cle}
+\textbf{Convention d'indices, à fixer une fois pour toutes.} Dans tout le mémoire,
+\[
+  \boxed{\;W_{jk}\;=\;\text{propension du pilier } j \text{ (source) à entraîner la
+  défaillance du pilier } k \text{ (cible).}\;}
+\]
+La ligne $j$ décrit donc ce que $j$ \emph{émet}, et la colonne $k$ ce que $k$
+\emph{reçoit}. C'est la convention du graphe d'arêtes vivantes (définition~\ref{def:cascade} :
+l'arc $j\to k$ existe si $B_{jk}=1$) et celle de toutes les implémentations. Elle donne son sens
+à la somme de ligne $s_j$, qui mesure l'émission du pilier $j$, et à la revendication
+centrale \og{}P1 émet fort et reçoit peu\fg{} : P1 a la plus grande somme de ligne ($2{,}6$) et
+une somme de colonne trois fois inférieure à celle de P2. Toute lecture inverse rendrait cette
+revendication fausse.
+\end{cle}
+
+Pour encoder l'asymétrie, on ajoute un terme de réseau dirigé : le stress de $j$ subit celui des
+autres piliers de la même entité, pondéré par une matrice asymétrique $W$. En respectant
+la convention ci-dessus, la source est le premier indice, donc le stress \emph{reçu} par $j$
+somme les colonnes :
+\begin{equation}
+X_{ij} \;=\; \underbrace{\sum_{k\neq j} W_{kj}\,X_{ik}}_{\text{contagion dirigée, } k \to j}
+   \;+\; \sqrt{\rho_{ij}}\,Y_j \;+\; \sqrt{1-\rho_{ij}}\,\varepsilon_{ij},
+\end{equation}
+d'où, en forme matricielle sur les cinq piliers, la forme réduite
+$\mathbf X_i=(I-W^{\top})^{-1}(\text{systémique}+\text{idio})$, \emph{sous réserve} que
+$\rho(W)<1$, le rayon spectral étant invariant par transposition. Si
+$W=0$ on retombe sur la partie~A, et avec un seul facteur sur le Vasicek standard :
+l'emboîtement est propre. La figure~\ref{fig:reseau-W} donne la structure de $W$ retenue et
+l'allure d'un choc qui s'y propage.
+
+% SOURCES-SCRIPTS: 29
+
+\section{La normalisation de Leontief : une stabilité garantie}
+
+\begin{attention}
+\textbf{Brancher la matrice d'expert TRANS telle quelle est une erreur de catégorie.}
+$(I-W)^{-1}$ ne représente une cascade que si la série $I+W+W^2+\cdots$ converge, soit
+$\rho(W)<1$. Or $\rho(\mathrm{TRANS})=1{,}461>1$, et $(I-\mathrm{TRANS})^{-1}$ contient
+21 entrées négatives sur 25 : un choc positif produirait un stress négatif ailleurs.
+TRANS n'a jamais été une matrice de parts.
+\end{attention}
+
+% FIGURE FIXEE ICI EN [H], ET ELLE EST APPELEE UNE PAGE PLUS HAUT (\S de la propagation
+% dirigee). En [htbp] a son point d'appel elle derivait jusqu'a cette page-ci et s'inserait au
+% milieu de la phrase de Leontief, coupant l'inverse B=(I-A)^{-1} de sa somme. Elle ne peut pas
+% tenir sous son paragraphe d'appel (191 pt disponibles pour 242 demandes) et la retrecir
+% mettrait ses etiquettes sous 5 pt. Posee ici, elle ouvre la page et le paragraphe la suit
+% entier. Ne pas la remettre en [htbp].
+\begin{figure}[H]\centering
+\figover{H1_reseau_W.png}
+\caption{Structure dirigée de $W$ sur les cinq piliers (P1 émet fort et reçoit peu) et
+propagation d'un choc sur un sous-réseau.}
+\label{fig:reseau-W}
+\end{figure}
+
+La discipline vient du modèle entrées-sorties de Leontief, dont l'inverse
+$B=(I-A)^{-1}=\sum_{k\ge0}A^k$ n'explose jamais parce que $A$ est une matrice de parts :
+les colonnes somment à moins de un, la différence étant la valeur ajoutée, strictement positive.
+On applique la même règle en lisant la ligne $j$ de $W$ comme les parts du stress que $j$
+\emph{émet} vers les autres piliers :
+\begin{equation}
+\label{eq:norm}
+\boxed{\;W \;=\; g \cdot \frac{\mathrm{TRANS}}{\max_j \sum_k \mathrm{TRANS}_{jk}}\;,
+\qquad g \in (0,\,1]\;}
+\end{equation}
+où $g$ est la part de contagion du pilier le plus exposé. La contrainte $g\le1$ n'est pas ad
+hoc : $W$ est positive et chaque ligne somme à au plus $g$, donc par Perron-Frobenius (le strict
+analogue de la valeur ajoutée positive de Leontief)
+\begin{equation}
+\rho(W)\;\le\;\max_j\sum_k W_{jk}\;\le\;g\;<\;1,
+\end{equation}
+et $(I-W)^{-1}$ existe. La stabilité est donc garantie par la normalisation, sur tout
+le domaine admissible, et non supposée. Numériquement, $\rho(W)=0{,}562\,g$. On divise par un
+scalaire et non ligne à ligne, ce qui préserve l'hétérogénéité de ce que \emph{reçoit} chaque
+pilier (P1 reçoit trois fois moins que P2) : la revendication \og P1 émet fort et reçoit peu\fg{}
+survit à la normalisation.
+
+% SOURCES-SCRIPTS: 03
+
+\section{La cascade est un processus de branchement}
+\label{sec:branch}
+
+Le modèle simultané sur latentes n'est pas celui que les données pourraient identifier. On lui
+substitue une contagion retardée sur incidents, qui est un processus de
+branchement multitype : un incident sur le pilier~$k$ engendre, à la période suivante, un
+nombre aléatoire d'incidents sur les autres piliers. Toute la théorie de l'extinction des
+épidémies s'applique, et l'objet central n'est plus $W$ mais la matrice de génération
+suivante $M$, qui compte des incidents et non des écarts-types latents :
+\begin{equation}
+M_{jk}\;=\;\Phi(\text{base}_j+W_{jk})-\Phi(\text{base}_j).
+\end{equation}
+
+\begin{cle}
+\textbf{Deux rayons spectraux, à ne pas confondre.} $\rho(W)$ gouverne le système latent
+simultané (il doit être $<1$ pour que $(I-W)^{-1}$ existe) ; $R_0=\rho(M)$ gouverne la cascade
+d'incidents, qui s'éteint si et seulement si $R_0<1$ (le $R_0$ des épidémiologistes). Avec une
+incidence de fond de $4{,}5\,\%$ et $g=0{,}9$, on obtient $\rho(W)=0{,}506$ et
+$R_0=0{,}054$ : les deux lectures sont stables, mais pas du même ordre.
+\end{cle}
+
+\noindent La figure~\ref{fig:branchement-R0} vérifie ces deux seuils numériquement.
+
+\begin{figure}[htbp]\centering
+\figover{K3_branchement_R0.png}
+\caption{(a) Sur le domaine admissible $g\le1$, les deux rayons spectraux restent $<1$ ; les
+seuils critiques ($\rho(W)=1$ à $g=1{,}78$ ; $R_0=1$ à $g=8{,}1$) sont hors domaine. (b) La
+progéniture $(I-M)^{-1}$ reproduit exactement le classement ROOT du jugement d'expert.}
+\label{fig:branchement-R0}
+% SOURCES-SCRIPTS: 03
+\end{figure}
+
+Deux résultats en découlent. D'une part, la forme simultanée est structurellement
+alarmiste : même normalisée, elle approche son seuil critique plus de \emph{quatre} fois plus
+vite que la cascade réelle ($g^\star=1{,}78$ contre $8{,}1$). Une lecture naïve de TRANS crierait à
+l'emballement systémique dans un régime où la contagion s'éteint tranquillement. D'autre part,
+la progéniture $(I-M)^{-1}$ se lit comme le nombre de descendants d'un incident initial : le
+calcul donne $0{,}109$ (P1), $0{,}069$ (P4), $0{,}058$ (P2), $0{,}054$ (P3), $0{,}026$ (P5), un
+classement identique à celui du barème ROOT (Spearman $=1{,}00$), et ce pour toute
+valeur de $g$.
+
+\begin{attention}
+\textbf{Cohérence interne, et non validation externe.} ROOT et TRANS sont issus du jugement du
+même expert ; retrouver ROOT à partir de TRANS n'est pas une validation externe mais un test de
+\emph{cohérence interne} du jugement, réussi. Sa portée réelle est une réduction de
+paramètres : ROOT se déduit de TRANS au lieu d'être posé, soit cinq paramètres d'expert en
+moins.
+\end{attention}
+
+% SOURCES-SCRIPTS: 03 29
+
+\section{Le seuil $K_j$ : ce qui remplace $\Phi^{-1}(\mathrm{PD})$}
+
+Il faut distinguer deux seuils vivant dans deux espaces : $u_j$, le seuil de matérialité
+(DORA art.~18), dans l'espace des sévérités observables (euros, clients, heures) ; et $K_j$, le
+seuil sur la variable latente, sans unité. On ne peut pas prendre l'un pour l'autre : on
+apparie leurs probabilités, en choisissant $K_j$ pour que l'événement latent
+$\{X_{ij}\ge K_j\}$ ait la même probabilité que l'incident majeur observable
+$\{S_{ij}\ge u_j\}$ :
+\begin{equation}
+\label{eq:Kj}
+\boxed{\;K_j\;=\;F^{-1}(1-p_j), \qquad p_j=\mathbb P(S_{ij}\ge u_j).\;}
+\end{equation}
+
+\begin{cle}
+\textbf{La littérature fait déjà exactement cela.} Dans la représentation CreditMetrics des
+matrices de transition \citep{jpmorgan1997}, le seuil de migration vaut
+$L=\Phi^{-1}(\text{fréquence cumulée observée})$ : on inverse \emph{toujours} une répartition. Ce
+qu'on reproche à $\Phi^{-1}(\mathrm{PD})$ n'est pas l'inversion, ce sont ses deux entrées : une
+fréquence non mesurable (remplacée par $p_j$, définie par le règlement, donc stable et
+comparable entre entités) et une queue gaussienne trop fine (remplacée par une loi $F$ à queue
+lourde). La probabilité de dépassement devient alors une sortie du modèle,
+conditionnelle à l'état systémique.
+\end{cle}
+
+\noindent Le biais sur $K_j$ ne vient pas de la méthode d'estimation de la queue mais de la
+\textbf{sous-déclaration} : en notant $q(s)$ la probabilité qu'un incident de sévérité $s$ soit
+déclaré, on a l'identité exacte $\hat p_j^{\text{naïf}}/p_j=\mathbb E[q(S)\mid S\ge u_j]<1$. On
+sous-estime $p_j$, donc on sur-estime $K_j$, donc on sous-provisionne, et ce biais s'effondre
+quand la barre monte dans la queue ($+0{,}369$ à $u=0{,}5$ ; $+0{,}001$ à $u=40$). La
+barre DORA est défendable parce qu'elle est haute, pas parce qu'elle est réglementaire, et
+c'est une propriété vérifiable : il suffit d'estimer $q(u_j)$. Le rôle de l'EVT n'est pas de
+débiaiser cette fréquence (extrapoler le taux depuis un seuil haut n'est pas pilotable), mais de
+modéliser la sévérité au-dessus de la barre, donc le capital ($-0{,}8\,\%$ de biais
+contre $-63{,}9\,\%$ pour la lognormale).
+
+% SOURCES-SCRIPTS: 04 02
+
+\section{Calibration et faisabilité}
+\label{sec:calib-cascade}
+
+L'asymétrie de $W$ ne s'identifie que par l'information temporelle (qui déclenche avant
+qui) : le modèle de calibration est dynamique, et l'estimateur est littéralement un
+probit (le modèle générateur a un bruit gaussien et un seuil), non un logit qui gonflerait les
+magnitudes d'un facteur $2{,}1$. Sur données \emph{simulées}, ce protocole fonctionne : le probit
+retrouve $W$ dans ses unités (corrélation $0{,}92$, pente $1{,}08$). Le protocole n'est donc pas
+en cause dans ce qui suit.
+
+\begin{attention}
+\textbf{Ce que ce protocole donne sur données réelles : rien.} Appliqué aux sources
+disponibles, il échoue, et il échoue pour des raisons qui tiennent aux \emph{données} et non à
+la méthode. Le chapitre~\ref{ch:identifiabilite} le démontre sur trois sources qui échouent pour
+des raisons distinctes et en tire la frontière d'identification ; le
+chapitre~\ref{chap:partielle} en tire les conséquences sur le capital. Une précision de méthode
+s'impose dès ici : le test intuitif du \og temps inversé \fg{} est dégénéré
+sur des comptages, puisque la matrice obtenue en renversant la chronologie vaut, par
+construction, la transposée. Il ne prouve rien, et seul le placebo par permutation est valide.
+\end{attention}
+
+% SOURCES-SCRIPTS: 03 05
+
+\section{Formalisation : définitions et propriétés}
+\label{sec:formalisation}
+
+Cette section consolide le modèle sous une forme opposable à un lecteur exigeant. On note
+$P=\{1,\dots,5\}$ les piliers, $W\in[0,1]^{P\times P}$ la matrice de contagion avec
+$W_{jj}=0$, et $s_{\max}=\max_j\sum_k \mathrm{TRANS}_{jk}$. Les démonstrations sont
+rassemblées à l'annexe~\ref{ann:cascade}.
+
+\begin{definition}[Cascade indépendante]
+\label{def:cascade}
+À chaque couple ordonné $(j,k)$, $j\neq k$, on associe une variable de Bernoulli
+indépendante $B_{jk}\sim\mathcal B(W_{jk})$. Le \emph{graphe d'arêtes vivantes} $G$ possède
+l'arc $j\to k$ si et seulement si $B_{jk}=1$. Pour un pilier d'amorce $a$, l'\emph{ensemble
+atteint} est
+\[
+  S_a \;=\; \{a\}\cup\{k\in P : \text{il existe un chemin dirigé } a\rightsquigarrow k \text{ dans } G\}.
+\]
+C'est la construction standard de la cascade indépendante \citep{kempe2003}, équivalente à une percolation
+de liens sur le graphe dirigé pondéré par $W$.
+\end{definition}
+
+\begin{proposition}[Forme réduite et descendance espérée]
+\label{prop:reduite}
+Le nombre espéré de marches dirigées de longueur $n$ de $a$ vers $k$ vaut $(W^n)_{ak}$, et la
+descendance totale espérée, comptée avec multiplicité, est
+\[
+  \sum_{n\ge 0}(W^n)_{ak} \;=\; \bigl((I-W)^{-1}\bigr)_{ak},
+\]
+série convergente si et seulement si $\rho(W)<1$. L'ensemble atteint étant compté sans
+multiplicité, on a la majoration $\mathbb E\,|S_a|\le \bigl[(I-W)^{-1}\mathbf 1\bigr]_a$, et
+l'écart mesure exactement les piliers atteints par plusieurs chemins.
+\end{proposition}
+
+\begin{proposition}[Sous-criticité par normalisation de Leontief]
+\label{prop:leontief}
+Sous la normalisation~\eqref{eq:norm}, $W=(g/s_{\max})\,\mathrm{TRANS}$, la matrice $W$ est
+positive et chacune de ses lignes somme à au plus $g$ ; par conséquent
+\[
+  \rho(W)\;\le\;\max_j\sum_k W_{jk}\;\le\;g\;<\;1 .
+\]
+La convergence de $(I-W)^{-1}$, donc la stabilité de la cascade, est ainsi \emph{garantie sur
+tout le domaine admissible}, et non supposée.
+\end{proposition}
+
+\begin{proposition}[Loi exacte de l'ensemble atteint]
+\label{prop:loi}
+Pour tout $A\subseteq P$ avec $a\in A$,
+\[
+  \mathbb P(S_a=A)\;=\;R(A)\,B(A),\qquad
+  B(A)=\!\!\prod_{j\in A,\;k\notin A}\!\!(1-W_{jk}),
+\]
+où $B(A)$ est la probabilité qu'aucune arête ne fuie hors de $A$, et $R(A)$, la probabilité
+que $a$ atteigne \emph{tout} $A$ par les seules arêtes internes, vérifie $R(\{a\})=1$ et
+\[
+  R(A)\;=\;1-\sum_{\substack{A'\subsetneq A\\ a\in A'}} R(A')\!\!\prod_{j\in A',\;k\in A\setminus A'}\!\!(1-W_{jk}).
+\]
+\end{proposition}
+
+\noindent Le moteur qui produit les capitaux publiés n'emploie pas cette cascade mais sa variante
+à un successeur par pas, la marche auto-évitante : depuis le pilier courant $j$, la cascade passe
+au pilier $k$ avec la probabilité $W_{jk}$, et s'arrête sinon, ou dès qu'elle revient sur un
+pilier déjà touché. Les deux constructions ont la même matrice moyenne $W$ et le même nombre
+moyen de descendants directs, et la loi de l'ensemble atteint se calcule exactement dans les deux
+cas, sans simulation. Elles diffèrent par la forme de la loi de taille et non par le capital :
+passer de la marche au branchement déplace le SCR de $-4\,\%$. Les
+propositions~\ref{prop:reduite} à~\ref{prop:mono} sont énoncées pour la cascade indépendante,
+qui en donne la forme la plus simple ; pour la marche, la croissance du capital en $g$ est
+vérifiée numériquement au \S\ref{sec:invariance-g}.
+
+\begin{proposition}[Monotonie stochastique]
+\label{prop:mono}
+Si $W\le W'$ terme à terme, alors $S_a(W)$ est stochastiquement dominé par $S_a(W')$. Toute
+fonctionnelle croissante de $S_a$, en particulier la perte agrégée et sa VaR, est donc
+croissante en chaque entrée de $W$. En revanche une perturbation \emph{antisymétrique}
+$A$ déplace $W_{jk}$ et $W_{kj}$ en sens opposés : le capital n'est pas monotone en $A_{jk}$,
+ce qui justifie de balayer les sommets de l'ensemble admissible
+(chapitre~\ref{chap:partielle}) sans revendiquer de bornes exactes.
+\end{proposition}
+
+\begin{proposition}[Dépendance à l'ordre]
+\label{prop:ordre}
+La vraisemblance d'une chaîne ordonnée $\ell(i_1,\dots,i_n)=\mathrm{ROOT}_{i_1}\prod_k
+\mathrm{TRANS}_{i_k i_{k+1}}$ est invariante par permutation si et seulement si
+$\mathrm{TRANS}$ est symétrique. Comme $\mathrm{TRANS}$ est asymétrique, la criticité
+\emph{n'est pas une fonction de l'ensemble} des piliers touchés : aucune copule ni aucun
+score additif, invariants par permutation, ne peut la reproduire.
+\end{proposition}
+
+\begin{proposition}[Ce que la co-occurrence voit de la direction]
+\label{prop:nonid}
+Soit la décomposition unique $W=S+A$, avec $S=\tfrac12(W+W^\top)$ et $A=\tfrac12(W-W^\top)$.
+\emph{(i)} Sous une amorce uniforme, de probabilité $r$ pour chaque pilier, la probabilité qu'un
+même sinistre touche à la fois $j$ et $k$ vaut
+\[
+  \sum_{a\in P} r\,\mathbb P\bigl(\{j,k\}\subseteq S_a\bigr)
+  \;=\; r\,(W_{jk}+W_{kj})+O\bigl(\lVert W\rVert^2\bigr)
+  \;=\; 2r\,S_{jk}+O\bigl(\lVert W\rVert^2\bigr) :
+\]
+au premier ordre, la co-occurrence ne dépend de $W$ que par $S$, et $W$ et $W^\top$ y sont
+indiscernables. \emph{(ii)} Au-delà du premier ordre, ou sous une amorce non uniforme, la loi de
+l'ensemble atteint dépend de $A$ en général : $W$ et $W^\top$ ne sont pas observationnellement
+équivalents pour la loi complète des ensembles de piliers touchés. \emph{(iii)}
+$\mathrm{SCR}(W)\neq\mathrm{SCR}(W^\top)$ en général.
+\end{proposition}
+
+% SOURCES-SCRIPTS: 32 61 29 98
+
+\section{Vérification numérique des trois propriétés qui portent l'argument}
+\label{sec:verif-proprietes}
+
+Parmi les six énoncés ci-dessus, trois portent l'argument du mémoire. Chacun est accompagné de
+sa vérification numérique : l'énoncé
+% SOURCES-SCRIPTS: 32
+dit ce qui doit se produire, le calcul montre que cela se produit.
+
+\paragraph{La criticité dépend de l'ordre (proposition~\ref{prop:ordre}).} Sur les $26$
+sous-ensembles de taille au moins deux, $22$ changent de criticité selon l'ordre, avec
+un écart atteignant $6$ points sur une échelle de $10$, soit $60\,\%$ de l'échelle, pour
+un \emph{même} ensemble de piliers. Le contre-exemple minimal suffit à le voir : sur la paire
+$\{P_1,P_2\}$, le classeur donne $\mathrm{TRANS}[1][2]=0{,}80$ et $\mathrm{TRANS}[2][1]=0{,}20$,
+d'où des criticités de $8$ et $2$ pour le même ensemble.
+
+\begin{cle}
+\textbf{La contraposée est l'argument utile.} Toute mesure de risque qui ne dépend que de
+l'ensemble touché est invariante par permutation. La proposition~\ref{prop:ordre} exhibe donc un
+objet qu'\emph{aucune} copule et qu'\emph{aucun} score additif ne reproduit, et l'hypothèse
+requise est minimale : il suffit que $\mathrm{TRANS}$ soit asymétrique, sans qu'aucune
+\emph{valeur} de la direction ne soit revendiquée.
+\end{cle}
+
+\begin{cle}
+\textbf{Ce qui n'est pas revendiqué, et pourquoi le dire.} Une propriété plus forte, la
+\emph{non-transitivité} de la dominance entre piliers, a été testée dans trois formulations :
+la transitivité des corrélations qu'impose un modèle à facteur unique, la positivité de la
+dépendance symétrisée, et l'existence de cycles de dominance par paire. Aucune ne se
+vérifie : zéro violation de l'inégalité de transitivité sur $420$ triplets, valeur propre
+minimale $+0{,}405$ donc matrice de corrélation parfaitement valide, et zéro cycle. Cette
+revendication est donc retirée. La dépendance à l'ordre exclut exactement les mêmes
+concurrents et, elle, se démontre.
+\end{cle}
+
+\paragraph{La borne de propagation tient, et son écart se lit (propositions~\ref{prop:reduite}
+et~\ref{prop:leontief}).} Avec le classeur actuel, $\rho(W)=0{,}506$. La majoration
+$\E\,|S_a|\le[(I-W)^{-1}\mathbf 1]_a$ est vérifiée sur les cinq amorces et sur $300$ matrices de
+l'ensemble admissible, sans aucun contre-exemple. L'écart entre la borne et la valeur exacte va
+de $10{,}6\,\%$ (amorce P5) à $19{,}9\,\%$ (amorce P1). Cet écart n'est pas une
+imprécision : il mesure exactement les \emph{collisions}, c'est-à-dire les piliers atteints par
+plusieurs chemins, que la forme linéaire compte plusieurs fois. Sur cinq piliers fortement
+connectés il n'est pas négligeable, ce qui justifie de conserver le calcul exact par
+sous-ensembles (proposition~\ref{prop:loi}) plutôt que la seule forme close.
+
+\paragraph{La direction échappe aux statistiques disponibles, et cela coûte
+(proposition~\ref{prop:nonid}).} Le test directionnel ne rejette pas l'hypothèse $A=0$
+(chapitre~\ref{ch:identifiabilite} : asymétrie observée $119$ contre un nul de permutation à
+$128 \pm 27$, soit $z=-0{,}33$, et aucune arête significative sur $18$). Retourner la matrice
+déplace pourtant le capital de $3{,}6\,\%$ et la perte moyenne de $7{,}9\,\%$ (les niveaux sont
+établis en partie~\ref{part:resultats} ; seuls les écarts importent ici), et surtout la priorité
+de remédiation bascule de P1 à P4. Sur l'ensemble admissible, l'écart entre une matrice et sa
+transposée atteint $1\,173$~M\euro{}.
+
+La loi complète des ensembles touchés, elle, distingue les deux matrices, ce que la partie (ii) de
+la proposition énonce. Sur la matrice publiée, avec l'amorce et la marche du moteur, un sinistre
+touche en moyenne $1{,}931$ pilier sous $W$ et $1{,}746$ sous $W^\top$, la part des sinistres
+multi-piliers passe de $62{,}31\,\%$ à $50{,}77\,\%$, et la probabilité que P2 et P5 cèdent
+ensemble tombe de $0{,}127$ à $0{,}066$. Sous amorce uniforme, l'écart entre les deux matrices
+s'efface avec l'intensité de la contagion : il ne vaut plus que $0{,}86\,\%$ quand $W$ est ramenée
+au cinquantième de sa valeur, ce qui est la partie (i).
+
+\begin{cle}
+\textbf{L'énoncé à retenir : indiscernables pour les statistiques disponibles, matériellement
+différentes.} C'est la formulation exacte de la frontière d'identification, et elle ne repose sur
+\emph{aucun} dire d'expert. Elle chiffre en euros de capital, et en inversion de priorité, le
+prix de ne pas savoir dans quel sens la contagion circule. Elle désigne aussi la donnée qui
+réduirait cette ignorance : la direction n'est pas inaccessible par principe, elle est absente
+des sources, et un registre qui consignerait l'ensemble des piliers touchés par chaque incident
+en porterait une partie. C'est ce qui fonde à la fois le modèle en couches
+(chapitre~\ref{chap:partielle}) et la spécification de reporting adressée au régulateur.
+\end{cle}
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 40 03 98

@@ -1,0 +1,144 @@
+
+======================================================================================
+0. Verification de la convention d'indices (ligne = source)
+======================================================================================
+  sommes de LIGNE   (emission) : P1=2.6  P2=1.5  P3=1.4  P4=1.7  P5=0.7
+  sommes de COLONNE (reception): P1=0.8  P2=2.3  P3=1.6  P4=1.5  P5=1.7
+  P1 a la plus forte emission : True
+  P1 recoit moins que P2      : True  (rapport 2.9)
+  => convention LIGNE = SOURCE CONFIRMEE sur la matrice d'expert.
+
+======================================================================================
+1. Le corpus etendu
+======================================================================================
+  10 post-mortems, 22 transitions dirigees codees.
+    dont source primaire  : 7 incidents, 18 transitions
+    dont perspective entite : 6 incidents
+
+  incident                        src         persp.      defaillants     transitions
+  Microsoft Exchange Online 2023  primaire    fournisseur P1234           P1>P3 P3>P2 P1>P4
+  TSB Bank 2018                   primaire    entite      P1234           P1>P4 P1>P3 P3>P2 P4>P2
+  Equifax 2017                    primaire    entite      P1235           P1>P5 P5>P3 P3>P2 P1>P3
+  Knight Capital 2012             primaire    entite      P123            P3>P2 P1>P3
+  Capital One 2019                primaire    entite      P134            P1>P4 P1>P3
+  ION Cleared Derivatives 2023    secondaire  fournisseur P24             P4>P2
+  MOVEit 2023                     secondaire  fournisseur P24             P4>P2
+  CrowdStrike Falcon 2024         primaire    fournisseur P23             P3>P2
+  Log4Shell 2021-2022             primaire    entite      P124            P1>P4 P4>P2
+  Raphaels Bank 2015              secondaire  entite      P124            P1>P4 P4>P2
+
+  Matrice des transitions M (LIGNE = source, COLONNE = cible) :
+             ->P1   ->P2   ->P3   ->P4   ->P5     N_j
+    P1          0      0      5      5      1       7
+    P2          0      0      0      0      0       9
+    P3          0      5      0      0      0       6
+    P4          0      5      0      0      0       7
+    P5          0      0      1      0      0       1
+
+  emissions : P1=11, P2=0, P3=5, P4=5, P5=1
+  receptions: P1=0, P2=10, P3=6, P4=5, P5=1
+
+======================================================================================
+2. Le test de direction, rejoue sur le corpus etendu
+======================================================================================
+  corpus complet               10 inc., 22 trans. : T= 22.0  nul=  9.5+-2.4  z=+5.12  p=0.0001
+  sources primaires seules      7 inc., 18 trans. : T= 18.0  nul=  8.2+-2.4  z=+4.08  p=0.0003
+  perspective entite seule      6 inc., 16 trans. : T= 16.0  nul=  8.0+-2.2  z=+3.62  p=0.0006
+
+  Rappel : le corpus initial (7 rapports, 17 transitions) donnait z = +3.93,
+  contre un placebo par permutation de 8.4 +/- 2.2 transitions (script 53).
+  Si z tient ou monte sur le corpus etendu, le signal n'etait pas un artefact des
+  sept incidents choisis. S'il tient sur les seules sources PRIMAIRES, il ne vient
+  pas non plus de la couverture de presse.
+
+======================================================================================
+3. La matrice ORDONNEE p_jk, et non plus le seul sens par paire
+======================================================================================
+  p_jk = P(k cede | j a cede), posterieur Beta(1 + m_jk, 1 + N_j - m_jk).
+  C'est la matrice complete : elle porte S ET A, donc l'amplitude et la direction.
+
+  Mediane a posteriori de p_jk (LIGNE = source j, COLONNE = cible k) :
+               ->P1     ->P2     ->P3     ->P4     ->P5
+    P1          .      0.083    0.679    0.679    0.201
+    P2        0.067      .      0.067    0.067    0.067
+    P3        0.094    0.772      .      0.094    0.094
+    P4        0.083    0.679    0.083      .      0.083
+    P5        0.293    0.293    0.707    0.293      .  
+
+  credible a 90 % ENTIEREMENT SOUS 0,5 (propagation faible etablie) : 12 / 20
+  credible a 90 % ENTIEREMENT AU-DESSUS de 0,5 (propagation forte etablie) : 0 / 20
+
+  LE RESULTAT EST ASYMETRIQUE, ET C'EST LUI QU'IL FAUT RETENIR. Le corpus etablit
+  tres bien ou la contagion NE VA PAS, et pas du tout ou elle va fort. Les douze
+  liens credibiliement faibles comprennent les 4 sorties de P2, soit TOUTES,
+  et 3 des 4 entrees de P1 — l'entree P5 vers P1 n'est PAS etablie comme faible.
+  LE PUITS EST DONC ETABLI, LA SOURCE PURE SEULEMENT EN PARTIE : c'est une asymetrie
+  de plus, et elle va contre la convention « cause racine = gouvernance ».
+  Mais AUCUN lien n'est etabli comme fort : meme les plus eleves gardent un
+  credible qui recouvre 0,5.
+
+  Les quatre liens les plus eleves :
+    P3 -> P2 : 0.772 [0.479 ; 0.947]   m=5 / N=6
+    P5 -> P3 : 0.707 [0.224 ; 0.975]   m=1 / N=1
+    P4 -> P2 : 0.679 [0.400 ; 0.889]   m=5 / N=7
+    P1 -> P4 : 0.679 [0.400 ; 0.889]   m=5 / N=7
+
+======================================================================================
+4. Decomposition S / A de la matrice estimee, et comparaison a l'expert
+======================================================================================
+  ||S|| = 1.351   ||A|| = 1.012   part de la direction ||A||/||W|| = 60.0%
+  expert : ||S|| = 0.633   ||A|| = 0.282   part = 40.7%
+
+  Correlation de Spearman documentaire vs expert :
+    sur la matrice complete      rho = +0.078  (p = 0.7443)
+    sur la seule partie A        rho = +0.307  (p = 0.1886)
+
+  LECTURE, ET ELLE EST NEGATIVE SUR CE POINT. Aucune des deux correlations n'est
+  significative : le corpus ne reproduit PAS le classement des coefficients du
+  classeur, ni en amplitude ni meme en direction paire par paire. Il serait
+  malhonnete de presenter ce resultat autrement.
+
+  Ce qu'il reproduit, en revanche, est la STRUCTURE : P1 est source pure (11 sorties, 0 entree) et P2 puits pur (0 sortie, 10 entrees),
+  sur 7 et 9 incidents ou ces piliers ont respectivement cede.
+  C'est exactement le decoupage a trois niveaux du chapitre 9 : la structure
+  est corroboree, la direction paire par paire ne l'est pas, l'amplitude pas davantage.
+  Le corpus etendu ne deplace donc PAS la frontiere d'identification, il la CONFIRME
+  sur un objet plus riche (la matrice ordonnee complete) et avec plus de matiere.
+
+  A noter : le corpus est PLUS dirige que le jugement d'expert (part de A de 60%
+  contre 41%). Le classeur est donc, sur ce
+  point precis, plus prudent que la donnee documentaire.
+
+======================================================================================
+5. Le biais qui interdit de lire p_jk comme une mesure
+======================================================================================
+  Un rapport d'enquete raconte la CHAINE qui a produit le sinistre. Il documente donc
+  les controles qui ont cede ET propage, mal ceux qui ont cede sans propager, et pas
+  du tout ceux qui ont tenu. Le denominateur N_j est donc sous-estime et p_jk est une
+  BORNE SUPERIEURE. On chiffre cette sensibilite en ajoutant delta defaillances non
+  propagees par pilier et par incident.
+
+    delta   p med. moyen    P1->P2    P4->P2    P1->P3   ||A||/||W||
+     0.00          0.274     0.083     0.679     0.679         60.0%
+     0.25          0.188     0.064     0.523     0.523         59.7%
+     0.50          0.146     0.052     0.425     0.425         59.8%
+     1.00          0.103     0.038     0.309     0.309         59.9%
+     2.00          0.065     0.024     0.200     0.200         59.9%
+
+  Lecture. Le NIVEAU de p_jk s'effondre avec delta : l'amplitude n'est pas identifiee,
+  exactement comme le chapitre 9 l'annonce. En revanche la PART DE DIRECTION
+  ||A||/||W|| bouge peu : ce que le corpus etablit, c'est un ORDRE, pas une magnitude.
+  C'est la meme conclusion que le mémoire tenait deja, mais obtenue cette fois sur la
+  matrice ordonnee complete et non plus sur le seul sens a l'interieur des paires.
+
+figure ecrite : exploratory/vasicek_lab/figures/Z20_corpus_etendu_pij.png
+
+======================================================================================
+AVERTISSEMENT DE VALIDATION
+======================================================================================
+  Les trois incidents ajoutes par ce script (CrowdStrike 2024, Log4Shell 2021-2022,
+  Raphaels Bank 2015) sont codes a partir des constats PUBLICS et etablis de leurs
+  rapports respectifs. Chaque codage reste une PROPOSITION a valider avant usage dans
+  le memoire, au meme titre que les sept initiaux : c'est la raison d'etre du second
+  codage en aveugle du script 54. Le corpus n'atteint pas encore la trentaine visee ;
+  les candidats identifies et non encore codes sont listes dans le README du dossier.

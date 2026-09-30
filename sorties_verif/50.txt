@@ -1,0 +1,80 @@
+﻿
+==================================================================================
+1. Capital libere par levier, et sa valeur annuelle (cout du capital 6 %)
+==================================================================================
+  levier                  ΔSCR (M€)  valeur/an (M€)      statut
+  fréquence (entrée)           4328             260  calibrable
+  accumulation P4              1728             104       borné
+  propagation W                1633              98       borné
+  détection P2/P3              1448              87  calibrable
+
+  Conformite TOTALE : ΔSCR = 14139 M€ libere, soit une valeur recurrente de
+  848 M€/an au seul cout de portage du capital (6 %). Le capital libere est
+  CONCENTRE : la frequence seule (4328 M€) porte 47 % de la somme des leviers isoles.
+
+==================================================================================
+2. Face au cout de remediation DORA (hypotheses affichees)
+==================================================================================
+  Cout de remediation (secteur) : 200 entites x 25-150 M€
+  = 5.0 a 30.0 Md€ en one-off.
+  Economie recurrente (capital) : 848 M€/an.
+  Retour sur le SEUL portage du capital : 6 a 35 ans, et ces durees
+  sont des MAJORANTS puisque le benefice retenu est minore (voir section 3).
+  MAIS le ΔSCR est majoritairement de la PERTE EVITEE (pas seulement du portage) : en
+  ajoutant la baisse de la charge moyenne, le retour est bien plus court. Le portage
+  seul (848 M€/an) est le PLANCHER conservateur du benefice.
+
+==================================================================================
+3. Ce que « portage » et « plancher » veulent dire, et le sens de la borne
+==================================================================================
+  PORTAGE. Detenir du capital n'est pas gratuit. Sous Solvabilite II le cout de detention
+  se lit dans la marge de risque, un pourcentage par an du capital immobilise. Liberer
+  14139 M€ de SCR economise donc ce pourcentage CHAQUE ANNEE, et non une fois.
+
+  LE BENEFICE A DEUX COMPOSANTES, et ce script n'en monetise qu'une :
+    (1) le portage economise                       -> chiffre ci-dessous ;
+    (2) la charge de sinistralite evitee           -> chiffre ci-dessous aussi, desormais.
+
+  Charge annuelle moyenne : 622 M€/an conforme contre 3869 non conforme,
+  soit une PERTE EVITEE de 3247 M€/an, a comparer aux 848 M€/an
+  de portage : la perte evitee vaut 3.8 fois le portage.
+  C'est ce qui justifie le mot « plancher », et il porte sur le BENEFICE.
+
+  LES DEUX COMPOSANTES REUNIES : 4095 M€/an, soit un retour de 1 a 7 ans
+  contre 6 a 35 au portage seul. LA BORNE VA DONC DANS CE SENS-LA, et
+  c'est tout ce que le mot voulait dire : le benefice retenu est un MINORANT, donc la
+  duree affichee est un MAJORANT, et le compte reel est plus favorable, jamais moins.
+  A ASSUMER TOUTEFOIS : additionner les deux composantes ajoute un flux de compte de
+  resultat (la sinistralite evitee) a un cout du capital (le portage). C'est une
+  convention economique de ROI, defendable et courante, mais ce n'est PAS une sortie du
+  modele : le modele produit les deux termes separement, et c'est ainsi qu'ils sont
+  publies. Le retour au portage seul reste donc le chiffre de reference.
+
+==================================================================================
+4. Le taux de portage a change : 6 % historique, 4,75 % en vigueur
+==================================================================================
+  taux de portage                      valeur/an     retour (majorant)
+  6 % (delegue 2015/35, historique)       848 M€            6 a 35 ans
+  4,75 % (directive UE 2025/2)            672 M€            7 a 45 ans
+
+  Le taux revise abaisse le portage monetise de 21 % et allonge
+  le majorant du retour de 35 a 45 ans. AUCUNE CONCLUSION NE BOUGE,
+  et la raison est structurelle : la duree calculee est un MAJORANT, la composante
+  dominante du benefice (3247 M€/an de perte evitee) n'etant pas monetisee ici.
+  La chaine publiee reste au taux historique : la calibration est gelee, et rejouer la
+  chaine pour un ecart qui ne renverse rien ferait bouger des nombres publies sans
+  qu'aucun deplacement soit attribuable a la correction.
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. La conformite n'est pas un pur cout : elle libere du capital (ΔSCR), dont la valeur
+     recurrente est 848 M€/an (plancher, cout de portage seul).
+  2. Ce capital est CONCENTRE : prioriser la remediation par capital libere (frequence
+     et detection, les leviers CALIBRABLES) plutot que l'etaler uniformement.
+  3. Les leviers BORNES (propagation, accumulation) liberent aussi du capital mais se
+     remedient par la donnee (registre DORA) autant que par l'action directe.
+  4. C'est l'aboutissement du fil : du score de criticite abstrait a un arbitrage
+     economique chiffre, opposable a une direction financiere.
+
+figure ecrite : exploratory\vasicek_lab\figures\J6_roi_conformite.png

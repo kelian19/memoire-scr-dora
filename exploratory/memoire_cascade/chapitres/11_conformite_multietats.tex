@@ -1,0 +1,351 @@
+\chapter{La conformité multi-états}
+\label{chap:multietats}
+
+\begin{cle}
+\textbf{Idée directrice.} Le besoin de capital dépend de l'état de conformité de l'entité,
+objet ni binaire ni statique. On le modélise à deux échelles de temps (\emph{fast-slow}). À
+l'échelle rapide, un Vasicek multi-états définit l'état (non conforme, partiellement conforme,
+conforme) de chaque pilier et le fait piloter la cascade. À l'échelle lente, une chaîne de Markov
+fait progresser la conformité le long de la mise en conformité. Tout ce qui en sort se lit avec
+la règle que les chapitres~\ref{ch:identifiabilite} et~\ref{chap:partielle} établissent : le
+niveau est illustratif, l'écart et l'ordre sont ce qui est défendable.
+\end{cle}
+
+\section{Le principe des deux échelles de temps}
+
+Le moteur du chapitre~\ref{chap:cascade} traite l'état de conformité
+comme \emph{figé}, et les niveaux qui en découlent ne sont établis qu'en
+partie~\ref{part:resultats}. Or la
+conformité n'est ni un point ni un instantané : elle est graduelle (trois niveaux au moins) et
+évolue dans le temps. On distingue donc deux dynamiques. La couche rapide est celle des
+incidents et de leur cascade à l'intérieur d'une année, chiffrée par le moteur du
+chapitre précédent, \emph{conditionnellement} à une configuration de conformité. La couche
+lente est celle de la gouvernance : l'état de conformité de chaque pilier progresse sur des
+mois et des années. L'état de la couche lente sert de paramètre à la couche rapide.
+C'est exactement la structure d'un modèle de risque de crédit à migration de rating, sur
+laquelle on revient en \S\ref{sec:couplage}.
+
+\paragraph{Cette séparation n'est pas une commodité de calcul, et un précédent le confirme.} On
+pourrait la lire comme un artifice permettant de simuler deux dynamiques sans les coupler. Elle
+répond en réalité à une exigence de fond : la propagation à l'intérieur d'un sinistre et
+l'évolution de la conformité d'une année sur l'autre ne vivent pas sur la même horloge, et les
+confondre reviendrait à laisser une tendance longue expliquer un enchaînement de quelques
+heures, ou l'inverse. Le préprint de cascade climatique cité au chapitre~\ref{ch:positionnement}
+\citep{ccrn2026} sépare de la même façon trois indices, un temps calendaire, une position
+spatiale et un pas de propagation \emph{à l'intérieur} d'un événement, en donnant explicitement
+pour motif d'empêcher que l'évolution de long terme ne soit confondue avec la propagation de
+court terme. Une équipe travaillant sur un autre péril aboutit donc à la même séparation pour la
+même raison, ce qui la déplace d'un choix de modélisation vers une contrainte de construction.
+
+\section{Le Vasicek multi-états : latente et seuils ordonnés}
+
+Chaque pilier porte une capacité de conformité latente $C^\star\sim\mathcal N(0,1)$,
+décomposée à la Vasicek en un facteur systémique commun $\Theta$ et un choc idiosyncratique :
+\begin{equation}
+C^\star \;=\; \gamma\,\Theta \;+\; \sqrt{1-\gamma^2}\,\varepsilon, \qquad \gamma=0{,}68.
+\end{equation}
+Au lieu d'un unique seuil de défaut, on en pose deux, ordonnés, qui découpent trois
+états :
+\begin{equation}
+\text{NC si } C^\star\le K_{\text{bas}}, \quad
+\text{PC si } K_{\text{bas}}<C^\star\le K_{\text{haut}}, \quad
+\text{C si } C^\star>K_{\text{haut}}.
+\end{equation}
+Les seuils sont fixés par les probabilités d'état ancrées sur les enquêtes de
+conformité (fin 2025), $K_{\text{bas}}=\Phi^{-1}(p_{\text{NC}})$ et
+$K_{\text{haut}}=\Phi^{-1}(p_{\text{NC}}+p_{\text{PC}})$. Ce dispositif est un
+\emph{ordered-probit} posé sur la structure de Merton-Vasicek : il réutilise la machinerie de
+seuil du chapitre~\ref{chap:cascade} (le seuil $K_j$) et généralise la variable latente de
+défaut, binaire, en une variable latente de conformité à trois niveaux.
+
+\begin{cle}
+\textbf{Le facteur systémique rend les probabilités conditionnelles.} La probabilité d'être dans
+chaque état sachant l'environnement $\Theta$ s'écrit
+\begin{equation}
+\mathbb P(\text{NC}\mid\Theta)=\Phi\!\Big(\tfrac{K_{\text{bas}}-\gamma\Theta}{\sqrt{1-\gamma^2}}\Big),
+\qquad
+\mathbb P(\text{C}\mid\Theta)=1-\Phi\!\Big(\tfrac{K_{\text{haut}}-\gamma\Theta}{\sqrt{1-\gamma^2}}\Big).
+\end{equation}
+Intégrée sur $\Theta$, la marginale redonne exactement l'ancrage (contrôle de cohérence) ; en
+crise systémique, la masse bascule vers la non-conformité. C'est la version à trois états
+ordonnés de l'amplification systémique d'un modèle à facteur unique.
+\end{cle}
+
+% SOURCES-SCRIPTS: 63
+
+
+\section{Les quatre canaux : comment l'état pilote la cascade}
+\label{sec:quatre-canaux}
+
+L'état de conformité agit sur la cascade par quatre canaux, câblés sans réécrire
+l'agrégation du chapitre~\ref{chap:cascade} :
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt,topsep=2pt]
+\item \emph{Fréquence} $\lambda$ : l'état module le nombre d'incidents amorcés, de $21{,}56$
+  incidents matériels par an à l'état conforme à $53{,}62$ à l'état non conforme, par le
+  multiplicateur de scénario décrit ci-dessous.
+\item \emph{Propagation} $g$ : une entité plus conforme contient mieux la contagion, donc un
+  gain plus faible, de $0{,}90$ à $0{,}45$. La propension à propager depuis un pilier reste
+  $e_j=g(c_j)\,s_j/\max_k s_k$, avec un gain indexé sur l'état du pilier source.
+\item \emph{Détection} $p_u$ : le taux de matérialité (le seuil de détection du
+  chapitre~\ref{chap:cascade}). Une entité conforme intercepte et remédie tôt, de sorte qu'une
+  moindre fraction d'incidents atteint la sévérité matérielle : $p_u$ est multiplié par $0{,}85$
+  à l'état conforme et par $1{,}20$ à l'état non conforme, deux valeurs posées.
+\item \emph{Accumulation par un prestataire commun} : à l'état non conforme, un incident amorcé
+  sur le pilier des tiers devient un choc commun qui touche chacun des autres piliers avec la
+  probabilité $0{,}68$, au lieu de se propager comme un nœud de cascade (\S\ref{sec:p4-accumulation}).
+\end{enumerate}
+On présente ces canaux en lectures emboîtées (fréquence seule ; $+$ propagation ; $+$
+détection ; $+$ accumulation), ce qui rend visible la contribution marginale de chacun et
+empêche qu'un canal domine en silence. Le chiffre de tête du chapitre~\ref{chap:resultats}
+relâche les quatre.
+
+\paragraph{D'où vient le multiplicateur de fréquence.} Il se compose vecteur d'attaque par
+vecteur d'attaque : $\lambda_{\text{NC}}=\lambda_{\text{C}}\sum_v \pi_v\,m_v$, où $\pi_v$ est la
+part du vecteur $v$ dans le recensement Hackmageddon (\S\ref{sec:hackmageddon}) et $m_v$ le centre
+d'une fourchette de multiplicateur propre au scénario non conforme.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l r c r r >{\raggedright\arraybackslash}p{5.2cm}@{}}
+\toprule
+\textbf{Vecteur} & \textbf{Part $\pi_v$} & \textbf{Fourchette} & \textbf{Centre} & \textbf{$\pi_v\,m_v$} & \textbf{Effet publié qui ancre la fourchette} \\
+\midrule
+Hameçonnage & $0{,}388$ & $[1{,}8\,;3{,}0]$ & $2{,}40$ & $0{,}9312$ & réduction du risque par la formation (Ponemon/IBM) \\
+Exploitation de vulnérabilité & $0{,}338$ & $[2{,}0\,;2{,}6]$ & $2{,}30$ & $0{,}7774$ & écart de conversion en intrusion entre exploitation et hameçonnage (ENISA) \\
+Chaîne d'approvisionnement & $0{,}158$ & $[1{,}9\,;2{,}6]$ & $2{,}25$ & $0{,}3555$ & surcoût et progression des brèches d'origine tierce (IBM, SecurityScorecard) \\
+Identifiants compromis & $0{,}063$ & $[3{,}0\,;8{,}0]$ & $5{,}50$ & $0{,}3465$ & réduction de compromission par l'authentification forte (Microsoft Research) \\
+Autres & $0{,}053$ & $[1{,}3\,;1{,}6]$ & $1{,}45$ & $0{,}0769$ & aucune source dédiée \\
+\midrule
+\multicolumn{4}{@{}l}{Multiplicateur agrégé, état non conforme} & $2{,}4875$ & $21{,}56\times 2{,}4875 = 53{,}62$ incidents par an \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Le multiplicateur est \emph{semi-ancré} et non calibré. Les parts sont une citation
+externe, et les bornes des fourchettes traduisent chacune un effet publié en multiplicateur
+prudent, sans estimation sur la donnée du projet : sa provenance est tracée, sa valeur est posée.
+Deux conséquences sont à garder. Aux bornes des fourchettes, le multiplicateur va de $1{,}933$ à
+$3{,}042$, soit une fréquence non conforme de $41{,}7$ à $65{,}6$ incidents par an. Et le vecteur
+des identifiants, qui ne compte que $6{,}3\,\%$ des incidents, porte $13{,}9\,\%$ du multiplicateur,
+sa fourchette étant la plus large.
+
+% SOURCES-SCRIPTS: 67 99 43
+
+
+\section{Les valeurs de \texorpdfstring{$g$}{g} sont posées, et la conclusion n'en dépend pas}
+\label{sec:invariance-g}
+
+Le gain de propagation $g$ est l'un des canaux par lesquels la conformité agit, et ses trois
+valeurs,
+\[
+  g = 0{,}45 \ \text{(conforme)}, \qquad 0{,}68 \ \text{(partiellement conforme)},
+  \qquad 0{,}90 \ \text{(non conforme)},
+\]
+sont posées. Elles ne sont calibrées sur aucune donnée, et pour une raison
+irréductible : aucune entité ne publie son état de conformité DORA, si bien qu'il
+n'existe aucun échantillon d'où tirer la correspondance état $\to g$. Un écart énoncé comme
+\og le capital passe de $116$ à $169$~M\euro\fg{} hérite donc entièrement de ces trois décimales.
+Ce qui s'établit sans elles tient en deux temps.
+
+\paragraph{Le lemme, qui n'allait pas de soi.} Le capital est croissant en $g$. Ce
+n'est pas une évidence : le chapitre~\ref{chap:resultats} établit qu'à indice de queue élevé la
+VaR annuelle est \emph{peu sensible} à la structure de cascade, par principe du grand
+saut unique, et peu sensible ne veut pas dire monotone. On le vérifie donc numériquement plutôt
+que de le supposer, sur une grille de vingt points et à nombres aléatoires communs, condition
+sans laquelle deux valeurs voisines de $g$ ne différeraient que par le bruit de tirage. Résultat :
+\emph{aucun pas décroissant} sur les vingt intervalles, et cela sur quatre grandeurs à la fois,
+le capital et la perte moyenne, à l'échelle d'entité comme à celle du secteur.
+
+\paragraph{L'invariance, qui en découle.} Si le capital est croissant en $g$, alors toute
+application état $\to g$ respectant l'ordre $g_C < g_{PC} < g_{NC}$ produit
+$\mathrm{SCR}_C < \mathrm{SCR}_{PC} < \mathrm{SCR}_{NC}$, \emph{quelles que soient les valeurs}.
+Or la charge forfaitaire de Formule Standard ne dépend pas de l'état. L'existence et le
+\emph{sens} de l'écart sont donc invariants à la calibration ; seule son amplitude
+est un scénario.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r r r r@{}}
+\toprule
+\textbf{Application état $\to g$} & \textbf{Conf.} & \textbf{Part.} & \textbf{Non conf.} &
+\textbf{Écart} & \textbf{Ordre} \\
+ & M\euro & M\euro & M\euro & & \\
+\midrule
+étroite $(0{,}70 / 0{,}80 / 0{,}90)$ & $145{,}5$ & $156{,}5$ & $169{,}0$ & $+16{,}2\,\%$ & oui \\
+\textbf{retenue} $(0{,}45 / 0{,}68 / 0{,}90)$ & $\mathbf{116{,}4}$ & $\mathbf{143{,}2}$ &
+$\mathbf{169{,}0}$ & $\mathbf{+45{,}2\,\%}$ & oui \\
+large $(0{,}20 / 0{,}55 / 0{,}90)$ & $94{,}4$ & $126{,}4$ & $169{,}0$ & $+79{,}1\,\%$ & oui \\
+conformité faible $(0{,}45 / 0{,}55 / 0{,}65)$ & $116{,}4$ & $126{,}4$ & $139{,}2$ &
+$+19{,}5\,\%$ & oui \\
+très étroite $(0{,}85 / 0{,}875 / 0{,}90)$ & $162{,}6$ & $166{,}7$ & $169{,}0$ & $+3{,}9\,\%$ &
+oui \\
+\midrule
+\emph{repère forfaitaire de Formule Standard} & $450$ & $450$ & $450$ & $0\,\%$ & \emph{plat} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+La dernière ligne du tableau est la plus instructive. Même en n'accordant à la conformité qu'un
+déplacement de $0{,}05$ sur $g$, soit une hypothèse presque nulle, l'écart de capital subsiste
+($+3{,}9\,\%$) quand le forfait reste exactement plat. La thèse du mémoire est cet écart de signe, non une
+valeur de $g$.
+
+\begin{cle}
+\textbf{Ce qui reste une hypothèse, et c'est tout ce qui reste.} La proposition
+\og se conformer à DORA réduit la propagation entre piliers\fg{}, soit $g_C < g_{NC}$. C'est
+une affirmation qualitative, discutable, et sur laquelle le règlement lui-même prend parti
+puisque ses cinq piliers sont des exigences de maîtrise. Elle est d'un autre ordre de solidité
+qu'un triplet de valeurs. Ce qui reste un scénario : l'amplitude, qui ne dépend que de
+l'écartement $g_{NC}-g_C$. L'élasticité d'arc du capital au gain vaut $0{,}41$ sur
+$g \in [0{,}20\,;0{,}95]$, de sorte qu'un lecteur qui préfère ses propres valeurs recalcule son
+écart sans relancer le modèle. Et pour que cet écart dépasse $10\,\%$, il suffit que la
+conformité fasse baisser $g$ de $0{,}90$ à $0{,}75$, soit un écartement de $0{,}15$ : l'exigence
+porte sur un ordre de grandeur, pas sur une mesure.
+\end{cle}
+
+Une conséquence de rédaction en découle, et elle est appliquée au
+chapitre~\ref{chap:resultats} : l'écart entre états n'y est pas présenté comme une mesure mais
+comme un \emph{scénario d'écartement}, et c'est l'invariance d'ordre qui est mise en avant,
+puisque c'est elle qui est établie (figure~\ref{fig:invariance-g}).
+
+\begin{figure}[htbp]
+\centering
+\figover{S23_invariance_conformite.png}
+\caption{La thèse ne dépend pas des valeurs de $g$, seulement de
+leur ordre. (a)~le lemme de monotonie sur vingt points de grille, à nombres aléatoires
+communs, avec les trois valeurs retenues situées sur la courbe et la charge forfaitaire qui,
+elle, ne dépend pas de l'état. (b)~cinq applications état $\to g$, de très étroite à
+large : l'ordre du capital est respecté par toutes, le forfait reste plat dans tous les cas.
+(c)~l'amplitude de l'écart en fonction du seul écartement $g_{NC}-g_C$, la valeur
+retenue étant marquée : c'est la seule grandeur qui soit un scénario.}
+\label{fig:invariance-g}
+\end{figure}
+% SOURCES-SCRIPTS: 66 67
+
+\section{L'état par pilier}
+
+L'apport central est de porter l'état par pilier : chaque pilier a sa propre latente
+$C^\star_j$, les cinq étant corrélées par le facteur systémique commun $\Theta$. C'est ce qui
+fait \emph{interagir} la conformité et la cascade : un pilier non conforme propage plus et
+détecte moins que ses voisins conformes. Les trois canaux deviennent indexés par pilier
+($\lambda_j$, $g_j$, $p_{u,j}$) et alimentent un moteur d'agrégation qui se réduit exactement à
+la version globale lorsque tous les piliers partagent un état (contrôle de cohérence). On en
+déduit la décomposition du surcoût de non-conformité par pilier, en basculant un pilier
+à la fois, dont les résultats sont au chapitre~\ref{chap:resultats}.
+
+\subsection{La dépendance entre états : structure portée et structure omise}
+\label{sec:dependance-etats}
+
+% SOURCES-SCRIPTS: 69 77 94
+
+Une objection métier se pose ici, et elle est juste : le
+recouvrement des dispositifs de contrôle fait qu'être conforme aux piliers~1 et~2 confère
+indirectement une conformité partielle au pilier~3, les mêmes preuves d'audit servant aux trois.
+Le modèle ne représente pas ce mécanisme ; ce qu'il porte déjà et ce que l'omission coûte se
+mesurent.
+
+\textbf{Ce qu'il porte déjà.} Les états ne sont pas indépendants : les cinq latentes partagent le
+facteur systémique avec une charge de $0{,}68$, soit une corrélation de $0{,}462$ entre deux
+piliers quelconques. Répondre à l'objection par \og{}la dépendance manque\fg{} serait donc faux.
+Ce qui manque est sa structure : la dépendance est \emph{échangeable}, identique pour
+toutes les paires, alors que le recouvrement des contrôles est propre à certains triplets.
+
+\textbf{Ce que l'omission coûte, et la réponse est nulle.} On ajoute un surcroît de corrélation
+$\delta$ aux deux seules paires concernées, par une matrice de corrélation dont la diagonale
+vaut un, ce qui préserve les marges \emph{par construction} et isole donc l'effet de structure.
+Le surcroît admissible va jusqu'à $\delta = 0{,}38$ avant que la matrice cesse d'être définie
+positive. Sur ce balayage, la loi des configurations bouge nettement : la probabilité que les
+cinq piliers soient non conformes passe de $0{,}068$ à $0{,}088$ et celle qu'ils soient tous
+conformes de $0{,}291$ à $0{,}330$. Le capital espéré, lui, ne bouge que de $2$~M\euro, soit
+$0{,}02\,\%$.
+
+\textbf{Et la raison n'est pas numérique, elle est structurelle.} Le capital des $32$
+configurations s'ajuste presque exactement par une forme \emph{additive} en indicateurs de
+pilier, $R^2 = 0{,}9945$, avec des contributions de $3\,524$ (P1), $2\,863$ (P4), $2\,022$ (P2),
+$1\,577$ (P3) et $897$~M\euro{} (P5) au-dessus d'un socle tous conformes. Or l'espérance d'une
+fonction additive ne dépend que des marges, jamais de la dépendance : les termes croisés
+sont le seul canal par lequel une structure pourrait agir, et il n'en reste presque rien.
+L'invariance ne tient donc pas à la valeur de $\delta$ retenue, elle vaut pour \emph{toute}
+structure de dépendance à marges fixées, y compris celles qu'on n'a pas essayées. C'est ce qui
+rend la conclusion solide alors qu'aucune donnée du projet ne calibre $\delta$. Le détail et la
+figure sont déportés \matcomp.
+
+Cette quasi-additivité est par ailleurs le même fait que l'interaction entre piliers déjà
+publiée, petite devant la somme des marginaux et de signe non résolu (\S\ref{sec:allocation}) :
+deux lectures d'un seul constat, et l'ordre des contributions additives reproduit celui des
+marginaux, $P1 > P4 > P2 > P3 > P5$.
+
+\paragraph{L'argument porte sur une espérance, et le capital est un quantile.} Il ne
+transporte ni au quantile de la loi de perte mélangée sur les configurations, ni au quantile de
+la loi des configurations elle-même. Sur le premier, l'invariance est seulement non détectée ;
+sur le second, l'effet est de quelques pour cent, porté par une polarisation des configurations
+extrêmes. Les deux calculs et leurs limites sont déportés \matcomp.
+
+\section{La chaîne de Markov et les séjours de type phase}
+
+À l'échelle lente, l'état de conformité suit une chaîne de Markov à temps continu
+$\text{NC}\to\text{PC}\to\text{C}$, l'état Conforme étant absorbant en cas de base
+(une fois conforme, on le reste ; la régression est un axe de sensibilité). Les séjours ne sont
+pas exponentiels mais de type phase (Erlang-$k$) : une exponentielle autoriserait une
+remédiation quasi instantanée (densité maximale en zéro), irréaliste, alors qu'un projet DORA a
+une durée minimale. L'Erlang-$k$, somme de $k$ exponentielles, a un mode strictement positif qui
+capte cette durée.
+
+\begin{attention}
+\textbf{Deux Erlang, deux objets sans rapport.} Le mot désigne ici la loi des \emph{durées de
+séjour} dans la chaîne de conformité, où $k$ est un choix de modélisation assumé. Il désigne
+ailleurs, au chapitre~\ref{chap:socle}, la loi \emph{mélangeante} de la fréquence, dont la
+forme ajustée vaut $0{,}63$ et n'est donc pas une Erlang, celle-ci exigeant une forme
+entière supérieure ou égale à un. Les deux usages n'ont ni le même support, ni le même statut :
+le premier est posé, le second est estimé et rejeté comme tel.
+\end{attention} On développe chaque macro-état transitoire en $k$ phases et l'on résout le
+générateur $Q$ sur l'espace de phases par exponentielle de matrice :
+\begin{equation}
+\big(\mathbb P(\text{NC},t),\mathbb P(\text{PC},t),\mathbb P(\text{C},t)\big)
+\;=\; \text{(sommes de phases de)}\;\; v_0\,\exp(Qt),
+\end{equation}
+où $v_0$ est la distribution initiale. À chaque horizon $t$, cette distribution pondère les
+besoins de capital par état du Vasicek multi-états :
+\begin{equation}
+\overline{\mathrm{SCR}}(t)\;=\;\sum_{e\in\{\text{NC,PC,C}\}}\mathbb P(e,t)\,\mathrm{SCR}_e .
+\end{equation}
+Cette grandeur est une \emph{moyenne de quantiles}, pondérée par la loi de l'état à l'horizon
+$t$. Ce n'est pas le quantile à $99{,}5\,\%$ de la perte d'une entité dont l'état est incertain,
+qui serait le quantile de la loi mélangée : la queue d'un mélange se prélève dans ses composantes
+les plus lourdes, et les deux objets ne coïncident pas. Sur le mélange des $32$ configurations de
+piliers, l'écart mesuré est de $9{,}3\,\%$ \matcomp. La
+trajectoire se lit donc comme l'espérance du besoin de capital sous l'incertitude d'état, qui est
+la convention retenue dans tout le mémoire.
+
+% SOURCES-SCRIPTS: 08b 77
+
+
+\section{Le couplage systémique et l'analogie de crédit}
+\label{sec:couplage}
+
+\begin{cle}
+\textbf{Un seul facteur couple les deux couches.} Le même facteur systémique $\Theta$ agit à la
+fois sur la couche lente et sur la couche rapide. Un environnement dégradé ($\Theta<0$) fait deux
+choses avec le \emph{même} tirage : il ralentit la remédiation, via des taux de
+transition $\mu(\Theta)=\mu_0\,e^{\beta_{\text{rem}}\Theta}$, et il durcit la cascade,
+via $\mathrm{SCR}_e(\Theta)=\mathrm{SCR}_e\,e^{-\beta_{\text{casc}}\Theta}$. Les deux poussent le
+capital dans le même sens : la corrélation entre conformité et sinistralité, qu'auraient perdue
+des couches indépendantes, est restaurée. La dispersion de $\Theta$ engendre la bande
+d'incertitude de la trajectoire.
+\end{cle}
+
+\noindent Cette architecture est celle, éprouvée, du risque de crédit à migration de
+rating : la chaîne de Markov joue le rôle de la migration d'un \og rating de conformité DORA\fg{}
+(la qualité change lentement, d'année en année), et le Vasicek multi-états celui du modèle de
+défaut conditionnel au rating (rapide, dans l'année, pour un rating donné). Transposer
+cette structure à deux étages au risque cyber n'est pas une invention fragile mais l'application
+d'un cadre reconnu, ce qui en fait un argument de robustesse et non un pari.
+
+Ce chapitre en donne la méthodologie complète ; les résultats chiffrés et les figures qui en
+découlent sont rassemblés au chapitre~\ref{chap:resultats}.
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 63
+

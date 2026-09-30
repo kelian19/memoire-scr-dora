@@ -1,0 +1,114 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage[margin=1.7cm]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+
+\definecolor{navy}{HTML}{1F3864}
+\definecolor{lightblue}{HTML}{D6E0F0}
+\definecolor{accent}{HTML}{C0491F}
+\definecolor{softgreen}{HTML}{E2EFDA}
+\definecolor{softred}{HTML}{FCE4D6}
+
+\newtcolorbox{cle}[1][]{colback=lightblue!45,colframe=navy,boxrule=0.6pt,
+  arc=2pt,left=7pt,right=7pt,top=5pt,bottom=5pt,#1}
+\newtcolorbox{oui}[1][]{colback=softgreen,colframe=softgreen!60!black,boxrule=0.5pt,
+  arc=2pt,left=7pt,right=7pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{non}[1][]{colback=softred,colframe=accent,boxrule=0.5pt,
+  arc=2pt,left=7pt,right=7pt,top=4pt,bottom=4pt,#1}
+
+\setlist[itemize]{leftmargin=1.3em,itemsep=1pt,topsep=2pt}
+\setlength{\parindent}{0pt}
+
+\title{\vspace{-1.4cm}\color{navy}\bfseries Antisèche d'animation -- séance d'élicitation de $W$\\[2pt]
+  \large À garder sous les yeux (~30 min, \textbf{un expert à la fois})}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.4cm}
+
+\begin{cle}
+\textbf{Le principe qui gouverne tout.} On mesure le \textbf{jugement} de l'expert, pas ses
+connaissances : il n'y a pas de bonne réponse. Le seul biais qui casse la méthode est
+l'\textbf{intervalle trop étroit} (excès de confiance). Ton rôle d'animateur : l'\textbf{élargir}
+en poussant sur les extrêmes, \textbf{jamais} en soufflant un chiffre.
+\end{cle}
+
+\vspace{4pt}
+\textbf{1. Préparer (2 min).}
+\begin{itemize}
+\item Un expert \textbf{seul}, sans les autres. Aucune discussion entre eux : sinon leurs
+      réponses se ressemblent et la pondération de Cooke perd tout son sens.
+\item Explique le format sur un exemple \emph{neutre, hors sujet} (ex.\ la hauteur d'un
+      immeuble connu) : basse 5\,\%, médiane 50\,\%, haute 95\,\%.
+\item Dis que la partie A a des réponses que \emph{tu} connais mais ne révéleras pas, et que
+      ça sert à le \textbf{pondérer}, pas à le piéger.
+\end{itemize}
+
+\textbf{2. L'ordre des trois nombres, pour chaque question (anti-ancrage).}
+\begin{itemize}
+\item D'abord la \textbf{HAUTE (95\,\%)} : \og une valeur assez haute pour que tu sois
+      surpris, disons 1 chance sur 20, que le vrai soit au-dessus \fg.
+\item Puis la \textbf{BASSE (5\,\%)} : pareil, en dessous.
+\item La \textbf{MÉDIANE (50\,\%) en DERNIER} : \og une valeur où le vrai a autant de chances
+      d'être au-dessus qu'en dessous \fg.
+\item \emph{Pourquoi} : demander la médiane d'abord ancre tout autour d'elle. Partir des
+      extrêmes \textbf{élargit} les intervalles, c'est exactement le but.
+\end{itemize}
+
+\vspace{2pt}
+\begin{oui}
+\textbf{Relances neutres (à utiliser).}
+\begin{itemize}[topsep=1pt]
+\item \og Qu'est-ce qui pourrait le faire monter \emph{bien} plus haut ? Et \emph{bien} plus
+      bas ? \fg{} (fait imaginer des scénarios extrêmes, casse l'ancrage).
+\item \og Serais-tu \emph{vraiment} surpris si le vrai tombait hors de ton intervalle ? \fg{}
+      (teste l'honnêteté de l'intervalle ; s'il hésite, élargis).
+\end{itemize}
+\end{oui}
+
+\begin{non}
+\textbf{À bannir absolument.}
+\begin{itemize}[topsep=1pt]
+\item Donner un chiffre, un ordre de grandeur, ou \og en général les gens disent\dots \fg.
+\item \textbf{Réagir} à une réponse : pas de \og ah oui \fg, pas de moue, pas de silence
+      appuyé. Le moindre signal l'ancre.
+\item Reformuler sa réponse avec une valeur (\og donc environ 50 ? \fg).
+\end{itemize}
+\end{non}
+
+\vspace{2pt}
+\textbf{3. Quand il bloque.} \og Je ne sais pas \fg{} n'est pas une case vide : demande un
+intervalle \textbf{large} (\og entre quoi et quoi es-tu à peu près sûr que ça tombe ? \fg).
+Un large intervalle honnête est une excellente réponse, pas un échec.
+
+\vspace{3pt}
+\textbf{4. Partie B (les liens entre piliers) -- le point le plus sensible.}
+\begin{itemize}
+\item Rappelle l'échelle à \emph{chaque} lien : $0$ = le pilier $k$ n'entraîne \emph{jamais}
+      $j$ ; $1$ = $k$ entraîne \emph{quasi-certainement} $j$.
+\item \textbf{Ne suggère jamais de direction} (\og on pense que la gouvernance domine \fg{} est
+      interdit). Laisse-le noter P1$\to$P2 et P2$\to$P1 \emph{séparément} :
+      \textbf{l'asymétrie qu'on cherche doit venir de lui, pas de toi.}
+\end{itemize}
+
+\vspace{3pt}
+\textbf{5. Logistique.} Note les trois nombres tout de suite, vérifie
+\textbf{basse $<$ médiane $<$ haute}. Environ $1{,}5$ min par question, 16 questions,
+${\sim}30$ min. Ne \og corrige \fg{} pas ses réponses après coup : elles sont la donnée.
+
+\vfill
+\begin{cle}
+\textbf{En une phrase.} Tu es un \emph{miroir neutre} : tu poses, tu relances vers les
+extrêmes, tu notes. Dès que tu donnes une info, une valeur ou une réaction, tu fabriques la
+réponse au lieu de la mesurer, et le poids de Cooke devient faux.
+\end{cle}
+
+\end{document}

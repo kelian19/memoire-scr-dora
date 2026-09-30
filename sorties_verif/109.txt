@@ -1,0 +1,29 @@
+
+========================================================================================
+109 - LA SURFACE CONJOINTE DU PLAFOND ET DE LA SATURATION
+========================================================================================
+  lu dans sorties_verif\86.txt : 2 grille(s), exposants [0.7, 0.85, 1.0, 1.15, 1.3].
+
+  Controles :
+    plafonds de la grille capital    : 5   (attendu 5)
+    plafonds de la grille interaction: 4   (attendu 4)
+    coin libre (aucun, theta = 1)    : 179.1   (attendu 179.1)
+    cases a signe contraire a 1-theta: 0   (attendu 0)
+    => controles passes, le script trace.
+
+  figure ecrite : exploratory\vasicek_lab\figures\S34_plafond_saturation_3d.png
+
+========================================================================================
+1. GRANDEURS CITEES PAR LE MEMOIRE (sans separateur de milliers)
+========================================================================================
+  VaR libre, plafond absent et theta = 1        : 179.1
+  capital minimal du rectangle                  : 47.9
+  capital maximal du rectangle                  : 225.7
+  interaction maximale en valeur absolue        : 46.6
+  capital a plafond 0,5 pourcent, les cinq theta : 96.2 96.2 96.2 96.2 96.2
+  etendue de cette ligne plate                  : 0.0
+  interaction le long de theta = 1              : 0.0 0.0 0.0 0.0
+
+========================================================================================
+FIN 109
+========================================================================================

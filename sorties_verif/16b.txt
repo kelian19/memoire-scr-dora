@@ -1,0 +1,44 @@
+﻿
+==========================================================================
+Coherence : configurations homogenes (tous piliers dans le meme etat)
+==========================================================================
+  Doit redonner l'ordre du script 16 (lecture C, les 3 canaux).
+
+  OPRISK :
+    tous C   -> SCR =     6085 M EUR
+    tous PC  -> SCR =     9457 M EUR
+    tous NC  -> SCR =    17012 M EUR
+
+  PRC :
+    tous C   -> SCR =     1654 M EUR
+    tous PC  -> SCR =     3135 M EUR
+    tous NC  -> SCR =     6611 M EUR
+
+==========================================================================
+Decomposition du Delta_DORA : basculer UN pilier de Conforme a Non conforme
+==========================================================================
+  Delta_k = SCR(pilier k seul NC, autres C) - SCR(tous C).  Graine MC commune.
+
+  OPRISK  (base tous C = 6085 M EUR)
+  pilier bascule en NC             SCR     Delta_k     part
+  P1 gouvernance                  9566        3481     37%
+  P4 tiers                        8743        2658     28%
+  P2 incidents                    7719        1634     17%
+  P3 tests                        7179        1094     11%
+  P5 partage                      6750         665      7%
+  -> pilier le plus couteux en non-conformite : P1 gouvernance
+  Delta total (tous NC vs tous C) = 10927 M ; somme des Delta_k = 9531 M
+  interaction (total - somme) = +1395 M (super-additif : les cascades interagissent).
+
+  PRC  (base tous C = 1654 M EUR)
+  pilier bascule en NC             SCR     Delta_k     part
+  P1 gouvernance                  3029        1375     34%
+  P4 tiers                        2729        1075     27%
+  P2 incidents                    2375         721     18%
+  P3 tests                        2226         571     14%
+  P5 partage                      1965         311      8%
+  -> pilier le plus couteux en non-conformite : P1 gouvernance
+  Delta total (tous NC vs tous C) = 4957 M ; somme des Delta_k = 4052 M
+  interaction (total - somme) = +905 M (super-additif : les cascades interagissent).
+
+figure ecrite : exploratory\vasicek_lab\figures\S11_decomp_par_pilier.png

@@ -1,0 +1,167 @@
+﻿
+========================================================================================
+1. Le treillis complet : seize configurations de canaux
+========================================================================================
+  Graines : 4 pour les valeurs (celles du script 43), 16 pour les ecarts-types.
+  40000 annees par graine, VaR 99,5 %.
+
+  configuration                SCR (M)   ecart a conforme  ordre
+  conforme                        6049                  0      0
+  freq                           10377               4328      1
+  det                             7497               1448      1
+  prop                            7682               1633      1
+  accum                           7777               1728      1
+  freq+det                       13565               7516      2
+  freq+prop                      13193               7144      2
+  det+prop                        9645               3596      2
+  freq+accum                     13772               7723      2
+  det+accum                       9799               3750      2
+  prop+accum                      9080               3031      2
+  freq+det+prop                  16786              10737      3
+  freq+det+accum                 17785              11736      3
+  freq+prop+accum                15626               9577      3
+  det+prop+accum                 11413               5364      3
+  freq+det+prop+accum            20188              14139      4
+
+  Reperes du script 43 : conforme 6049 M, non conforme 20188 M,
+  ecart total 14139 M, facteur 3.34.
+
+========================================================================================
+2. La table complete des leviers : trois lectures d'un meme canal
+========================================================================================
+  ISOLE      : depuis l'etat conforme, ce canal seul passe en non conforme.
+  FERMETURE  : depuis l'etat non conforme, ce canal seul revient a la cible.
+  SHAPLEY    : moyenne sur les 24 ordres d'entree ; la seule lecture qui SOMME au total.
+
+  canal                    isole      fermeture        Shapley       statut
+  frequence          4328 +-463     8775 +-1004    6546 +-457    calibrable
+  detection          1448 +-277     4562 +-819     2928 +-343    calibrable
+  propagation        1633 +-188     2402 +-442     2088 +-152         borne
+  accumulation       1728 +-210     3402 +-493     2576 +-222         borne
+  -----------------------------------------------------------------------
+  somme                     9138          19141          14139
+  ecart total              14139          14139          14139
+
+  LA COLONNE ISOLEE MANQUE 5001 M, soit 35 % de l'ecart : c'est le residu du
+  script 43. La colonne de FERMETURE, elle, depasse le total de +5002 M.
+  Rapport fermeture / isole : de 1.5 a 3.1 selon le canal.
+  CONSEQUENCE DE GESTION, ET C'EST LE POINT UTILE. Remedier un canal rapporte
+  DAVANTAGE a une entite deja defaillante partout qu'a une entite conforme, parce que
+  le canal ferme aussi les effets croises qu'il portait. Les deux lectures ne sont donc
+  pas deux estimations du meme nombre : ce sont deux questions differentes, et seule la
+  seconde correspond a une entite reelle en debut de remediation.
+  Shapley est la seule colonne qui somme au total, mais c'est une CONVENTION
+  d'attribution, pas une prevision de remediation : deux des quatre canaux sont bornes
+  et non calibres, donc leur part n'est pas un budget actionnable.
+
+========================================================================================
+3. Reconciliation exacte : la decomposition de Mobius, ordre par ordre
+========================================================================================
+  ordre                             termes     total (M)   part de l ecart
+  ordre 1 : effets principaux              4     9138 +-775             64.6 %
+  ordre 2 : croises de paires              6     5345 +-1363            37.8 %
+  ordre 3 : croises de triplets            4     -691 +-1351            -4.9 %
+  ordre 4 : croise des quatre              1      346 +-680              2.5 %
+  ------------------------------------------------------------------------
+  somme des quinze termes               15         14139           100.0 %
+  ecart total (non conforme - conforme)            14139
+
+  RESIDU DE RECONCILIATION = 0.00e+00 M, soit zero a la precision
+  machine. C'est une IDENTITE de Mobius, pas une verification statistique : ce qu'elle
+  atteste est que la table est COMPLETE, aucun euro de l'ecart n'etant hors des quinze
+  termes. Elle ne dit rien de la precision de chaque terme, qui est l'objet du point 5.
+
+  Et elle referme le residu du script 43 : les 5001 M
+  des ordres 2 a 4 sont exactement l'interaction que le 43 imprimait sans la decomposer.
+
+========================================================================================
+4. Les six effets croises d'ordre 2 : quelle paire porte l'interaction
+========================================================================================
+  paire de canaux                     croise (M)   part ordre 2   perte moyenne
+  frequence x detection              1739 +-708            33 %            28 %
+  frequence x accumulation           1666 +-354            31 %            32 %
+  frequence x propagation            1182 +-444            22 %            27 %
+  detection x accumulation            573 +-202            11 %            10 %
+  detection x propagation             515 +-247            10 %             8 %
+  propagation x accumulation         -330 +-242            -6 %            -5 %
+  -----------------------------------------------------------------------------
+  total ordre 2                             5345          100 %           100 %
+
+  LA PAIRE QUE LE CALL DEMANDAIT, frequence x accumulation P4 : +1666 +-354 M,
+  soit 31 % du total d'ordre 2 et 33 % de toute l'interaction.
+  MECANISME. Le choc commun de P4 fait tomber plusieurs piliers sur le MEME sinistre ; la
+  frequence multiplie le nombre de sinistres exposes a ce choc. A queue lourde le quantile
+  est porte par un sinistre unique : multiplier les tirages et epaissir chaque tirage ne
+  produit pas deux effets qui s'ajoutent mais un seul effet compose. C'est la definition
+  du croise, et c'est ce que la frequence fait avec CHACUN des trois autres canaux.
+
+  PAS DE PAIRE DOMINANTE, et il faut le dire. Les deux premieres se tiennent a 73 M
+  l'une de l'autre pour des ecarts-types de 708 et 354 M, et leur
+  ordre S'INVERSE en perte moyenne. Le classement des deux premieres n'est donc pas
+  resolu et n'a pas a l'etre. Ce qui l'est : les trois paires porteuses passent TOUTES
+  par la frequence, et elles font a elles seules 86 % de l'ordre 2.
+
+  LA SEULE PAIRE NEGATIVE, et c'est un resultat a part : propagation x accumulation,
+  -330 +-242 M, negative sur les 16 graines et sur
+  les deux metriques. Les deux canaux sont SUBSTITUTS et non complements : la cascade par
+  W et le choc commun de P4 sont deux facons de faire tomber plusieurs piliers sur un
+  meme sinistre. Le premier actif, il reste moins a gagner au second, un pilier deja
+  touche ne pouvant l'etre deux fois. La cascade est donc super-additive en general mais
+  SOUS-additive entre ses deux canaux de co-occurrence, ce qui borne ce qu'on peut
+  attribuer a la contagion prise en bloc : les deux canaux bornes ne s'empilent pas.
+
+========================================================================================
+5. Ce qui est resolu, et ce qui ne l'est pas
+========================================================================================
+  Un terme est dit RESOLU si son signe est le meme sur les 16 graines.
+  Resolus : 9 termes sur 15.
+
+  terme                         valeur (M)  ecart-type   graines > 0   resolu
+  freq                                4328         463        16/16      oui
+  freq+det                            1739         708        16/16      oui
+  accum                               1728         210        16/16      oui
+  freq+accum                          1666         354        16/16      oui
+  prop                                1633         188        16/16      oui
+  det                                 1448         277        16/16      oui
+  freq+prop                           1182         444        16/16      oui
+  freq+prop+accum                     -631         323         1/16      NON
+  det+accum                            573         202        16/16      oui
+  det+prop                             515         247        15/16      NON
+  freq+det+prop+accum                  346         680         5/16      NON
+  prop+accum                          -330         242         0/16      oui
+  freq+det+accum                       253         457        12/16      NON
+  det+prop+accum                      -204         338         8/16      NON
+  freq+det+prop                       -109         873         8/16      NON
+
+  L'INTERACTION TOTALE (ordres 2 a 4) = 5001 M, ecart-type 1167 M sur 16 graines,
+  positive sur 16/16 graines. Elle est donc RESOLUE en signe,
+  ce qui n'allait pas de soi : sur l'interaction entre PILIERS, a resolution comparable,
+  le script 20b trouve 4 graines positives sur 6 et conclut que le signe n'est pas
+  resolu. Ici il l'est, et la raison est de taille : l'interaction entre canaux vaut
+  35 % de son ecart quand celle entre piliers en vaut 13 %.
+
+  A NE PAS CITER SANS SON ECART-TYPE. Les termes d'ordre 3 et 4 sont des differences de
+  differences de differences : leur ecart-type approche leur valeur. Ils sont dans la
+  table parce que la reconciliation l'exige, pas parce qu'ils sont mesures.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. La table des leviers BOUCLE : quinze termes, somme = 14139 M a la
+     precision machine. Le +5 001 M du script 43 n'est plus un residu, il est reparti.
+  2. L'interaction vit AUX PAIRES : ordre 2 = 5345 M, ordres 3 et 4 reunis
+     -345 M, et aucun de ces cinq termes n'est resolu
+     individuellement : leur quasi-annulation ne doit pas se lire comme cinq mesures.
+     Le mecanisme est a DEUX canaux, pas diffus.
+  3. Les trois paires porteuses passent toutes par la FREQUENCE. Le classement des deux
+     premieres n'est pas resolu, et s'inverse d'une metrique a l'autre.
+  3bis. Une seule paire est negative, propagation x accumulation (-330 M),
+     resolue sur les 16 graines et les deux metriques : les deux canaux de co-occurrence
+     sont substituts. La cascade est super-additive en bloc, sous-additive entre ces deux.
+  4. Trois lectures d'un canal, non interchangeables : isole, fermeture, Shapley. La
+     fermeture est la seule qui reponde a la question d'une entite en remediation, et
+     elle est la plus grande des trois.
+  5. Le signe de l'interaction entre CANAUX est resolu ; celui entre PILIERS ne l'est
+     pas (script 20b). Deux objets distincts, a ne jamais additionner.
+
+figure ecrite : exploratory\vasicek_lab\figures\S24_interaction_canaux.png

@@ -1,0 +1,218 @@
+﻿
+========================================================================================
+1. Les sequences sont deja dans le corpus, il suffisait de composer les aretes
+========================================================================================
+  10 incidents, 22 transitions codees.
+  Chemins de longueur 2 obtenus par composition : 9, pour 4 sequences distinctes.
+
+  sequence                occurrences   incidents
+  P1 -> P3 -> P2                     4   Microsoft, TSB, Equifax, Knight
+  P1 -> P4 -> P2                     3   TSB, Log4Shell, Raphaels
+  P1 -> P5 -> P3                     1   Equifax
+  P5 -> P3 -> P2                     1   Equifax
+
+  4 incidents ne fournissent AUCUN chemin de longueur 2 : Capital, ION, MOVEit, CrowdStrike.
+  Soit ils ne codent qu'une arete, soit leurs aretes partent toutes du meme pilier.
+
+  Chemins de longueur 3 aretes : 1
+    P1 -> P5 -> P3 -> P2   (Equifax 2017)
+
+  Aucun chemin de longueur 4 aretes.
+
+========================================================================================
+2. La question posee ne peut pas etre tranchee, et la raison est structurelle
+========================================================================================
+  pilier               emissions  receptions   role dans le corpus
+  P1 gouvernance              11           0   SOURCE PURE
+  P2 reponse                   0          10   PUITS PUR
+  P3 detection                 5           6   intermediaire
+  P4 tiers                     5           5   intermediaire
+  P5 partage                   1           1   intermediaire
+
+  P2 n'emet JAMAIS : 0 emission sur 22 transitions.
+  P1 n'est JAMAIS cible : 0 reception sur 22.
+
+  Or les deux sequences que la question compare exigent toutes deux que P2 emette :
+    P1 -> P2 -> P3  demande l'arete P1->P2, jamais codee, puis P2->P3, jamais codee ;
+    P2 -> P3 -> P1  demande P2->P3, jamais codee, puis P3->P1, impossible P1 etant
+                    source pure.
+  Aucune des deux n'a le moindre support. La comparaison n'est donc pas indecise faute
+  de donnees, elle est SANS OBJET sur ce corpus : ce n'est pas un intervalle large, c'est
+  un ensemble vide. La reponse a donner est de corriger la question.
+
+  ET IL FAUT DISTINGUER DEUX RELATIONS QUE LE MOT « ordre » CONFOND. Le corpus code le
+  CONDITIONNEMENT DIRECT (le rapport etablit que j a precede ET conditionne k), pas la
+  PRECEDENCE (j est arrive avant k). La cloture transitive des aretes le montre :
+    aretes codees en direct        : 6  [(1, 3), (1, 4), (1, 5), (3, 2), (4, 2), (5, 3)]
+    ajoutees par transitivite      : 2  [(1, 2), (5, 2)]
+    la paire (P1,P2) est impliquee par 6 incidents et codee par aucun
+    la paire (P5,P2) est impliquee par 1 incident et codee par aucun
+  Donc P1 precede P2 sans jamais le conditionner DIRECTEMENT. Pour W c'est correct, W
+  etant un transfert direct ; mais lire p_jk comme une precedence serait faux, et le
+  p_12 = 0 du script 59 ne dit pas que P2 pourrait preceder P1.
+
+========================================================================================
+3. Le graphe agrege est acyclique, et ce n'est PAS surprenant
+========================================================================================
+  22 transitions se repartissent sur 6 paires distinctes :
+    {P1,P3}  multiplicite  5, toujours codee P1 -> P3
+    {P1,P4}  multiplicite  5, toujours codee P1 -> P4
+    {P1,P5}  multiplicite  1, toujours codee P1 -> P5
+    {P2,P3}  multiplicite  5, toujours codee P3 -> P2
+    {P2,P4}  multiplicite  5, toujours codee P4 -> P2
+    {P3,P5}  multiplicite  1, toujours codee P5 -> P3
+
+  Le graphe agrege est acyclique : True.
+  Ordre topologique : {P1} < {P4,P5} < {P3} < {P2}
+  La cloture transitive tranche 8 des 10 paires de piliers ; restent incomparables :
+    (P3,P4), (P4,P5)
+  L'ordre est donc PRESQUE total, et les deux paires libres sont exactement celles qui
+  n'ont jamais ete vues ensemble dans une meme chaine.
+
+  NUL PAR PAIRE (64 orientations equiprobables des 6 paires) :
+    42 sont acycliques, soit 65.6 %. L'acyclicite observee n'est donc
+    PAS un resultat : p = 0.66, on l'obtiendrait deux fois sur trois au hasard.
+    Un graphe de six aretes sur cinq sommets est trop peu contraint pour que son
+    acyclicite dise quoi que ce soit.
+
+  NUL PAR OBSERVATION (20000 tirages, chaque transition changeant de sens a 1/2) :
+    0.00 % sont acycliques. L'acyclicite paraitrait ecrasante, et c'est
+    trompeur : ce nul detruit la CONSTANCE du codage, une paire vue cinq fois pouvant
+    recevoir cinq directions differentes. Il mesure la fiabilite du codeur, pas
+    l'existence d'une direction. C'est le meme travers que l'indexation sur la valeur
+    dans le harnais : le nul doit porter sur l'objet, ici la relation, pas sur ses
+    occurrences.
+
+========================================================================================
+4. Le modele n'est PAS sans memoire sur les sequences, et c'est calculable
+========================================================================================
+  On lit souvent que la chaine des piliers est sans memoire, donc que les triplets
+  seraient redondants avec les paires. C'est faux pour CE modele, et pour une raison
+  qui n'est pas un detail : la cascade est AUTO-EVITANTE. Depuis k, la cible est tiree
+  dans TRANS[k]/s_k, et un pilier deja tombe eteint la propagation. Donc, conditionnellement
+  a ce que la cascade CONTINUE vers un pilier neuf, la loi du successeur est
+  TRANS[k][l] / (s_k - somme des TRANS[k] vers les piliers deja visites) : elle depend du
+  chemin parcouru, donc du predecesseur.
+
+  triplet               sans memoire  auto-evitant  gonflement
+  P1 -> P3 -> P2               0.3571        0.4545      1.273x
+  P1 -> P4 -> P2               0.4706        0.5333      1.133x
+  P1 -> P5 -> P3               0.2857        0.3333      1.167x
+  P5 -> P3 -> P2               0.3571        0.4545      1.273x
+
+  Gonflement moyen 1.211x, maximum 1.273x. Le modele
+  predit donc des sequences MESURABLEMENT differentes de ce qu'une chaine sans memoire
+  donnerait, et les triplets ne sont pas redondants : ils portent une prediction.
+
+  UNE PRECISION SUR CE CALCUL, ET ELLE VA DANS LE SENS FAVORABLE. Le gonflement est
+  calcule pour un chemin qui DEMARRE au premier pilier du triplet, donc avec deux piliers
+  seulement dans l'ensemble visite. Si le triplet est lui-meme precede, comme le
+  P5 -> P3 -> P2 d'Equifax qui suit un P1 -> P5, l'exclusion porte sur trois piliers et le
+  gonflement est plus grand. Les valeurs ci-dessus sont donc des BORNES BASSES de l'ecart
+  a l'absence de memoire.
+
+  LOI EXACTE DES SEQUENCES SOUS LE MODELE (g = 0.9, somme = 1.000000) :
+  sequence                  probabilite   rang
+  P4                            11.224 %      1
+  P2                             8.741 %      2
+  P3                             7.809 %      3
+  P5                             6.888 %      4
+  P1 -> P2                       4.615 %      5
+  P1 -> P3                       4.547 %      6
+  P4 -> P2                       4.415 %      7
+  P1 -> P4                       3.530 %      8
+  P1 -> P5                       3.324 %      9
+  P4 -> P5                       3.123 %     10
+
+  Les chemins de longueur 2 aretes pesent 18.29 % de la masse.
+  Classement du modele sur ces chemins, contre le comptage du corpus :
+  sequence                modele  rang mod.   corpus  rang corp.
+  P1->P3->P2               0.875%          6        4           1
+  P1->P4->P2               1.329%          3        3           2
+  P1->P5->P3               0.210%         29        1           3
+  P5->P3->P2               0.090%         44        1           4
+
+  CE RAPPROCHEMENT N'EST PAS UN TEST, ET IL NE FAUT PAS LE PRESENTER COMME TEL. La loi
+  du modele est INCONDITIONNELLE sur 60 chemins de longueur 2, alors que le corpus
+  n'est pas un echantillon tire au hasard : ce sont des post-mortems d'incidents notables,
+  choisis parce qu'ils ont fait l'objet d'un rapport. Le biais de selection est celui que
+  le script 64 mesure, et il interdit de lire les frequences du corpus comme des
+  probabilites. Ce qu'on peut dire est plus modeste : les deux sequences les plus
+  frequentes du corpus sont aux rangs 6 et 3 du modele sur 60, donc il n'y a pas de
+  contradiction criante, et rien de plus.
+
+========================================================================================
+5. Le test a une puissance NULLE, et pas faute d'echantillon
+========================================================================================
+  UN TEST DE DEPENDANCE AU PREDECESSEUR EXIGE DEUX CHOSES DU MEME PILIER : qu'il soit
+  ATTEINT, sans quoi il n'y a pas de predecesseur sur quoi conditionner, et qu'il ait au
+  moins DEUX successeurs distincts, sans quoi la loi conditionnelle egale la marginale
+  par construction. Voici les deux conditions, pilier par pilier.
+
+  pilier            atteint   emis  cibles   test possible ?
+  P1 gouvernance          0     11       3   non, jamais atteint   (P3:5, P4:5, P5:1)
+  P2 reponse             10      0       0   non, n'emet pas   (aucune)
+  P3 detection            6      5       1   non, loi degeneree   (P2:5)
+  P4 tiers                5      5       1   non, loi degeneree   (P2:5)
+  P5 partage              1      1       1   non, loi degeneree   (P3:1)
+
+  AUCUN PILIER NE REMPLIT LES DEUX CONDITIONS : 0 sur 5. Et les deux
+  manques sont exclusifs l'un de l'autre dans ce corpus, ce qui est plus net qu'une
+  simple penurie. P1 a bien trois successeurs distincts, donc une loi non degeneree,
+  mais il n'est JAMAIS atteint : il n'y a pas de predecesseur a conditionner. P3, P4 et
+  P5 sont atteints, mais leur loi de successeur est un POINT : depuis P3 tout va a P2,
+  depuis P4 tout va a P2, depuis P5 tout va a P3. La statistique du test est donc
+  identiquement nulle, et le test n'a pas une faible puissance, il n'en a AUCUNE.
+
+  CE N'EST PAS UN PROBLEME DE TAILLE D'ECHANTILLON, et c'est ce qui rend le diagnostic
+  utile plutot que decevant. Ajouter dix incidents du meme genre laisserait les lois
+  degenerees et le test sans prise. Le critere de reouverture est donc precis : il faut
+  un pilier a la fois ATTEINT et observe avec DEUX successeurs distincts, repete assez
+  souvent. C'est une condition sur la STRUCTURE du corpus, pas sur son volume.
+
+  ET ON PEUT CHIFFRER LE VOLUME QU'IL FAUDRAIT, une fois cette condition remplie. Pour
+  separer au seuil de 5 % avec 80 % de puissance la loi sans memoire de la loi
+  auto-evitante, sur les ecarts que le modele predit lui-meme a la section 4 :
+  triplet             sans mem.  auto-evit.  n requis
+  P1->P3->P2              0.357       0.455       158
+  P1->P4->P2              0.471       0.533       403
+  P1->P5->P3              0.286       0.333       589
+  P5->P3->P2              0.357       0.455       158
+
+  Il faudrait donc de 158 a 589 chemins passant par un MEME
+  pilier selon la sequence visee. Le corpus en fournit 9 au total, tous piliers
+  confondus, et zero sur un pilier qui remplirait les deux conditions. L'ecart est d'un
+  a deux ordres de grandeur, et il porte sur la structure du corpus avant son volume.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LES SEQUENCES ETAIENT DEJA LA, implicites dans les ensembles d'aretes : 9 chemins
+     de longueur 2 pour 4 sequences distinctes, plus une chaine de trois
+     aretes chez Equifax. Personne ne les avait composees.
+  2. LA QUESTION EST SANS OBJET SUR CE CORPUS, et il faut le dire ainsi : P2 n'emet
+     jamais (0/22) et P1 n'est jamais cible (0/22),
+     donc les deux sequences comparees ont un support vide. Ensemble vide, pas
+     intervalle large.
+  3. DEUX RELATIONS A NE PAS CONFONDRE : le corpus code le conditionnement DIRECT, non
+     la precedence. La cloture transitive ajoute deux paires, dont (P1,P2), impliquees
+     par plusieurs incidents et codees par aucun. p_12 = 0 est correct pour W, qui est un
+     transfert direct, et ne dit rien de l'ordre d'arrivee.
+  4. L'ACYCLICITE N'EST PAS UN RESULTAT : 66 % des orientations d'un tel graphe
+     sont acycliques, donc on l'obtiendrait deux fois sur trois au hasard. Le nul par
+     observation la rendrait ecrasante, mais il teste la constance du codeur et non
+     l'existence d'une direction : c'est le mauvais nul.
+  5. LE MODELE PREDIT LES TRIPLETS, il n'est pas sans memoire : l'auto-evitement gonfle
+     la loi du successeur de 1.21x en moyenne, et c'est une borne basse. Les triplets
+     ne sont donc PAS redondants avec les paires, contrairement a ce qu'on suppose
+     spontanement, et la loi exacte des sequences est publiee ici pour la premiere fois.
+  6. MAIS LE TEST N'A AUCUNE PUISSANCE, et la cause est structurelle : le test exige un
+     pilier a la fois ATTEINT et a DEUX successeurs, et les deux manques sont exclusifs
+     dans ce corpus. P1 a trois successeurs mais n'est jamais atteint ; P3, P4 et P5 sont
+     atteints mais n'ont qu'un successeur. Un corpus plus grand du meme genre n'y
+     changerait rien ; il faudrait de 158 a 589 chemins par un pilier qualifie.
+  7. DONC LES SEQUENCES NE RESSERRENT PAS LA BANDE D'IDENTIFICATION, et l'ignorance sur
+     la direction reste ce qu'elle est, graduee par le script 30. C'est un diagnostic
+     avec un critere de reouverture : un pilier a deux successeurs, repete.
+
+figure ecrite : exploratory\vasicek_lab\figures\S31_sequences_ordonnees.png

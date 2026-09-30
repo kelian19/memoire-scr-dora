@@ -1,0 +1,42 @@
+Registre charge : SYNTHETIQUE (gabarit de demonstration) --- 320 accords, 58 prestataires.
+
+==================================================================================
+K1 - Concentration par prestataire (fonctions critiques) -> ancre gamma
+==================================================================================
+  Fonctions critiques/importantes : 212 sur 58 prestataires.
+  Les 10 premiers prestataires portent 57 % des fonctions critiques (repere ECB : >30 %).
+  => lecture directe du parametre d'accumulation gamma (concentration reelle du livre).
+
+==================================================================================
+K2 - Largeur de co-declenchement : fonctions critiques par prestataire -> phi_cs
+==================================================================================
+  Un prestataire partage porte en moyenne 3.9 fonctions critiques ; le plus
+  concentre en porte 19. Sa defaillance emporte donc plusieurs fonctions d'un coup :
+  c'est la largeur du choc commun phi_cs, ici MESUREE et non plus bornee a l'aveugle.
+
+==================================================================================
+K3 - Substituabilite des fonctions critiques -> severite de l'accumulation
+==================================================================================
+  Parmi les fonctions critiques : 16 % non substituables, 54 % difficilement ou pas substituables.
+  => la part non substituable borne par le haut la severite de l'accumulation (un choc
+     sur un prestataire non substituable ne se resorbe pas par bascule).
+
+==================================================================================
+K4 - Profondeur de sous-traitance en chaine -> concentration cachee
+==================================================================================
+  29 % des accords passent par de la sous-traitance (rang >= 2), 6 % au rang >= 3.
+  => concentration CACHEE : deux prestataires directs distincts peuvent partager un meme
+     sous-traitant en aval, ce que seul le registre (B_05.02) revele.
+
+==================================================================================
+VERDICT (pipeline pret)
+==================================================================================
+  Le registre transforme les parametres P4 BORNES du modele en quantites MESUREES :
+    gamma      <- concentration top-10 = 57 % (K1)
+    phi_cs     <- 3.9 fonctions critiques par prestataire (K2)
+    severite   <- 54 % difficilement substituables (K3)
+    queue      <- 29 % de sous-traitance en chaine (K4)
+  Il suffit de definir la variable d'environnement DORA_REGISTER vers le fichier d'une entite
+  et d'ajuster la cartographie COLS ; tout le reste tourne a l'identique.
+
+figure ecrite : exploratory/vasicek_lab/figures/Z15_registre_dora_ingestion.png

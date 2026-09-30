@@ -1,0 +1,424 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\definecolor{navy}{HTML}{1F3864}
+\definecolor{bluemid}{HTML}{2E5496}
+\definecolor{lightblue}{HTML}{D6E0F0}
+\definecolor{accent}{HTML}{C0491F}
+
+\hypersetup{colorlinks=true, linkcolor=bluemid, urlcolor=bluemid,
+  pdftitle={Draft - Probabilites conditionnelles au sein d'un comptage N_ij},
+  pdfauthor={Kelian Kaddouri}}
+
+\newtcolorbox{cle}[1][]{colback=lightblue!40,colframe=navy,boxrule=0.6pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,before skip=9pt,after skip=9pt,#1}
+\newtcolorbox{attention}[1][]{colback=accent!8,colframe=accent,boxrule=0.6pt,
+  arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,before skip=9pt,after skip=9pt,#1}
+
+\titleformat{\section}{\normalfont\large\bfseries\color{navy}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.9ex plus .3ex minus .2ex}{1.0ex plus .2ex}
+\captionsetup{font=small,labelfont={bf,color=navy},labelsep=period,skip=6pt}
+
+\title{\vspace{-1.2cm}\color{navy}\bfseries Draft : probabilités conditionnelles au sein d'un comptage $N_{i,j}$\\[2pt]
+  \large De la cascade qualitative à la brique fréquence/sévérité d'un SCR}
+\author{Kélian Kaddouri}
+\date{\today}
+
+\begin{document}
+\maketitle
+\vspace{-0.5cm}
+
+\begin{cle}
+\textbf{But de ce draft (document de travail).} On note $N_{i,j}$ le \textbf{nombre d'incidents}
+observés dans la cellule (segment~$i$, pilier~$j$) : c'est une \textbf{fréquence}. L'objet
+d'étude est la loi \emph{conditionnelle} à ce comptage : \og{}sachant qu'il y a eu $N_{i,j}$
+incidents, comment chacun se propage-t-il à travers les piliers~?\fg{} La réponse est que la
+\textbf{cascade qualitative devient la loi conditionnelle de propagation}, et cette brique
+alimentera ensuite la sévérité, la perte agrégée, puis le SCR. Le SCR lui-même n'est pas traité
+ici : c'est l'étape d'après.
+\end{cle}
+
+\section{Le cadre : fréquence, puis sévérité}
+
+On décompose la perte d'une cellule en deux étages, comme tout \textbf{modèle collectif de
+risque}~\cite{Buhlmann1970,KlugmanPanjerWillmot,Mikosch2009}.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item \textbf{Fréquence} : $N_{i,j}$, le nombre d'incidents entrant par le pilier~$j$ dans le
+  segment~$i$ sur la période. C'est un comptage aléatoire. Pour le cyber, on le prendra
+  \emph{surdispersé} (un \textbf{Poisson mixte}~\cite{Grandell1997} plutôt qu'un Poisson simple :
+  un choc commun fait varier l'intensité, ce qui est le pendant fréquentiel du facteur
+  systémique et rejoint les modèles de contagion cyber~\cite{BessyRolandBoumezouedHillairet2021,HillairetLopez2021}).
+\item \textbf{Sévérité conditionnelle} : \emph{sachant} $N_{i,j}=n$, chacun des $n$ incidents
+  produit un dommage. C'est \textbf{ici} que vit \og{}au sein d'un même $N_{i,j}$\fg{} : la loi
+  des dommages \emph{conditionnelle au comptage}.
+\end{itemize}
+
+\begin{cle}
+\textbf{Le lien avec la cascade.} Un incident n'est pas un point : il \emph{se propage}. Entré
+par le pilier~$j$, il peut entraîner d'autres piliers. La \textbf{sévérité d'un incident est
+donc gouvernée par sa cascade}, et la cascade se décrit par des \textbf{probabilités
+conditionnelles} $\mathbb P(j' \mid j)$. C'est exactement l'objet que le modèle qualitatif
+fournit déjà, une fois traduit en probabilités.
+\end{cle}
+
+\section{La probabilité conditionnelle de propagation $\mathbb P(j' \mid j)$}
+
+On part de la matrice dirigée TRANS ($\text{TRANS}[j][j']$ = force \og{}$j$ entraîne $j'$\fg{}).
+Ce n'est pas encore une probabilité : les lignes ne somment pas à~1. On \textbf{normalise chaque
+ligne} par sa somme $s_j = \sum_{j'} \text{TRANS}[j][j']$ :
+\begin{equation}
+\boxed{\;\mathbb P(j' \mid j) \;=\; \frac{\text{TRANS}[j][j']}{s_j}\;,\qquad
+\sum_{j'\neq j} \mathbb P(j'\mid j) = 1.\;}
+\end{equation}
+C'est la probabilité que \textbf{le prochain pilier touché soit $j'$, sachant que $j$ vient de
+l'être}. Les $\mathbb P(j'\mid j)$ forment une \textbf{matrice de transition} : la cascade
+devient une \textbf{chaîne de Markov} sur les piliers~\cite{Norris1997}, dont la structure
+dirigée reprend les modèles de propagation d'influence~\cite{Pearl1988,Kempe2003}. L'asymétrie
+causale est \emph{préservée}.
+
+\begin{table}[h]\centering\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}c|ccccc|c@{}}
+\toprule
+$\mathbb P(j'\mid j)$ & $j'=$P1 & P2 & P3 & P4 & P5 & $s_j$ \\
+\midrule
+$j=$P1 & ---    & $0{,}308$ & $0{,}269$ & $0{,}269$ & $0{,}154$ & $2{,}60$ \\
+P2     & $0{,}133$ & ---    & $0{,}267$ & $0{,}200$ & $0{,}400$ & $1{,}50$ \\
+P3     & $0{,}214$ & $0{,}357$ & ---    & $0{,}214$ & $0{,}214$ & $1{,}40$ \\
+P4     & $0{,}118$ & $0{,}471$ & $0{,}176$ & ---    & $0{,}235$ & $1{,}70$ \\
+P5     & $0{,}143$ & $0{,}286$ & $0{,}286$ & $0{,}286$ & ---    & $0{,}70$ \\
+\bottomrule
+\end{tabular}
+\caption{Le noyau de propagation, chaque ligne normalisée à~1. Exemple d'asymétrie :
+$\mathbb P(\text{P2}\mid\text{P1})=0{,}31$ mais $\mathbb P(\text{P1}\mid\text{P2})=0{,}13$. La
+colonne $s_j$ retient la force d'émission de chaque pilier.}
+\end{table}
+
+\section{L'état d'arrêt : indispensable pour une sévérité finie}
+
+\begin{attention}
+\textbf{Sans arrêt, la cascade ne s'éteint jamais.} Si chaque pilier touché en entraîne toujours
+un autre (lignes sommant à~1), l'incident se propage sans fin et sa sévérité diverge. Il faut un
+\textbf{état d'arrêt} $\varnothing$ (un état \emph{absorbant}) pour que le nombre de piliers
+atteints soit fini, exactement la condition d'extinction d'un processus de
+branchement~\cite{AthreyaNey1972}.
+\end{attention}
+
+\noindent On introduit une \textbf{propension à propager} $e_j = g\cdot s_j / \max_k s_k$, avec un
+gain $g\in(0,1)$ (ici $g=0{,}9$, $\max_k s_k = s_1 = 2{,}60$), et l'on pose
+\begin{equation}
+\mathbb P(j' \mid j) = e_j \cdot \frac{\text{TRANS}[j][j']}{s_j},
+\qquad
+\mathbb P(\varnothing \mid j) = 1 - e_j.
+\end{equation}
+Un pilier qui émet peu éteint souvent la cascade : on garde \emph{où} \textbf{et} \emph{si} elle
+continue. Ce gain $g$ est le même objet que la normalisation de la partie quantitative du
+mémoire (il borne la propagation, comme un $R_0<1$).
+
+\begin{table}[h]\centering\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+pilier $j$ & P1 & P2 & P3 & P4 & P5 \\
+\midrule
+propension $e_j = 0{,}9\,s_j/2{,}60$ & $0{,}90$ & $0{,}52$ & $0{,}48$ & $0{,}59$ & $0{,}24$ \\
+$\mathbb P(\text{arrêt}\mid j) = 1-e_j$ & $0{,}10$ & $0{,}48$ & $0{,}52$ & $0{,}41$ & $\mathbf{0{,}76}$ \\
+\bottomrule
+\end{tabular}
+\caption{Avec l'état d'arrêt, P5 éteint la cascade dans $76\,\%$ des cas, P1 rarement : la force
+d'émission est restaurée, et toute cascade se termine presque sûrement.}
+\end{table}
+
+\noindent\textbf{Cascade auto-évitante.} Un pilier ne défaille qu'une fois. Si la propagation
+vise un pilier déjà touché, la cascade s'éteint (cette branche n'a plus de cible neuve). La
+probabilité d'arrêt effective croît donc à mesure que l'ensemble atteint grandit ; au premier
+pas, aucun autre pilier n'est encore touché et elle vaut exactement $1-e_j$ (le tableau ci-dessus).
+
+\section{Ce que \og{}au sein d'un même $N_{i,j}$\fg{} donne concrètement}
+
+Sachant $N_{i,j}=n$ incidents dans la cellule, \textbf{chacun} des $n$ incidents part du
+pilier~$j$ et réalise une cascade tirée du noyau ci-dessus. La probabilité d'un chemin est un
+produit de probabilités conditionnelles. Exemple, incident entré en P1 :
+\begin{align}
+\mathbb P(\text{extinction immédiate, P1 seule}) &= 1-e_1 = 0{,}10, \\
+\mathbb P(\text{propagation P1}\to\text{P2}) &= e_1\,\tfrac{\text{TRANS}[\text{P1}][\text{P2}]}{s_1} = 0{,}90\times\tfrac{0{,}80}{2{,}60} = 0{,}277 .
+\end{align}
+La \textbf{sévérité} de l'incident se déduit des piliers atteints, via GBASE
+($\text{P1}=6$, $\text{P2}=4$, $\text{P3}=3$, $\text{P4}=7$, $\text{P5}=1$) : \og{}P1 seule\fg{} coûte $6$ ; si la cascade atteint
+aussi P2, le coût devient $6+4=10$. La loi conditionnelle des sévérités est donc
+\emph{entièrement déterminée} par les probabilités conditionnelles de propagation.
+
+\noindent\textbf{Hypothèse de sévérité, à assumer.} On prend ici la sévérité \textbf{additive} :
+le coût d'une cascade est la somme des GBASE des piliers atteints. C'est une hypothèse de travail,
+pas une loi. GBASE est un score de gravité \emph{ordinal} (échelle AMDEC de 0 à 10), pas un
+montant, et la somme peut dépasser 10. À trancher : recaler GBASE en unité de perte en gardant
+l'additivité (avec éventuelle sur-gravité de cascade), ou adopter une règle non additive (le
+maximum, une agrégation concave). La brique de propagation ne dépend pas de ce choix.
+
+\begin{cle}
+\textbf{La perte de la cellule, et le pont vers le SCR.} La perte agrégée est une
+\textbf{somme composée}~\cite{Buhlmann1970,KlugmanPanjerWillmot} : sachant $N_{i,j}=n$, on somme
+les sévérités des $n$ cascades,
+\[
+S_{i,j} \;=\; \sum_{k=1}^{N_{i,j}} X_k, \qquad
+X_k = \text{sévérité de la cascade de l'incident } k .
+\]
+Les $X_k$ ont la loi conditionnelle décrite ici. \textbf{L'étape suivante} (pas ce draft) est
+la loi de $S_{i,j}$, puis l'agrégation sur les cellules et la VaR/TVaR à $99{,}5\,\%$ : le
+SCR~\cite{mcneil2015,SolvencyII2009}.
+\end{cle}
+
+\section{Sachant quels piliers ont fait défaut : la probabilité de l'ordre}
+
+\begin{cle}
+\textbf{La question.} On \emph{sait} que $m$ piliers donnés ont fait défaut, par exemple
+$S=\{\text{P1},\text{P2},\text{P3}\}$. On ne sait pas dans quel \textbf{ordre} la défaillance
+s'est propagée. On cherche la \textbf{probabilité conditionnelle de chaque ordre, sachant
+l'ensemble} $S$. Il y a $m!$ ordres possibles ($3!=6$ pour trois piliers), le nombre
+d'arrangements, qui suit la récurrence $m! = m\,(m-1)!$.
+\end{cle}
+
+\noindent\textbf{Changement de point de vue.} Dans les sections précédentes on était \emph{dans}
+une cellule $(i,j)$ : l'incident entre par $j$, la cascade démarre donc sur $j$ (fixé) et ROOT
+n'intervenait pas. Ici on ne fixe plus le pilier d'entrée ; on demande, parmi les défaillances
+observées, sur quel pilier la cascade a \emph{amorcé} et dans quel ordre elle s'est propagée.
+C'est ROOT qui gouverne alors l'amorce : $\pi(j)=\text{ROOT}[j]/\sum_k\text{ROOT}[k]$ est la
+probabilité qu'un incident amorce sur $j$, donc qu'il alimente la cellule d'entrée $j$. Les
+sections précédentes conditionnaient sur cette amorce ; celle-ci la rend aléatoire.
+
+À chaque ordre on associe un \textbf{poids}, égal à la probabilité de ce chemin dans le modèle :
+la propension à \emph{amorcer} sur le premier pilier (ROOT), multipliée par les forces
+d'enchaînement dirigées (TRANS) le long de la chaîne,
+\begin{equation}
+W(j_1 \to j_2 \to \dots \to j_m) \;=\; \text{ROOT}[j_1]\,\prod_{\ell=1}^{m-1}\text{TRANS}[j_\ell][j_{\ell+1}].
+\end{equation}
+La probabilité conditionnelle d'un ordre est son poids \textbf{divisé par la somme des poids de
+tous les ordres} du même ensemble (le conditionnement \og{}sachant que ce sont ces piliers\fg{}
+se lit dans le dénominateur, qui ne parcourt que les permutations de $S$) :
+\begin{equation}
+\boxed{\;\mathbb P\big(j_1 \to \dots \to j_m \;\big|\; \text{défaut de } S\big)
+\;=\; \frac{W(j_1 \to \dots \to j_m)}{\displaystyle\sum_{\sigma \in \mathfrak S(S)} W(\sigma)}\;.}
+\end{equation}
+
+\noindent\textbf{Exemple chiffré, $S=\{\text{P1},\text{P2},\text{P3}\}$.} Avec
+$\text{ROOT}=\{1{,}0\,;0{,}6\,;0{,}5\}$ pour (P1, P2, P3), le reste du système (P4, P5)
+portant le total des amorces à $\sum_k\text{ROOT}[k]=3{,}3$, et la matrice TRANS du modèle :
+
+\begin{table}[h]\centering\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Ordre & Poids $W$ (ROOT $\times$ TRANS $\times$ TRANS) & Poids & Probabilité \\
+\midrule
+\rowcolor{lightblue!40} P1 $\to$ P3 $\to$ P2 & $1{,}0 \times 0{,}70 \times 0{,}50$ & $0{,}350$ & $\mathbf{35{,}1\,\%}$ \\
+P1 $\to$ P2 $\to$ P3 & $1{,}0 \times 0{,}80 \times 0{,}40$ & $0{,}320$ & $32{,}1\,\%$ \\
+P3 $\to$ P1 $\to$ P2 & $0{,}5 \times 0{,}30 \times 0{,}80$ & $0{,}120$ & $12{,}0\,\%$ \\
+P2 $\to$ P1 $\to$ P3 & $0{,}6 \times 0{,}20 \times 0{,}70$ & $0{,}084$ & $8{,}4\,\%$ \\
+P2 $\to$ P3 $\to$ P1 & $0{,}6 \times 0{,}40 \times 0{,}30$ & $0{,}072$ & $7{,}2\,\%$ \\
+P3 $\to$ P2 $\to$ P1 & $0{,}5 \times 0{,}50 \times 0{,}20$ & $0{,}050$ & $5{,}0\,\%$ \\
+\midrule
+\multicolumn{2}{r}{somme des poids} & $0{,}996$ & $100\,\%$ \\
+\bottomrule
+\end{tabular}
+\caption{Probabilité conditionnelle de chaque ordre, sachant que P1, P2, P3 ont fait défaut,
+\emph{au niveau du score qualitatif} (poids ROOT $\times$ TRANS, sans l'état d'arrêt). On calcule
+les six poids, puis on divise par leur somme pour ramener le total à $100\,\%$. La version qui
+intègre l'état d'arrêt est donnée plus bas.}
+\end{table}
+
+\begin{cle}
+\textbf{Lecture.} Au niveau du score qualitatif, l'ordre le mieux classé est
+\textbf{P1 $\to$ P3 $\to$ P2} ($35{,}1\,\%$). Les deux ordres qui démarrent par P1 totalisent
+$67\,\%$ : c'est cohérent, P1 est le plus fort amorceur (ROOT $=1{,}0$) et le plus fort émetteur.
+On répond ainsi à la question \og{}dans quel ordre~?\fg{} : le modèle fournit la \textbf{loi de
+probabilité sur les ordres}, pas un ordre unique. Le modèle rigoureux ci-dessous, qui intègre
+l'extinction, affine ce classement.
+\end{cle}
+
+\medskip
+\noindent\textbf{La probabilité jointe : le scénario complet.} La loi ci-dessus répond à
+\og{}sachant l'ensemble, quel ordre\fg{}. On veut aussi la probabilité \emph{absolue} du scénario
+entier, sous l'hypothèse auto-évitante : \og{}la cascade amorce sur $j_1$, touche successivement
+$j_1,\dots,j_m$, puis s'éteint sans atteindre de pilier extérieur à $S$\fg{}. Sa probabilité est
+\begin{equation}
+\mathbb P_{\text{jointe}}(j_1\to\dots\to j_m)
+= \pi(j_1)\,\Big[\prod_{\ell=1}^{m-1}\mathbb P(j_{\ell+1}\mid j_\ell)\Big]\;t(j_m\mid S),
+\end{equation}
+avec $\pi(j_1)=\text{ROOT}[j_1]/\sum_k\text{ROOT}[k]$ la loi d'amorce ($\sum_k\text{ROOT}[k]=3{,}3$), la
+propagation $\mathbb P(j'\mid j)$ de la section~3, et
+\[
+t(j_m\mid S)\;=\;1 - e_{j_m}\,\frac{\sum_{j'\notin S}\text{TRANS}[j_m][j']}{s_{j_m}}\;.
+\]
+la probabilité de s'éteindre au dernier pilier \emph{sans sortir de $S$}. Elle dépend de
+l'ensemble : sortir vers un pilier hors de $S$ l'agrandirait, revenir sur un pilier déjà touché
+arrête la cascade. Détail pour P1$\to$P3$\to$P2, $S=\{$P1,P2,P3$\}$, extérieur $\{$P4,P5$\}$ :
+\[
+\underbrace{\tfrac{1{,}0}{3{,}3}}_{\pi(\text{P1})=0{,}303}\cdot
+\underbrace{0{,}90\tfrac{0{,}70}{2{,}60}}_{0{,}242}\cdot
+\underbrace{0{,}48\tfrac{0{,}50}{1{,}40}}_{0{,}173}\cdot
+\underbrace{(1-0{,}312)}_{t(\text{P2}\mid S)=0{,}688}
+\approx 0{,}875\,\% .
+\]
+
+\begin{table}[h]\centering\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Ordre & Probabilité jointe & Conditionnelle (rigoureuse) \\
+\midrule
+\rowcolor{lightblue!40} P1 $\to$ P2 $\to$ P3 & $0{,}921\,\%$ & $35{,}3\,\%$ \\
+P1 $\to$ P3 $\to$ P2 & $0{,}875\,\%$ & $33{,}5\,\%$ \\
+P3 $\to$ P1 $\to$ P2 & $0{,}300\,\%$ & $11{,}5\,\%$ \\
+P2 $\to$ P1 $\to$ P3 & $0{,}242\,\%$ & $9{,}3\,\%$ \\
+P2 $\to$ P3 $\to$ P1 & $0{,}162\,\%$ & $6{,}2\,\%$ \\
+P3 $\to$ P2 $\to$ P1 & $0{,}112\,\%$ & $4{,}3\,\%$ \\
+\midrule
+\textbf{total (défaut = exactement \{P1,P2,P3\})} & $\mathbf{2{,}61\,\%}$ & $100\,\%$ \\
+\bottomrule
+\end{tabular}
+\caption{Modèle \textbf{auto-évitant}. Probabilité jointe de chaque scénario complet (amorce,
+ordre, extinction sans sortir de l'ensemble) ; leur somme, $2{,}61\,\%$, est la probabilité que le
+défaut porte sur \emph{exactement} ces trois piliers (valeur confirmée par simulation). La
+dernière colonne, jointe renormalisée, est la probabilité conditionnelle de l'ordre sachant
+l'ensemble.}
+\end{table}
+
+\begin{attention}
+\textbf{Ce que l'auto-évitement change.} Pour que l'ensemble soit \emph{exactement}
+$\{$P1,P2,P3$\}$, la cascade doit s'éteindre au dernier pilier \textbf{sans s'échapper} vers P4
+ou P5. Or les piliers s'échappent inégalement : $t(\text{P3}\mid S)=0{,}79$ (P3 fuit peu vers
+P4/P5) contre $t(\text{P1}\mid S)=0{,}62$. Les ordres qui \emph{finissent} sur P3 sont donc
+favorisés, et l'ordre le plus probable devient \textbf{P1$\to$P2$\to$P3} ($35{,}3\,\%$), là où le
+score qualitatif sans arrêt plaçait P1$\to$P3$\to$P2 en tête. Tenir compte de l'extinction ne fait
+pas que repondérer : cela \emph{change l'ordre de tête}. C'est la version à retenir.
+\end{attention}
+
+\section{Le jour où l'on aura des données}
+
+Les scores TRANS jouent aujourd'hui le rôle des comptages. Le jour où un registre fournit les
+transitions observées, la probabilité conditionnelle s'estime \emph{de la même façon}, par le
+comptage normalisé, l'estimateur classique des transitions d'une chaîne de
+Markov~\cite{AndersonGoodman1957} :
+\[
+\widehat{\mathbb P}(j' \mid j) \;=\; \frac{N_{j,j'}}{N_{j,\cdot}}\;,\qquad N_{j,\cdot} = \sum_{k} N_{j,k}\;.
+\]
+La structure du modèle ne change pas ; seules les entrées deviennent empiriques.
+
+\begin{attention}
+\textbf{Questions ouvertes à trancher.}
+\begin{enumerate}[leftmargin=1.5em,itemsep=1pt,topsep=2pt]
+\item Loi de fréquence pour $N_{i,j}$ : Poisson, ou mixte Poisson / binomiale négative pour la
+  surdispersion cyber~?
+\item Garde-t-on l'état d'arrêt (sévérité finie) et le gain $g$, ou une autre borne de
+  propagation~?
+\item La sévérité par pilier : GBASE brut, ou la formule de gravité complète du modèle
+  qualitatif (étendue $+$ amplification)~?
+\item Dépendance entre cellules $N_{i,j}$ d'un même segment $i$ (le choc commun) : à modéliser
+  pour l'agrégation SCR.
+\end{enumerate}
+\end{attention}
+
+\section{Sources des notions mobilisées}
+
+Le draft assemble des briques actuarielles et probabilistes standard. Chaque notion et sa source :
+
+\begin{table}[h]\centering\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{6.6cm} p{6.6cm}@{}}
+\toprule
+\textbf{Notion} & \textbf{Source} \\
+\midrule
+Modèle collectif fréquence/sévérité & Bühlmann~(1970)~\cite{Buhlmann1970} ; Klugman, Panjer \& Willmot~\cite{KlugmanPanjerWillmot} ; Mikosch~(2009)~\cite{Mikosch2009} \\
+Somme composée $S=\sum_{k=1}^{N} X_k$ & Bühlmann~(1970)~\cite{Buhlmann1970} ; Klugman et coll.~\cite{KlugmanPanjerWillmot} \\
+Fréquence Poisson mixte (surdispersion) & Grandell~(1997)~\cite{Grandell1997} \\
+Choc commun / contagion fréquentielle cyber & Bessy-Roland et coll.~(2021)~\cite{BessyRolandBoumezouedHillairet2021} ; Hillairet \& Lopez~(2021)~\cite{HillairetLopez2021} \\
+Probabilité conditionnelle, chaîne de Markov & Norris~(1997)~\cite{Norris1997} \\
+Propagation dirigée (TRANS $\to$ transition) & Pearl~(1988)~\cite{Pearl1988} ; Kempe et coll.~(2003)~\cite{Kempe2003} \\
+État absorbant / extinction de cascade & Athreya \& Ney~(1972)~\cite{AthreyaNey1972} \\
+Estimation $\widehat{\mathbb P}(j'|j)=N_{j,j'}/N_{j,\cdot}$ & Anderson \& Goodman~(1957)~\cite{AndersonGoodman1957} \\
+VaR/TVaR à $99{,}5\,\%$, SCR, agrégation & McNeil, Frey \& Embrechts~(2015)~\cite{mcneil2015} ; Directive Solvabilité~II~\cite{SolvencyII2009} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{Buhlmann1970}
+Bühlmann, H.
+\emph{Mathematical Methods in Risk Theory}. Springer, 1970.
+
+\bibitem{KlugmanPanjerWillmot}
+Klugman, S.~A., Panjer, H.~H. et Willmot, G.~E.
+\emph{Loss Models: From Data to Decisions}. Wiley (éditions successives).
+
+\bibitem{Mikosch2009}
+Mikosch, T.
+\emph{Non-Life Insurance Mathematics: An Introduction with the Poisson Process}.
+2\ieme\ éd., Springer, 2009.
+
+\bibitem{Grandell1997}
+Grandell, J.
+\emph{Mixed Poisson Processes}. Chapman \& Hall, 1997.
+
+\bibitem{BessyRolandBoumezouedHillairet2021}
+Bessy-Roland, Y., Boumezoued, A. et Hillairet, C.
+\og Multivariate Hawkes process for cyber insurance\fg{}.
+\emph{Annals of Actuarial Science}, 15(1):14--39, 2021.
+
+\bibitem{HillairetLopez2021}
+Hillairet, C. et Lopez, O.
+\og Propagation of cyber incidents in an insurance portfolio\fg{}.
+\emph{Scandinavian Actuarial Journal}, 2021.
+
+\bibitem{Norris1997}
+Norris, J.~R.
+\emph{Markov Chains}. Cambridge University Press, 1997.
+
+\bibitem{Pearl1988}
+Pearl, J.
+\emph{Probabilistic Reasoning in Intelligent Systems: Networks of Plausible Inference}.
+Morgan Kaufmann, 1988.
+
+\bibitem{Kempe2003}
+Kempe, D., Kleinberg, J. et Tardos, {\'E}.
+\og Maximizing the Spread of Influence through a Social Network\fg{}.
+\emph{Proc. 9th ACM SIGKDD}, p.~137--146, 2003.
+
+\bibitem{AthreyaNey1972}
+Athreya, K.~B. et Ney, P.~E.
+\emph{Branching Processes}. Springer, 1972.
+
+\bibitem{AndersonGoodman1957}
+Anderson, T.~W. et Goodman, L.~A.
+\og Statistical Inference about Markov Chains\fg{}.
+\emph{The Annals of Mathematical Statistics}, 28(1):89--110, 1957.
+
+\bibitem{mcneil2015}
+McNeil, A.~J., Frey, R. et Embrechts, P.
+\emph{Quantitative Risk Management: Concepts, Techniques and Tools}.
+éd. révisée, Princeton University Press, 2015.
+
+\bibitem{SolvencyII2009}
+Parlement européen et Conseil de l'Union européenne.
+\emph{Directive 2009/138/CE (Solvabilité~II)}. 2009.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,43 @@
+Panel : 1200 entites x 70 periodes ; incidence moyenne 6.2%
+Charges vraies s_j = [0.35 0.55 0.45 0.6  0.3 ]
+Sigma_Y vraie (hors-diagonale) : [0.3 0.2 0.6 0.1 0.4 0.3 0.2 0.2 0.3 0.1]
+
+base_j vrai = -1.70 ; estime = [-1.714 -1.791 -1.711 -1.754 -1.746]
+
+--- Route A : effets fixes de periode (panel) ---
+  pilier   s vrai   s estime   corr(Y)
+      P1     0.35      0.384    +0.978
+      P2     0.55      0.502    +0.992
+      P3     0.45      0.469    +0.989
+      P4     0.60      0.660    +0.966
+      P5     0.30      0.304    +0.979
+  corr(Y) moyenne = +0.981
+  Sigma_Y : erreur absolue moyenne hors-diagonale = 0.095
+            correlation vrai/estime = 0.667
+
+--- Route B : Frobenius sur co-incidences (agrege) ---
+  pilier   s vrai   s estime   corr(Y)
+      P1     0.35      0.384    +0.978
+      P2     0.55      0.502    +0.992
+      P3     0.45      0.470    +0.989
+      P4     0.60      0.745    +0.906
+      P5     0.30      0.304    +0.980
+  corr(Y) moyenne = +0.969
+  Sigma_Y : erreur absolue moyenne hors-diagonale = 0.093
+            correlation vrai/estime = 0.673
+
+==========================================================================
+VERDICT
+==========================================================================
+  Route A (panel)  : corr(Y) = +0.981 | erreur Sigma_Y = 0.095
+  Route B (agrege) : corr(Y) = +0.969 | erreur Sigma_Y = 0.093
+
+  La route B n'utilise AUCUN identifiant d'entite : uniquement des comptages
+  agreges par pilier et par periode. Or c'est precisement ce que publient les
+  registres DORA, l'ENISA et les CERT.
+
+  => W exige un panel individuel horodate au mois (script 05 : introuvable).
+     Y, s_j et Sigma_Y s'obtiennent sur des donnees publiques AGREGEES.
+     Le verrou de la note est donc plus etroit qu'annonce.
+
+figure ecrite : exploratory/vasicek_lab/figures/N_facteur_systemique.png

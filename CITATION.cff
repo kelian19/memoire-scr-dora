@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ce travail, merci de le citer comme indiqué ci-dessous."
+title: "Quantification du SCR lié à la non-conformité au règlement DORA : une cascade dirigée entre les cinq piliers"
+type: software
+authors:
+  - family-names: Kaddouri
+    given-names: Kélian
+    affiliation: "ENSAE Paris ; Nexialog Consulting"
+repository-code: "https://github.com/kelian19/memoire-scr-dora"
+license: MIT
+version: 1.1.0
+date-released: "2026-09-30"
+keywords:
+  - risque cyber
+  - DORA
+  - Solvabilité II
+  - ORSA
+  - théorie des valeurs extrêmes
+  - cascade dirigée
+  - identification partielle
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22874524
+    description: "Matériel complémentaire du mémoire, sur Zenodo (DOI de concept, dernière version)"
+preferred-citation:
+  type: thesis
+  title: "Quantification du SCR lié à la non-conformité au règlement DORA : une cascade dirigée entre les cinq piliers"
+  authors:
+    - family-names: Kaddouri
+      given-names: Kélian
+  institution:
+    name: "ENSAE Paris"
+  thesis-type: "Mémoire d'actuariat"
+  year: 2026
+  url: "https://github.com/kelian19/memoire-scr-dora"

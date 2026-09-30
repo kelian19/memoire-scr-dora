@@ -1,0 +1,228 @@
+% ---------------------------------------------------------------------
+% STATUT : RÉDIGÉ (transplanté de exploratory/cascade_qualitative/
+%          chapitre_positionnement.tex, préambule retiré).
+% FAIT (août 2026) : (1) les références sont dans references.bib et rendues
+%          par \citep, avec \nocite en filet ; (2) le positionnement de
+%          l'identification partielle est ajouté ci-dessous.
+% ---------------------------------------------------------------------
+\chapter{État de l'art et positionnement}
+\label{ch:positionnement}
+
+% HARNAIS-HORS-SCRIPT: revue de litterature et positionnement : les nombres y comptent des references et des annees de publication, ils ne sortent d'aucun calcul du memoire.
+
+La modélisation actuarielle du risque cyber s'est construite en trois vagues, dont ce
+mémoire hérite les acquis tout en s'en démarquant sur un point. La première interroge
+l'assurabilité même du risque et la rareté des données \citep{BienerElingWirfs2015},
+et pose les marges par la théorie des valeurs extrêmes. La deuxième modélise la
+\emph{contagion}, mais entre entités d'un portefeuille, par des modèles de réseau ou
+épidémiologiques. La troisième saisit la dynamique temporelle des arrivées par des
+processus de Hawkes. Le présent travail emprunte à chacune ses marges empiriques et son
+cadre de risque extrême, et emprunte au risque de crédit deux outils structurels que la
+littérature cyber n'avait pas mobilisés ensemble : le processus de branchement
+multitype, qui décrit la propagation d'un incident entre piliers (chapitre~\ref{chap:cascade}),
+et les modèles multi-états de type migration de rating, qui font dépendre le
+capital de l'état de conformité (chapitre~\ref{chap:multietats}). Sa démarcation tient en un
+mécanisme que ces trois vagues laissent de côté.
+
+\begin{cle}
+\textbf{La contribution en une phrase.} Là où la littérature cyber actuarielle modélise soit
+la \emph{co-occurrence} (copules, chocs communs), soit la \emph{contagion entre entités}
+(réseaux, épidémiologie), soit la \emph{dynamique temporelle} (Hawkes), ce mémoire introduit
+une dépendance dirigée et à l'ordre entre les domaines de contrôle réglementaires
+(les piliers DORA) au sein d'une même entité, et la traduit en SCR. Sa signature est que
+la criticité dépend de l'ordre de la chaîne et non du seul ensemble des piliers
+touchés, ce qu'aucune des approches recensées ne peut reproduire.
+\end{cle}
+
+\section{Le mécanisme, et sa signature}
+
+La cascade dirigée pose une matrice $W$ de contagion entre piliers, où $W_{jk}$ mesure la
+propension d'une défaillance de $j$ à entraîner celle de $k$ (la ligne émet, la colonne
+reçoit). Trois propriétés la
+distinguent : elle est dirigée ($W_{jk}\neq W_{kj}$), elle autorise les
+\emph{cycles} (P1$\to$P2$\to\cdots\to$P1), stabilisés par la normalisation de Leontief
+($\rho(W)\le g<1$, forme réduite $(I-W)^{-1}$), et surtout elle est à l'ordre : la
+criticité d'une chaîne n'est pas une fonction de l'\emph{ensemble} des piliers touchés, elle
+dépend de l'\emph{ordre} dans lequel ils le sont. Sur les $26$ sous-ensembles de taille au
+moins deux, $22$ changent de criticité selon l'ordre, avec un écart atteignant $6$ points sur
+une échelle de $10$ (la chaîne P1$\to$P2 vaut $8$, la chaîne P2$\to$P1 vaut $2$). Or toute dépendance symétrique et tout score additif sont,
+par construction, invariants par permutation : aucun ne peut reproduire cela.
+
+\begin{cle}
+\textbf{Ce qui n'est \emph{pas} revendiqué.} Une propriété plus forte, la
+\emph{non-transitivité} de la dominance entre piliers, a été testée dans trois formulations
+et aucune ne se vérifie sur ce modèle : la revendication est retirée. Le détail des trois
+tests et leurs valeurs sont au chapitre~\ref{chap:cascade}. La dépendance à l'ordre, elle,
+se vérifie, et elle exclut les mêmes concurrents.
+\end{cle}
+
+\section{Positionnement : pourquoi le mécanisme est irréductible}
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}p{3.2cm} c c c c p{3.1cm} p{3.0cm}@{}}
+\toprule
+\textbf{Approche} & \textbf{Dir.} & \textbf{Ordre} & \textbf{Cycles} & \textbf{Propag.} &
+\textbf{Donnée requise} & \textbf{Objet modélisé} \\
+\midrule
+Matrices de risque / AMDEC & \non & \non & \non & \non & dires d'expert & risques listés (proba $\times$ gravité) \\
+Copule (Gumbel, gaussienne) & \non & \non & \non & \non & co-mouvement observé & briques de perte \\
+Réseau / épidémiologie (SIR) & \oui & \non & \oui & \oui & structure réseau $+$ taux d'infection & entités d'un portefeuille \\
+Hawkes (multivarié) & \oui & \non & \oui & \oui & horodatage fin des arrivées & types d'attaque, dans le temps \\
+Réseau bayésien & \oui & \non & \non & \oui & tables de proba conditionnelle & variables d'un graphe acyclique \\
+\cascell\textbf{Cascade dirigée (ici)} & \cascell\oui & \cascell\oui & \cascell\oui & \cascell\oui & \cascell jugement d'expert, puis bornes & \cascell\textbf{domaines de contrôle (piliers) d'une entité} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+Point par point :
+\begin{itemize}\itemsep2pt
+\item \textbf{Matrices de risque / AMDEC} (le standard praticien, RPN $=$ gravité $\times$
+      occurrence $\times$ détection) : listent et notent des risques mais n'ont \emph{aucune}
+      propagation ni direction. La cascade ajoute exactement la couche qui leur manque.
+\item \textbf{Copules} \citep{BohmeKataria2006, HerathHerath2011} : capturent la
+      dépendance de queue entre pertes, mais symétrique : elles ne distinguent pas
+      $k\to j$ de $j\to k$. Le benchmark du chapitre~\ref{chap:resultats} le chiffre : une copule ne peut pas
+      exprimer la propagation (interaction moyenne $+0$ par construction contre $+560$ M\euro{}
+      pour la cascade), et sa priorité de remédiation suit les \emph{réceptacles}, la cascade
+      les \emph{sources}.
+\item \textbf{Modèles réseau et épidémiologiques} \citep{HillairetLopez2021,
+      HillairetLopezDOultremontSpoorenberg2022, XuHua2017, Baldwin2017} : ils modélisent la
+      vraie contagion, mais entre
+      entités d'un portefeuille, et exigent la structure du réseau et des taux
+      d'infection, données indisponibles ici. Le mémoire \emph{emprunte} à Hillairet et Lopez la
+      logique d'états de conformité, mais l'applique entre piliers d'une entité,
+      pas entre assurés.
+\item \textbf{Hawkes} \citep{BessyRolandBoumezouedHillairet2021, BoumezouedCherkaouiHillairet2023} :
+      modélisent l'auto-excitation de la fréquence dans le temps,
+      entre \emph{types d'attaque}, pas la structure inter-piliers. Sur la fréquence d'entrée,
+      l'excitation est intra-journalière et exogène (chapitre~\ref{ch:robustesse}) : elle n'est
+      donc pas ajoutée, et ce constat rejoint leur raffinement two-phase de $2023$.
+\item \textbf{Réseaux bayésiens} : peuvent porter la direction, mais supposent un graphe
+      \emph{acyclique} (pas de cycle de contagion) et des tables de probabilités
+      conditionnelles qui se heurtent au même mur d'identification que $W$
+      (chapitre~\ref{ch:identifiabilite}). La forme de Leontief, elle, gère les cycles.
+\end{itemize}
+
+\section{Revue de littérature, par thème}
+
+\textbf{Dépendance et accumulation.} La modélisation actuarielle du cyber a d'abord traité la
+\emph{corrélation} entre risques par copules \citep{BohmeKataria2006, HerathHerath2011}
+et par chocs communs. Ces approches capturent l'accumulation, que la donnée employée ici
+confirme par une concentration journalière de Gini de $0{,}69$, mais restent symétriques.
+
+\textbf{Contagion structurée.} Une seconde vague introduit la propagation : \citet{HillairetLopez2021}
+couplent des processus de comptage à un modèle épidémiologique compartimental (type
+SIR) pour la contagion dans un portefeuille ; \citet{HillairetLopezDOultremontSpoorenberg2022}
+ajoutent une structure de réseau ; \citet{XuHua2017} et \citet{Baldwin2017}
+modélisent la contagion entre cibles. Toutes exigent la donnée de réseau ou d'infection.
+
+\textbf{Dynamique temporelle.} La fréquence auto-excitée est traitée par les processus de
+Hawkes : \citet{BessyRolandBoumezouedHillairet2021} sur données PRC, dont la source
+employée ici dérive, puis \citet{BoumezouedCherkaouiHillairet2023} avec un terme exogène ;
+\citet{HillairetReveillacRosenbaum2021} en développent la théorie pour le pricing de
+dérivés ; \citet{Peng2016} sur des taux d'attaque horodatés. Le présent travail se situe dans cette
+lignée mais en \emph{sort} sur la fréquence d'entrée, pour les raisons données au
+chapitre~\ref{ch:robustesse}.
+
+\textbf{Fréquence, sévérité, queue.} Sur les marges, \citet{Edwards2016} ajustent des lois
+discrètes (binomiale négative) au nombre journalier de brèches ; \citet{LuZhangZhu2024}
+séparent fréquence et nombre de brèches par événement, structure de paquet qui soutient le
+Poisson composé retenu ici ; \citet{FarkasLopezThomas2021} tarifent par arbres de régression
+GPD. La lourdeur de la queue des pertes cyber est établie de longue date
+\citep{MaillartSornette2010, wheatley2016}, et \citet{elingloperfido2017} confrontent plusieurs
+familles de lois sur les brèches de données. \citet{elingwirfs2019} étudient les pertes cyber sur
+la base SAS OpRisk Global employée ici, par une approche de valeurs extrêmes, ce qui en fait le
+précédent le plus proche de la brique de sévérité de ce mémoire. Le mémoire en retient la théorie
+des valeurs extrêmes (indice de queue $\xi$) et la structure de paquet.
+
+\textbf{Un mémoire d'actuariat sur les mêmes sources.} \citet{Ranguin2024} modélise le risque
+cyber des entreprises françaises pour la Caisse Centrale de Réassurance, à partir de bases
+d'incidents proches de celles du présent travail (PRC, VCDB, Hackmageddon) et de l'étude LUCY :
+sévérité construite à partir du volume de données compromises par arbres de régression GPD, dans
+la lignée de \citet{FarkasLopezThomas2021}, sinistralité annuelle simulée sur un portefeuille
+fictif d'entreprises françaises, attritionnels compris, puis reparamétrage des lois sur les
+observations du marché français dans un cadre bayésien. Ce travail décrit la sinistralité d'un
+portefeuille assuré et ne produit pas de mesure de capital à un quantile réglementaire. Le
+présent mémoire porte sur un autre objet, le besoin de capital d'une entité financière selon son
+état de conformité, et il s'en distingue sur deux choix : la sévérité est calibrée sur une base de
+pertes opérationnelles exprimées en montants, et la dépendance entre domaines de contrôle est
+modélisée en plus des lois marginales des sinistres.
+
+\textbf{La sévérité lue dans le texte des incidents.} Sur la base PRC, dont provient la source de
+sévérité alternative du présent travail, \citet{KherLopezRapior2023} estiment la gravité d'un
+incident à partir de sa seule description textuelle par réseaux de neurones, et
+\citet{Dountio2026} prolonge cette démarche par des architectures séquentielles, des règles
+expertes et un enrichissement de la classe rare par des rapports synthétiques. Ces travaux
+classent la sévérité d'un incident, mesurée en volume de dossiers compromis ; le présent mémoire
+n'en reprend pas l'objet et porte sur la charge de capital annuelle.
+
+\textbf{Cadre structurel.} Le squelette quantitatif emprunte au modèle à facteur de
+\citet{Vasicek2002} (risque de crédit) l'idée d'un stress latent à composante systémique, et
+à l'analyse entrées-sorties de \citet{Leontief1936} la normalisation qui garantit la
+stabilité d'une contagion
+\emph{avec cycles}. La nouveauté est de faire porter cette mécanique par une matrice
+\emph{dirigée} entre domaines de contrôle réglementaires.
+
+\textbf{Identification partielle.} Le traitement réservé au paramètre non identifiable relève
+d'une littérature économétrique distincte de la littérature cyber, celle des \emph{bornes} : on
+renonce à identifier un paramètre ponctuellement et l'on caractérise l'ensemble des valeurs
+compatibles avec les données, dont on déduit un intervalle pour la quantité d'intérêt. Cette
+tradition, initiée par les bornes de sélection de \citet{Manski1990}, exposée dans
+\citet{Manski1995} et systématisée par \citet{Tamer2010}, est courante en évaluation de politiques publiques et pratiquement absente
+de l'actuariat du cyber, où l'usage veut qu'un paramètre non observable soit \emph{posé} au
+jugement d'expert. Le mémoire l'y transpose : la direction de la contagion n'étant pas
+identifiée (chapitre~\ref{ch:identifiabilite}), le capital est publié en bornes sur l'ensemble
+admissible (chapitre~\ref{chap:partielle}), et l'échelle de repli sur $u_{ij}$ y ajoute la
+gradation d'hypothèses de structure qui manque aux bornes de pire cas. C'est le second emprunt
+méthodologique du travail, après celui du risque de crédit.
+
+\paragraph{Un précédent récent, sur un autre péril, et ce qu'il autorise à dire.} Un préprint de
+2026 propose un réseau de cascade pour le risque climatique de catastrophe
+\citep{ccrn2026}. Sa parenté avec le présent travail est \emph{indépendante} : ni le péril,
+ni les données, ni les auteurs ne sont communs. La structure y est la même, un graphe dirigé de propagation entre n\oe uds, avec une
+séparation explicite des indices de temps, et trois de ses expériences répliquent des résultats
+obtenus ici, ce que les chapitres correspondants signalent au passage.
+
+\begin{attention}
+\textbf{Une réserve de lecture qui vaut pour toutes les citations de ce travail.} Ce préprint est
+\emph{entièrement synthétique} et le dit lui-même : ses paramètres ne sont pas estimés sur
+données, et ses auteurs mettent en garde contre toute lecture de leurs valeurs comme des
+grandeurs calibrées. Aucun de leurs chiffres ne sert donc de repère empirique ici, et
+aucun n'est repris. Ce qui est emprunté est \emph{architectural} : une séparation d'échelles, un
+protocole de comparaison, une expérience d'ablation, un positionnement de méthode et une forme
+fonctionnelle. Confondre les deux usages serait exactement l'erreur que ce mémoire reproche
+ailleurs à la lecture des sources externes.
+\end{attention}
+
+\section{Où se situe ce mémoire}
+
+Le mémoire emprunte ce qui est établi et ancré sur données (la queue de sévérité par
+EVT, la structure de paquet de la fréquence, la logique d'états de conformité de Hillairet et
+Lopez) et ajoute deux choses absentes de la littérature : (i)~une dépendance
+\emph{dirigée et à l'ordre} entre les piliers DORA, traduite en
+capital ; (ii)~une frontière d'identifiabilité explicite, muée en spécification de
+reporting. Aucune des références recensées ne modélise une dépendance dirigée entre domaines
+de contrôle au sein d'une entité, ni ne la relie au SCR.
+
+\begin{cle}
+\textbf{L'étendue exacte de la nouveauté.} Le mémoire n'introduit ni loi de sévérité ni
+processus de fréquence nouveaux : sur ces marges, il s'appuie sur la littérature établie et la
+calibre. La contribution est le mécanisme de dépendance lui-même, dirigé et à l'ordre entre
+piliers réglementaires, que ni les copules, symétriques, ni les modèles de réseau, qui exigent
+une donnée absente, ni les processus de Hawkes, qui vivent dans le temps, ne capturent. Il est
+traduit en capital, et sa limite d'identification est démontrée. La nouveauté est donc étroite
+et située : neuve sur le mécanisme, sobre sur le reste, déclarée sur les limites.
+\end{cle}
+
+% Les références de ce chapitre sont dans references.bib et rendues par la bibliographie
+% de fin. Le \nocite garantit l'apparition de celles qui ne seraient pas déjà \citep dans
+% le corps (filet de sécurité).
+\nocite{BohmeKataria2006, HerathHerath2011, HillairetLopez2021,
+  HillairetLopezDOultremontSpoorenberg2022, XuHua2017, Baldwin2017,
+  BessyRolandBoumezouedHillairet2021, BoumezouedCherkaouiHillairet2023,
+  HillairetReveillacRosenbaum2021, Peng2016, Edwards2016, LuZhangZhu2024,
+  FarkasLopezThomas2021, Vasicek2002, Leontief1936}
+
+% =====================================================================

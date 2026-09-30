@@ -1,0 +1,42 @@
+
+==========================================================================
+Pertes par etat de conformite (severite OpRisk, canaux freq+prop+detec)
+==========================================================================
+  Conforme                   perte moyenne    626.9 M | SCR (VaR 99,5%) =    5984.7 M
+  Partiellement conforme     perte moyenne   1318.4 M | SCR (VaR 99,5%) =    9662.5 M
+  Non conforme               perte moyenne   3061.3 M | SCR (VaR 99,5%) =   17151.4 M
+
+==========================================================================
+SCR_DORA en distribution de melange (normal vs crise systemique)
+==========================================================================
+  part de temps Non-conforme  : normal 35%  crise 96%  (bascule DORA)
+
+  SCR par etat            : C 5985  PC 9662  NC 17151 M
+  moyenne ponderee des VaR (naif) : 11180 M
+  SCR_DORA (melange, normal)      : 12596 M  (+13 % vs naif)
+  SCR_DORA (melange, crise)       : 16919 M  (x1.34 vs normal)
+
+  Lecture : le melange n'est pas la moyenne des VaR. Sa queue 99,5 % est portee
+  par l'etat Non-conforme ; une crise systemique y bascule la masse et epaissit
+  encore la queue. Le SCR_DORA integre donc l'incertitude de conformite.
+
+==========================================================================
+Delta_DORA(NC vs C) en distribution : bootstrap 2 niveaux, CRN
+==========================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  severite de queue : reechantillonnage des exces reels OpRisk
+  Delta_DORA(NC vs C) : mediane 10909 M€  |  IC90 [4301 ; 60980] M€
+  surcout de capital relatif median : x2.87 (NC / C, calage central)
+
+==========================================================================
+VERDICT
+==========================================================================
+1. SCR_DORA est bien une DISTRIBUTION, pas un point : le melange sur les etats de
+   conformite en donne le 99,5 % = 12596 M (normal), 16919 M (crise).
+2. Il ne se lit PAS comme la moyenne des VaR par etat : la queue est portee par
+   le Non-conforme, et le facteur systemique correle les bascules (effet DORA).
+3. Delta_DORA(NC vs C) est une distribution large : le surcout de non-conformite
+   vaut 10909 M€ en median mais l'IC90 va de 4301 a 60980 M€. A
+   presenter comme une fourchette, jamais comme un point.
+
+figure ecrite : exploratory/vasicek_lab/figures/T_scr_dora_distribution.png

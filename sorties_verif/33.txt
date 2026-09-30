@@ -1,0 +1,75 @@
+﻿  A. référence         lambda=  21.56/an  xi=0.5954  865674 incidents  ->  socle    5275 M, bornes [   6858 ;    8697] M
+  B. sévérité PRC      lambda=  21.56/an  xi=1.0328  865674 incidents  ->  socle     239 M, bornes [    336 ;     424] M
+  C. fréquence x3      lambda=  64.69/an  xi=0.5954  2598571 incidents  ->  socle   11709 M, bornes [  14353 ;   17405] M
+
+================================================================================
+1. Les grandeurs ABSOLUES : elles se deplacent fortement
+================================================================================
+  configuration            socle   borne basse   borne haute    expert
+  A. référence             5275 M         6858 M         8697 M     8110 M
+  B. sévérité PRC           239 M          336 M          424 M      400 M
+  C. fréquence x3         11709 M        14353 M        17405 M    16245 M
+
+  Amplitude du socle       : facteur 48.89 entre configurations
+  Amplitude de la borne haute : facteur 41.03
+
+  LES DEUX FACTEURS QUE LE RESUME CITE, tires du meme tableau :
+    severite SEULE, sur le socle        : facteur 22.03   (A / B)
+    severite SEULE, sur la borne haute  : facteur 20.50
+    en ajoutant l'echelle de frequence  : facteur 41.03   (C / B, borne haute)
+    idem sur le socle                   : facteur 48.89
+    Le resume arrondit le premier a 22 et le troisieme a 41. Les deux autres sont
+    imprimes pour que le choix de la grandeur de reference soit visible : selon qu'on
+    lit le socle ou la borne haute, l'amplitude n'est pas la meme, et annoncer un
+    facteur sans dire sur quoi il porte serait un raccourci.
+
+  Le NIVEAU depend donc massivement de la source de severite et de la frequence,
+  qui sont precisement les deux briques les moins transposables (pertes
+  americaines de grandes institutions, perimetre de collecte). Presenter ce
+  niveau comme une mesure serait indefendable.
+
+================================================================================
+2. Les grandeurs RELATIVES : sont-elles stables ?
+================================================================================
+  configuration          basse/socle   haute/socle   largeur/socle   % fixe sans élic.
+  A. référence                1.300x        1.649x          34.9 %              78.9 %
+  B. sévérité PRC             1.404x        1.771x          36.8 %              79.2 %
+  C. fréquence x3             1.226x        1.487x          26.1 %              82.5 %
+
+  borne basse / socle      varie de 0.178 sur les trois configurations (soit 13.6 % de sa valeur moyenne)
+  borne haute / socle      varie de 0.285 sur les trois configurations (soit 17.4 % de sa valeur moyenne)
+  largeur / socle          varie de 0.107 sur les trois configurations (soit 32.9 % de sa valeur moyenne)
+
+  Le moins stable est "largeur / socle" (32.9 %). Il faut le
+  dire : ce rapport diminue quand la frequence augmente, ce qui est attendu, la
+  queue annuelle etant alors moins dominee par une perte unique et donc moins
+  sensible a la structure de cascade. La stabilite du relatif n'est pas parfaite.
+  En revanche la part du capital fixee sans elicitation est tres stable : 78.9 a 82.5 %.
+
+================================================================================
+3. La DECISION : le classement de priorite bouge-t-il ?
+================================================================================
+  configuration              P1       P2       P3       P4       P5
+  A. référence              42%      17%       6%      35%       0%
+  B. sévérité PRC           40%      27%       5%      28%       0%
+  C. fréquence x3           47%      16%       5%      32%       0%
+
+  Groupe de tete identique dans les trois configurations : OUI (P1, P4)
+
+================================================================================
+4. Verdict
+================================================================================
+  Le NIVEAU bouge d'un facteur 41.0 quand on change la loi de
+  severite ou la frequence, c'est-a-dire quand on change ce que le memoire ne
+  maitrise pas (perimetre de collecte des pertes, plafond de reassurance).
+  Les RAPPORTS varient d'au plus 33 % de leur valeur moyenne,
+  soit un ordre de grandeur 31 fois plus
+  faible que le niveau, et le groupe de tete de la priorite est INCHANGE.
+
+  CONCLUSION, a ecrire telle quelle dans le memoire : le niveau absolu du SCR
+  est ILLUSTRATIF et ne doit pas etre lu comme une mesure. Ce que le modele
+  determine, et qui resiste au changement de source, c'est le RAPPORT du
+  capital au socle, la largeur de la bande d'ignorance, et le classement des
+  piliers. Ce n'est pas une precaution de langage, c'est un resultat verifie.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z4_relatif_vs_absolu.png

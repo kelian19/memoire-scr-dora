@@ -1,0 +1,133 @@
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+% Un \chapter* ne met pas le titre courant a jour : sans cette ligne, la seconde page du
+% resume portait << Remerciements >> en tete.
+\markboth{Résumé}{}
+
+% LONGUEUR CONTRAINTE PAR LE § 5.1.c DES RECOMMANDATIONS JURY : 150 A 250 MOTS, pour le
+% resume francais comme pour l'abstract anglais, ces deux textes servant a l'indexation sur
+% le site de l'Institut. Mesure du 23 septembre 2026 AVANT resserrage : 322 et 305 mots sur
+% le PDF, soit +29 % et +22 %. Ce qui a ete retire est du DETAIL, jamais un resultat ni une
+% reserve : le compte des sources qui echouent et le champ VERIS rempli une fois sur 10 591,
+% et le mecanisme de la decroissance de la charge avec la taille. Tous trois vivent dans la
+% note de synthese et dans l'executive summary, qui n'ont AUCUNE limite de longueur.
+% NE PAS REGROSSIR CES DEUX BLOCS : recompter sur le PDF apres toute retouche.
+% REECRITS LE 30 SEPTEMBRE 2026, 247 et 239 mots : la bande dite hors des deux etats, le
+% chiffre d'entite en majorant, la seule dependance gouvernance-incidents, le groupe de tete
+% des piliers, les deux canaux a bornes posees, et trois antitheses retirees. L'abstract
+% passe en romain, comme le resume francais.
+Ce mémoire quantifie le coût en capital d'un défaut de conformité au règlement DORA
+(UE~2022/2554) pour un assureur exposé au risque cyber. La dépendance entre les cinq piliers y
+est portée par une cascade dirigée plutôt que par une copule, et sa normalisation de Leontief en
+garantit la stabilité ; l'état de conformité pilote le capital par une couche multi-états
+markovienne.
+
+La contribution centrale n'est pas de \emph{mesurer} cette contagion mais d'en établir la
+\emph{frontière d'identifiabilité} : sur données publiques agrégées, la \emph{direction} de la
+propagation n'est pas identifiable alors que sa \emph{co-occurrence} l'est. Le mémoire borne donc
+le capital sur les $1\,024$ sommets admissibles : entre $6\,858$ et $8\,697$~M\euro{}, dans une
+configuration distincte des deux états ci-dessous. Cette largeur de $1\,839$~M\euro{} est le coût
+de l'ignorance, connu d'avance.
+
+Sur les quatre canaux que la conformité déplace, dont deux reposent sur des bornes posées, le
+besoin de capital sectoriel passe de $6\,049$ à $20\,188$~M\euro, soit un facteur $3{,}34$. C'est
+un besoin au sens de l'ORSA, faute de module DORA en Formule Standard. À l'échelle d'une entité
+notionnelle, entre $131{,}5$ et $183{,}3$~M\euro{} : un majorant d'ordre de grandeur, le niveau
+absolu variant d'un facteur $41$ selon la loi de sévérité et la fréquence. Résistent le rapport au
+socle et le groupe de tête des piliers.
+
+La limite devient un livrable : un registre mieux spécifié resserrerait la bande de $66\,\%$, et
+documenter la seule dépendance gouvernance-incidents en lèverait $28{,}9\,\%$.
+
+\paragraph{Mots-clés.} Risque cyber ; DORA ; SCR ; Solvabilité II ; théorie des valeurs
+extrêmes ; cascade dirigée ; identification partielle ; bornes de capital ; inférence
+bayésienne ; valeur de l'information.
+
+% LE PARAGRAPHE D'USAGE DE L'IA SUIT LE RESUME FRANCAIS, ET NON L'ABSTRACT.
+% Le referentiel de l'Institut le veut << a la fin du resume et distinct de ce
+% dernier >>, ce qui designe le resume lui-meme et non sa traduction. Et la
+% place n'est pas neutre : pose apres l'Abstract, il faisait une TROISIEME page
+% de liminaires, donc 200 pages pour un document que Kelian veut sous 200.
+% =====================================================================
+% USAGE DE L'IA GENERATIVE. EXIGE par le § 5.1.c des Recommandations Jury de
+% l'Institut des actuaires (1er avril 2026) : << En complement et a la fin du
+% resume et distinct de ce dernier, quelques phrases concises mentionneront
+% l'usage effectue de l'intelligence artificielle generative tant au cours des
+% travaux que dans la redaction du memoire. >> Le § 4.5 precise que tout
+% manquement a la transparence conduit a l'ajournement sans autre motivation.
+%
+% KELIAN : A RELIRE ET A AJUSTER AVANT LE DEPOT. Ce paragraphe decrit l'usage
+% tel que le depot en porte la trace. Si le perimetre reel est plus large ou
+% plus etroit, c'est ce paragraphe et l'annexe d'inventaire qui doivent bouger, pas le
+% principe : le referentiel demande une transparence TOTALE, et une declaration
+% incomplete est traitee comme une absence de declaration.
+%
+% AUCUN CHIFFRE ICI A DESSEIN : un nombre pose dans ce bloc irait chercher sa
+% confirmation dans les scripts cites en bas de fichier, qui ne le portent pas.
+% Les comptes du dispositif de verification vivent dans l'annexe, qui se declare
+% hors script pour ce motif.
+% =====================================================================
+\bigskip
+\noindent\textbf{Usage de l'intelligence artificielle générative.} Ce mémoire a été rédigé avec
+l'appui ponctuel d'outils d'IA générative, utilisés comme assistance à la rédaction et à la reformulation du
+manuscrit, à l'écriture des scripts d'analyse et à la vérification du texte, sous le contrôle
+permanent de l'auteur. L'ensemble des analyses, choix méthodologiques et interprétations des
+résultats relèvent exclusivement de l'auteur, et aucun résultat chiffré n'est produit par
+l'assistant : tout nombre publié provient de l'exécution d'un script du dépôt. L'annexe~\ref{ann:ia}
+détaille cet usage ainsi que les mesures prises pour en contrôler la validité.
+
+% << ABSTRACT >> EST UN TITRE, ET NON UNE AMORCE EN GRAS. La liste de controle
+% de l'ecole l'exige nommement : << le titre de votre resume francais est
+% Resume et le titre de votre resume en anglais est Abstract >>. Il portait
+% jusqu'au 28 septembre 2026 un simple  \textbf{Abstract.}  en tete de
+% paragraphe, qui n'est pas un titre et n'apparaissait pas au sommaire.
+%
+% ET LA PAGE NEUVE NE COUTE RIEN. La meme liste demande un resume d'UNE page au
+% plus dans chaque langue : le francais et l'anglais tenaient sur la meme page,
+% donc l'anglais aurait debordé sur la suivante des qu'on lui pose un titre. Les
+% deux blocs occupent desormais une page chacun, et le document n'en gagne
+% aucune, le paragraphe d'usage de l'IA occupant deja seul la seconde.
+% \chapter* ET NON \section* : le titre de l'abstract doit avoir le meme
+% rang que celui du resume francais, la liste de controle les citant cote a
+% cote. Un \chapter* ouvre sa page lui-meme, d'ou l'absence de \newpage.
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\markboth{Abstract}{}
+
+\begin{otherlanguage*}{english}
+This thesis quantifies the capital cost of DORA non-compliance (EU~2022/2554) for a
+cyber-exposed insurer. Dependence across the five DORA pillars is carried by a directed cascade
+rather than a copula, and its Leontief normalisation guarantees stability. The firm's compliance
+state drives capital through a Markov multi-state layer.
+
+The central contribution is not to \emph{measure} this contagion but to establish its
+\emph{identifiability boundary}: from aggregated public data the \emph{direction} of propagation
+is not identifiable, whereas its \emph{co-occurrence} is. The thesis therefore bounds capital over
+the $1\,024$ admissible vertices: between $6\,858$ and $8\,697$~M\euro{}, in a configuration
+distinct from the two states below. That width of $1\,839$~M\euro{} is the cost of not knowing,
+known in advance.
+
+Across the four channels that compliance shifts, two of which rest on assumed bounds,
+sector-level capital need rises from $6\,049$ to $20\,188$~M\euro, a factor of $3.34$. This is an
+ORSA-type need, since the Standard Formula has no DORA module. At the scale of a notional entity,
+between $131.5$ and $183.3$~M\euro{}: an order-of-magnitude upper bound, the absolute level moving
+by a factor of $41$ with the severity distribution and frequency. What holds is the ratio to the
+baseline and the leading group of pillars.
+
+The limitation becomes a deliverable: a better-specified incident register would narrow the band
+by $66\,\%$, and documenting the governance-incident dependency alone would remove $28.9\,\%$ of
+the ambiguity.
+\end{otherlanguage*}
+
+% =====================================================================
+% SOMMAIRE AU NIVEAU DES SECTIONS, et non des sous-sections. Mesure du
+% 22 septembre 2026 : en listant les sous-sections il occupait SIX pages, sur un
+% document que Kelian veut imperativement sous 200. Rien n'est retire du
+% memoire, seule la profondeur du sommaire change ; les sous-sections gardent
+% leur numero et leur titre dans le corps.
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 28 39 33 43 68 92 66 89 91 100 30 55 65

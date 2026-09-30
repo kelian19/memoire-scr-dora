@@ -1,0 +1,34 @@
+﻿
+==========================================================================
+Cascade dirigee : SCR conforme vs non conforme
+==========================================================================
+  SCR cascade  C = 6085 M   NC = 17012 M   Delta = 10927 M  (+180 %)
+
+==========================================================================
+LDA-copule gaussienne (marges par etat, dependance calee sur la cascade)
+==========================================================================
+  SCR copule   C = 5114 M   NC = 11873 M   Delta = 6760 M  (+132 %)
+  la propagation (g : 0,45 -> 0,90) n'a aucun parametre de marge : Delta sous-estime.
+
+==========================================================================
+Formule Standard (risque operationnel, art. 204)
+==========================================================================
+  SCR_op = min(0,3 x BSCR ; 0,03 x max(primes, provisions)).
+  Aucun terme ne depend du profil cyber ni de la conformite DORA :
+  SCR_op(conforme) = SCR_op(non conforme). Reponse a DORA = 0, par construction.
+
+==========================================================================
+SYNTHESE : fraction de l'effet DORA que chaque cadre sait exprimer
+==========================================================================
+  cadre                    Delta capital C->NC   part de l effet cascade
+  Formule Standard                         0 M                       0 %
+  LDA-copule                            6760 M                      62 %
+  Cascade dirigee                      10927 M         100 % (reference)
+
+  Verdict phase 4 : la Formule Standard est structurellement AVEUGLE a la
+  conformite (facteur sur le volume) ; la copule en voit une partie (frequence,
+  detection) mais rate la propagation ; seule la cascade exprime l'effet complet.
+  La valeur du modele se mesure donc en effet DORA rendu visible, pas en un ecart
+  de SCR a interpreter dans l'absolu.
+
+figure ecrite : exploratory\vasicek_lab\figures\W_benchmark_sf.png

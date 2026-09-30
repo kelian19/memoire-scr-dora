@@ -1,0 +1,34 @@
+﻿
+====================================================================================
+1. Dispositif de fiabilite inter-juges
+====================================================================================
+  Unites de codage : 10 incidents x 10 paires = 100 cellules.
+  Codage de reference (KK, script 53) : 22 cellules directionnelles, 78 'abs'.
+  Modalites : k>j | j>k | co | abs
+  Dossier attendu pour les codages : notes\codage
+  Ecrit : codage_KK.csv (reference) et gabarit_second_codeur.csv (a remplir).
+  Le gabarit porte les etiquettes ANONYMES (Recit 1 a Recit 10), correspondant aux recits
+  numerotes du kit. Le codeur ne voit donc aucun nom d'entreprise, ni dans le kit ni
+  dans le fichier qu'il remplit : c'est la condition de l'aveuglement.
+
+====================================================================================
+2. Second codage : present ou non ?
+====================================================================================
+  AUCUN second codage trouve. Ce script NE FABRIQUE PAS de donnees : il s'arrete ici.
+
+  Mode d'emploi :
+    1. Transmettre `notes/kit_codage_aveugle.pdf` au second codeur (Hugo, ou un
+       praticien hors du projet). Le kit ne contient AUCUNE de mes fleches : seulement
+       les faits documentes par les rapports officiels, et la grille a remplir.
+       Il n'y manipule AUCUN code : il ecrit le NOM du domaine qui a lache en premier
+       (Gouvernance, Incidents, Tests, Prestataires, Partage), ou bien 'en meme temps',
+       'non concerne', 'je ne sais pas'. La conversion est faite par ce script.
+    2. Il remplit `gabarit_second_codeur.csv` et le renomme `codage_<INITIALES>.csv`
+       dans notes\codage.
+    3. Relancer ce script : il calculera l'accord brut, le kappa de Cohen, et
+       l'accord sur les seules decisions directionnelles.
+
+  Interpretation prevue : un kappa >= 0,60 (substantiel) leverait la principale
+  reserve du script 53 (codeur unique) ; un kappa faible signifierait que la
+  direction que je lis dans ces rapports n'est PAS intersubjective, ce qui serait
+  un resultat en soi (et devrait alors etre publie tel quel).

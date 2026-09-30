@@ -1,0 +1,518 @@
+% =====================================================================================
+% ANNEXE AJOUTEE LE 12 AOUT 2026, a la demande de Caroline Hillairet, qui a salue
+% l'initiative de pallier le manque de donnees par un recueil d'avis d'experts et demande de
+% mettre la methode de Cooke et le questionnaire en annexe.
+%
+% LE SENS DE L'ANNEXE A CHANGE DEUX FOIS. D'abord avec la decision de ne pas lancer
+% l'elicitation, qui en faisait un protocole PREPARE ET NON EXECUTE. Puis le 23 septembre 2026,
+% Kelian ayant precise que le questionnaire a ETE DIFFUSE : formulaire en ligne et questionnaire
+% PDF adresses a une commission de l'Institut des Actuaires et a des praticiens du cabinet,
+% AUCUNE REPONSE de l'Institut, aucun panel constitue. L'annexe rapporte donc une DEMARCHE et son
+% issue, et non un choix. Ce qui ne change pas : l'argument chiffre du script 31 reste, et il est
+% presente comme ETABLI AVANT le constat, ce qu'il etait.
+%
+% LES DESTINATAIRES NE SONT PAS NOMMES DANS LE MEMOIRE, meme regle que pour les repondants du
+% formulaire de relecture. Nommer des personnes qui n'ont pas repondu, dans un document mis en
+% ligne par l'Institut, serait deplace. Leurs noms vivent dans REPRISE.md, pas ici.
+%
+% ATTENTION AU PIEGE DU HARNAIS, ET IL A ETE RENCONTRE ICI. Une declaration
+% HARNAIS-HORS-SCRIPT posee AVANT la premiere \section couvre tout le fichier : la premiere
+% version de cette annexe declarait ainsi ses onze nombres d'un coup, dont les huit qui sont
+% parfaitement verifiables. La declaration est donc descendue dans la seule section qui la
+% justifie, et les autres citent leurs scripts.
+% =====================================================================================
+
+\chapter{Le protocole d'élicitation, diffusé et resté sans réponse}
+\label{ch:elicitation}
+
+% SOURCES-SCRIPTS: 31 34 59
+
+La direction de la matrice de contagion n'est pas identifiable sur la donnée disponible
+(chapitre~\ref{ch:identifiabilite}). Le recours au jugement d'expert formalisé est la réponse
+classique à ce genre d'impasse, et un protocole complet a été construit pour cela, puis diffusé.
+Aucun panel n'a pu être constitué. Cette annexe existe pour que la démarche entière soit
+lisible : le protocole y est décrit, ce qui a été produit et adressé y est dit, et ce que
+l'absence de panel coûte y est chiffré. La conclusion, elle, ne dépend pas de cette absence, et
+c'est le dernier point qui la porte.
+
+\section{La méthode de Cooke, en quatre temps}
+
+% HARNAIS-HORS-SCRIPT: les quantiles demandes a l'expert sont une propriete de CONCEPTION du
+% questionnaire, non une grandeur calculee : aucun script ne les imprime et aucun ne le devrait.
+
+Le \emph{modèle classique} de Cooke ne traite pas les experts comme interchangeables : il les
+\emph{note}, sur des questions dont l'analyste connaît la réponse, puis pondère leurs avis par
+cette note. Il se déroule en quatre temps.
+
+\begin{enumerate}[itemsep=3pt,topsep=3pt]
+\item \textbf{Élicitation en quantiles.} Chaque expert ne donne pas un point mais trois
+      quantiles, à $5$, $50$ et $95\,\%$, ce qui rend son incertitude déclarée mesurable.
+\item \textbf{Calibration.} Sur les \emph{questions-graines}, dont la réponse est connue de
+      l'analyste et masquée à l'expert, on compare la fréquence empirique des réalisations dans
+      les intervalles déclarés à la fréquence théorique. L'écart se lit comme une statistique
+      d'information de Kullback-Leibler, et son niveau de signification devient le
+      score de calibration.
+\item \textbf{Information.} Un expert bien calibré mais qui déclare des intervalles très larges
+      n'apporte rien. Le score d'information mesure la concentration de ses
+      distributions relativement à une loi de référence.
+\item \textbf{Poids et agrégation.} Le poids d'un expert est le produit des deux scores, et il
+      est nul sous un seuil de calibration. L'avis agrégé est la combinaison linéaire
+      pondérée des distributions individuelles.
+\end{enumerate}
+
+C'est le quatrième point qui fait la force et la fragilité de la méthode : un expert mal
+calibré est écarté, ce qui protège des dires péremptoires, mais réduit d'autant la taille
+effective du panel.
+
+\section{Le protocole construit pour la matrice de contagion}
+
+Le questionnaire préparé comporte deux parties. La partie d'étalonnage pose des
+questions à réponse connue, tirées de sources publiques vérifiables, sur des grandeurs du même
+domaine que les cibles. La partie cible interroge les liens dirigés entre piliers, un
+par un, sous la forme d'une probabilité conditionnelle : sachant que le pilier source est
+défaillant, quelle est la probabilité que le pilier cible le devienne.
+
+Le dispositif complet demande seize questions par expert, dont dix questions-graines. Ce ratio
+n'est pas un excès de prudence : c'est le minimum qui permette de distinguer un expert calibré
+d'un expert chanceux, et le réduire viderait la méthode de ce qui la distingue d'une moyenne
+d'opinions. Le protocole, le questionnaire et le gabarit de réponses sont versionnés dans le
+dépôt du mémoire, et deux scripts implémentent l'agrégation, l'un sur réponses fictives pour
+valider la chaîne de traitement, l'autre prêt à recevoir des réponses réelles.
+
+\paragraph{Une dixième graine a été retirée, et le dire fait partie du protocole.} La première
+version de l'étalonnage portait une question sur l'indice de queue de sévérité $\xi$, de valeur
+vraie annoncée $0{,}90$. Deux défauts s'y cumulaient. D'abord $0{,}90$ n'est pas la calibration
+mais la valeur \emph{posée} du scénario de pire cas, la calibration figée donnant
+$\hat\xi = 0{,}5954$ : or dans la méthode de Cooke une graine fausse n'ajoute pas du bruit, elle
+\emph{inverse} les poids, en pénalisant le répondant qui vise juste. Ensuite, et c'est ce qui
+justifie le retrait plutôt que la correction, $\xi$ est une \emph{estimation} d'intervalle
+$[0{,}30\,;0{,}83]$, plus large que la valeur elle-même : une graine doit être une grandeur
+réalisée, pas un paramètre estimé. Les dix graines de l'instrument révisé sont toutes reproductibles par une
+sortie de script versionnée, ce qui est la condition pour qu'une notation d'expert soit
+opposable.
+
+\vspace{2pt}
+% SOURCES-SCRIPTS: 26 47 63
+
+%--------------------------------------------------------------
+\section{Le questionnaire, reproduit}
+\label{sec:questionnaire-reproduit}
+%--------------------------------------------------------------
+% LES VALEURS VRAIES DES GRAINES NE SONT PAS PUBLIEES ICI, ET C'EST DELIBERE : les imprimer
+% BRULERAIT l'instrument, un expert qui a lu le memoire ne pouvant plus etre note dessus. Le
+% script 105 les calcule, leur applique quatre controles et les imprime dans sa sortie de
+% travail ; si l'elicitation etait lancee apres publication, les graines se retirent du meme jeu
+% de donnees par ce meme script. Ce qui est cite ci-dessous est donc le seul nombre que
+% l'arbitrage de conception exige de montrer, la valeur du candidat ecarte.
+% SOURCES-SCRIPTS: 105
+
+Décrire un instrument ne suffit pas à établir qu'il existe. Il est donc reproduit ici dans la
+forme sous laquelle il aurait été soumis, de façon qu'un lecteur puisse juger sur pièce ce que
+la section précédente affirme, et le réutiliser si la décision était rouverte. Le formulaire
+complet, avec sa consigne, son exemple traité, sa mention d'usage et de conservation et son
+accord signé du répondant, est versionné à part dans le dépôt du mémoire ; la présente annexe en
+reprend les deux tables et l'essentiel de la consigne.
+
+\begin{attention}
+\textbf{L'instrument reproduit ici est la version révisée, et il diffère de l'exemplaire de
+travail.} Celui-ci portait une question d'étalonnage sur l'indice de queue de sévérité, retirée
+pour les deux motifs exposés plus haut. Elle n'est pas corrigée mais \emph{remplacée}, et le
+remplacement a lui-même été arbitré : un indice de Gini de la concentration avait d'abord été
+retenu, puis écarté parce qu'il fait doublon avec la question qui compte les incidents portant la
+moitié du volume, et parce qu'une valeur vraie de $0{,}97$ se devine sans rien connaître du
+dossier. La graine retenue porte sur la durée de confinement, qui est une performance de
+résilience et donc du même domaine que les cibles. L'exemplaire de travail ne doit pas
+être soumis en l'état.
+\end{attention}
+
+\paragraph{La règle que s'impose l'instrument, vérifiée graine par graine.} Une graine doit être une
+\emph{grandeur réalisée}, reproductible par une sortie de script versionnée, et jamais un
+paramètre estimé. Les dix graines retenues sont donc des comptages, des parts, des délais ou des
+quantiles observés : aucune ne demande d'ajuster un modèle. Un script les calcule et leur applique
+quatre contrôles, portant sur ce caractère réalisé, sur la non-dégénérescence de la valeur, sur le
+respect des bornes naturelles, et sur le pouvoir de séparation entre experts. Une seule graine est
+signalée comme potentiellement devinable, celle qui porte sur la part du piratage ; elle est
+conservée avec son motif : sa valeur vraie est nettement au-dessus de la réponse spontanée, si
+bien qu'elle sépare malgré son caractère extrême.
+
+\paragraph{Aucune graine ne porte une grandeur de capital, choix délibéré.} Un praticien de la
+résilience observe des incidents, des délais et des concentrations ; il n'observe pas un quantile
+de charge annuelle. Noter un expert sur une telle grandeur mesurerait sa familiarité avec le
+présent mémoire, non son jugement sur le risque.
+
+\subsection*{Consigne remise à l'expert}
+
+\begin{cle}
+\textbf{Comment répondre.} Pour chaque quantité, donnez trois nombres : une valeur \emph{basse}
+($5\,\%$), une valeur \emph{médiane} ($50\,\%$), une valeur \emph{haute} ($95\,\%$), telles que
+vous estimez à $90\,\%$ de chances que la vraie valeur soit comprise entre votre $5\,\%$ et votre
+$95\,\%$. Il n'y a pas de réponse attendue : donnez votre meilleure estimation \emph{et} votre
+incertitude. Répondez même incertain, un intervalle large étant une réponse honnête et
+parfaitement valable. Ne cherchez pas les vraies valeurs : l'objet est de mesurer votre jugement.
+\end{cle}
+
+\subsection*{Partie A, les dix questions d'étalonnage}
+
+Des quantités observées dans les bases du mémoire, dont la valeur vraie est connue de l'analyste
+et n'est pas affichée au répondant. Elles servent à pondérer les experts, non à les piéger. Les
+trois colonnes de droite sont vides dans les deux tables qui suivent : c'est l'espace de réponse
+du formulaire, non une donnée manquante.
+
+{\small
+\renewcommand{\arraystretch}{1.22}
+\begin{longtable}{@{}l p{8.0cm} c c c@{}}
+\toprule
+& \textbf{Quantité, sur les incidents notifiés de la chronologie} & $\mathbf{5\,\%}$ &
+$\mathbf{50\,\%}$ & $\mathbf{95\,\%}$ \\
+\midrule
+\endfirsthead
+\toprule
+& \textbf{Quantité (suite)} & $\mathbf{5\,\%}$ & $\mathbf{50\,\%}$ & $\mathbf{95\,\%}$ \\
+\midrule
+\endhead
+G1 & Délai médian entre la survenance d'un incident et sa déclaration, en jours & & & \\
+G2 & Part des incidents déclarés plus de quatre-vingt-dix jours après leur survenance,
+     en \% & & & \\
+G3 & Délai médian de déclaration d'un incident de type piratage, en jours & & & \\
+G4 & Durée médiane entre le début et la fin d'exposition d'un incident, en jours & & & \\
+G5 & Nombre médian d'enregistrements touchés par incident & & & \\
+G6 & Nombre d'incidents qui portent à eux seuls la moitié du volume touché
+     sur sept exercices & & & \\
+G7 & Part des incidents dont l'exposition a duré plus de trente jours, en \% & & & \\
+G8 & Part des incidents de type piratage parmi ceux dont le vecteur est renseigné,
+     en \% & & & \\
+G9 & Part des lignes de la chronologie qui sont des doublons de notification d'un même
+     incident, en \% & & & \\
+G10 & Rapport du quatre-vingt-dix-neuvième centile à la médiane des pertes cyber du
+      secteur financier & & & \\
+\bottomrule
+\end{longtable}}
+
+\vspace{2pt}
+\noindent\textbf{Ce que chaque graine cherche à mesurer.} G1 à G3 portent sur le \emph{délai de
+détection}, qui est le canal que la conformité déplace le plus directement. G4 et G7 portent sur
+le \emph{confinement}. G5, G6 et G10 portent sur la \emph{concentration} de la perte, c'est-à-dire
+sur l'intuition de queue lourde. G8 porte sur la structure des vecteurs et G9 sur la qualité de la
+donnée déclarative, dont un praticien de la notification a une expérience directe.
+
+\subsection*{Partie B, les six liens dirigés entre piliers}
+
+Force du lien dirigé de $j$ vers $k$, entre $0$ et $1$ : $0$ signifie qu'une défaillance du
+pilier $j$ n'entraîne jamais celle de $k$, $1$ qu'elle l'entraîne quasi certainement dans la
+foulée. Les trois mêmes quantiles sont demandés.
+
+\begin{attention}
+\textbf{Le sens des lettres n'est pas une coquette\-rie de notation.} La matrice du modèle
+s'écrit $W_{jk}$ avec $j$ la \emph{source} et $k$ la \emph{cible} : la ligne émet, la colonne
+reçoit, et deux scripts vérifient cette convention avant tout calcul. Un formulaire qui
+demanderait la force du lien \emph{de $k$ vers $j$} ferait donc saisir la matrice
+\emph{transposée}. Or c'est précisément entre une matrice et sa transposée que le
+chapitre~\ref{ch:identifiabilite} montre que la donnée ne tranche pas, et le
+chapitre~\ref{chap:cascade} que le capital et la décision diffèrent. Une inversion de lettres
+dans l'instrument produirait donc exactement l'erreur que tout le mémoire s'emploie à ne pas
+commettre, et elle ne serait rattrapée par aucun contrôle numérique.
+\end{attention}
+
+{\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}l p{8.2cm} c c c@{}}
+\toprule
+& \textbf{Lien dirigé $j \rightarrow k$, $j$ émet} & $\mathbf{5\,\%}$ & $\mathbf{50\,\%}$ &
+$\mathbf{95\,\%}$ \\
+\midrule
+\endfirsthead
+\toprule
+& \textbf{Lien dirigé (suite)} & $\mathbf{5\,\%}$ & $\mathbf{50\,\%}$ & $\mathbf{95\,\%}$ \\
+\midrule
+\endhead
+B1 & P1 $\rightarrow$ P2 : une défaillance de gouvernance entraîne des incidents & & & \\
+B2 & P2 $\rightarrow$ P1 : des incidents entraînent une défaillance de gouvernance & & & \\
+B3 & P4 $\rightarrow$ P2 : une défaillance d'un tiers entraîne des incidents & & & \\
+B4 & P1 $\rightarrow$ P4 : une défaillance de gouvernance entraîne une défaillance côté
+     tiers & & & \\
+B5 & P3 $\rightarrow$ P1 : une défaillance des tests de résilience entraîne une défaillance
+     de gouvernance & & & \\
+B6 & P5 $\rightarrow$ P2 : une défaillance du partage d'information entraîne des
+     incidents & & & \\
+\bottomrule
+\end{longtable}}
+
+\paragraph{Le couple B1 et B2 est l'objet même du mémoire.} Les deux questions portent sur le
+\emph{même} couple de piliers, dans les deux sens. Une donnée de co-occurrence ne les distingue
+pas ; un expert, lui, peut les séparer. C'est précisément la quantité que le
+chapitre~\ref{ch:identifiabilite} montre non identifiable : ce
+questionnaire aurait donc eu une valeur que nulle autre source du dossier ne porte.
+
+\paragraph{Ce qui est fait des réponses.} La partie~A mesure la calibration du répondant, c'est-à-dire
+la justesse de ses intervalles, et son information, c'est-à-dire leur finesse ; ces deux
+grandeurs fixent son poids dans l'agrégation. La partie~B, pondérée par ce poids et croisée avec
+les réponses des autres experts, produirait chaque lien de la matrice sous forme d'\emph{intervalle}
+et non de point. Le traitement est automatique et aucune donnée d'incident n'est requise, seulement
+le jugement.
+
+\section{Ce qui a été produit, et ce qui a été adressé}
+
+% HARNAIS-HORS-SECTION: cette section rapporte une demarche et son issue, non une grandeur
+% calculee. Ses comptes sont ecrits en lettres, aucun script ne les imprime et aucun ne le
+% devrait : ce qui les atteste est le materiel verse au depot, pas une sortie numerique.
+
+Le dispositif n'est pas resté à l'état d'intention, et le distinguer importe : un protocole qu'on
+décrit sans l'avoir soumis n'engage rien, un protocole soumis et resté sans réponse documente un
+état du terrain. Quatre pièces ont été produites et sont versionnées au dépôt du mémoire.
+
+\begin{itemize}[itemsep=2pt,topsep=3pt]
+\item \textbf{Le protocole}, qui fixe la méthode, les seuils et la règle d'agrégation.
+\item \textbf{Le questionnaire}, dans sa troisième version, avec ses seize questions dont dix
+      graines d'étalonnage, reproduit à la section précédente.
+\item \textbf{Un formulaire en ligne} reprenant ces questions, pour que le répondant saisisse
+      ses trois quantiles sans manipuler de fichier.
+\item \textbf{Le gabarit de réponses}, qui alimente la chaîne d'agrégation.
+\end{itemize}
+
+Deux scripts complètent l'ensemble, l'un validant la chaîne de traitement sur des réponses
+fictives, l'autre prêt à recevoir des réponses réelles.
+
+L'appel a été adressé par deux canaux. Le premier est une commission de l'Institut des Actuaires,
+sollicitée pour atteindre des praticiens qualifiés sur le risque lié aux technologies ; les
+destinataires ne sont pas nommés ici, la même règle valant pour eux que pour les répondants du
+formulaire de relecture rapporté plus bas. Le second est un ensemble de praticiens du cabinet,
+déjà sollicités par ailleurs sur cette relecture.
+
+\paragraph{L'appel est resté sans réponse, et aucun panel n'a pu être constitué.} Du côté de
+l'Institut, aucune réponse n'est parvenue. C'est un fait de démarche et il se publie comme tel,
+sans être présenté comme un résultat : il dit la difficulté d'obtenir un jugement quantitatif
+structuré sur un objet aussi récent, il ne dit rien de la disposition des personnes sollicitées.
+La conséquence pour le mémoire est en revanche nette, et la section suivante la tire.
+
+\section{Pourquoi l'absence de panel ne laisse pas le mémoire démuni}
+
+La première raison est de fait : l'appel n'a pas abouti. Les deux suivantes disent pourquoi cette
+absence ne fragilise pas la conclusion, et elles étaient établies \emph{avant} qu'on la constate,
+ce qui est la seule façon honnête de les présenter.
+
+\paragraph{Un panel de un ou deux experts n'aurait eu aucun pouvoir de calibration.} À supposer
+même que l'appel eût trouvé des répondants, le calendrier du mémoire et un taux de retour
+réaliste sur un questionnaire de seize questions quantitatives auraient donné un nombre de
+réponses exploitables, c'est-à-dire complètes et passant le seuil de calibration, de l'ordre de
+une à deux. Or à deux experts la pondération de Cooke dégénère : soit un
+seul survit au seuil et l'on obtient un avis unique déguisé en agrégation, soit les deux
+survivent et le poids relatif est estimé sur dix graines, ce qui ne le distingue pas d'une
+moyenne simple. Dans les deux cas la méthode ne fait plus ce pour quoi elle est choisie.
+
+\paragraph{Et une élicitation faible ne serait pas neutre, elle serait trompeuse.} C'est
+l'argument décisif, chiffré. Le chapitre~\ref{chap:partielle} mesure l'effet d'un
+panel biaisé sur le capital : il déplace le SCR de $777$~M\euro{} sans
+qu'aucun signal ne l'indique au lecteur, là où l'approche par bornes reste \emph{invariante} à
+ce biais. Un jugement d'expert faiblement calibré introduirait donc dans le résultat une
+incertitude \emph{non déclarable}, alors que la non-identifiabilité, elle, se déclare et se
+borne. En termes de qualité de la conclusion, l'échange serait défavorable : on remplacerait
+une ignorance mesurée par une erreur invisible.
+% SOURCES-SCRIPTS: 31
+
+\paragraph{Une asymétrie à assumer, car un relecteur la trouvera.} Cet argument condamne le
+jugement d'expert non vérifiable, or ce mémoire \emph{utilise} du jugement d'expert ailleurs :
+la direction de la contagion s'appuie sur un corpus de dix rapports codés, et par un seul codeur
+à ce jour. Refuser l'élicitation au nom du biais d'expert tout en s'appuyant sur un codage
+d'expert demande donc une justification, et non un silence.
+
+Elle tient en trois différences dont le cumul compte. Le codage est
+\emph{auditable} : le protocole est écrit, les dix récits sont publics, et n'importe qui peut
+recoder le corpus et confronter ses réponses aux nôtres, ce qu'une élicitation quantitative en
+séance ne permet pas. Son biais principal est mesuré plutôt que redouté : le biais de
+narration fait l'objet d'un test contre une loi nulle exacte, dont le résultat est publié
+\emph{et négatif} (\S\ref{sec:biais-narration}). Et son produit est un ordre partiel,
+un objet qualitatif que la suite du raisonnement borne, là où une élicitation produirait des
+coefficients numériques entrant directement dans le capital. Un dire d'expert qui alimente une
+borne et un dire d'expert qui alimente un nombre n'engagent pas le même risque.
+
+Reste que la comparaison n'est pas entièrement favorable : le codage demeure à juge
+unique, et cela se lit comme une limite déclarée et non comme une étape en attente. Ce
+qui la distingue du défaut reproché à l'élicitation est qu'elle est \emph{bornée} : la
+dégradation complète de la source contestée coûte moins que l'ignorance directionnelle déjà
+publiée (\S\ref{sec:biais-narration}), là où un panel faiblement calibré introduirait une
+incertitude non déclarable. Un second codage en aveugle renforcerait l'énoncé, et le dispositif
+reste préparé à cette fin.
+
+\section{Ce qui le remplace}
+
+Trois dispositifs, tous en place et tous sans prior d'expert.
+
+\begin{description}[itemsep=3pt,topsep=3pt]
+\item[Le corpus documentaire.] Dix rapports post-mortem officiels sont codés selon un protocole
+      écrit, et le sens des transitions y est testé contre une loi nulle exacte de permutation :
+      $z = +5{,}12$ sur le corpus étendu. La direction n'est donc pas seulement posée, elle est
+      \emph{corroborée} par une source indépendante du classeur qualitatif.
+\item[L'échelle de repli sur la direction.] Plutôt que de connaître la direction, on peut
+      supposer qu'elle est de rang faible. Le premier cran de cette échelle capte $74{,}1\,\%$
+      de la variance de la direction posée et resserre le capital dans
+      $[7\,761\,;\,8\,316]$~M\euro, soit une largeur de $555$~M\euro{} contre $1\,839$ sous
+      ignorance totale. C'est une hypothèse structurelle, déclarée comme telle, et bien plus
+      modeste qu'un dire d'expert.
+\item[Les ancrages réglementaires.] Les niveaux d'exigence des textes et les publications des
+      autorités fournissent des repères externes sur les états de conformité, sans passer par un
+      panel.
+\end{description}
+
+% SOURCES-SCRIPTS: 30 34 59
+
+\section{La relecture de praticien et son résultat}
+\label{sec:relecture-praticien}
+
+\paragraph{Pourquoi ce dispositif est nécessaire, et il l'est pour une raison qui n'a rien de
+conjoncturel.} La direction de $W$ n'est pas identifiable sur les données disponibles,
+et le chapitre~\ref{ch:identifiabilite} le démontre plutôt que de le déplorer : les statistiques
+que les sources permettent de construire sont aveugles à la partie antisymétrique, donc une
+matrice et sa transposée y sont indiscernables. Il en résulte que $W$ n'est pas calibrée au sens où le sont la fréquence et
+la sévérité. Sa structure est \emph{déduite} d'un corpus de rapports post-mortem, source qui
+porte son propre confondant, le biais de narration d'une enquête officielle, borné au
+\S\ref{sec:biais-narration} mais non levé.
+
+Sur une structure ainsi posée, il ne reste qu'un seul contrôle externe possible : le
+jugement de praticiens qui ont vu des défaillances réelles, et qui n'ont lu ni le corpus ni le
+mémoire. Ce dispositif est donc nécessaire et non facultatif. Mais il faut voir ce
+qu'il peut et ce qu'il ne peut pas : un praticien peut corroborer ou contredire une
+structure, il ne peut pas la calibrer, faute de quoi on retomberait sur l'élicitation
+que ce chapitre vient d'écarter, avec son déplacement de capital non déclarable. C'est
+exactement la différence entre une relecture et une élicitation, et elle commande la forme de
+l'instrument.
+
+Le dispositif est donc de nature différente des trois précédents : non pas recueillir des
+probabilités, mais soumettre à des praticiens du secteur les affirmations \emph{qualitatives}
+sur lesquelles le modèle repose, en leur demandant de les contredire. L'instrument est
+un questionnaire de sept phrases, sans lecture préalable du mémoire, dont deux portent
+explicitement sur l'ordre P1 vers P2. Le choix de demander des désaccords plutôt que des
+accords est délibéré : un accord ne discrimine rien, alors qu'un désaccord argumenté désigne
+l'endroit exact où le modèle s'écarte de ce que le terrain observe.
+
+\paragraph{La première réponse ne contredit rien.} Une consultante de Nexialog, exerçant en
+gestion des risques et du contrôle depuis une dizaine d'années, n'a contredit aucune
+des sept phrases : deux accords pleins, cinq accords assortis d'une nuance. Un instrument
+construit pour recueillir des désaccords et qui n'en recueille aucun renseigne d'abord sur
+lui-même, et cette information vaut d'être écrite plutôt que passée sous silence.
+
+\paragraph{Ce que la réponse corrobore, la direction exceptée.} Deux affirmations
+reçoivent un accord franc et argumenté, et toutes deux portent sur la \emph{faisabilité} des
+recommandations plutôt que sur la structure du modèle. Sur les trois indicateurs pilotables,
+la répondante les juge cohérents et produisibles, et suggère de les compléter par une fréquence
+d'occurrence. Sur le registre d'incidents mieux spécifié, qui est le prolongement le plus utile
+identifié par ce mémoire, elle va plus loin que l'accord : elle décrit un usage professionnel
+établi, un tableau de bord des incidents par prestataire servant, dans une analyse de risque
+conduite au titre de DORA, à évaluer la fréquence du risque de défaillance système et le taux
+d'indisponibilité sur douze mois. La recommandation la moins mathématique du mémoire est donc
+aussi celle que le terrain confirme le plus directement.
+
+\paragraph{Une qualification substantielle, qu'il faut déclarer sans la traiter.} La nuance la
+plus utile porte sur l'arc de la gouvernance vers la gestion des prestataires tiers. La
+répondante distingue l'occurrence et la maîtrise : une gouvernance solide ou
+fragile ne change pas, selon elle, le fait qu'un prestataire critique tombe, mais elle change
+la capacité de l'entité à en limiter les conséquences. Traduite dans les termes du modèle,
+cette distinction déplacerait cet arc de la matrice de propagation vers le canal de détection,
+ce qui n'est pas la même chose et ne donne pas le même chiffre. La réserve est donc
+déclarée et non traitée : la traiter reviendrait à recalibrer, ce que le gel interdit,
+et cette qualification, portée par une seule des trois réponses, ne justifie pas de rouvrir
+la calibration.
+
+\paragraph{Et un argument d'antériorité, le seul de la réponse qui soutienne vraiment un
+ordre.} Sur la phrase qui fait de la gestion des incidents un puits, la répondante avance un
+argument temporel plutôt qu'une intuition : les tests sont conduits en amont de la mise en
+service, donc un incident postérieur ne peut pas dégrader les tests. C'est de la précédence, et
+c'est précisément ce que le corpus documentaire code. Elle ajoute une critique de la définition
+du pilier lui-même, en séparant l'incident de sa gestion, deux objets que la nomenclature
+réglementaire réunit.
+
+\paragraph{Ce que l'instrument devient.} Deux défauts du questionnaire ont été identifiés par
+cette première réponse, tous deux dans les phrases et non chez la répondante. La phrase sur la
+gouvernance source pure \emph{empaquetait} deux affirmations, et la répondante a nuancé la
+première sans se prononcer sur la seconde, qui est celle qui compte. Et la phrase opposant la
+contagion à la cause commune ne discriminait pas ce qu'elle prétendait discriminer, pour la
+raison exposée au chapitre~\ref{ch:identifiabilite}. Trois questions à choix forcé ont été
+ajoutées,
+qui séparent les deux affirmations empaquetées, demandent au répondant de choisir entre
+contagion et cause commune, et font trancher la distinction occurrence contre maîtrise. La
+modalité \emph{je ne peux pas trancher} y est offerte explicitement ; c'est la modalité la plus
+intéressante : un praticien qui la choisit corrobore la frontière d'identifiabilité sur le
+terrain, ce qui vaut davantage qu'un accord sur la matrice.
+
+\paragraph{La seconde réponse contredit deux phrases, ce que l'instrument cherchait.}
+Un consultant de Nexialog, expert de la résilience et de la continuité d'activité dans les
+services financiers depuis sept ans, a répondu à la même version du questionnaire, sans les
+questions à choix forcé ajoutées depuis. Il ne se prononce pas sur la première phrase tout en la
+commentant, donne quatre accords assortis d'une nuance, et exprime deux désaccords argumentés,
+sur les deux phrases que le questionnaire désignait comme les plus importantes.
+
+\paragraph{La cause commune, avancée sans y être invité.} Sur la phrase qui oppose la contagion à
+la cause extérieure commune, il reconnaît des chaînes de causalité, une gouvernance peu
+structurée conduisant à des tests insuffisants puis à des incidents, mais ajoute que plusieurs
+domaines peuvent céder ensemble parce qu'ils partagent une cause : un manque de ressources, une
+transformation mal pilotée, une architecture vieillissante. Il conclut qu'il parlerait de
+dépendances entre domaines plutôt que de causalité systématique. Là où la première réponse
+illustrait la frontière d'identifiabilité sans la nommer, celle-ci la formule : c'est la
+corroboration la plus nette que le dispositif ait produite, et elle porte sur la frontière, non
+sur la matrice.
+
+\paragraph{Deux désaccords sur le sens des arcs, déclarés.} Il conteste que la gouvernance soit une
+source pure : un incident significatif peut conduire à changer les responsabilités, à renforcer
+les comités de suivi ou à augmenter les budgets, si bien que la gouvernance est aussi une
+conséquence des défaillances. Il conteste de même que la gestion des incidents soit un puits : un
+incident mal géré révèle des tests insuffisants et conduit à les renforcer, un incident impliquant
+un prestataire fait revoir les contrats et la surveillance, et une escalade défaillante dégrade la
+circulation de l'information. Deux lectures de ces exemples doivent être tenues ensemble. La
+plupart décrivent une rétroaction corrective, l'incident conduisant à renforcer un domaine :
+elle relève de l'évolution des états de conformité modélisée au chapitre~\ref{chap:multietats},
+non de la propagation d'une perte que porte la matrice. Un seul décrit une dégradation en retour,
+de la gestion des incidents vers le partage d'information, sens qu'aucun rapport du corpus ne
+code. Ce désaccord ne déplace pas le capital publié : l'ensemble admissible du
+chapitre~\ref{chap:partielle} ne fixe aucune direction et contient aussi bien les matrices à
+dépendance réciproque que celles où l'arc est inversé. Il affaiblit en revanche la structure que
+le corpus suggère, déjà déclarée corroborée et non calibrée ; il est enregistré comme tel.
+
+\paragraph{La faisabilité, sous conditions.} Il juge les trois indicateurs pertinents et
+actionnables mais insuffisants à eux seuls, et y ajouterait les incidents récurrents, les
+vulnérabilités critiques non corrigées, les résultats des tests et la disponibilité des services
+critiques. Il juge le registre d'incidents réaliste, et la distinction entre date de survenue et
+date de déclaration particulièrement utile, sous réserve de règles de qualification précises :
+le classement d'un incident par domaine peut être subjectif, et reconnaître une cause commune à
+plusieurs victimes suppose de disposer de l'information qui l'établit. Sur le prestataire
+partagé, il confirme le choc simultané en rappelant que le niveau de dépendance résulte lui-même
+de choix de gouvernance.
+
+\paragraph{Ce qui manque selon lui.} La gestion des changements et celle des vulnérabilités,
+qu'il désigne comme des déclencheurs fréquents d'une chaîne traversant plusieurs domaines sans
+qu'aucun ait été défaillant au départ. Le modèle fait naître un incident sur un pilier ; un
+déclencheur transversal de ce type n'y a pas de place propre. Cette limite de périmètre est à
+inscrire parmi les prolongements.
+
+\paragraph{La troisième réponse répète le désaccord sans l'élargir.} Un consultant en données,
+exerçant depuis un an, a répondu à la version portant les trois questions à choix forcé. Il
+conteste les deux mêmes phrases que la réponse précédente, et répond à la question fermée sur la
+gouvernance qu'un incident, un test raté ou la défaillance d'un prestataire la dégradent
+\emph{temporairement}. Son seul commentaire juge le registre d'incidents réaliste mais risqué pour
+la confidentialité. Aucun argument nouveau n'entre donc par cette voie : venant d'un profil plus
+éloigné du métier de la résilience, elle augmente la fréquence du désaccord et non sa portée. Ce
+répondant a demandé à n'être cité que par sa fonction.
+
+\paragraph{Statut.} Trois réponses ne font pas un panel. Cette relecture n'entre donc dans aucune
+table de robustesse et ne modifie aucun niveau publié. Elle est citée pour ce qu'elle est, une
+relecture de praticiens engagée et rendue, et les répondants ne sont pas nommés.
+
+\section{Le coût de l'absence et sa réversibilité}
+
+Il faut nommer le coût. L'élicitation avait une fonction précise et une seule :
+\emph{départager P1 et P4} en tête du classement des piliers sources. Sans elle, les deux
+restent pratiquement à égalité sur l'ensemble admissible, P1 arrivant premier dans
+$43{,}6\,\%$ des configurations et P4 dans $37{,}7\,\%$, pour un écart de regret maximal de
+$1{,}5\,\%$ (\S\ref{sec:res-robustesse}). Le mémoire conclut donc que P1 et P4 devancent nettement les
+trois autres piliers, et il s'arrête là où la donnée s'arrête, au lieu de trancher entre eux par
+un avis.
+% SOURCES-SCRIPTS: 30 31
+
+\begin{cle}
+\textbf{Un instrument prêt, à qui il ne manque que des répondants.} Le protocole est écrit, le
+questionnaire est prêt et diffusé, le gabarit de réponses et la chaîne d'agrégation sont testés.
+Ce qui manque n'est pas le dispositif mais un panel de taille suffisante pour que la pondération
+de Cooke ait un sens. La reprise est donc \emph{sans coût de développement} : si un accès à un panel
+d'une dizaine de répondants devient possible, l'élicitation reprend là où elle a été laissée,
+et son apport attendu est connu d'avance, à savoir le départage de P1 et P4 et un resserrement
+de la bande d'identification. C'est le seul point du mémoire où une donnée supplémentaire
+changerait une conclusion plutôt qu'un niveau.
+\end{cle}

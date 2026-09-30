@@ -1,0 +1,66 @@
+\chapter{Démonstrations}
+
+% HARNAIS-HORS-SCRIPT: chapitre de demonstrations : les nombres y sont des constantes d'enonce (bornes, exposants, dates de theoremes), aucun n'est un resultat calcule par le pipeline.
+\noindent Les preuves de stabilité de la cascade ($\rho(W)<1$ par normalisation de Leontief) et
+de la propriété de branchement figurent à l'annexe~\ref{ann:cascade}, avec leur vérification
+numérique. Cette annexe rassemble les démonstrations de la théorie des valeurs extrêmes sur
+lesquelles s'appuie la calibration de sévérité.
+
+% MIGRÉ AUTOMATIQUEMENT depuis memoire/main.tex (plages 3155-3164, 3181-3216).
+% Hiérarchie descendue d'un cran, labels préfixés "soc:".
+% RELECTURE FAITE (août 2026). Contenu purement EVT, aucun résidu de l'ancien
+% modèle. DEFAUT CORRIGE : les cinq labels se suivaient sans unite de
+% sectionnement, si bien que les cinq renvois du ch. 6 resolvaient tous vers le
+% MEME numero (celui du chapitre). Chaque demonstration a desormais sa section.
+\section{Théorème de Fisher-Tippett-Gnedenko}
+\label{soc:ann:ftg}
+La loi limite $H$ des maxima normalisés est \emph{max-stable} : $H^t(x)=H(a_tx+b_t)$ pour tout $t>0$. En posant $g(x)=-\ln H(x)$, la max-stabilité devient l'équation fonctionnelle $t\,g(a_tx+b_t)=g(x)$. Sa résolution (via la théorie des fonctions à variation régulière de Karamata) impose $g(x)=(1+\xi x)^{-1/\xi}$, soit $H=H_\xi$. Le domaine d'attraction se caractérise ensuite par le comportement de queue : $F\in\mathrm{DA}(H_\xi)$ avec $\xi>0$ si et seulement si $\bar F$ est à variation régulière d'indice $-1/\xi$, i.e.\ $\bar F(tx)/\bar F(x)\to t^{-1/\xi}$. Les lois lognormale et gamma relèvent du cas $\xi=0$ (Gumbel) ; les lois à support borné du cas $\xi<0$ (Weibull).
+
+
+\section{Théorème de Pickands-Balkema-de Haan}
+\label{soc:ann:balkema}
+Pour $F\in\mathrm{DA}(H_\xi)$, il existe une fonction positive $a(\cdot)$ telle que, pour $y\ge0$,
+$\lim_{u\to x_F}\bar F(u+y\,a(u))/\bar F(u)=(1+\xi y)^{-1/\xi}$.
+Or $\bar F(u+ya(u))/\bar F(u)=\Prob(X>u+ya(u)\mid X>u)=1-F_u(y\,a(u))$, dont la limite est la survie GPD $\bar G_{\xi,1}(y)$. En posant $\sigma(u)=a(u)$, on obtient $F_u(y)\to G_{\xi,\sigma(u)}(y)$. La convergence est uniforme car les $F_u$ sont des fonctions de répartition monotones convergeant vers une limite continue (théorème de Pólya). Le paramètre $\xi$ est préservé car il gouverne à la fois la variation régulière de $\bar F$ et la forme de la GPD limite.
+
+
+
+\section{Information de Fisher et normalité asymptotique de l'EMV de la GPD}
+\label{soc:ann:fisher}
+On part de la log-vraisemblance \eqref{soc:eq:loglik-gpd}, écrite par observation avec $W_i=1+\xi Y_i/\sigma$ :
+\begin{equation}
+\ell_i(\xi,\sigma)=-\ln\sigma-\Bigl(1+\tfrac1\xi\Bigr)\ln W_i.
+\end{equation}
+
+\paragraph{Moments-clés.} La transformation de probabilité intégrale donne $W_i^{-1/\xi}=\bar G(Y_i)\sim\mathcal U(0,1)$, donc $W_i\overset{d}{=}U^{-\xi}$ avec $U\sim\mathcal U(0,1)$. On en déduit les quatre moments qui suffisent au calcul :
+\begin{equation}
+\E[W^{-1}]=\E[U^{\xi}]=\tfrac{1}{1+\xi},\quad
+\E[W^{-2}]=\tfrac{1}{1+2\xi},\quad
+\E[\ln W]=-\xi\,\E[\ln U]=\xi,\quad
+\E[(\ln W)^2]=2\xi^2,
+\end{equation}
+tous finis dès que $\xi>-\tfrac12$ (condition assurant $\E[W^{-2}]<\infty$).
+
+\paragraph{Score et hessienne.} En dérivant $\ell_i$,
+\begin{align*}
+\partial_\xi\ell_i&=\tfrac{1}{\xi^2}\ln W_i-\Bigl(1+\tfrac1\xi\Bigr)\tfrac{Y_i/\sigma}{W_i},\qquad
+\partial_\sigma\ell_i=-\tfrac1\sigma+\Bigl(1+\tfrac1\xi\Bigr)\tfrac{\xi Y_i/\sigma^2}{W_i}.
+\end{align*}
+En prenant l'espérance de l'opposé des dérivées secondes et en substituant les moments ci-dessus, on obtient l'information de Fisher par observation
+\begin{equation}
+\mathcal{I}(\xi,\sigma)=\frac{1}{1+2\xi}\begin{pmatrix} 2 & \sigma^{-1}\\[2pt] \sigma^{-1} & \sigma^{-2}(1+\xi)\end{pmatrix},\qquad
+\mathcal{I}^{-1}=(1+\xi)\begin{pmatrix} 1+\xi & -\sigma\\[2pt] -\sigma & 2\sigma^2\end{pmatrix}.
+\end{equation}
+La variance asymptotique de $\hat\xi$ est le terme $(1,1)$ de $\mathcal I^{-1}$ divisé par $N_u$, soit $(1+\xi)^2/N_u$ ; celle de $\hat\sigma$ vaut $2\sigma^2(1+\xi)/N_u$. Le terme hors-diagonal négatif $-\sigma(1+\xi)$ traduit la corrélation négative entre $\hat\xi$ et $\hat\sigma$, retrouvée empiriquement sur le nuage \emph{a posteriori} bayésien. C'est cette corrélation qui interdit de stresser $\xi$ et $\sigma$ indépendamment, et qui justifie le pivotement au centroïde retenu au chapitre~\ref{chap:resultats}. La condition $\xi>-\tfrac12$ garantit la finitude des moments impliqués, donc la validité de la normalité asymptotique classique de l'EMV \citep{smith1987}.
+
+
+\section{Loi asymptotique de l'estimateur de Hill}
+\label{soc:ann:hill}
+Sous variation régulière $\bar F(x)=x^{-1/\xi}\ell(x)$ avec $\ell$ à variation lente, les $\log$-espacements $\log X_{(i)}-\log X_{(i+1)}$ des $k$ plus grandes statistiques d'ordre sont, à la limite, des variables exponentielles indépendantes d'espérance $\xi/i$ (représentation de Rényi). L'estimateur $\hat\xi_{Hill}(k)=\frac1k\sum_{i=1}^k(\log X_{(i)}-\log X_{(k+1)})$ est alors une moyenne empirique d'espérance $\xi$ et de variance $\xi^2/k$ ; le théorème central limite donne $\sqrt k(\hat\xi_{Hill}-\xi)\xrightarrow{d}\mathcal N(0,\xi^2)$, sous la condition de second ordre $\sqrt k\,A(n/k)\to0$ contrôlant le biais dû à $\ell$.
+
+
+\section{Formes fermées du quantile de sévérité et de sa moyenne de queue sous GPD}
+\label{soc:ann:varestvar}
+Les objets de cette annexe portent sur la sévérité $X$ d'un \emph{sinistre unique}, non sur la charge annuelle agrégée : d'où les symboles $\qsev$ et $\qbarsev$ plutôt que $\VaR$ et $\TVaR$, réservés à la mesure de capital. La forme fermée du quantile découle directement de l'inversion de la fonction de survie POT $\bar F(x)=\zeta_u(1+\xi(x-u)/\sigma)^{-1/\xi}$. Pour la moyenne de queue, on utilise $\qbarsev_\alpha=\frac{1}{1-\alpha}\int_\alpha^1\qsev_s\,\dd s$ ; la stabilité de la GPD (l'excès au-delà de tout seuil $v>u$ reste GPD de forme $\xi$ et d'échelle $\sigma+\xi(v-u)$) donne $\E[X-\qsev_\alpha\mid X>\qsev_\alpha]=\frac{\sigma+\xi(\qsev_\alpha-u)}{1-\xi}$ pour $\xi<1$, d'où \eqref{soc:eq:tvar-gpd}. Pour $\xi\ge1$, $\int_u^\infty\bar F=\infty$ : la moyenne de queue diverge.
+
+% =====================================================================

@@ -1,0 +1,190 @@
+
+======================================================================================
+Donnees : panel firme-annee, avec la taille de firme
+======================================================================================
+observations firme-annee            : 14,944  (5230 firmes)
+dont avec actifs renseignes         : 14,544  (4929 firmes)
+lambda brut, toutes firmes          : 0.0988
+lambda brut, sous-panel avec actifs : 0.0978
+
+actifs medians, firme du panel      : 9,903 M USD
+actifs medians, ponderes evenements : 121,894 M USD
+   soit, en milliards               : 9.9 Md USD (panel) et 121.9 Md USD (ponderes evenements)
+actifs de l'entite cible            : 20,000 M USD
+   -> l'entite cible est 6 fois plus petite que la firme
+      mediane PONDEREE PAR EVENEMENT de la base. C'est cet ecart que les deux
+      corrections doivent absorber.
+
+======================================================================================
+(A) lambda comme FONCTION de la taille, au lieu d'un seau arbitraire
+======================================================================================
+Les deux lectures actuelles du memoire sont des seaux : 'toutes firmes' et
+'firmes a >= 10 evenements'. Le second est un proxy de taille, pas une mesure. On
+estime donc directement le taux en fonction de la taille, sur le panel firme-annee.
+
+  rappel seau 1, toutes firmes           : lambda = 0.0988
+  rappel seau 2, firmes >= 10 evenements : lambda = 0.2102
+  actifs medians de ces firmes >= 10 ev. : 372,538 M USD  (soit 372.5 Md USD)
+  soit 19x l'entite cible : utiliser leur lambda POUR l'entite
+  cible etait bien l'incoherence a corriger.
+
+Binomiale negative, log-lien, covariable log(actifs) centree :
+  elasticite frequence / taille b_lambda = +0.0744  (ET 0.0098, z = +7.59, p = 3.24e-14)
+  IC 95 %                                = [+0.0552 ; +0.0936]
+  lambda a la taille mediane du panel    = 0.0953
+
+  >>> lambda LU A LA TAILLE CIBLE (20,000 M USD) = 0.0917/an
+      bande de l'incertitude sur b_lambda : [0.0908 ; 0.0926]
+      valeur exacte a reporter dans le script 58 : LAM_ENTITE = 0.09168423156000373
+      a comparer aux deux seaux du memoire : 0,10 et 0,21
+
+======================================================================================
+(B) Le multiplicateur de severite, a la MEME taille cible
+======================================================================================
+elasticite severite / taille b = 0.087  IC [0.026 ; 0.148]  (script 57, EMV tronquee)
+rapport de taille cible / base = 20,000 / 121,894 = 0.1641
+
+  >>> multiplicateur de severite = 0.8545   (soit -14.6 %)
+      bande sur l'IC de b            : [0.7653 ; 0.9541]
+
+La severite GPD est une famille d'ECHELLE au-dessus du seuil : multiplier toutes
+les severites par c multiplie le quantile par c EXACTEMENT. La source OpRisk n'est
+pas plafonnee (cap = None), donc rien ne vient tronquer cette homothetie.
+
+======================================================================================
+(C) Composition des deux corrections dans le moteur de cascade
+======================================================================================
+lecture                                    lambda   x sev    SCR 99,5%       E[X]  SCR/E[X]
+Secteur (calage du chapitre)               21.560   1.000      8,122.9     982.51       8.3
+Entite, seau >= 10 ev. (memoire)            0.210   1.000        487.5       9.71      50.2
+Entite, seau toutes firmes (memoire)        0.100   1.000        229.1       4.61      49.7
+Entite, lambda lu a la taille               0.092   1.000        197.8       4.26      46.5
+Entite, taille + severite (retenu)          0.092   0.854        169.0       3.64      46.5
+
+Charge operationnelle de Formule Standard (0,03 x 15,000) = 450 M EUR
+Rapport SCR retenu / Formule Standard                       = 0.38
+
+La non-linearite, en rapports (cites tels quels au chapitre resultats) :
+  lambda divise par        235
+  perte moyenne divisee par 270
+  capital divise par        48
+  Le capital resiste parce que le quantile est porte par un sinistre unique, la
+  moyenne par le nombre d'evenements : c'est le principe du grand saut unique.
+
+======================================================================================
+(D) Le resultat d'entite est une BANDE, pas un point
+======================================================================================
+La direction de W n'est pas identifiee. Un SCR d'entite calcule a la matrice
+d'expert est UN point de l'ensemble admissible, pas sa mesure. On enumere donc les
+1024 sommets du pave a t = 1 (ignorance directionnelle totale).
+
+sommets admissibles           : 1024 / 1024
+SCR d'entite, bornes          : [131.5 ; 183.3] M EUR
+   largeur                    : 51.7 M EUR (39.3 % de la borne basse)
+point a la matrice d'expert   : 169.0 M EUR
+perte moyenne, bornes         : [2.94 ; 3.85] M EUR
+
+socle sans contagion (W = 0)  : 78.1 M EUR
+le socle vaut 42.6 % de la borne haute
+part NON exposee a l'ignorance directionnelle, au sens du chapitre 10
+  (1 - largeur / borne haute) : 71.8 %
+  rappel de la meme quantite a l'echelle du secteur : 78.9 % (bornes 6858-8697)
+
+======================================================================================
+(E) Ce qui reste non transposable, chiffre
+======================================================================================
+Deux limites ne se corrigent pas par une elasticite, et il faut les chiffrer.
+
+(1) LA FORME DE LA QUEUE. xi = 0.595, IC 90 % [0.304 ; 0.831],
+    estime sur de grandes institutions financieres. L'elasticite corrige l'ECHELLE
+    de la severite, jamais sa FORME. On mesure ce que l'incertitude sur xi seule
+    fait au capital d'entite, a frequence et taille CIBLES :
+      xi borne basse  = 0.304  ->  SCR =     140.9 M EUR
+      xi central      = 0.595  ->  SCR =     167.0 M EUR
+      xi borne haute  = 0.831  ->  SCR =     191.6 M EUR
+
+(1 bis) COMPARAISON DES DEUX INCERTITUDES, a l'echelle d'entite. La bande
+    d'IDENTIFICATION (direction de W inconnue) vaut 51.7 M EUR de large ;
+    la bande de PARAMETRE (IC 90 % sur xi seul) vaut 51.5 M EUR. Les deux sont
+    du meme ordre : a l'echelle d'entite, ignorer la direction coute autant
+    qu'ignorer l'indice de queue. Aucune des deux ne domine l'autre.
+
+(2) LA COMPOSITION SECTORIELLE. Le panel est celui du secteur financier d'OpRisk,
+    domine par la banque. Rien dans ce script ne corrige un effet 'assureur contre
+    banque' : la taille est controlee, le METIER ne l'est pas. C'est la limite qui
+    exige une donnee d'entite et qu'aucune elasticite ne remplace.
+
+======================================================================================
+(F) Le SCR d'entite par etat de conformite, face a une charge forfaitaire
+======================================================================================
+Le gain de propagation g est le canal que la conformite fait bouger (0,45 conforme,
+0,68 partiel, 0,90 non conforme). On le balaie a frequence et taille CIBLES. Seul le
+canal CONTAGION varie ici : les canaux frequence et detection, qui exigent les
+multiplicateurs de scenario, ne sont pas mobilises, donc l'ecart lu est un PLANCHER.
+
+etat                            g    SCR 99,5%      E[X]   / Formule Standard
+conforme                     0.45        116.4      2.67                 0.26
+partiellement conforme       0.68        143.2      3.13                 0.32
+non conforme                 0.90        169.0      3.64                 0.38
+
+surcout de non-conformite, canal contagion seul : 52.6 M EUR (+45.2 %)
+charge de Formule Standard, identique aux trois etats : 450 M EUR (ecart nul)
+
+C'est la these du memoire, lue a l'echelle ou une entite la vit : le forfait ne
+bouge pas d'un euro entre un profil exemplaire et un profil defaillant, quand le
+modele, lui, ecarte les deux. Le NIVEAU du forfait n'est pas le sujet ; son
+INSENSIBILITE l'est.
+
+======================================================================================
+(G) L'arbitrage detenir / transferer survit-il a la correction d'echelle ?
+======================================================================================
+La section detenir/transferer du chapitre resultats (script 58) est en AVAL du meme
+choix de lambda : elle tourne a 0,21 et sur un SCR de 488 M EUR. On la rejoue ici a
+l'echelle corrigee, pour dire si sa conclusion tient ou si elle en dependait.
+
+grandeur                                       a 0,21 (memoire)   echelle corrigee
+SCR 99,5 %  (M EUR)                                       491.1              169.0
+sinistralite attendue E[X]  (M EUR)                        9.44               3.64
+multiple de capital SCR / E[X]                             52.0               46.5
+cout annuel de detention  (M EUR)                          23.3                8.0
+   soit x la sinistralite attendue                         2.47               2.21
+portee optimale L*  (M EUR)                                 488                169
+part de la sinistralite cedee                              61%                38%
+gain du dimensionnement                                   -47%               -64%
+
+CE QUI EST INVARIANT, ET CE QUI NE L'EST PAS. Il faut separer les deux, car tout
+ne survit pas de la meme facon.
+
+  INVARIANT. Le multiple de capital (52.0 -> 46.5) et le cout de
+  detention rapporte a la sinistralite attendue (2.47 -> 2.21)
+  bougent de moins de 11 %, alors que les NIVEAUX sont divises par pres de
+  trois. Leurs deux termes se rapportent au meme SCR et se deplacent ensemble :
+  c'est la these du memoire, verifiee sur une correction qui n'avait pas ete faite
+  pour la tester.
+
+  NON INVARIANT. Le gain du dimensionnement passe de -47 % a -64%, et il faut
+  le dire au lieu de le ranger avec les rapports. La cause est mecanique : a lambda
+  plus faible, la perte annuelle est plus dominee par un sinistre unique, donc une
+  part PLUS GRANDE de E[X] se situe au-dela du SCR et echappe a une portee bornee
+  par le SCR. La part cedee tombe de 61% a 38%, et le cout residuel
+  avec elle. Le sens de la conclusion (transferer est nettement moins cher que
+  detenir) est donc renforce par la correction, mais son AMPLEUR chiffree en depend
+  et ne doit pas etre citee comme une grandeur d'entite.
+
+======================================================================================
+Figure
+======================================================================================
+figure ecrite : exploratory/vasicek_lab/figures/S21_descente_echelle.png
+
+======================================================================================
+Verdict
+======================================================================================
+Peut-on donner un SCR d'entite ? OUI, mais en BANDE et sous deux reserves nommees.
+
+  socle sans contagion            :      78.1 M EUR
+  bande d'identification (t = 1)  : [131.5 ; 183.3] M EUR
+  point a la matrice d'expert     :     169.0 M EUR
+  Formule Standard, meme entite   :     450.0 M EUR
+
+  Les deux corrections composees deplacent le chiffre d'entite de 488 a 169 M EUR.
+  Restent non corriges : la forme de la queue et la composition sectorielle.

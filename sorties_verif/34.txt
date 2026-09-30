@@ -1,0 +1,53 @@
+
+================================================================================
+La décomposition, et le contrôle que la normalisation ne dit rien
+================================================================================
+  attractivité des cibles, p_j : P1=0.065  P2=0.179  P3=0.127  P4=0.118  P5=0.143
+  amplitude de la direction, max |u_ij| = 1.078
+  reconstruction exacte de W a partir de (p_j, u) : ecart max 2.78e-17
+  SCR sous la convention retenue      : 8110 M
+  SCR apres translation compensee     : 8110 M (ecart 0.0 M)
+  La normalisation est bien une CONVENTION : le capital n'en depend pas.
+
+================================================================================
+Cran 1 : u est-il bien approché par un rang 1 ?
+================================================================================
+  valeurs singulieres de u : 1.947  0.834  0.612  0.508  0.000
+  part de variance captee par le rang 1 : 74.1 %
+  Lecture : un rang 1 restitue l'essentiel de la direction posee par le classeur
+  si cette part est elevee ; sinon, reculer d'un cran coute cher en fidelite.
+
+================================================================================
+Bornes de capital, cran par cran
+================================================================================
+  cran 0 : u libre                   [   7831 ;    8569] M   largeur    738 M   (400 tirages)
+  cran 1 : u de rang 1               [   7761 ;    8316] M   largeur    555 M   (400 tirages)
+  cran 3 : u du classeur (point)        8110 M
+  cran 4 : u = 0 (modele nul)           7831 M
+
+  Largeur cran 0 : 738 M   cran 1 : 555 M   variation +25 %
+  Reculer d'un cran RESSERRE les bornes : c'est le gain d'une hypothese de
+  structure explicite. On n'a pas acquis de donnee, on a assume une forme.
+
+================================================================================
+Ce qui bascule au cran 4 : la logique de la priorite
+================================================================================
+  cran 0 (u libre)                P1   63%  P2    3%  P3    4%  P4   29%  P5    0%
+  cran 1 (rang 1)                 P1   57%  P2    2%  P3    4%  P4   38%  P5    0%
+  cran 3 (classeur), gains        P1 1387  P2  494  P3  501  P4 1034  P5  266
+  cran 4 (u = 0), gains           P1 1051  P2  630  P3  592  P4 1052  P5  530
+
+  Ordre de remediation au cran 3 : P1 > P4 > P3 > P2 > P5
+  Ordre de remediation au cran 4 : P4 > P1 > P2 > P3 > P5
+  Au cran 4, pour une meme cible, l'ecart entre sources vaut 0.00e+00 :
+  aucune source ne se distingue plus par son profil de propagation. Ce qui
+  subsiste du classement ne vient QUE de la frequence d'amorce, pas du mecanisme.
+
+  Au cran 4, les deux premiers sont separes de 0 M (0.0 %).
+  => marge trop faible pour conclure a une inversion : au cran 4, P4 et
+  P1 sont INDISCERNABLES. Le resultat defendable n'est pas un
+  basculement, c'est que la DIRECTION est ce qui separe les deux piliers de
+  tete : au cran 3 l'ecart est de 353 M, au cran 4 il
+  s'annule. Sans direction, on ne sait plus lequel remedier en premier.
+
+figure ecrite : exploratory/vasicek_lab/figures/Z5_echelle_repli.png

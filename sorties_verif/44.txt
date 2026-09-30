@@ -1,0 +1,42 @@
+
+==================================================================================
+1. Le sous-process tiers : la taxonomie fine est rare sur donnee ouverte (calcul)
+==================================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  OpRisk 'Vendors & Suppliers' (finance) : n = 20  (1.0 % du TIC finance en compte, 0.7 % de la perte).
+  VCDB actor.Partner (finance) : n = 56, 0 deux crans plus bas (script 28).
+  Seuil d'estimation : ~30 obs/cellule.
+  => la TAXONOMIE fine du tiers n'est PAS resoluble sur open data : il faut le registre
+     DORA d'une entite (ITS 2024/2956). Meme mur de sparsite que le VCDB.
+
+==================================================================================
+2. Concentration de la sinistralite tiers (deja etablie, script 08g)
+==================================================================================
+  Data Breach Chronology, secteur financier : Gini des comptes journaliers = 0.69,
+  et 1.7 % des jours portent 20 % des incidents.
+  C'est le proxy de cause commune tierce : un prestataire partage fait tomber N entites
+  le meme jour (type MOVEit). Structure SYMETRIQUE, donc partie identifiee du modele.
+
+==================================================================================
+3. Origination et concentration tiers : ancrage sur donnee europeenne officielle
+==================================================================================
+  ORIGINATION. ESAs, 1er rapport incidents DORA (3 juin 2026) : 29 % des 3383 incidents ICT
+    MAJEURS de 2025 d'origine TIERCE => validation externe de P4 amorce (ROOT[4]=0.9).
+  CONCENTRATION (exposition). ECB 2024 (registres 2023) :
+    10 fournisseurs = 30 % du budget d'externalisation.
+    30 fournisseurs = 50 % du budget d'externalisation.
+    19 fournisseurs ICT critiques designes (ESAs, nov. 2025 : AWS, Microsoft, ...).
+    => ancre le parametre d'accumulation gamma = 0.68 sur un chiffre officiel.
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. La TAXONOMIE fine du sous-process tiers est rare sur open data (OpRisk V&S ~ 20,
+     VCDB Partner 56 -> 0) : il faut le registre DORA d'une entite (these du memoire, au
+     niveau sous-process P4).
+  2. Mais l'ORIGINATION (29 %, ESAs) et la CONCENTRATION (>30 % sur 10 fourn., ECB ;
+     Gini 0.69, notre donnee) sont ancrees : P4 amorce majeure et gamma valides.
+  3. On avance donc sans registre d'entite sur la partie IDENTIFIEE (origination, accumulation
+     symetrique) et on reserve au registre la partie non resoluble (taxonomie fine).
+
+figure ecrite : exploratory/vasicek_lab/figures/Z14_p4_sousprocess_open.png

@@ -1,0 +1,47 @@
+﻿
+==========================================================================
+A. Coefficients Jacobs (a, b) : stress de b pivote au centroide
+==========================================================================
+  source primaire : a = 7.68 (SE 0.7013), b = 0.7584 (SE 0.0697), n = 115, RSE = 0.523
+  centroide deduit des SE publies : x_bar = 10.04 (~22,864 enregistrements, coherent Ponemon)
+PRC chargée : 15,053 incidents avec total_affected > 0 (2019-2025)
+
+  axe                        b    a(b)    u=P85      xi   sigma   SCR(C)   SCR(NC)    Delta
+  bas (-1,645 SE)       0.6437   8.831    4.097   0.846   5.375     1650      4775     3125
+  central (2014)        0.7584   7.680    4.109   1.030   6.389     1883      5460     3577
+  haut (+1,645 SE)      0.8731   6.529    4.121   1.214   7.421     2081      6058     3977
+
+  Lecture : b est l'ELASTICITE cout-taille. Pivote au centroide, un b plus haut
+  appauvrit les petites breches et enrichit les grandes : la queue derivee
+  s'epaissit, le SCR et le Delta PRC montent. C'est l'axe d'hypothese dominant
+  du perimetre PRC (le residu par enregistrement, lui, se moyenne : script 21).
+
+==========================================================================
+B. Charge systemique gamma : probabilites de crise et SCR espere
+==========================================================================
+  gamma n'affecte PAS le SCR par etat (conditionnel) ; il commande la bascule
+  des probabilites d'etat en crise, donc le SCR espere conditionnel a Theta.
+  SCR par etat (OpRisk, lecture B, fixes) : C 6664  PC 9625  NC 15074 M EUR
+
+  gamma       P(NC|crise)  P(C|crise)  SCR espere normal  SCR espere crise
+  0.50             84.1%        2.0%             10644 M            14148 M
+  0.68             96.4%        0.1%             10644 M            14872 M
+  0.85            100.0%        0.0%             10644 M            15071 M
+  Lecture : le SCR espere NORMAL est invariant (la marginale redonne l'ancrage
+  par construction) ; gamma ne joue que sur la severite de la bascule en crise.
+
+==========================================================================
+C. Ancrage des probabilites d'etat : melange, jamais SCR par etat
+==========================================================================
+  Le SCR par etat et le Delta NC vs C ne dependent pas de l'ancrage (ils sont
+  conditionnels a l'etat). L'ancrage deplace le MELANGE : SCR espere et point
+  de depart de la trajectoire du 17.
+
+  ancrage                   SCR espere normal  SCR espere crise  surcout vs conforme
+  optimiste (25/40/35)                  9951 M            14626 M                3286 M
+  central  (35/35/30)                  10644 M            14872 M                3979 M
+  pessimiste (45/35/20)                11485 M            14987 M                4820 M
+  Lecture : l'ancrage (enquetes, non calibre sur l'entite) borne le capital
+  ESPERE actuel ; la cible conforme et le surcout par etat restent inchanges.
+
+figure ecrite : exploratory\vasicek_lab\figures\S17_sensibilites_hypotheses.png

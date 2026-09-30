@@ -1,0 +1,114 @@
+
+====================================================================================
+La distribution de perte annuelle, a l'echelle d'une entite
+====================================================================================
+annees simulees            : 600,000
+annees sans aucun sinistre : 98.7%
+perte moyenne E[X]         : 3.64 M EUR
+SCR = VaR 99.5%          : 169.0 M EUR
+multiple de capital SCR/E[X] : 46.5
+TVaR 99.5%               : 617.7 M EUR
+
+====================================================================================
+Le point de depart : tout detenir
+====================================================================================
+regime actuel (6,00 %)             cout annuel de detention =     10.1 M EUR   soit  2.79 x la sinistralite attendue
+directive (UE) 2025/2 (4,75 %)     cout annuel de detention =      8.0 M EUR   soit  2.21 x la sinistralite attendue
+
+Autrement dit : immobiliser le capital coute plusieurs fois ce que le risque
+coute en moyenne. C'est ce rapport qui rend le transfert economiquement pertinent,
+et c'est un rapport que le memoire ne calculait nulle part.
+
+====================================================================================
+Le traite en exces de perte annuel : cout total en fonction de la portee
+====================================================================================
+Retention R = 0 (le traite prend tout des le premier euro), CoC = 4,75 %
+
+  portee L     prime   SCR retenu   cout capital   cout total   % cede
+         0      0.00        169.0           8.03         8.03      0%
+        25      0.64        144.0           6.84         7.48      9%
+        50      1.18        119.0           5.65         6.84     16%
+       100      2.03         69.0           3.28         5.31     27%
+       150      2.67         19.0           0.90         3.57     36%
+       200      3.17          0.0           0.00         3.17     42%
+       300      3.92          0.0           0.00         3.92     52%
+       400      4.46          0.0           0.00         4.46     59%
+       500      4.87          0.0           0.00         4.87     65%
+       750      5.54          0.0           0.00         5.54     74%
+     1,000      5.95          0.0           0.00         5.95     79%
+
+CoC = 6,00 % : portee optimale L* = 170 M EUR
+   cout total 2.89 M EUR/an contre 10.14 en tout-detention (-72%)
+   prime 2.89 + cout du capital residuel 0.00 ; 38% de la sinistralite cedee
+   taux marginal de prime a l'optimum : 0.0103 par euro de portee
+   seuil d'inefficacite kappa* = 1 - 0.0103/0.0600 = 83%
+
+CoC = 4,75 % : portee optimale L* = 170 M EUR
+   cout total 2.89 M EUR/an contre 8.03 en tout-detention (-64%)
+   prime 2.89 + cout du capital residuel 0.00 ; 38% de la sinistralite cedee
+   taux marginal de prime a l'optimum : 0.0103 par euro de portee
+   seuil d'inefficacite kappa* = 1 - 0.0103/0.0475 = 78%
+
+====================================================================================
+Le seuil d'indifference : a partir de quel chargement detenir redevient rationnel ?
+====================================================================================
+CoC = 6,00 % : ratio de sinistralite d'indifference = 13.7%
+CoC = 4,75 % : ratio de sinistralite d'indifference = 17.4%
+
+ratio de sinistralite observe sur le marche cyber : 48.5%
+Si le ratio d'indifference est INFERIEUR au ratio de marche, le transfert est
+moins cher que la detention. L'ecart mesure la marge de negociation de l'entite.
+
+====================================================================================
+La correction qui empeche de conclure trop vite : le transfert n'est pas gratuit
+====================================================================================
+Le resultat ci-dessus est MECANIQUE : la VaR du retenu vaut max(SCR - L, 0), donc
+elle s'annule exactement en L = SCR, et l'optimum tombe la par construction. Trois
+raisons interdisent de s'y arreter, et toutes trois vont dans le meme sens.
+  (i)  CAPACITE. Une couverture agregee de pres de 500 M EUR est au plafond de ce
+       que le marche cyber sait placer sur un seul risque.
+  (ii) RISQUE DE BASE. Les polices cyber excluent la guerre et les infrastructures
+       essentielles : une part de la queue modelisee n'est pas assurable.
+  (iii) CONTREPARTIE. Sous Solvabilite II, ceder ne supprime pas l'exigence, cela
+       SUBSTITUE au risque cyber un risque de DEFAUT DE CONTREPARTIE (module SCR_def
+       sur les creances de reassurance).
+
+On resume les trois par un coefficient d'inefficacite kappa : le capital residuel
+devient max(SCR - L, 0) + kappa x L. Le transfert reste avantageux tant que le taux
+marginal de prime reste sous CoC x (1 - kappa).
+
+   kappa   L* (M EUR)   cout total   vs tout detenir   % cede
+    0.00          170         2.89             -64%      38%
+    0.02          170         3.05             -62%      38%
+    0.05          170         3.29             -59%      38%
+    0.10          170         3.69             -54%      38%
+    0.20          170         4.50             -44%      38%
+    0.30          170         5.31             -34%      38%
+
+taux marginal de prime pres de L = SCR (pas de 1.69 M EUR, soit 1 % de la portee) :
+   0.0104 par euro de portee
+   soit 1.04% de taux sur ligne, contre un cout du capital economise
+   de 4.75% par euro.
+
+SEUIL CRITIQUE : kappa* = 1 - 0.0104/0.0475 = 78%
+Il faudrait donc que plus des trois quarts de la couverture soient inefficaces
+(capacite indisponible, exclusion, ou defaut de contrepartie) pour que la detention
+redevienne preferable. La conclusion est robuste, mais le gain affiche (-64%) est
+une BORNE SUPERIEURE et doit etre cite comme telle.
+
+====================================================================================
+Ce que la conformite DORA change a cet arbitrage
+====================================================================================
+La remediation agit sur la FREQUENCE d'amorce. On rejoue l'arbitrage a lambda
+reduit, ce qui simule une entite devenue conforme.
+
+   lambda       SCR     E[X]   L* (4,75 %)   cout total
+    0.092       169     3.64           170         2.89
+    0.064        97     2.59            98         1.39
+    0.046        43     1.78            45         0.54
+
+Lecture : la conformite ne fait pas que baisser le capital, elle deplace le
+point d'equilibre entre retention et transfert. C'est un resultat de PILOTAGE,
+pas seulement de mesure.
+
+figure ecrite : exploratory/vasicek_lab/figures/S19_detenir_ou_transferer.png

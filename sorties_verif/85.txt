@@ -1,0 +1,128 @@
+﻿
+========================================================================================
+1. LA PREDICTION ANALYTIQUE, avant toute simulation
+========================================================================================
+  Si chaque pilier touche est un evenement enregistrable, alors dans une cascade la
+  fraction d'evenements qui sont des ENFANTS vaut (E[k] - 1) / E[k], ou E[k] est le nombre
+  moyen de piliers touches par sinistre. C'est exactement ce qu'un ajustement de Hawkes
+  appelle son ratio de branchement.
+
+  E[k] = 1.380 a l'etat conforme       -> n attendu = 0.275
+  E[k] = 1.931 a l'etat non conforme   -> n attendu = 0.482
+
+  A COMPARER AU 0.551 MESURE PAR LE SCRIPT 08h SUR LA CHRONOLOGIE REELLE. Les deux
+  sont du meme ordre, et cela AVANT d'avoir simule quoi que ce soit. Si la simulation le
+  confirme, alors le ratio de branchement observe est exactement ce qu'une cascade SANS
+  auto-excitation produit, et il ne constitue aucune preuve d'auto-excitation.
+
+========================================================================================
+2. CONTROLES DE L'ESTIMATEUR : sans eux rien de ce qui suit ne vaut
+========================================================================================
+  (a) POISSON PUR, 6000 evenements : n estime = 0.004
+      Attendu proche de zero. Un estimateur qui verrait de l'excitation dans un Poisson
+      invaliderait tout le reste.
+  (b) HAWKES SIMULE de ratio 0.30, 4881 evenements : n estime = 0.285
+  (b) HAWKES SIMULE de ratio 0.55, 4817 evenements : n estime = 0.541
+  (b) HAWKES SIMULE de ratio 0.80, 4715 evenements : n estime = 0.790
+      L'estimateur retrouve le ratio impose. Il est donc utilisable sur les dates de la
+      cascade, ou l'on ne connait pas la reponse a l'avance.
+
+========================================================================================
+3. LE TEST : ajuster un Hawkes sur des dates ENGENDREES PAR LA CASCADE
+========================================================================================
+  On engendre 60 annees de dates avec le moteur de cascade a l'etat non conforme. Ce
+  processus ne contient AUCUN terme d'auto-excitation : sa seule structure temporelle est
+  la duree des pas de propagation a l'interieur d'un sinistre. On lui ajuste un Hawkes
+  exponentiel, comme on le ferait sur une chronologie reelle, et l'on regarde ce qu'il
+  trouve, resolution d'observation par resolution d'observation.
+
+    resolution   evenements    n estime    etendue   demi-vie (h)
+         heure         6348       0.473      0.020            4.8
+          jour         6348       0.480      0.022            9.0
+       semaine         6348       0.532      0.037           50.8
+          mois         6348       0.739      0.048          368.8
+
+  A LA RESOLUTION DE LA DONNEE REELLE, LE JOUR, l'ajustement trouve n = 0.480 SUR UN
+  PROCESSUS QUI N'A AUCUNE AUTO-EXCITATION. La valeur mesuree sur la chronologie reelle est
+  0.551, et la prediction analytique de la section 1 vaut 0.482. LES TROIS SONT DU
+  MEME ORDRE, et les deux premieres coincident a trois millemes.
+
+  ET L'AJUSTEMENT RETROUVE AUSSI L'HORLOGE INTERNE DE LA CASCADE : la demi-vie estimee du
+  noyau vaut 9.0 h a la resolution du jour, pour un lag de propagation vrai de 6.7 h.
+  Le Hawkes ne se contente donc pas de trouver le bon ratio : il retrouve le bon temps
+  caracteristique, et l'appelle « decroissance de l'excitation ».
+
+  L'EFFET DE LA RESOLUTION VA DANS LE SENS INVERSE DE CELUI QU'ON ATTENDAIT, et il faut le
+  dire tel quel : n MONTE quand on degrade la resolution, de 0.473 a l'heure a 0.739 au
+  mois, au lieu de tomber. Le mecanisme est clair une fois vu : agreger des dates dans des
+  cellules plus larges FABRIQUE du groupement, et l'ajustement le lit comme de l'excitation
+  en allongeant son noyau, dont la demi-vie passe de 9 a 369 heures.
+
+  CE N'EST DONC PAS LE MEME PHENOMENE QUE CELUI DU SCRIPT 08h, et les confondre serait une
+  faute. Les deux operations sont OPPOSEES : le script 08h RETIRE les co-occurrences du
+  meme jour du compte de l'excitation, et le ratio tombe vers zero ; ici on les CONSERVE en
+  perdant leur ordre, et le ratio monte. Les deux encadrent donc le meme fait par les deux
+  cotes : L'ESTIMATION DU RATIO EST ENTIEREMENT PILOTEE PAR LA STRUCTURE INFRA-JOURNALIERE.
+  La retirer l'annule, la brouiller l'amplifie, et dans les deux cas ce qui est mesure n'est
+  pas une propriete du phenomene mais une propriete de la fenetre par laquelle on le
+  regarde. C'est exactement l'argument de resolution temporelle, et il est ici chiffre.
+
+========================================================================================
+4. CE QUE CELA CHANGE POUR L'ARGUMENT DU MEMOIRE
+========================================================================================
+  L'ARGUMENT ACTUEL est un constat de sensibilite : « l'endogeneite disparait quand on
+  re-etiquette les co-occurrences du meme jour ». Un lecteur peut objecter que le
+  re-etiquetage est un choix, donc que le constat est circulaire.
+
+  L'ARGUMENT QUE CE SCRIPT PERMET EST UNE EQUIVALENCE OBSERVATIONNELLE, et elle ne prete
+  pas le flanc a cette objection : a la resolution dont on dispose, un processus SANS
+  auto-excitation produit le meme ratio de branchement que celui qu'on mesure. Le 0,551
+  n'est donc PAS une preuve d'auto-excitation ; c'est une quantite que les deux modeles
+  reproduisent egalement bien.
+
+  D'OU LA FORMULATION A RETENIR, ET ELLE EST PLUS HONNETE QUE « LE HAWKES EST REJETE » :
+  sur la donnee de frequence disponible, LE HAWKES ET LA CASCADE NE SONT PAS DISTINGUABLES.
+  Le choix se fait donc ailleurs, et il se defend mieux ainsi :
+    - les parametres de la cascade sont des DOMAINES DE CONTROLE REGLEMENTAIRES, sur
+      lesquels DORA fait porter des exigences et qu'une entite peut piloter ;
+    - les parametres d'un Hawkes sont un taux de fond et un noyau d'excitation, qui ne
+      correspondent a aucune exigence et sur lesquels aucune remediation ne se formule.
+  A pouvoir explicatif EGAL sur la donnee, on retient le modele dont les parametres sont
+  actionnables. C'est un argument de PARCIMONIE INTERPRETATIVE, pas un rejet empirique, et
+  il ne pretend pas plus que ce que la donnee permet.
+
+  CE QUE CELA NE DIT PAS, et il faut le garder. On ne demontre pas qu'il n'y a AUCUNE
+  auto-excitation dans le phenomene reel : on demontre que la donnee disponible ne permet
+  pas de la distinguer de la cascade. Une chronologie a l'heure, ou un marquage des
+  sinistres par identifiant d'evenement racine, trancherait ; ni l'une ni l'autre n'existe
+  dans les sources retenues.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LA PREDICTION EST ANALYTIQUE : dans une cascade ou chaque pilier touche est un
+     evenement, la fraction d'enfants vaut (E[k]-1)/E[k], soit 0.482 a l'etat non
+     conforme. Le script 08h mesure 0.551 sur la chronologie reelle.
+  2. L'ESTIMATEUR EST VALIDE AVANT USAGE : il rend n proche de zero sur un Poisson pur
+     (0.004) et retrouve les ratios imposes sur des Hawkes simules.
+  3. AJUSTE SUR DES DATES ENGENDREES PAR LA CASCADE, SANS AUCUNE AUTO-EXCITATION, il trouve
+     n = 0.480 a la resolution du JOUR, celle de la donnee reelle. Le ratio observe est
+     donc exactement ce qu'une cascade produit, et il ne prouve rien.
+  3bis. IL RETROUVE MEME L'HORLOGE : demi-vie estimee 9.0 h pour un lag de propagation
+     vrai de 6.7 h. Le bon ratio ET le bon temps caracteristique, sans excitation.
+  4. L'EFFET DE LA RESOLUTION VA A L'INVERSE DE CE QU'ON ATTENDAIT : n MONTE quand on
+     degrade, de 0.473 a l'heure a 0.739 au mois, parce qu'agreger des dates FABRIQUE du
+     groupement (la demi-vie du noyau passe de 9 a 369 h). Ce n'est donc PAS le meme
+     phenomene que dans le script 08h, dont l'operation est OPPOSEE : il retire les
+     co-occurrences du meme jour et le ratio tombe vers zero. Les deux encadrent le meme
+     fait par les deux cotes : l'estimation est entierement pilotee par la structure
+     INFRA-JOURNALIERE. La retirer l'annule, la brouiller l'amplifie ; dans les deux cas on
+     mesure la fenetre d'observation et non le phenomene.
+  5. L'ARGUMENT DU MEMOIRE SE REFORMULE, ET IL Y GAGNE : au lieu d'un rejet empirique du
+     Hawkes, une EQUIVALENCE OBSERVATIONNELLE a la resolution disponible, suivie d'un choix
+     de parcimonie interpretative. Les parametres de la cascade sont des domaines de
+     controle pilotables, ceux d'un Hawkes ne le sont pas.
+  6. ET CE QUI N'EST PAS DEMONTRE RESTE DIT : on ne montre pas l'absence d'auto-excitation
+     dans le phenomene, seulement que la donnee ne permet pas de l'en distinguer.
+
+figure ecrite : exploratory\vasicek_lab\figures\S41_equivalence_hawkes.png

@@ -1,0 +1,136 @@
+
+============================================================================================
+95 : l'agregation du besoin ORSA DORA au capital total
+============================================================================================
+
+Question : le memoire chiffre un ecart de capital entre etats de conformite. Que devient
+cet ecart une fois porte au capital TOTAL de l'entite ? Deux conventions sont comparees
+sur les memes montants : l'additive, qui est celle de Solvabilite II pour le risque
+operationnel, et un contrefactuel correle qui sert de mesure, jamais de proposition.
+
+Tout est lu dans sorties_verif/65.txt, donc de chiffres SFCR publies. Les entites sont
+designees par leur classe de taille : les identites restent dans le script 65.
+  controle du 65 : les 8 valeurs publiees au chapitre 12 sont retrouvees.
+
+============================================================================================
+1. Ce que le 65 donne, et les bornes du BSCR qui s'en deduisent
+============================================================================================
+L'identite SCR = BSCR + Adj + SCR_op avec Adj <= 0 donne BSCR >= SCR - SCR_op, et le
+plafond SCR_op <= 0,3 BSCR donne BSCR >= SCR / 1,3. Le minorant retenu est le plus grand
+des deux. Minorer le BSCR MAJORE le taux du contrefactuel : les taux qui suivent sont
+donc des majorants, et l'ecart entre conventions est au moins celui qu'on lit.
+
+entite                   besoin    ecart  SCR pub.  op publie   BSCR >=  origine de la borne       
+                          M EUR    M EUR     M EUR      M EUR     M EUR
+Assureur non-vie A        112.1     34.9       425       59.0     366.0  SCR - module publie       
+Assureur non-vie B        135.5     44.4       812       39.7     772.3  SCR - module publie       
+Assureur vie C            195.8     62.7      1587 non publie    1220.8  SCR / 1,3 (plafond seul)  
+Assureur vie D            294.4     86.0     14800 non publie   11384.6  SCR / 1,3 (plafond seul)  
+
+============================================================================================
+2. La convention reglementaire : additive, donc reconnue en entier
+============================================================================================
+Le risque operationnel entre hors de la matrice de correlation du BSCR. Un besoin de
+capital de nature operationnelle, porte en ORSA, se transmet donc au capital total sans
+aucun benefice de diversification : Delta SCR = D, taux de reconnaissance 1,000.
+
+C'est vrai du NIVEAU comme de l'ECART entre etats. Or c'est l'ecart qui porte la these du
+memoire, et le niveau est une borne superieure d'ordre de grandeur (chapitre 12). La suite
+lit donc les deux, en donnant le premier rang a l'ecart.
+
+entite                  ecart D   Delta SCR additif  en % du SCR publie
+Assureur non-vie A         34.9                34.9               8.21%
+Assureur non-vie B         44.4                44.4               5.47%
+Assureur vie C             62.7                62.7               3.95%
+Assureur vie D             86.0                86.0               0.58%
+
+============================================================================================
+3. Le contrefactuel : le meme montant agrege comme un module de plus
+============================================================================================
+tau(rho, d) = (sqrt(1 + 2 rho d + d^2) - 1) / d, avec d = D / BSCR. Le BSCR est pris
+comme un bloc unique correle a rho, ce qui MINORE la reconnaissance : agreger module par
+module donnerait davantage, la somme des modules majorant le BSCR. Le sens de la
+conclusion n'en depend pas, seulement son amplitude.
+
+
+  L'ECART entre etats :
+  entite                  d = D/BSCR  tau rho=0.00  tau rho=0.25  tau rho=0.50  tau rho=0.75  additif / rho=0,25
+  Assureur non-vie A          0.0954          4.8%         29.4%         53.4%         76.9%               3.41x
+  Assureur non-vie B          0.0575          2.9%         27.7%         52.1%         76.2%               3.62x
+  Assureur vie C              0.0514          2.6%         27.4%         51.9%         76.1%               3.65x
+  Assureur vie D              0.0076          0.4%         25.4%         50.3%         75.2%               3.94x
+  soit, a rho = 0,25, de 25.4 a 29.4 % reconnus contre 100 % en additif, un facteur 3.4 a 3.9.
+
+  le NIVEAU du besoin :
+  entite                  d = D/BSCR  tau rho=0.00  tau rho=0.25  tau rho=0.50  tau rho=0.75  additif / rho=0,25
+  Assureur non-vie A          0.3063         15.0%         38.1%         59.8%         80.4%               2.63x
+  Assureur non-vie B          0.1754          8.7%         32.8%         56.0%         78.4%               3.05x
+  Assureur vie C              0.1604          8.0%         32.2%         55.5%         78.1%               3.11x
+  Assureur vie D              0.0259          1.3%         26.2%         51.0%         75.6%               3.82x
+  soit, a rho = 0,25, de 26.2 a 38.1 % reconnus contre 100 % en additif, un facteur 2.6 a 3.8.
+
+============================================================================================
+4. La limite analytique, qui est le resultat a retenir
+============================================================================================
+Developpement de tau en d = 0 :
+
+    sqrt(1 + 2 rho d + d^2) = 1 + rho d + (d^2 / 2)(1 - rho^2) + O(d^3)
+    donc  tau(rho, d) = rho + (d / 2)(1 - rho^2) + O(d^2).
+
+Un montant petit devant le BSCR est donc reconnu a hauteur de rho, et de rho seulement.
+La convention additive le reconnait a 1. L'ecart entre les deux conventions n'est pas un
+effet de taille : c'est 1 - rho, et il ne se referme qu'a correlation parfaite.
+
+Controle numerique de ce developpement sur l'ecart de l'entite la plus grande :
+
+  rho = 0.25  d = 0.00755   tau exact = 0.25353   rho + (d/2)(1-rho^2) = 0.25354   ecart = 0.000007
+  rho = 0.50  d = 0.00755   tau exact = 0.50282   rho + (d/2)(1-rho^2) = 0.50283   ecart = 0.000011
+  rho = 0.75  d = 0.00755   tau exact = 0.75164   rho + (d/2)(1-rho^2) = 0.75165   ecart = 0.000009
+
+============================================================================================
+5. Le plafond de Formule Standard, et la marge qui reste avant saturation
+============================================================================================
+SCR_op = min(0,3 x BSCR ; Op). La charge forfaitaire ne peut donc pas depasser 0,3 BSCR,
+quelle que soit l'exposition operationnelle reelle. La marge qui reste avant saturation
+vaut 0,3 x BSCR - SCR_op publie, et elle se calcule sur les deux entites non-vie, seules a
+publier leur module. Lecture de reference Adj = 0, POSEE ET DECLAREE : un Adj strictement
+negatif releverait le BSCR, donc le plafond, donc la marge. L'etat S.25.01 de l'entite
+permet de lever cette hypothese entite par entite, et c'est ainsi qu'il faut la citer.
+
+entite                  BSCR ref.   plafond  op publie    marge  ecart D  besoin D  verdict
+Assureur non-vie A          366.0     109.8       59.0     50.8     34.9     112.1  le besoin DEPASSE la marge
+Assureur non-vie B          772.3     231.7       39.7    192.0     44.4     135.5  le besoin tient dans la marge
+Assureur vie C         module operationnel non publie : le plafond ne se teste pas
+Assureur vie D         module operationnel non publie : le plafond ne se teste pas
+
+Sur l'assureur non-vie A, le besoin de 112.1 M EUR vaut 2.21 fois la marge de
+50.8 M EUR qui reste sous le plafond. Meme un forfait qui repondrait a la conformite
+saturerait donc avant d'avoir exprime ce besoin. L'ecart entre etats, lui, vaut
+34.9 M EUR, soit 0.69 fois cette marge.
+
+============================================================================================
+VERDICT
+============================================================================================
+
+1. Un euro d'ecart DORA coute un euro de capital total. Le risque operationnel entrant
+   hors de la matrice de correlation, la convention reglementaire reconnait l'ecart en
+   ENTIER, et cela vaut a toutes les tailles du panel.
+
+2. Le meme montant agrege comme un module de plus ne serait reconnu qu'a hauteur de
+   25.4 a 29.4 % a rho = 0,25, soit un facteur 3.4 a 3.9 entre les deux
+   conventions. Ce n'est pas un effet de taille : pour un montant petit devant le BSCR,
+   le taux tend vers rho lui-meme.
+
+3. Consequence pour l'entite, et c'est la lecture decisionnelle : un euro economise sur la
+   non-conformite DORA vaut plus, en capital, qu'un euro economise sur un risque qui se
+   diversifie. La remediation est donc sous-evaluee par une lecture qui la traiterait
+   comme un module parmi d'autres.
+
+4. Consequence sur la Formule Standard, qui s'ajoute a sa cecite deja etablie. Non
+   seulement la charge forfaitaire ne repond pas a la conformite, mais elle est PLAFONNEE
+   a 0,3 BSCR : sur l'assureur non-vie A, la marge restant sous ce plafond ne couvre meme
+   pas le besoin calcule. Un forfait rendu sensible a la conformite ne suffirait donc pas.
+
+5. Ce qui reste hors de portee sans l'etat S.25.01 complet : la valeur exacte du BSCR et
+   de l'ajustement Adj, donc le passage des bornes aux valeurs. Les taux imprimes ici sont
+   des majorants, ce qui suffit au verdict mais pas a une mesure.

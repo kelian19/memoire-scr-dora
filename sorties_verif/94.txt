@@ -1,0 +1,141 @@
+﻿
+========================================================================================
+1. LE CAPITAL DES 32 CONFIGURATIONS, ET LE CONTROLE CONTRE LE SCRIPT 69
+========================================================================================
+Lecture binaire C / NC sur 5 piliers, 32 configurations, 40000 annees, 4 graines,
+a nombres communs. Protocole recopie du script 69 ; le controle ci-dessous est ce qui
+atteste que la recopie est fidele, et sans lui le reste porterait sur un autre modele.
+
+  capital minimal (tous conformes)   :   6 015 M EUR
+  capital maximal (tous non conf.)   :  17 009 M EUR
+  ESPERANCE a surcroit nul           :   9 736 M EUR   <- le script 69 imprime 9736
+
+  controle des marges a surcroit nul, P(non conforme) par pilier :
+    P1 0.3498  P2 0.3499  P3 0.3501  P4 0.3500  P5 0.3500   (ancrage 0.35)
+
+========================================================================================
+2. ESPERANCE CONTRE QUANTILES, LE LONG DU SURCROIT DE CORRELATION
+========================================================================================
+Le surcroit delta s'ajoute aux deux seules paires structurees, par une matrice de
+correlation dont la diagonale vaut un, ce qui preserve les marges par CONSTRUCTION. La
+comparaison porte donc sur la structure de dependance seule, a marges strictement fixees.
+
+  delta   esperance   q   50 %   q   75 %   q   90 %   q   95 %   q   99 %    CTE 90 %
+   0.00       9 736     9 077    12 033    15 619    17 009    17 009      16 563
+   0.10       9 736     9 077    12 033    15 619    17 009    17 009      16 603
+   0.20       9 736     9 077    12 385    16 051    17 009    17 009      16 759
+   0.30       9 736     9 077    12 698    16 051    17 009    17 009      16 747
+   0.38       9 734     9 077    12 698    16 051    17 009    17 009      16 738
+
+DEPLACEMENT ENTRE LE MODELE ACTUEL ET LE SURCROIT MAXIMAL ADMISSIBLE :
+  esperance : 9 736 -> 9 734, soit -0.02 %
+  q   50 %  : 9 077 -> 9 077, soit +0.00 %
+  q   75 %  : 12 033 -> 12 698, soit +5.53 %
+  q   90 %  : 15 619 -> 16 051, soit +2.76 %
+  q   95 %  : 17 009 -> 17 009, soit +0.00 %
+  q   99 %  : 17 009 -> 17 009, soit +0.00 %
+  CTE 90 %  : 16 563 -> 16 738, soit +1.06 %
+
+UN QUANTILE DISCRET EST EN ESCALIER, et il faut le dire plutot que de le lisser. La loi
+des configurations ne porte que 32 atomes : un quantile reste sur le meme atome tant
+que la masse cumulee ne franchit pas son niveau, puis saute. Une absence de deplacement
+d'un quantile n'est donc PAS une invariance, seulement l'absence de franchissement.
+
+========================================================================================
+2bis. LE PLAFOND DE L'EXERCICE : AU-DELA D'UN NIVEAU, LE QUANTILE EST SATURE
+========================================================================================
+Les colonnes a 95 % et 99 % ci-dessus ne bougent pas d'un iota, et il serait faux d'y lire
+une invariance. L'atome le plus haut, la configuration ou les cinq piliers sont non
+conformes, porte a lui seul une masse importante : des que le complement du niveau tombe
+sous cette masse, le quantile EST cet atome et il ne peut plus bouger par construction.
+
+  delta   P(tous non conformes)   niveau au-dela duquel le quantile est sature
+   0.00                  6.83 %      93.17 %
+   0.10                  7.27 %      92.73 %
+   0.20                  7.75 %      92.25 %
+   0.30                  8.28 %      91.72 %
+   0.38                  8.78 %      91.22 %
+
+CONSEQUENCE, ET C'EST UNE LIMITE DE L'OBJET ET NON DU CALCUL. Un << quantile a 99,5 % de la
+loi des configurations >> n'existe pas comme grandeur informative : il vaut la
+configuration integralement non conforme, quelle que soit la structure de dependance et
+quelles que soient les marges tant qu'elles restent a leur ancrage. La loi des
+configurations ne porte que 32 atomes ; on ne peut pas lui demander la resolution qu'on
+demande a une loi de perte. C'est une raison de plus de ne jamais lui appliquer la macro
+\VaR, qui est reservee a la charge annuelle agregee.
+
+========================================================================================
+3. LA MESURE QUI NE SAUTE PAS : LES PROBABILITES DE DEPASSEMENT
+========================================================================================
+Pour eviter l'escalier, on lit la loi a NIVEAUX de capital fixes plutot qu'a probabilites
+fixees. La probabilite de depasser un niveau donne varie continument avec delta, et c'est
+la statistique a citer quand on veut parler de la queue de la loi des configurations.
+
+  niveau de capital    delta 0.00   delta 0.10   delta 0.20   delta 0.30   delta 0.38
+    9 736 M EUR (x1.00)       41.72 %       41.27 %       40.80 %       40.28 %       39.94 %
+   12 170 M EUR (x1.25)       24.22 %       24.95 %       25.74 %       26.62 %       27.34 %
+   14 604 M EUR (x1.50)       13.10 %       13.36 %       13.63 %       13.92 %       14.14 %
+   17 039 M EUR (x1.75)        0.00 %        0.00 %        0.00 %        0.00 %        0.00 %
+
+ET LES DEUX EXTREMITES DE LA LOI DES CONFIGURATIONS, qui sont la lecture la plus directe
+de ce que fait la correlation :
+  P(tous conformes    )       29.06 %       29.89 %       30.81 %       31.87 %       33.03 %
+  P(tous non conformes)        6.83 %        7.27 %        7.75 %        8.28 %        8.78 %
+
+========================================================================================
+VERDICT
+========================================================================================
+Ecrit APRES lecture des sorties.
+
+1. LA RESERVE DU SCRIPT 69 ETAIT JUSTIFIEE, ET ELLE EST MAINTENANT CHIFFREE. L'esperance
+   du capital ne bouge que de -0.02 % sur tout le balayage, ce qui reproduit le
+   resultat publie ; les quantiles de la loi des configurations, eux, bougent :
+   +5.53 % au niveau de 75 %, +2.76 % a 90 %, et +1.06 % sur la moyenne de queue a 90 %.
+   L'argument d'additivite ne transporte donc PAS a un quantile, et il ne faut pas
+   presenter l'invariance mesuree sur l'esperance comme une invariance du modele.
+
+2. MAIS L'ORDRE DE GRANDEUR RESTE PETIT, ET C'EST LE SECOND RESULTAT. Quelques pour cent,
+   contre deux centiemes de pour cent pour l'esperance : l'ecart entre les deux objets est
+   de deux ordres de grandeur, et pourtant les deux restent loin des incertitudes que le
+   memoire declare par ailleurs. La reserve du script 69 se referme donc en un chiffre
+   plutot qu'en une inquietude.
+
+3. LE MECANISME EST LA POLARISATION, ET C'EST LA MESURE LA PLUS ROBUSTE DU SCRIPT. A
+   esperance inchangee, plus de correlation rend les configurations extremes plus
+   probables des DEUX cotes : P(tous conformes) passe de 29.06 % a 33.03 % et
+   P(tous non conformes) de 6.83 % a 8.78 %. La probabilite de depasser 1,25 fois le capital
+   espere monte de 24.22 % a 27.34 %, soit +12.9 % en relatif. Ces
+   grandeurs varient CONTINUMENT, contrairement aux quantiles, et ce sont donc elles
+   qu'il faut citer pour parler de la queue de la loi des configurations.
+
+4. ET UNE LIMITE DE L'OBJET, TROUVEE EN CHEMIN. Au-dela du niveau imprime en section 2bis,
+   le quantile de la loi des configurations EST la configuration integralement non
+   conforme et ne peut plus bouger. Les colonnes a 95 % et 99 % du tableau sont donc
+   SATUREES et non invariantes, et un quantile a 99,5 % de cette loi n'aurait aucun
+   contenu. Une loi a 32 atomes ne se lit pas comme une loi de perte.
+
+CE QUE CE SCRIPT NE DIT PAS.
+  - le surcroit de correlation n'est pas CALIBRE : aucune donnee du projet ne l'estime, et
+    le balayage donne un ordre de grandeur, pas une correction. Ce qui est robuste est que
+    la borne de positivite de la matrice ferme l'exercice par le haut ;
+  - le deplacement d'un quantile discret est un CHANGEMENT D'ATOME, donc un changement de
+    la configuration qui occupe ce rang, et non la variation continue d'une valeur. Sa
+    direction suit de la polarisation, qui est mesuree directement au point 3 ;
+  - la grandeur calculee ici est un quantile de l'incertitude sur l'ETAT de conformite,
+    JAMAIS une mesure de capital. Elle ne porte ni \VaR ni \TVaR, et la confondre avec
+    l'exigence de solvabilite ferait lire une incertitude d'etat comme une exigence.
+
+GRANDEURS CITEES PAR LE MEMOIRE, SANS SEPARATEUR DE MILLIERS
+Aucun calcul nouveau : les memes valeurs, sans l'espace de milliers que l'extracteur du
+harnais coupe en deux.
+  esperance a surcroit nul                9736
+  quantile 75 %, surcroit nul             12033
+  quantile 75 %, surcroit maximal         12698
+  quantile 90 %, surcroit nul             15619
+  quantile 90 %, surcroit maximal         16051
+  moyenne de queue a 90 %, surcroit nul   16563
+  moyenne de queue a 90 %, maximal        16738
+  capital de la configuration extreme     17009
+  capital de la configuration conforme    6015
+
+EXIT 0

@@ -1,0 +1,96 @@
+﻿tirage commun : 40000 annees, 865674 incidents, lambda=21.56/an, g=0.9
+
+==============================================================================
+Socle identifie, point d'expert, et ce que la contagion ajoute
+==============================================================================
+  SOCLE (W = 0, aucune contagion)          :      5275 M
+  W symetrique (A = 0, direction nulle)    :      7993 M   (+51.5 % / socle)
+  W d'expert (classeur qualitatif actuel)  :      8110 M   (+53.7 % / socle)
+  rho(W) expert = 0.506   (Leontief : doit rester < 1)
+  Le socle ne depend d'AUCUN parametre non identifiable : c'est le plancher
+  defendable. Tout ce qui est au-dessus est de la contagion, donc a borner.
+
+==============================================================================
+Bornes de capital sur l'ensemble admissible, en fonction de l'ignorance t
+==============================================================================
+  degres de liberte de la direction : 10 paires hors diagonale, donc 2^10 = 1024 sommets
+  (une paire non ordonnee par couple de piliers distincts ; chaque sommet fixe le sens
+  de chacune, ce qui rend l'enumeration exhaustive et le resultat deterministe.)
+
+  t = 0.25 : SCR dans [    7837 ;     8174] M   largeur     336 M   (  6.4 % du socle)   [1024/1024 sommets admissibles]
+  t = 0.50 : SCR dans [    7605 ;     8300] M   largeur     695 M   ( 13.2 % du socle)   [1024/1024 sommets admissibles]
+  t = 0.75 : SCR dans [    7348 ;     8431] M   largeur    1083 M   ( 20.5 % du socle)   [1024/1024 sommets admissibles]
+  t = 1.00 : SCR dans [    6858 ;     8697] M   largeur    1839 M   ( 34.9 % du socle)   [1024/1024 sommets admissibles]
+
+  Etat actuel des donnees (t = 1, ignorance totale de la direction) :
+    capital BORNE dans [6858 ; 8697] M, facteur 1.27 entre les bouts.
+    La contagion ajoute entre +30 % et +65 % au socle (5275 M).
+    Le point d'expert (8110 M) est UN point de cet ensemble, pas sa mesure.
+
+  MISE EN GARDE DE LECTURE : a xi eleve, la queue annuelle obeit au principe de la
+  perte unique dominante, donc la VaR est PEU sensible a la structure de cascade
+  (le 29 l'avait deja constate entre marche et branchement). Lecture en MOYENNE,
+  estimateur bien moins bruite :
+    moyenne annuelle : socle 583 M, bornes [849 ; 1100] M  (facteur 1.30)
+  NE PAS faire porter la demonstration par le seul niveau de VaR : la contribution
+  se lit sur la DECISION (priorite de remediation) et sur la moyenne.
+
+  VALEUR DE L'INFORMATION : un registre contraignant l'asymetrie a la moitie du
+  niveau de co-occurrence (t = 0,5) reduirait la largeur des bornes de 1839 M
+  a 695 M, soit -62 %. C'est la specification de
+  reporting DORA, chiffree en euros de capital.
+
+==============================================================================
+Lecture centrale a l'interieur des bornes : le prior d'expert (couche bayesienne)
+==============================================================================
+  prior centre sur le classeur qualitatif, dispersion tau = 0.5 x co-occurrence
+  lecture centrale : mediane 8159 M, intervalle a 90 % [8017 ; 8295] M
+  a comparer aux BORNES sans prior [6858 ; 8697] M
+  ATTENTION, a ecrire tel quel dans le memoire : ce prior est le classeur qualitatif
+  actuel, PAS une elicitation de Cooke. Les seances ne sont pas faites. Les BORNES,
+  elles, ne dependent d'aucun prior : c'est ce qui les rend opposables.
+
+==============================================================================
+Priorite de remediation ROBUSTE : minimax regret sur l'ensemble admissible
+==============================================================================
+  220 matrices admissibles retenues (sommets tires, t = 1)
+
+  pilier     gain moyen   regret max   regret p95  % fois 1er  % minimax
+  P1              1030 M        1532 M        1119 M       43.6 %      10.7 %
+  P2               777 M        1691 M        1294 M       15.0 %       3.5 %
+  P3               566 M        1684 M        1446 M        3.6 %       0.2 %
+  P4               997 M        1510 M        1089 M       37.7 %      85.7 %
+  P5               373 M        1774 M        1553 M        0.0 %       0.0 %
+  (gain min nul pour tous : a t = 1, certains sommets annulent deja la ligne du
+   pilier, le remedier n'y change alors rien. Ce n'est pas une anomalie.)
+
+  Action minimax regret : P4 (regret max 1510 M), devant P1 (1532 M), soit 1.5 % d'ecart.
+  Stabilite du choix (bootstrap) : P1 11 %, P2 4 %, P4 86 %
+  Choix sous le seul W d'expert : P1.
+  VERDICT HONNETE : P4 et P1 sont a egalite pratique.
+  L'ignorance directionnelle ne permet PAS de les departager, et il ne faut pas
+  pretendre le contraire. Ce qui est solide : ils devancent nettement les autres.
+
+==============================================================================
+Hierarchie de remediation : tient-elle sur tout l'ensemble admissible ?
+==============================================================================
+  ATTENTION AU VOCABULAIRE : ce n'est PAS la non-transitivite du script 01. Le 01
+  montre que les correlations violent la contrainte de transitivite d'un modele a
+  facteur unique. Ici on teste la relation de preference MAJORITAIRE entre piliers,
+  par gain de remediation. Un resultat ici ne confirme ni n'infirme celui du 01.
+
+  dominance majoritaire (part des W ou le gain de la ligne depasse celui de la colonne)
+             P1     P2     P3     P4     P5  
+     P1    .     0.66   0.80   0.54   0.90 
+     P2   0.34    .     0.72   0.41   0.83 
+     P3   0.20   0.28    .     0.21   0.74 
+     P4   0.46   0.59   0.79    .     0.91 
+     P5   0.10   0.17   0.26   0.09    .   
+
+  Aucun cycle : la preference majoritaire est un ordre total sur l'ensemble.
+  MAIS ne pas en conclure que la hierarchie est invariante : 2 paire(s) sont
+  a moins de 5 points de 0,50, donc a pile ou face. Enonce defendable : la
+  SEPARATION entre le groupe de tete et les autres est robuste, l'ORDRE INTERNE
+  au groupe de tete ne l'est pas. Ecrire "classement invariant" serait une survente.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z_identification_partielle.png

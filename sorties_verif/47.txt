@@ -1,0 +1,151 @@
+
+==================================================================================
+Severite GPD : chargement et ajustement (OpRisk cyber x finance)
+==================================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  582 pertes ; seuil u = 20.03 M€ (configuration figee, percentile 84.4) ; 91 exces ;
+  re-ajustement libre a ce seuil : GPD xi = 0.598, sigma = 55.75.
+  parametres PUBLIES par la configuration : xi = 0.5954, sigma = 57.97.
+
+==================================================================================
+Tests d'adequation (p-value par bootstrap parametrique)
+==================================================================================
+  Anderson-Darling : A2 = 0.163, p = 0.959  (ajustement NON rejete a 5 %).
+  Kolmogorov-Smirnov : D = 0.043, p = 0.889  (non rejete a 5 %).
+
+  Ecart-type asymptotique de xi, (1+xi)/sqrt(N_u) avec N_u = 91 : 0.167
+  IC 90 % par delta-methode : [0.320 ; 0.871]
+  a comparer a l'IC bootstrap de la configuration figee : [0.304 ; 0.831]
+  Les deux approches, asymptotique et par reechantillonnage, se recoupent.
+
+  Estimateur de Hill, k = 86 : xi_Hill = 1.315   (MLE au seuil publie : 0.5954)
+  ecart relatif de Hill au MLE : +120.8 %
+
+  Estimateur de Hill, k = 91 : xi_Hill = 1.396   (MLE au seuil publie : 0.5954)
+  ecart relatif de Hill au MLE : +134.5 %
+  Hill suppose une queue de Pareto pure et ignore le parametre d'echelle : sur des
+  excedents convertis, il surestime systematiquement. C'est le MLE qui est retenu.
+
+==================================================================================
+Hill contre MLE : l'ecart est-il du biais, ou un desaccord ?
+==================================================================================
+  Monde simule : corps observe sous u = 20.03 M EUR, queue GPD de
+  parametres publies (xi = 0.5954, sigma = 57.97), 2000 tirages.
+
+      k   Hill observe    Hill simule (moy.)             IC90 simule  dedans ?
+     30          0.932                 0.825   [ 0.604 ;  1.076]       oui
+     50          0.956                 0.961   [ 0.768 ;  1.165]       oui
+     86          1.315                 1.327   [ 1.155 ;  1.506]       oui
+     91          1.396                 1.422   [ 1.248 ;  1.596]       oui
+    120          1.457                 1.477   [ 1.344 ;  1.608]       oui
+    200          1.717                 1.728   [ 1.649 ;  1.807]       oui
+
+  VERDICT. 6 valeurs de Hill sur 6 tombent dans l'intervalle a 90 % du monde
+  simule a xi = 0.5954. L'ecart de +120 % au MLE n'est donc PAS un desaccord entre
+  deux estimateurs : c'est ce qu'un xi de 0.5954 produit quand on applique Hill
+  a des pertes brutes, decalees du seuil, sur un echantillon de cette taille.
+  Les donnees ne contredisent pas la calibration publiee, elles la confirment par un
+  troisieme chemin, apres Anderson-Darling et Kolmogorov-Smirnov.
+
+  LA SIGNATURE DU BIAIS SE LIT AUSSI DANS LE SENS DE LA DERIVE. Un vrai indice de
+  queue donne un PLATEAU sur le trace de Hill. Ici l'estimateur croit sans s'arreter
+  avec k (0.93 a k=30 puis 1.72 a k=200) : plus on
+  descend dans le CORPS de la loi, plus il monte. Et le balayage de seuil ci-dessous
+  va dans le sens inverse, xi DECROIT quand on monte dans la queue. Si la queue valait
+  vraiment 1,32, les deux derives seraient inversees.
+  Ci-dessus : la FAMILLE GPD est-elle compatible avec les exces, parametres refaits
+  a chaque tirage. Ci-dessous : le couple (xi, sigma) que le memoire PUBLIE est-il
+  compatible avec eux, parametres imposes. C'est le second test qui atteste le
+  chiffre publie ; le premier n'atteste que le choix de loi.
+
+  Parametres PUBLIES imposes (xi = 0.5954, sigma = 57.97) :
+  Anderson-Darling : A2 = 0.200, p = 0.986  (NON rejete a 5 %).
+  Kolmogorov-Smirnov : D = 0.054, p = 0.891  (non rejete a 5 %).
+
+  Controle de robustesse au seuil : au q85 des donnees courantes (22.03 M€, 88 exces),
+  le re-ajustement libre donne xi = 0.6012, sigma = 56.59, a comparer a xi = 0.5979, sigma = 55.75
+  au seuil publie. L'indice de queue bouge de 0.5 % entre les deux seuils : le resultat ne tient pas au seuil.
+
+==================================================================================
+Coherence du taux de depassement p_u : un defaut connu, chiffre et publie
+==================================================================================
+  p_u N'EST PAS UN PARAMETRE LIBRE. La formule POT a trois entrees (u, p_u, (xi, sigma))
+  et deux degres de liberte : le seuil et l'echantillon fixes, le taux de depassement
+  est COMPTE, il n'est pas choisi. Le couple publie n'est donc pas une hypothese que
+  l'on pourrait assumer, c'est une incoherence arithmetique.
+
+  configuration : n_excess = 91, p_u = 0.1509
+  p_u x n = 87.8 exces attendus, contre 91 que le seuil publie donne dans la donnee courante.
+  taux coherent = 91/582 = 0.1564, soit +3.6 % sur le taux.
+  p_u vaut 88/583 : le taux du percentile 85 d'un filtrage anterieur. C'est donc lui
+  qui est en decalage, et non n_excess, qui compte bien les exces du seuil publie.
+
+  EFFET. Quantile de severite a 99,5 % (UN sinistre, pas un capital) : 662.78 publie contre 678.60 M EUR coherente,
+  soit +2.4 %. Calcule en rapport et non en niveau : la VaR
+  reconstruite a partir des xi et sigma arrondis du dictionnaire vaut 662,99 et non
+  662,78, mais le rapport, lui, ne depend pas de cet arrondi.
+
+  SENS, ET IL FAUT DISTINGUER DEUX PRUDENCES QUE L'ON CONFOND FACILEMENT.
+  Du point de vue de la SOLVABILITE, l'ecart est anti-conservateur : il sous-estime
+  le besoin de capital de 2.4 %, et une sous-estimation ne s'excuse pas par la prudence,
+  elle se declare. Du point de vue de la THESE, il va au contraire dans le bon sens :
+  le chiffre avance par le memoire n'est pas gonfle par ce defaut, il est minore.
+  Les deux sont vrais, ils ne parlent pas de la meme chose, et seul le premier engage.
+
+  MATERIALITE. 15.8 M EUR, soit 2.5 % de la largeur de l'IC90 de cette meme VaR ([411.5 ; 1037.1] M EUR).
+  DECISION. valeur gelée, écart publié au chapitre 13 (inventaire des hypothèses).
+  Rejouer le pipeline pour ce seul ecart reinjecterait un bruit de Monte-Carlo du meme
+  ordre (bootstrap a 200 tirages) : on deplacerait des centaines de nombres publies
+  sans pouvoir attribuer un seul deplacement a la correction. On ne rebase pas un
+  modele pour un ecart immateriel detecte tard, on l'inscrit au registre des limites.
+
+==================================================================================
+Couverture reelle de l'IC90 asymptotique de xi (a n fini)
+==================================================================================
+  Couverture empirique de l'IC90 = 86 % (nominal 90 %).
+  LECTURE. Un intervalle annonce a 90 % qui n'en couvre que 86 est trop
+  ETROIT : l'incertitude publiee sur xi est sous-estimee, pas l'inverse. Pour atteindre
+  le nominal il faudrait elargir la demi-largeur d'un facteur 1.10, soit 10 %.
+  C'est le second des deux defauts d'estimation du memoire, et il va DANS LE MEME SENS
+  que le premier (le taux de depassement gele, +2,4 % de capital manquant) : tous deux
+  sous-estiment. Les choix POSES du memoire, eux, sont tous prudents. Voir le
+  chapitre inventaire des hypotheses, qui met les deux colonnes en regard.
+  Cela conforte le choix de rapporter les IC bootstrap plutot que les asymptotiques.
+
+  Stabilite de xi au seuil, balayage q = 0.75, 0.80, 0.85, 0.90, 0.93, 0.95 :
+    q = 0.75   u =   8.62 M EUR   146 exces   xi = 0.982
+    q = 0.80   u =  12.88 M EUR   115 exces   xi = 0.750
+    q = 0.85   u =  22.03 M EUR    88 exces   xi = 0.601
+    q = 0.90   u =  47.42 M EUR    59 exces   xi = 0.534
+    q = 0.93   u =  76.06 M EUR    41 exces   xi = 0.500
+    q = 0.95   u = 105.39 M EUR    30 exces   xi = 0.382
+  plage brute sur tout le balayage : [0.38 ; 0.98].
+  plage RETENUE, seuils a 30 exces au moins : [0.38 ; 0.98].
+  AU-DESSUS du seuil publie : xi va de 0.60 a 0.38 quand le seuil monte,
+    tout entier dans l'IC90 publie de xi, [0.30 ; 0.83] : la sensibilite au
+    seuil ne cree donc pas d'incertitude nouvelle, elle se lit dans celle deja declaree.
+  EN DESSOUS : xi remonte jusqu'a 0.98, au-dela de la borne haute de cet IC.
+    Biais de seuil attendu, et c'est ce qui justifie de ne pas descendre plus bas.
+  A NE PAS ECRIRE : « xi est stable quand on fait varier le seuil ». Il ne l'est pas.
+    Ce qui est stable, c'est le VOISINAGE du seuil retenu, ou l'indice ne bouge que de
+    0.5 % entre le seuil publie et le q85 des donnees courantes.
+
+==================================================================================
+Frequence : adequation binomiale negative vs Poisson (comptes firme-annee)
+==================================================================================
+  14944 cellules firme-annee ; moyenne = 0.099, dispersion Var/E = 1.19.
+  Poisson logL = -5,024 ; NB (r=0.63) logL = -4,959.
+  LR Poisson vs NB : LR = 131, p = 1.6e-30 -> la NB l'emporte nettement.
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. Severite : la GPD n'est PAS rejetee (Anderson-Darling p = 0.96, KS p = 0.89) ;
+     xi = 0.60 au seuil publie, stable dans son VOISINAGE (0.5 % jusqu'au q85) mais
+     decroissant sur tout le balayage ; mean residual life lineaire au-dela de u.
+  2. La couverture de l'IC90 asymptotique est de 86 % : correcte.
+  3. Frequence : la binomiale negative domine le Poisson sans ambiguite (LR p = 2e-30), la surdispersion est un fait, pas un artefact.
+  Les deux briques du socle passent les tests d'adequation : le niveau reste incertain
+  (bande), mais les FORMES de loi posees sont soutenues par la donnee.
+
+figure ecrite : exploratory/vasicek_lab/figures/J3_validation_adequation.png

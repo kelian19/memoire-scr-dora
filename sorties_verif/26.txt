@@ -1,0 +1,43 @@
+﻿
+==========================================================================
+Calibration des experts sur les questions-graines (reponses connues)
+==========================================================================
+  9 graines | seuil alpha = 0.05
+
+  expert                    calibration  information    poids DM
+  Expert A -- bien calibre        0.571         0.84      91.5%
+  Expert B -- vague               0.405         0.11       8.5%
+  Expert C -- sur-confiant        0.000         1.78       0.0%  (sous alpha -> poids 0)
+  Expert D -- biaise              0.014         0.60       0.0%  (sous alpha -> poids 0)
+
+  => dominant : Expert A -- bien calibre (91%), le mieux place sur le produit
+     calibration x information (une performance, pas un statut).
+  Mecanisme : un expert BIAISE est ecarte par sa calibration ; un expert trop VAGUE
+  par sa faible information ; un expert TROP SUR DE LUI n'est recompense que si ses
+  intervalles etroits tombent juste.
+  Ecarte(s) sous le seuil de calibration alpha=0.05 : Expert C -- sur-confiant, Expert D -- biaise.
+
+==========================================================================
+Elicitation ponderee des liens diriges de W (DM = melange de Cooke)
+==========================================================================
+  lien                                         DM 5%   DM 50%   DM 95%   posit
+  P1 -> P2  (gouvernance entraine incidents)    0.45     0.71     0.94    0.80
+  P2 -> P1  (inverse)                           0.03     0.23     0.55    0.20
+  P4 -> P2  (tiers entraine incidents)          0.53     0.76     0.97    0.80
+  P1 -> P4  (gouvernance entraine tiers)        0.40     0.63     0.90    0.70
+  P3 -> P1                                      0.05     0.27     0.63    0.30
+  P5 -> P2                                      0.05     0.26     0.57    0.20
+
+==========================================================================
+VERDICT
+==========================================================================
+1. La methode de Cooke transforme un dire d'expert BRUT en une estimation PONDEREE
+   par la performance, auditable et reproductible. C'est l'apport methodo de la
+   phase 3, et il ne demande AUCUNE donnee d'incident : seulement des experts.
+2. Chaque lien de W ressort avec un INTERVALLE a 90 %, pas un point : l'incertitude
+   d'elicitation entre enfin dans le modele (et alimente la sensibilite du SCR).
+3. L'asymetrie causale survit a l'elicitation : P1->P2 median 0.71 contre P2->P1 median 0.23. C'est le resultat robuste du modele.
+4. Ici les reponses sont FICTIVES (demonstration). Le protocole (fiche jointe) est
+   pret : il ne reste qu'a collecter les quantiles des vrais experts.
+
+figure ecrite : exploratory\vasicek_lab\figures\V_elicitation_cooke.png

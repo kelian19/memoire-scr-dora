@@ -1,0 +1,136 @@
+\chapter{Conclusion}
+
+Ce mémoire a construit un modèle interne partiel du coût en capital de la non-conformité à
+DORA, où la dépendance entre les cinq piliers est portée par une cascade dirigée plutôt que
+par une copule, et où le capital dépend de l'état de conformité de l'entité. Trois lignes de
+résultat s'en dégagent, et ce qui est acquis se dit ici aussi nettement que ce qui
+ne l'est pas.
+
+\section{Ce qui est établi}
+\paragraph{Le chiffre.} Entre l'état conforme et l'état non conforme sur les quatre canaux, le
+besoin de capital passe de $6\,049$ à $20\,188$~M\euro{} à l'échelle du secteur, soit un facteur
+$3{,}34$. Les canaux isolés en expliquent $9\,138$~M\euro{} d'un écart de $14\,139$, leur
+interaction en portant $5\,001$, soit
+$35\,\%$, parce que les canaux se composent presque comme un produit : un plan de
+remédiation doit donc citer l'effet de fermeture d'un canal et non son effet isolé. La fréquence
+est le levier qui commande : seule, elle porte le besoin de capital à $10\,377$~M\euro{}, facteur
+que la forme fermée de la perte unique retrouve à moins de $1\,\%$, et toute cible au-delà de
+$11\,413$~M\euro{} l'exige. Ce montant
+reste un besoin de capital au sens de l'ORSA, non un SCR réglementaire.
+
+\paragraph{Le mécanisme.} Le mécanisme tient et se distingue formellement de ses concurrents : la criticité dépend de
+l'ordre de propagation, propriété qu'aucune dépendance symétrique ni aucun score
+additif ne peut reproduire, et la normalisation de Leontief garantit la stabilité de la
+contagion, cycles compris, par construction et non par calibration heureuse. Sur les marges
+que la donnée fixe, la queue de sévérité ($\hat\xi = 0{,}5954$ au seuil publié), la
+fréquence d'entrée et l'accumulation par cause commune, l'ancrage empirique est solide, et il est
+éprouvé hors échantillon : la loi de comptage et la forme de la queue passent le backtest, le
+niveau de la charge annuelle ne le passe pas pour une raison mesurée, la dérive de l'échelle de
+sévérité. Le processus de Hawkes n'est pas distinguable de la cascade à la résolution
+disponible ; il est écarté par un choix de parcimonie argumenté, non par un test qui le
+réfuterait. Enfin, le modèle exprime intégralement l'effet de la
+conformité sur le capital là où la Formule Standard n'en exprime rien.
+
+\paragraph{Un acquis de méthode, qu'il faut compter comme tel.} Chaque nombre publié dans ce
+mémoire est confronté, section par section, aux sorties versionnées des scripts que cette section
+cite, et le contrôle rend séparément ce qu'il confirme, ce qu'il exempte avec son motif et ce
+qu'il ne confirme pas. Il porte aujourd'hui sur la totalité des nombres du document, sans zone
+non couverte autre que celles qui sont déclarées avec leur raison. Ce n'est pas une coulisse
+d'atelier : le dispositif a trouvé trois valeurs fausses qu'aucune relecture n'avait vues, toutes
+justes au moment où elles avaient été écrites et devenues fausses quand une valeur amont avait
+bougé. Il est décrit \matcomp, avec ce qu'il ne garantit pas, car il ne vérifie
+ni qu'un nombre est au bon endroit ni qu'il veut dire ce que la phrase prétend.
+
+% SOURCES-SCRIPTS: 28 39 43 68 92 47 89 91 85 100
+
+\section{Ce qui est démontré comme non mesurable}
+La direction de la contagion n'est pas identifiable sur les données publiques. Le
+mémoire l'établit sur trois sources qui échouent pour des raisons distinctes, résiste à la
+tentation du test dégénéré du temps inversé, et pousse jusqu'à la meilleure expérience
+naturelle disponible, le choc de chaîne d'approvisionnement MOVEit, dont l'effet net
+s'annule une fois un placebo retranché. Le troisième échec ferme la dernière échappatoire :
+le schéma VERIS, standard de description d'incidents adopté par la profession, porte
+littéralement les deux champs manquants, et leur intersection n'est renseignée que dans
+\emph{un} incident sur $10\,591$. Le problème n'est donc pas de savoir quoi collecter, il est
+d'en rendre le remplissage obligatoire. Cette limite n'est pas dissimulée, elle est
+convertie en méthode : le capital est borné sur l'ensemble des matrices admissibles plutôt
+qu'appuyé sur une matrice posée. Le socle sans contagion est ainsi défendable sans aucune hypothèse non
+identifiable, et la contagion ajoute une bande explicite au-dessus de ce socle. Dans la
+configuration retenue pour ce calcul, le capital se situe entre $6\,858$ et $8\,697$~M\euro{} sur
+les $1\,024$ sommets de l'ensemble admissible. La largeur de cette bande, $1\,839$~M\euro{}, est le
+coût en capital de l'ignorance de la direction : il est connu d'avance plutôt que subi, et c'est
+la réponse que ce mémoire donne à la question du montant.
+
+% SOURCES-SCRIPTS: 30 34 28 110
+
+\section{Ce qui en découle pour le régulateur}
+La donnée qui rendrait la contagion mesurable se déduit par complémentarité des trois échecs :
+un registre d'incidents horodatant la survenance à la semaine, catégorisant par
+domaine de contrôle et non par vecteur d'attaque, consolidant une cause commune
+comme un événement unique, et consignant l'ensemble des piliers touchés par chaque incident,
+dont la loi jointe distingue à elle seule une matrice de sa transposée. Les deux premières exigences sont déjà des champs normalisés du
+schéma VERIS : la recommandation ne demande donc pas d'inventer une taxonomie, elle
+demande d'en rendre le remplissage obligatoire, ce que la notification d'incident
+majeur sous DORA peut imposer et qu'une base déclarative volontaire ne peut pas. Cette
+spécification n'est pas un v\oe{}u : le mémoire chiffre en euros de capital le resserrement des
+bornes qu'elle apporterait, et la hiérarchise par dépendance. Retenu sur les six dépendances dont
+le corpus documentaire indique le sens, un tel registre ferait tomber la largeur de la bande de
+$66\,\%$. Et la hiérarchie est très inégale : documenter la seule dépendance entre gouvernance et
+gestion des incidents lèverait $28{,}9\,\%$ de l'ambiguïté de capital, quand documenter le lien
+entre tests et prestataires tiers n'en lèverait rien. Un superviseur qui ne pourrait exiger qu'un
+seul champ sait donc lequel demander. La limite d'identifiabilité
+devient une recommandation de reporting opposable, ce qui donne au travail une portée
+au-delà du modèle.
+
+% SOURCES-SCRIPTS: 66 55
+
+\section{Ce qui en découle pour l'entité}
+Le capital n'est pas seulement un chiffre à publier, c'est un coût. En le confrontant au prix
+de marché du même risque, le mémoire met les trois leviers d'une entité, remédier, détenir,
+transférer, sur un seul axe en euros par an. À l'échelle d'entité, le coût annuel de détention
+vaut plus de deux fois la sinistralité attendue, un traité en excès de perte correctement
+dimensionné réduit le coût total d'au plus deux tiers environ, borne supérieure que la capacité
+du marché, les exclusions et le risque de contrepartie entament, et la remédiation déplace ce point
+d'équilibre en plus d'abaisser le capital. Le niveau reste illustratif, et il l'est doublement
+puisque la descente d'échelle du secteur vers l'entité passe par deux élasticités estimées.
+Mais le \emph{rapport} entre coût de détention et prix de transfert résiste mieux que le
+niveau, et pour une raison qui est une identité plutôt qu'une mesure : ses deux termes
+sont proportionnels au \emph{même} SCR, qui se simplifie, de sorte qu'un changement d'échelle
+pur le laisse inchangé. Il vaut $2{,}78$ au taux de la directive et $3{,}51$ au taux
+historique. Ce qui subsiste est un effet de forme, la descente d'échelle déplaçant la
+fréquence et la sévérité séparément plutôt que de redimensionner la loi de perte, et le seul
+balayage disponible le borne par le haut à $+36\,\%$ sur une plage de SCR d'un facteur quatre.
+C'est la lecture décisionnelle que le travail visait, et elle est plus robuste que le niveau
+sans être invariante.
+
+% SOURCES-SCRIPTS: 58 65 67
+
+\section{Limites}
+L'élicitation structurée a été préparée et diffusée, et elle est restée sans réponse
+(annexe~\ref{ch:elicitation}) : la lecture centrale de la direction repose donc sur un classeur
+qualitatif, non sur une agrégation d'experts pondérée. Deux hypothèses pèsent le plus sans être testables sur la donnée : les
+niveaux de propagation, posés, et l'additivité des coûts entre piliers touchés, dont
+l'élasticité vaut $0{,}95$ à l'état non conforme contre $0{,}39$ à l'état conforme
+(\S\ref{sec:additivite-couts}). Dans les deux cas le signe et l'ordre de l'écart résistent à
+toute la plage étudiée, non son amplitude. Le
+niveau absolu du SCR est illustratif et ne doit pas être cité hors de son cadrage relatif.
+L'incertitude de queue domine toute lecture ponctuelle, ce qui impose de présenter le capital
+en distribution. Et l'ordre de remédiation entre les deux piliers de tête, la gouvernance et
+la gestion des tiers, dépend de la direction non identifiée : le mémoire sait dire que ces
+deux-là dominent, pas lequel remédier d'abord sans un dire d'expert. Cette dépendance se chiffre
+plutôt qu'elle ne se déclare. En dégradant l'émission de la gouvernance pour simuler le biais
+d'une source qui la sur-attribue, le classement tient jusqu'à une dégradation du quart et bascule
+vers la gestion des tiers à la moitié, tandis que le niveau de capital, lui, ne perd que
+$24{,}8\,\%$ même lorsque la gouvernance est rendue entièrement muette, soit $0{,}81$ fois la
+largeur de la bande d'identification déjà publiée. Le niveau résiste, le classement non.
+
+% SOURCES-SCRIPTS: 74 64
+
+\section{Ouvertures}
+Trois prolongements se dessinent : mener l'élicitation structurée pour resserrer la bande
+directionnelle sur ses deux degrés de liberté restants ; approfondir le pilier des tiers sur
+des données clients, là où l'open data s'effondre ; et passer de la sensibilité de
+propagation à une véritable criticité au sens de l'audit, c'est-à-dire au risque résiduel
+après mesures de contrôle, une fois disponible une métrique de mitigation par pilier.
+
+% =====================================================================

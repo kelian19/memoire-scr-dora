@@ -1,0 +1,67 @@
+﻿
+==========================================================================
+1.1  Latente de conformite : seuils ordonnes et probabilites d'etat
+==========================================================================
+  C* = gamma*Theta + sqrt(1-gamma^2)*eps,  gamma = 0.68
+  seuils : K_bas = Phi^-1(p_NC) = -0.385   K_haut = Phi^-1(p_NC+p_PC) = +0.524
+  ancrage probas d'etat : NC 35%  PC 35%  C 30%
+
+  etat                       P (normal, marginale)   P (crise, Theta=-2,5)
+  Conforme                                  30.0%                   0.1%
+  Partiellement conforme                    35.0%                   3.5%
+  Non conforme                              35.0%                  96.4%
+  La marginale (integree sur Theta) redonne l'ancrage : controle de coherence.
+  Lecture : une crise systemique deplace la masse vers Non conforme (bascule DORA).
+
+==========================================================================
+1.2  SCR_DORA par etat, 3 canaux emboites (graine MC commune entre etats)
+==========================================================================
+
+  OPRISK  (severite OPRISK)
+  etat                         SCR A (freq)  SCR B (+prop)  SCR C (+detec)
+  Conforme                           8301 M         6664 M          5932 M
+  Partiellement conforme            11059 M         9625 M          9625 M
+  Non conforme                      15074 M        15074 M         16595 M
+    lecture A (freq): Delta(PC vs C)=  2759  Delta(NC vs C)=  6773  |  SCR espere normal= 11637  crise= 14924 M
+    lecture C (freq+prop+detec): Delta(PC vs C)=  3692  Delta(NC vs C)= 10663  |  SCR espere normal= 10956  crise= 16336 M
+
+  PRC  (severite PRC)
+  etat                         SCR A (freq)  SCR B (+prop)  SCR C (+detec)
+  Conforme                           2589 M         1903 M          1642 M
+  Partiellement conforme             3653 M         3118 M          3118 M
+  Non conforme                       5520 M         5520 M          6577 M
+    lecture A (freq): Delta(PC vs C)=  1064  Delta(NC vs C)=  2930  |  SCR espere normal=  3987  crise=  5450 M
+    lecture C (freq+prop+detec): Delta(PC vs C)=  1476  Delta(NC vs C)=  4935  |  SCR espere normal=  3886  crise=  6449 M
+
+==========================================================================
+Delta_DORA bootstrap 2 niveaux, par etat (lectures A freq et B +propagation)
+==========================================================================
+  Incertitude a 2 niveaux : (1) frequence par etat (S0/S1/S2 en mode sample),
+  (2) severite de queue. Pour OpRisk, REECHANTILLONNAGE DES EXCES REELS (methode
+  honnete du memoire, script 14) si la donnee sous licence est presente ; sinon
+  repli sur l'IC90 normal (sample_severity_params, plus large).
+  Graine MC COMMUNE entre etats ET entre lectures a chaque tirage : l'ecart ne
+  vient que du changement d'etat (canal frequence) et du gain de propagation g.
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+  OpRisk : 91 exces reels charges -> bootstrap non-parametrique de la queue.
+
+  OPRISK  lecture A (freq)  (120 tirages x 20,000 annees) :
+    Delta_DORA(PC vs C) : median =     2168 M EUR   IC90% [761 ; 9661]   part > 0 : 100%
+    Delta_DORA(NC vs C) : median =     6092 M EUR   IC90% [2083 ; 33358]   part > 0 : 100%
+
+  OPRISK  lecture B (freq+prop)  (120 tirages x 20,000 annees) :
+    Delta_DORA(PC vs C) : median =     2556 M EUR   IC90% [963 ; 12768]   part > 0 : 100%
+    Delta_DORA(NC vs C) : median =     7401 M EUR   IC90% [2830 ; 38793]   part > 0 : 100%
+    reference memoire (NC vs C, 07) =     3879 M EUR   IC90% [1497 ; 22249]
+
+  PRC  lecture A (freq)  (60 tirages x 3,000 annees) :
+    Delta_DORA(PC vs C) : median =     1082 M EUR   IC90% [819 ; 1368]   part > 0 : 100%
+    Delta_DORA(NC vs C) : median =     2995 M EUR   IC90% [2461 ; 3396]   part > 0 : 100%
+
+  PRC  lecture B (freq+prop)  (60 tirages x 3,000 annees) :
+    Delta_DORA(PC vs C) : median =     1257 M EUR   IC90% [1077 ; 1466]   part > 0 : 100%
+    Delta_DORA(NC vs C) : median =     3668 M EUR   IC90% [3201 ; 4094]   part > 0 : 100%
+    reference memoire (NC vs C, 07) =     2015 M EUR   IC90% [1607 ; 2366]
+
+figure ecrite : exploratory\vasicek_lab\figures\S10_scr_multi_etats.png

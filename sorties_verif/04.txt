@@ -1,0 +1,47 @@
+==========================================================================
+RESULTAT 1 : le biais de p_j est EXACTEMENT le taux de declaration a la barre
+==========================================================================
+     u     q(u)   E[q|S>=u]   p_naif/p_vrai    K vrai    K naif   biais K
+   0.5     0.44      0.7847          0.7845    -0.416    -0.047    +0.369
+   1.0     0.66      0.8654          0.8653    +0.025    +0.192    +0.167
+   3.0     0.89      0.9534          0.9535    +0.727    +0.763    +0.036
+   8.0     0.97      0.9852          0.9853    +1.300    +1.309    +0.008
+  15.0     0.98      0.9932          0.9934    +1.632    +1.635    +0.003
+  40.0     1.00      0.9981          0.9981    +2.095    +2.095    +0.001
+
+  Le rapport p_naif/p_vrai colle E[q(S)|S>=u] a la 4e decimale.
+  Biais de K toujours POSITIF => seuil trop haut => sous-provisionnement.
+  Il tombe de +0.369 (barre u=0.5, q=0.44) a +0.001 (barre u=40, q=1.00).
+  C'est LA le levier : monter la barre, pas raffiner l'estimateur de queue.
+
+==========================================================================
+RESULTAT 3 : l'extrapolation EVT du TAUX n'est pas pilotable (resultat negatif)
+==========================================================================
+  barre u = 3.0   K vrai = +0.7272   K naif = +0.7631 (biais +0.0359)
+
+  seuil haut v   E[q|S>v]  erreur ratio     K_EVT   biais K
+             8     0.9852        0.9790   +0.7545   +0.0273
+            15     0.9932        1.0023   +0.7306   +0.0034
+            25     0.9965        0.9729   +0.7507   +0.0235
+            40     0.9981        0.9630   +0.7572   +0.0300
+            60     0.9989        1.0899   +0.6611   -0.0660
+           100     0.9994        0.5885   +1.0923   +0.3651
+
+  comptage naif : plancher E[q|S>=u] = 0.9534, biais K = +0.0359
+
+  Le PLANCHER tend vers 1 quand v monte : c'est le seul gain reel, et il est
+  identique a celui du RESULTAT 2 (monter la barre). L'ERREUR DE RATIO, elle,
+  s'ecarte de 1 sans regle : elle vaut 0.59 a 1.09 selon v.
+  Biais resultant sur K : de -0.066 a +0.365, contre +0.036 pour le comptage naif.
+  Il existe un v optimal, mais on ne peut PAS le localiser sans connaitre la
+  verite. L'extrapolation EVT n'ajoute que du bruit a un levier deja disponible.
+
+==========================================================================
+Ce que l'EVT fait vraiment : l'indice de queue, invariant a la troncature
+==========================================================================
+  seuil  2 : xi sur donnees completes = 0.901 | sur donnees declarees = 0.885   (vrai 0.9)
+  seuil  4 : xi sur donnees completes = 0.896 | sur donnees declarees = 0.890   (vrai 0.9)
+  seuil  8 : xi sur donnees completes = 0.898 | sur donnees declarees = 0.896   (vrai 0.9)
+  => la queue (donc le CAPITAL) est robuste ; le SEUIL, lui, se joue ailleurs.
+
+figure ecrite : exploratory/vasicek_lab/figures/L_seuil_Kj.png

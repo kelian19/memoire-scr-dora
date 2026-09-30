@@ -1,0 +1,126 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+========================================================================================
+0. L'ECHANTILLON, ET LE CONTROLE QUI AUTORISE LA SUITE
+========================================================================================
+Perimetre cyber x finance, convention de severite du projet : 582 incidents.
+Seuil publie u = 20.03 M EUR, laissant 91 exces.
+
+CONTROLE D'IDENTITE. L'ajustement libre sur les 91 exces, au seuil publie, doit redonner
+la calibration figee. Sans ce controle on mesurerait l'influence d'une observation sur un
+AUTRE modele que celui du memoire.
+
+  grandeur          ce script     config.py        ecart
+  xi                   0.5979        0.5954     +0.42 %
+  sigma (M EUR)         55.75         57.97     -3.84 %
+  taux p_u             0.1564        0.1509     +3.62 %
+
+CONTROLE PASSE : le compte d'exces est exact et xi est a moins de 5 % de la valeur gelee.
+
+L'ecart sur p_u est le defaut CONNU, chiffre et publie comme limite au chapitre de
+robustesse : config.py porte 0,1509 quand 91 exces sur l'echantillon en donnent
+0.1564. Le gel interdit de le corriger. Toutes les lignes qui suivent sont calculees
+avec le taux RECOMPTE, de sorte que la ligne k = 0 serve de reference interne au script
+et que les ecarts entre lignes ne doivent rien a cette incoherence.
+
+  quantile a 99,5 % au taux recompte, k = 0 : 657.16 M EUR
+  quantile publie (taux gele)               : 662.78 M EUR
+
+========================================================================================
+1. RETRAIT DES k PLUS GROSSES PERTES : CE QUE DEVIENT LA QUEUE
+========================================================================================
+On retire les k plus gros sinistres de l'ECHANTILLON ENTIER, pas seulement des exces :
+un sinistre retire n'a pas eu lieu, donc il ne compte ni au numerateur ni au
+denominateur du taux de depassement. Le seuil, lui, ne bouge pas.
+
+   k   perte retiree   n exc.       xi    sigma      p_u   q 99,5 %   ecart / k=0
+   0        -           91   0.5979    55.75   0.1564      657.2      +0.0 %
+   1      1380.0        90   0.5120    56.90   0.1549      553.5     -15.8 %
+   2      1108.3        89   0.4239    58.31   0.1534      469.7     -28.5 %
+   3       800.4        88   0.3464    59.47   0.1520      408.5     -37.8 %
+   4       635.6        87   0.2745    60.54   0.1505      361.0     -45.1 %
+   5       489.2        86   0.2192    60.99   0.1490      327.3     -50.2 %
+
+LES DEUX BORNES QUI SERVENT DE REPERE, et elles sont DEJA PUBLIEES :
+  IC90 de xi       [0.3044 ; 0.8313]   amplitude 0.5269
+  IC90 du quantile [411.5 ; 1037.1] M EUR   amplitude 625.6
+
+  deplacement maximal de xi sur k = 0..5       : 0.3787, soit 71.9 % de l'amplitude de l'IC90
+  deplacement maximal du quantile sur k = 0..5 : 329.8 M EUR, soit 52.7 % de l'amplitude de l'IC90
+  toutes les valeurs de xi restent dans l'IC90 publie       : NON
+  toutes les valeurs du quantile restent dans l'IC90 publie : NON
+
+  SENS, calcule et non annonce : en retirant les 5 plus grosses pertes, xi BAISSE
+  et le quantile BAISSE. Le deplacement du quantile est monotone en k.
+
+========================================================================================
+1bis. CONTROLE DE CONVENTION : ET SI L'ON GELAIT LE TAUX DE DEPASSEMENT ?
+========================================================================================
+xi et sigma ne dependent pas du taux, seuls les quantiles en dependent. On refait donc la
+colonne des quantiles a taux GELE a sa valeur k = 0, pour verifier que la conclusion ne
+tient pas a la facon de recompter.
+
+   k   q taux recompte   q taux gele    ecart
+   0            657.2         657.2    +0.00 %
+   1            553.5         556.6    +0.56 %
+   2            469.7         474.4    +1.00 %
+   3            408.5         414.1    +1.35 %
+   4            361.0         366.9    +1.63 %
+   5            327.3         333.5    +1.89 %
+
+Les deux colonnes se suivent : la conclusion ne depend pas de la convention.
+
+========================================================================================
+2. INFLUENCE DE CHAQUE EXCES PRIS UN A UN
+========================================================================================
+Retirer les k plus gros ne repond qu'a une moitie de la question : il reste a savoir si
+UNE observation, quelle qu'elle soit, commande l'estimation. On retire donc chacun des
+91 exces a son tour, et l'on regarde la distribution des 91 estimations.
+
+  xi        min 0.5120   max 0.6146   etendue 0.1026
+  quantile  min     553.5   max     665.2   etendue     111.7 M EUR
+
+  L'exces le PLUS influent sur le quantile est celui de 1380.0 M EUR (rang 1 par la taille).
+  Son retrait porte le quantile de 657.2 a 553.5 M EUR, soit -15.8 %.
+  C'est BIEN la plus grosse perte de l'echantillon (1380.0 M EUR).
+
+  Etendue des 91 quantiles jackknife rapportee a l'amplitude de l'IC90 publie : 17.9 %
+  Nombre d'exces dont le retrait sort le quantile de l'IC90 publie : 0 sur 91
+
+========================================================================================
+3. CONTROLE CROISE : LE PERIMETRE CALIBRE N'EST PAS LE PLUS EXTREME
+========================================================================================
+Le script 104 imprime le rapport du maximum au q99 sur quatre colonnes, et trouve 3,7 sur
+le perimetre calibre contre 52,7 sur la base entiere. On le recalcule ici par un chemin
+independant, sur l'echantillon que ce script a charge.
+
+  maximum du perimetre calibre : 1380.0 M EUR
+  q99 du perimetre calibre     : 369.7 M EUR
+  rapport max / q99            : 3.7
+
+Une base dont le maximum ne vaut que quelques fois le q99 n'a pas d'observation detachee
+du reste : c'est la forme que ce controle atteste, et elle est la condition pour que la
+section 2 puisse conclure.
+
+========================================================================================
+4. GRANDEURS CITEES PAR LE MEMOIRE
+========================================================================================
+Bloc sans separateur de milliers ni signe, pour que l'extracteur du harnais les lise
+entieres. Aucun calcul nouveau ici.
+
+exces au seuil publie                          91
+xi ajuste libre, k = 0                         0.5979
+quantile 99,5 pourcent, k = 0                  657.2
+xi apres retrait de la plus grosse perte       0.5120
+quantile apres retrait de la plus grosse perte 553.5
+ecart relatif du quantile a k = 1 en pourcent  15.8
+xi apres retrait des cinq plus grosses         0.2192
+quantile apres retrait des cinq plus grosses   327.3
+ecart relatif du quantile a k = 5 en pourcent  50.2
+deplacement max de xi en part de l IC90        71.9
+deplacement max du quantile en part de l IC90  52.7
+etendue jackknife du quantile                  111.7
+etendue jackknife en part de l IC90            17.9
+rapport max sur q99 du perimetre calibre       3.7
+
+FIN.

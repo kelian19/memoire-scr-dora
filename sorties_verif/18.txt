@@ -1,0 +1,37 @@
+﻿
+==========================================================================
+3.1  Valeur d'acceleration par pilier (gain de capital si remedie en premier)
+==========================================================================
+  Base tous Non conforme : SCR = 14394 M EUR
+  pilier remedie en 1er      SCR restant   valeur v_k
+  P1 gouvernance                   11996         2398
+  P4 tiers                         12757         1637
+  P5 partage                       13425          969
+  P3 tests                         13695          699
+  P2 incidents                     14456          -62
+  -> ordre glouton (par valeur d'acceleration) : ['P1', 'P4', 'P5', 'P3', 'P2']
+
+==========================================================================
+3.2  Ordre de remediation optimal (enumeration des 5! = 120 ordres)
+==========================================================================
+  Un pilier par periode (tau=1 an). Cout = capital integre sur l'horizon.
+  ordre             sequence                          capital integre
+  OPTIMAL           P1 -> P4 -> P2 -> P3 -> P5               51471
+  glouton           P1 -> P4 -> P5 -> P3 -> P2               53236
+  ROOT (qualitatif) P1 -> P4 -> P2 -> P3 -> P5               51471
+  PIRE              P3 -> P5 -> P2 -> P4 -> P1               62273
+  Ecart pire/optimal : 21%  (l'ordre de remediation change le cout de capital porte).
+  Optimal == glouton ? NON   Optimal == ROOT ? oui
+
+==========================================================================
+3.3  Coherence : priorite de remediation vs Delta_k (16b) vs ROOT vs Euler (11)
+==========================================================================
+  approche                    classement des piliers (du + prioritaire au -)
+  remediation optimale (18)   P1 > P4 > P2 > P3 > P5                      
+  valeur acceleration (18)    P1 > P4 > P5 > P3 > P2                      
+  ROOT (qualitatif)           P1 > P4 > P2 > P3 > P5                      
+  Euler TVaR (11, normalise)  P4 > P1 > P2 > P3 > P5                      
+  Les vues amorce (ROOT, acceleration) coincident ; l'Euler (concentration de queue)
+  peut remonter P4 (severite tiers), a lire comme complementaire, pas contradictoire.
+
+figure ecrite : exploratory\vasicek_lab\figures\S13_priorisation.png

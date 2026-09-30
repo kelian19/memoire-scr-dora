@@ -1,0 +1,133 @@
+﻿
+========================================================================================
+1. La formule, ecrite, et les quatre nombres publies reproduits
+========================================================================================
+  T = C / B, avec C le cout ONE-OFF et B le benefice ANNUEL. Les entrees :
+    bornes de cout, en clair pour la verification : 5000 et 30000 M€.
+    C   = 200 entites x 25 a 150 M€ = 5 000 a 30 000 M€
+    Delta_SCR                                  = 14 139 M€
+    B(portage)   = CoC x Delta_SCR = 6 % x 14 139 = 848 M€/an
+    perte evitee = charge moyenne NC - charge moyenne C = 3869 - 622 = 3247 M€/an
+    B(les deux)  = 848 + 3247 = 4095 M€/an
+
+  lecture                      B (M€/an)    T bas   T haut        publie
+  portage seul                       848      5.9     35.4    6 a 35 ans
+  les deux composantes              4095      1.2      7.3     1 a 7 ans
+
+  Les quatre nombres publies sont donc reproduits, et la formule est une simple division.
+  Elle est desormais documentee, ce qui etait la demande. LA SUITE MONTRE POURQUOI CETTE
+  DIVISION EST LE MAUVAIS INSTRUMENT.
+
+========================================================================================
+2. Pourquoi un payback non actualise ne tient pas a cet horizon
+========================================================================================
+  Un payback simple traite un euro de l'annee 35 comme un euro d'aujourd'hui. Sur trois
+  ans l'approximation est benigne ; sur trente-cinq elle ne l'est pas, et elle l'est
+  d'autant moins que le flux dont on parle EST un cout du capital : escompter au cout du
+  capital est exactement ce que la marge de risque de Solvabilite II fait elle-meme.
+
+  LA VALEUR PRESENTE D'UNE ECONOMIE ANNUELLE PERPETUELLE B, escomptee au taux r, vaut B/r.
+  Pour le portage, B = CoC x Delta_SCR, donc :
+        VP(portage, escompte au taux r)  =  CoC x Delta_SCR / r
+  et, si l'on escompte au COUT DU CAPITAL lui-meme (r = CoC), les deux se simplifient :
+        VP  =  Delta_SCR      EXACTEMENT, et INDEPENDAMMENT de CoC.
+
+  Verification numerique : 6 % x 14 139 / 6 % = 14 139 M€, contre Delta_SCR = 14 139.
+  Ecart : 0.000000 M€.
+
+  CE N'EST PAS UNE COINCIDENCE, C'EST LA DEFINITION DU PORTAGE, et l'enonce merite d'etre
+  retenu : LE CAPITAL LIBERE *EST* LA VALEUR PRESENTE DE L'ECONOMIE DE PORTAGE. Comparer un
+  cout de remediation a Delta_SCR est donc la comparaison homogene ; la convertir en annees
+  n'ajoute rien et introduit une dependance au taux qui n'existe pas dans la grandeur.
+
+========================================================================================
+3. LA REPONSE A LA DEMANDE SUR LE TAUX, et elle est plus forte qu'une mise a jour
+========================================================================================
+  Le point tuteur demande de mettre a jour le cout du capital, revise par la directive
+  (UE) 2025/2 de 6 % a 4.75 %. Voici ce que la revision deplace et ce qu'elle ne
+  deplace pas.
+
+       CoC   B portage (M€/an)   T non actualise    VP au taux = CoC
+    6.00 %                 848     5.9 a 35.4                   14139
+    4.75 %                 672     7.4 a 44.7                   14139
+
+  LE NOMBRE D'ANNEES BOUGE DE 35 A 45 ANS, LA VALEUR PRESENTE NE BOUGE PAS
+  D'UN EURO : elle vaut 14 139 M€ dans les deux cas. La revision du taux deplace donc le
+  chiffre de COMMUNICATION et laisse l'economie intacte. C'est la reponse a la demande, et
+  elle dispense de rejouer la chaine : le gel de la calibration n'a rien a arbitrer ici,
+  puisque la grandeur economiquement pertinente est invariante.
+
+  UNE PRECAUTION, ET ELLE EST IMPORTANTE. L'invariance vaut quand on escompte AU COUT DU
+  CAPITAL. La marge de risque de Solvabilite II, elle, applique la charge de CoC aux SCR
+  futurs puis les escompte a la COURBE SANS RISQUE, qui est plus basse. On balaie donc le
+  taux d'escompte plutot que de le poser, et la section suivante montre que la conclusion
+  de gestion ne depend d'aucun de ces choix.
+
+========================================================================================
+4. LE SEUIL DE RENTABILITE, et il change la nature du « 35 ans »
+========================================================================================
+  Avec une economie annuelle B escomptee au taux r, la valeur presente sur T annees vaut
+  B x (1 - (1+r)^-T) / r, qui CONVERGE vers B/r. Il existe donc un cout au-dela duquel
+  aucun horizon ne suffit :
+        seuil de rentabilite  =  B / r
+
+  DEUX TAUX INTERVIENNENT ET IL NE FAUT PAS LES CONFONDRE, c'est justement l'objet de la
+  demande. Le taux de CHARGE (CoC) fixe le montant annuel immobilise, B = CoC x Delta_SCR ;
+  le taux d'ESCOMPTE r ramene ce flux a aujourd'hui. Solvabilite II les distingue : la marge
+  de risque applique la charge de CoC aux SCR futurs puis escompte a la courbe SANS RISQUE.
+  Dans la table qui suit, LA CHARGE EST TENUE A 6 % et seul l'escompte varie. Quand les deux
+  coincident, on retombe sur l'identite de la section 2 et le seuil vaut Delta_SCR.
+
+   taux d escompte r  B (charge a 6 %)     seuil   T(C bas)   T(C haut)
+              6.00 %               848     14139       7.5 a      JAMAIS
+              4.75 %               848     17860       7.1 a      JAMAIS
+              3.00 %               848     28278       6.6 a      JAMAIS
+              2.00 %               848     42417       6.3 a      62 ans
+
+  ET AVEC LES DEUX COMPOSANTES DU BENEFICE (4095 M€/an) :
+   taux d escompte r        B les deux     seuil   T(C bas)   T(C haut)
+              6.00 %              4095     68257       1.3 a      10 ans
+              4.75 %              4095     86220       1.3 a       9 ans
+              3.00 %              4095    136514       1.3 a       8 ans
+              2.00 %              4095    204772       1.2 a       8 ans
+
+  LE RESULTAT QUALITATIF, ET IL N'ETAIT PAS VISIBLE SUR LE PAYBACK SIMPLE. Au portage seul
+  et au cout du capital, le seuil vaut 14 139 M€ tandis que le haut de la fourchette de
+  cout vaut 30 000 : LE PROJET NE SE RENTABILISE JAMAIS, a aucun horizon. Le « 35 ans »
+  du memoire ne mesure donc pas une duree longue, il masque une NON-EXISTENCE. A un taux
+  d'escompte plus bas le seuil remonte et la duree redevient finie, mais tres longue.
+
+  ET LA CONCLUSION DE GESTION, ELLE, EST LA MEME A TOUS LES TAUX : au haut de la fourchette
+  de cout, LE PORTAGE SEUL NE JUSTIFIE PAS LA DEPENSE. Ce qui la justifie est la perte
+  evitee, 3247 M€/an, soit 3.8 fois le portage : avec les deux composantes le
+  seuil passe a 68 257 M€ au cout du capital, tres au-dessus de 30 000, et le retour
+  redevient 1.3 a 10 ans. C'EST DONC UN RESULTAT QUI RENFORCE LE MEMOIRE :
+  son propre argument, « le portage seul est un plancher et la perte evitee vaut 3,8 fois
+  plus », cesse d'etre une precaution de redaction pour devenir la condition MEME de
+  rentabilite du projet au haut de la fourchette.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LA FORMULE EST DOCUMENTEE, et c'est une division : T = C / B, avec C le cout one-off
+     (5 000 a 30 000 M€) et B le benefice annuel (848 au portage seul, 4095 avec
+     la perte evitee). Les quatre nombres publies sont reproduits.
+  2. MAIS C'EST UN PAYBACK NON ACTUALISE, donc le mauvais instrument a un horizon de
+     trente-cinq ans, d'autant que le flux en question EST un cout du capital.
+  3. UNE IDENTITE TRANCHE LA QUESTION DU TAUX : escomptee au cout du capital, la valeur
+     presente de l'economie de portage vaut EXACTEMENT Delta_SCR = 14 139 M€, quel que
+     soit CoC. Passer de 6 % a 4.75 % deplace le nombre d'annees de 35 a 45
+     et ne deplace la valeur presente d'aucun euro. LA REVISION DU TAUX EST DONC UN CHIFFRE
+     DE COMMUNICATION, PAS UNE RECALIBRATION, ce qui la rend compatible avec le gel.
+  4. LE CAPITAL LIBERE *EST* LA VALEUR PRESENTE DE L'ECONOMIE DE PORTAGE. La comparaison
+     homogene est donc cout de remediation contre Delta_SCR, en euros, sans passer par des
+     annees.
+  5. D'OU UN RESULTAT QUALITATIF QUE LE PAYBACK SIMPLE CACHAIT : au portage seul et au cout
+     du capital, le seuil de rentabilite vaut 14 139 M€ contre un cout haut de 30 000.
+     Le projet ne se rentabilise JAMAIS a ce niveau de cout. Le « 35 ans » masque une
+     non-existence plutot qu'il ne mesure une duree.
+  6. ET CELA RENFORCE LE MEMOIRE : la perte evitee (3247 M€/an, 3.8 fois le portage)
+     n'est plus une precaution de redaction mais la CONDITION de rentabilite au haut de la
+     fourchette de cout. Le mot « plancher » y gagne son sens economique.
+
+figure ecrite : exploratory\vasicek_lab\figures\S39_retour_actualise.png

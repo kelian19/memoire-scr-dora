@@ -1,0 +1,32 @@
+
+==========================================================================
+Surface SCR(g, xi) : VaR 99,5 %, charge a fixee a la base
+==========================================================================
+  a = 0.6 ; 120,000 annees par cellule ; unites normalisees.
+  grille g  : 0.00, 0.30, 0.50, 0.70, 0.90, 0.95
+  grille xi : 0.50, 0.60, 0.70, 0.80, 0.90, 0.95
+
+  SCR (lignes = xi croissant, colonnes = g croissant) :
+   xi\g      0.00     0.30     0.50     0.70     0.90     0.95
+   0.50      2749     3136     3329     3680     3994     4122
+   0.60      3198     3523     3756     4096     4642     4732
+   0.70      3972     4535     4616     5124     5562     5898
+   0.80      5256     5650     6302     6531     7268     7396
+   0.90      6911     7667     8411     9142    10670    10714
+   0.95      8269     9353    10468    10774    12035    12983
+
+  point de base (g=0,90 ; xi=0,70) : SCR = 5562
+  a xi fixe (0,70), g de 0 a 0,95 : x1.48
+  a g fixe (0,90), xi de 0,5 a 0,95 : x3.01
+  => la queue (xi) deplace le SCR bien plus que la propagation (g).
+
+==========================================================================
+Tornado : quel parametre deplace le plus le SCR ? (autres fixes a la base)
+==========================================================================
+  SCR de base (g=0.9, xi=0.7, a=0.6) = 5752
+  parametre                  bas    SCR bas    haut   SCR haut  amplitude
+  g  (propagation)          0.50       4629    0.95       5758       1129
+  xi (queue)                0.50       3949    0.90      10357       6407
+  a  (systemique)           0.30       4880    0.90       7590       2709
+
+figure ecrite : exploratory/vasicek_lab/figures/S4_sensibilite.png

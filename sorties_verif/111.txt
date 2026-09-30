@@ -1,0 +1,20 @@
+====================================================================================
+Z_pave_sommets : le pave admissible des directions et le capital qu'il donne (t = 1)
+====================================================================================
+  sommets evalues : 1024   points interieurs evalues : 3000
+  coupe tracee : paires P1-P2 et P1-P4, coordonnees A_jk / S_jk dans [-1 ; 1]
+  point d'expert dans la coupe : (+0.600 ; +0.556)
+
+  controles contre les sorties versionnees 30 et 61 :
+    borne basse aux sommets    calcule   6858.3   publie   6858   ok
+    borne haute aux sommets    calcule   8697.2   publie   8697   ok
+    minimum interieur          calcule   7377.6   publie   7378   ok
+    maximum interieur          calcule   8431.0   publie   8431   ok
+    direction nulle (A = 0)    calcule   7993.0   publie   7993   ok
+    point d'expert             calcule   8110.4   publie   8110   ok
+    points interieurs hors des bornes des sommets : 0
+
+  Lecture : les sommets portent les extremes, de la borne basse a la borne haute ;
+  les points interieurs se concentrent au milieu et n'en sortent jamais.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z_pave_sommets.png

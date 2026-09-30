@@ -1,0 +1,57 @@
+﻿tirage commun : 40000 annees, 865674 incidents, part d'amorce P4 = 27.2%
+
+================================================================================
+Reference : P4 traite comme un noeud de cascade ordinaire
+================================================================================
+  SCR (P4 = noeud cascade) = 8458 M
+
+================================================================================
+P4 en CHOC COMMUN : bornes du SCR sur l'intensite phi_cs dans [0, gamma]
+================================================================================
+    phi_cs       SCR   ecart / cascade   E[|S| | P4]
+      0.00     7694 M            -9.0 %          1.00
+      0.06     7990 M            -5.5 %          1.23
+      0.11     8021 M            -5.2 %          1.45
+      0.17     8301 M            -1.9 %          1.68
+      0.23     8637 M             2.1 %          1.91
+      0.28     8660 M             2.4 %          2.13
+      0.34     8949 M             5.8 %          2.36
+      0.40     9170 M             8.4 %          2.59
+      0.45     9332 M            10.3 %          2.81
+      0.51     9432 M            11.5 %          3.04
+      0.57     9727 M            15.0 %          3.27
+      0.62     9780 M            15.6 %          3.49
+      0.68    10096 M            19.4 %          3.72
+
+  Sur phi_cs dans [0 ; 0.68] : SCR dans [7694 ; 10096] M.
+  A phi_cs = 0, le choc commun se reduit a P4 seul (aucune simultaneite) et le SCR
+  passe MEME SOUS la cascade dirigee (7694 contre 8458) :
+  la cascade, elle, propage vers d'autres piliers. A phi_cs = gamma, la dependance
+  partagee emporte en moyenne 3.7 piliers d'un coup, et le SCR
+  depasse la cascade de 19 %.
+
+================================================================================
+Ce que le choc commun ajoute que la cascade dirigee ne voit pas
+================================================================================
+  P(un incident P4 touche >= 3 piliers) :
+    cascade dirigee : 0.224
+    choc commun (phi=gamma) : 0.900
+  La simultaneite cree de la CO-OCCURRENCE multiple que la propagation sequentielle
+  produit rarement. C'est une structure SYMETRIQUE (pas de direction), donc dans la
+  partie IDENTIFIEE du modele (le S de W = S + A) : la donnee la voit (MOVEit).
+
+================================================================================
+Verdict
+================================================================================
+  1. P4 n'est pas un noeud de cascade comme les autres : la bonne maille est le CHOC
+     COMMUN (dependance partagee), pas la propagation dirigee. Les deux mecanismes
+     coexistent, mais pour P4 l'accumulation domine.
+  2. Son intensite phi_cs n'est pas identifiee pour une entite isolee ; bornee sur
+     [0, gamma], elle place le SCR dans [7694 ; 10096] M. Encore une bande,
+     pas un point.
+  3. Contrairement a la direction, l'accumulation de P4 est SYMETRIQUE, donc
+     IDENTIFIEE : c'est le seul pilier ou la donnee (MOVEit, concentration cloud)
+     soutient une structure. A ecrire comme tel : la faiblesse d'identification
+     de W ne s'applique pas a l'accumulation de P4.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z9_p4_accumulation.png

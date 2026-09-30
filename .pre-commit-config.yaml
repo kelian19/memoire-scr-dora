@@ -1,0 +1,40 @@
+# Garde-fous executes avant chaque commit, sur le poste.
+#
+# Installation, une fois par poste :
+#     pip install pre-commit
+#     pre-commit install
+#
+# Aucun formateur automatique n'est branche, et c'est voulu : reformater les scripts d'analyse
+# produirait des diffs massifs sans rien corriger, sur un pipeline dont la calibration est gelee.
+# Ne sont retenus que des controles qui bloquent une erreur reelle du projet.
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=20000"]
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: detect-private-key
+
+  - repo: local
+    hooks:
+      - id: donnee-brute-interdite
+        name: data/raw est sous licence et ne se committe jamais
+        entry: "data/raw est sous licence : ce fichier ne doit pas etre committe"
+        language: fail
+        files: ^data/raw/
+
+      - id: signatures-interdites
+        name: les images de signature restent hors du depot
+        entry: "les griffes de la couverture restent gitignorees"
+        language: fail
+        files: logos/signature_
+
+      - id: version-institut-generee
+        name: main_institut.tex se regenere depuis main_ensae.tex
+        entry: python exploratory/memoire_cascade/build_institut.py
+        language: system
+        files: ^exploratory/memoire_cascade/main_(ensae|institut)\.tex$
+        pass_filenames: false

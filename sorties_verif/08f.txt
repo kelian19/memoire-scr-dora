@@ -1,0 +1,33 @@
+﻿
+==============================================================================
+Cas d'usage P3 : duree de breche (temps de containment)
+==============================================================================
+incidents BSF avec debut et fin : 2560
+duree (jours) : mediane 7 | q90 115 | q99 672 | moyenne 50
+contenu le JOUR MEME (duree 0) : 18.2%
+
+KPI CONTAINMENT : part contenue dans chaque fenetre
+   le jour meme     :  18.2%
+   sous 1 semaine   :  51.2%
+   sous 1 mois      :  70.0%
+   au-dela de 90 j (breche prolongee) : 13.1%
+
+KPI par type d'incident (mediane de duree) :
+   Divulgation      n=  192  mediane=     2 j
+   Perte de support n=   34  mediane=     3 j
+   Piratage         n= 1807  mediane=     7 j
+   Non precise      n=  380  mediane=     8 j
+   Carte            n=   33  mediane=    12 j
+   Interne          n=   95  mediane=    16 j
+
+==============================================================================
+VERDICT
+==============================================================================
+La duree de containment est tres etalee : la moitie des breches durent moins
+d'une semaine (51% sous 7 j), mais 13% restent actives au-dela
+de 90 jours. C'est cette QUEUE que les tests de resilience (P3, TLPT) visent a
+couper : l'ecart entre la mediane et la queue EST la marge de progression testable.
+KPI P3 propose : part des breches contenues sous 1 semaine, et longueur de la queue
+(q90). Deux nombres qu'un exercice de crise fait bouger, et qu'un audit DORA suit.
+
+figure ecrite : exploratory\vasicek_lab\figures\R_cas_usage_p3.png

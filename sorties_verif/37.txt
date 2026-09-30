@@ -1,0 +1,48 @@
+queues observees (categories Bale)  : [0.865 1.031 1.038 1.355 1.368]
+  source : script 67 section 5, convention de severite (Loss Amount, secteur lu sur
+  Industry Sector Name, seuil q75 par categorie, ajustement GPD libre).
+  dispersion des cinq queues (max - min) : 0.503
+  categorie la plus proche du TIC (Business Disruption & System Failures) :
+     111 observations, sous le seuil de 150 : queue NON estimable.
+queues centrees sur xi_ref = 0.9 : [0.634 0.8   0.807 1.124 1.137]  (moyenne 0.900)
+
+================================================================================
+Reference : queue COMMUNE xi = 0,90 sur les cinq piliers
+================================================================================
+  SCR (queue commune) = 40034 M
+
+================================================================================
+Bornes du SCR sur les 120 assignations de queues aux piliers
+================================================================================
+  SCR dans [62130 ; 78417] M sur les 120 permutations
+  ecart a la queue commune : de +55.2 % a +95.9 %
+  largeur relative de la bande : 40.7 % du SCR commun
+  Lecture : donner a chaque pilier sa propre queue, dans l'enveloppe observee,
+  deplace le niveau de cet ordre. Comme le reste du modele, c'est une bande,
+  pas un point : xi_j n'est pas identifie pilier par pilier, il est borne.
+
+================================================================================
+Le classement des piliers par contribution a la queue tient-il ?
+================================================================================
+  pilier en tete de contribution a la queue, sur 30 assignations tirees :
+    P1 : 25/30 fois
+    P2 : 3/30 fois
+    P3 : 2/30 fois
+  => P1 domine dans 83 % des assignations : dominant mais PAS invariant, l'heterogeneite de queue peut occasionnellement promouvoir un autre pilier.
+
+================================================================================
+Verdict
+================================================================================
+  1. L'heterogeneite de queue N'EST PAS neutre en capital. Meme en gardant la
+     moyenne des queues a xi_ref = 0.9, donner a chaque pilier sa propre queue
+     RELEVE le SCR de +55 % a +96 %.
+     C'est un effet de convexite : la VaR croit plus vite que lineairement en xi, donc
+     une queue lourde sur un pilier n'est pas compensee par une queue legere ailleurs.
+     Consequence : supposer une queue COMMUNE SOUS-ESTIME le capital. C'est une raison
+     de plus de lire le niveau comme illustratif, et de le presenter en bande.
+  2. Le CLASSEMENT est largement robuste : P1 domine dans 83 % des assignations : dominant mais PAS invariant, l'heterogeneite de queue peut occasionnellement promouvoir un autre pilier.
+  3. A ECRIRE : xi_j par pilier n'est pas POSE (les categories Bale ne sont pas les
+     piliers, la categorie TIC est sous-echantillonnee) ; il est BORNE, comme la
+     direction de W. La severite rejoint la discipline d'identification partielle.
+
+figure ecrite : exploratory/vasicek_lab/figures/Z8_xi_par_pilier.png

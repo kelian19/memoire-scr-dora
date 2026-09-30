@@ -1,0 +1,99 @@
+==============================================================================
+105 : GRAINES D'ETALONNAGE DU QUESTIONNAIRE D'ELICITATION
+==============================================================================
+
+TROIS CONTROLES SUR CHAQUE GRAINE
+
+  cle  grandeur                                                         valeur vraie (masquee)
+  G1   Delai median entre la survenance d'un incident et sa declarati   [valeur vraie tenue hors de la version publique]
+  G2   Part des incidents declares plus de 90 jours apres leur surven   [valeur vraie tenue hors de la version publique]
+  G3   Delai median de declaration d'un incident de type piratage   [valeur vraie tenue hors de la version publique]
+  G4   Duree mediane entre le debut et la fin d'exposition d'un incid   [valeur vraie tenue hors de la version publique]
+  G5   Nombre median d'enregistrements touches par incident   [valeur vraie tenue hors de la version publique]
+  G6   Nombre d'incidents qui portent la moitie du volume total de la   [valeur vraie tenue hors de la version publique]
+  G7   Part des incidents dont l'exposition a dure plus de 30 jours   [valeur vraie tenue hors de la version publique]
+  G8   Part des incidents de type piratage parmi ceux dont le vecteur   [valeur vraie tenue hors de la version publique]
+  G9   Part des lignes de la chronologie qui sont des doublons de not   [valeur vraie tenue hors de la version publique]
+  G10  Rapport du 99e centile a la mediane des pertes cyber du secteu   [valeur vraie tenue hors de la version publique]
+  (1) REALISEE : aucune graine ne demande d'ajuster un modele.
+      Toutes sont des comptages, des parts, des quantiles ou un indice de concentration.
+      -> OK par construction, aucune n'appelle scipy.stats.fit ni un estimateur.
+
+  (2) NON DEGENEREE : aucune part ne doit coller a 0 ni a 100.
+      Graines suspectes : aucune -> OK
+
+  (3) DANS SON DOMAINE : chaque valeur respecte ses bornes naturelles.
+      Graines hors bornes : aucune -> OK
+
+  (4) POUVOIR DE SEPARATION : graines a valeur extreme, donc potentiellement devinables
+      par le sens commun : ['G8'].
+      Conservees et declarees. G8 a une valeur contre-intuitive : la reponse
+      spontanee d'un praticien tourne autour de 60 a 70 %, si bien que la graine separe
+      malgre sa valeur extreme. Une graine devinable ET consensuelle, elle, serait a
+      retirer.
+
+  AUCUNE GRAINE NE PORTE UNE GRANDEUR DE CAPITAL, et c'est delibere : un praticien de la
+  resilience observe des incidents, des delais et des concentrations, jamais un quantile
+  de charge annuelle. Noter un expert sur une grandeur qu'il ne peut pas avoir vue
+  mesurerait sa familiarite avec ce memoire, pas son jugement sur le risque.
+
+  VERDICT : les dix graines sont retenues
+
+==============================================================================
+CANDIDAT ECARTE, AVEC SA VALEUR
+==============================================================================
+
+  Indice de Gini de la concentration des volumes sur les incidents : 0.9683
+
+  Ecarte pour DEUX raisons de conception et non de calcul.
+    - Doublon : G6 mesure deja la concentration, en comptant les incidents qui portent la moitie
+      du volume. Deux graines qui demandent la meme intuition n'achetent pas deux fois le pouvoir
+      de separation, elles allongent le questionnaire.
+    - Devinable : a 0.97, la reponse « tres concentre » suffit a tomber juste. Une
+      graine se juge sur ce qu'elle separe, pas sur ce qu'elle mesure.
+
+
+==============================================================================
+LA GRAINE RETIREE, ET POURQUOI ELLE L'EST
+==============================================================================
+
+  Question retiree : « Indice de queue xi de la severite ».
+  Valeur vraie annoncee dans la premiere version : 0,90.
+  Valeur de la calibration figee                 : 0,5954.
+  Intervalle publie de cette estimation          : [0,30 ; 0,83].
+
+  Deux defauts, et le second suffit a lui seul.
+    - La valeur annoncee etait FAUSSE : 0,90 est la valeur posee du scenario de pire cas, pas la
+      calibration. Une graine fausse inverse les poids de Cooke au lieu d'ajouter du bruit.
+    - Meme corrigee, la question resterait mauvaise : xi est un PARAMETRE ESTIME dont
+      l'intervalle est plus large que la valeur. Noter un expert contre une estimation revient a
+      lui demander de deviner le resultat d'un ajustement, non a mesurer son jugement sur le
+      monde. C'est pourquoi elle est retiree et non corrigee.
+
+  Son remplacement a lui-meme ete revu. Un indice de Gini de la concentration avait d'abord ete
+  retenu : il demandait la meme intuition, celle de la concentration, sur une grandeur observee.
+  Il a ete ecarte a son tour pour DEUX raisons de conception, et non de calcul : il fait doublon
+  avec G6, qui mesure deja la concentration en comptant les incidents qui portent la moitie du
+  volume, et sa valeur vraie de 0,97 se devine sans rien connaitre du dossier. La graine retenue
+  est G7, la part des incidents dont l'exposition depasse trente jours : elle porte sur le
+  CONFINEMENT, qui est une performance de resilience et donc du meme domaine que les cibles.
+
+==============================================================================
+GRANDEURS CITEES (sans separateur de milliers, pour le harnais)
+==============================================================================
+  graine G1   119.0000
+  graine G2   60.6668
+  graine G3   131.0000
+  graine G4   10.0000
+  graine G5   1104.0000
+  graine G6   31.0000
+  graine G7   31.1991
+  graine G8   92.3096
+  graine G9   10.9148
+  graine G10  267.9260
+  candidat ecarte gini 0.9683
+  nombre de graines 10
+  nombre de questions cibles 6
+  nombre total de questions 16
+
+FIN 105

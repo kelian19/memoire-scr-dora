@@ -1,0 +1,590 @@
+% ---------------------------------------------------------------------
+% STATUT : RÉÉCRIT (juillet 2026). La thèse passe de « W n'est pas
+%          identifiable » à une frontière en TROIS NIVEAUX : structure
+%          corroborée, direction par paire non établie, amplitude jamais
+%          identifiable. Sources : scripts 40, 53, 55, 56.
+% LABELS À PRÉSERVER : ch:identifiabilite (cité par 8 chapitres),
+%          fig:reversibilite (cité par 12b).
+% ---------------------------------------------------------------------
+\chapter{L'identifiabilité de la contagion dirigée}
+\label{ch:identifiabilite}
+
+\begin{cle}
+\textbf{Thèse du chapitre.} La \emph{direction} de la contagion entre les cinq piliers DORA
+n'est pas identifiable sur les données publiques agrégées disponibles, quand sa co-occurrence
+l'est. C'est un résultat d'identification empirique : les trois sources échouent pour des raisons
+propres à leur contenu, et la théorie des processus réversibles en donne la raison de principe
+pour les statistiques invariantes par renversement du temps. Il ne vaut pas pour toute donnée, la
+loi complète des piliers touchés par incident portant de l'information sur la direction
+(proposition~\ref{prop:nonid}). Mais l'affaire ne s'arrête pas là : un corpus de rapports
+d'incidents officiels corrobore la \emph{structure} de cette direction, sans lever pour autant
+le doute sur chacun de ses coefficients. On aboutit donc à une frontière en trois
+niveaux, que ce chapitre établit puis assume : la structure est revendiquée, la direction paire
+par paire ne l'est pas, l'amplitude ne le sera jamais par cette voie. Le capital est en
+conséquence lu en bornes, et la donnée manquante devient une spécification de reporting
+chiffrée et hiérarchisée.
+\end{cle}
+
+\section{Ce qu'identifier $W$ exigerait}
+
+Le coefficient $W_{jk}$ mesure la propension d'une défaillance du pilier $j$ à
+\emph{entraîner}, dans la foulée, une défaillance du pilier $k$ (convention
+du chapitre~\ref{chap:cascade} : la ligne émet, la colonne reçoit). L'identifier sur données
+demande trois choses simultanément : (i) observer des co-occurrences de défaillances de
+piliers au sein d'une même entité ; (ii) disposer d'une antériorité temporelle fiable
+(qui précède qui) pour distinguer $W_{jk}$ de $W_{kj}$ ; (iii) une taxonomie par pilier
+(domaine de contrôle), et non par vecteur d'attaque. Aucune des trois sources agrégées examinées
+ne réunit les trois, et elles échouent pour des raisons \emph{différentes} : la première n'a pas
+la taxonomie, la deuxième n'a pas le pas de temps, la troisième a les deux dans son schéma mais
+ne les renseigne pas.
+
+\section{Trois échecs, pour trois raisons distinctes}
+
+\paragraph{Source 1 : Data Breach Chronology (notifications d'États américains).}
+La base est volumineuse ($74\,783$ incidents, $25\,009$ organisations) mais inexploitable
+pour $W$, par manque de taxonomie et de volume informatif. La catégorie
+non déterminée (\texttt{UNKN}) pèse 52,7\,\% des incidents et n'est attribuable à
+aucun pilier. La date de \emph{survenance} n'est exploitable que dans 49,6\,\% des
+cas, et son caractère manquant n'est pas aléatoire : il varie par type d'incident, si bien
+qu'ordonner par survenance élimine des catégories entières du panel. Ordonner par
+\emph{déclaration}, l'autre date disponible, ne mesure pas la contagion mais le
+délai de détection. Résultat : une fois restreint aux types informatifs et aux
+trimestres consécutifs, il ne reste que 71 transitions $k(t\!-\!1)\to j(t)$ (soit
+$3{,}6$ observations par cellule hors-diagonale), et 34 dans le seul secteur
+financier. La direction n'y est pas estimable, faute de matière.
+
+\paragraph{Source 2 : SAS OpRisk Global Data (pertes opérationnelles, Bâle).}
+Ici le volume est au rendez-vous : 4\,329 transitions annuelles entre les
+7 catégories de risque, soit environ 103 observations par cellule. Et pourtant la
+direction reste inidentifiable, pour la raison \emph{opposée} : le pas de temps est
+l'année, trop grossier pour porter une antériorité. Un test placebo le montre sans
+appel. Soit $M$ la matrice des transitions observées, $M_{jk}$ comptant les passages
+$k(t-1)\to j(t)$. On mesure la direction par la statistique d'asymétrie
+\begin{equation}
+  T(M) \;=\; \tfrac{1}{2}\,\lVert M - M^{\top}\rVert_1
+        \;=\; \tfrac{1}{2}\sum_{j\neq k}\bigl|M_{jk}-M_{kj}\bigr| ,
+  \label{eq:asymetrie}
+\end{equation}
+nulle si et seulement si $M$ est symétrique. Sous l'hypothèse nulle $H_0$ d'absence de
+direction, permuter les années \emph{à l'intérieur de chaque firme} détruit toute antériorité
+tout en conservant la co-occurrence : si $\Pi$ désigne une telle permutation et $M^{\Pi}$ la
+matrice recalculée, la loi de $T(M^{\Pi})$ est celle de $T(M)$ sous $H_0$. En notant $\mu_0$ et
+$\sigma_0$ ses moyenne et écart-type empiriques sur les tirages de $\Pi$, la statistique
+centrée réduite
+\begin{equation}
+  z \;=\; \frac{T(M)-\mu_0}{\sigma_0}
+  \label{eq:placebo-z}
+\end{equation}
+vaut ici
+\[
+T(M) = 119 \qquad\text{contre}\qquad \mu_0 \pm \sigma_0 = 128 \pm 27
+\qquad\Longrightarrow\qquad z = -0{,}33 .
+\]
+L'asymétrie observée est \emph{sous} le bruit du placebo : aucun signal directionnel. Le
+test binomial par paire confirme : sur 18 paires suffisamment peuplées, aucune
+n'est significative à 5\,\%, ni avant ni après correction de Bonferroni. Le pas annuel a
+lessivé la direction.
+
+\begin{cle}
+\textbf{Précaution de méthode (à afficher).} Le test intuitif du \og temps inversé \fg{}
+(comparer $M$ à la matrice obtenue en renversant la chronologie) est dégénéré sur
+un comptage : par construction $M_{\text{inv}} = M^\top$, donc la corrélation des asymétries
+vaut $-1$ quel que soit le contenu. Il ne prouve rien. Seul le placebo par
+permutation est valide sur des comptages.
+\end{cle}
+
+\paragraph{Source 3 : la VERIS Community Database, ou le schéma sans le remplissage.}
+Les deux premiers échecs tiennent à ce que la source ne \emph{prévoit} pas ce que $W$ exige.
+Restait l'hypothèse la plus favorable : un standard de description d'incidents qui, lui,
+prévoit exactement les bons champs. C'est le cas du schéma VERIS, référence de la
+profession et support du \emph{Data Breach Investigations Report}, dont la base publique
+compte $10\,591$ incidents ($980$ en secteur financier, NAICS~52). Son schéma porte
+littéralement les deux objets manquants : un champ \texttt{control\_failure}, qui nomme le
+domaine de contrôle défaillant, et une chronologie en quatre étapes
+(compromission, exfiltration, découverte, confinement), qui porte l'antériorité.
+
+Le verdict est sans appel, et il porte sur le \emph{remplissage} et non sur la conception.
+Le champ \texttt{control\_failure} est renseigné dans $13$ incidents sur $10\,591$
+($0{,}12\,\%$), dont un seul en secteur financier. La chronologie n'est datée sur au
+moins deux étapes que dans $126$ incidents ($1{,}19\,\%$), et sur au moins trois dans $10$.
+Surtout, l'intersection des deux conditions, qui est ce qu'identifier $W$ exigerait
+simultanément, ne compte que $1$ incident sur toute la base, et aucun en
+secteur financier.
+
+\begin{cle}
+\textbf{Pourquoi ce troisième échec est le plus utile des trois.} Les deux premiers pouvaient
+se lire comme un défaut de conception des sources : personne n'avait prévu de collecter la
+direction. Celui-ci interdit cette lecture. La spécification \emph{existe}, elle est publiée,
+elle est adoptée par la profession, et elle n'est pas remplie. Le problème n'est donc
+pas de savoir \emph{quoi} collecter, question à laquelle le schéma VERIS répond déjà,
+mais d'en rendre le remplissage obligatoire. C'est exactement ce qu'un registre
+d'incidents sous DORA peut imposer et qu'une base déclarative volontaire ne peut pas, et c'est
+ce qui donne sa portée à la spécification de reporting du chapitre~\ref{ch:livrable} : elle
+ne demande pas d'inventer des champs, elle demande d'en rendre deux obligatoires.
+\end{cle}
+
+% SOURCES-SCRIPTS: 05 57
+
+% SOURCES-SCRIPTS: 28 40 64 110
+
+% SOURCES-SCRIPTS: 40 64
+
+\section{Pourquoi la direction échappe à la co-occurrence : la lecture par la réversibilité}
+
+Le placebo établit un fait ; la théorie des processus réversibles en donne la raison de principe,
+sous une hypothèse qu'il faut écrire : que les sauts entre piliers se représentent par une chaîne
+de Markov stationnaire. Toute matrice se décompose de façon unique en $W=S+A$, part
+symétrique $S=(W+W^\top)/2$ et antisymétrique $A=(W-W^\top)/2$, et ces deux parts sont
+\emph{orthogonales} au sens de Frobenius. Sur la chaîne de Markov des sauts inter-piliers construite à partir
+du jugement dirigé (de loi stationnaire $\pi$), $S$ est la partie réversible et $A$ le
+\emph{courant} de probabilité $J_{jk}=\pi_j P_{jk}-\pi_k P_{kj}$, antisymétrique et nul si et
+seulement si l'équilibre détaillé est satisfait. Le renversement du temps laisse $S$ invariante
+et retourne le signe de $A$.
+
+La décomposition $W=S+A$ est ce qui porte les bornes du chapitre~\ref{chap:partielle} et elle se
+retient telle quelle. Les trois identités qui suivent ne portent, elles, aucune valeur publiée :
+elles établissent pourquoi une statistique invariante par renversement du temps ne \emph{pouvait}
+pas révéler la direction, donc pourquoi l'échec des trois sources tient à la nature de
+l'observable et non à un défaut de collecte. Elles sont empruntées à la théorie des chaînes de
+Markov et non à l'outillage actuariel, et les sauter ne coûte rien à la suite du mémoire.
+
+Formellement, en notant $P$ le noyau de transition et $\pi$ sa loi stationnaire, on décompose
+$P = S_\pi + A_\pi$ où $S_\pi=\tfrac12(P+\tilde P)$ et $A_\pi=\tfrac12(P-\tilde P)$, avec
+$\tilde P_{jk} = \pi_k P_{kj}/\pi_j$ le noyau \emph{adjoint} (la chaîne renversée dans le temps).
+Trois identités s'ensuivent, vérifiées numériquement (%
+% SOURCES-SCRIPTS: 40
+figure~\ref{fig:reversibilite}).
+
+\emph{(i) Le courant.} La quantité
+\begin{equation}
+  J_{jk} \;=\; \pi_j P_{jk} - \pi_k P_{kj}
+  \label{eq:courant}
+\end{equation}
+est antisymétrique, et $J\equiv 0$ caractérise la réversibilité (équilibre détaillé). Elle est
+ici non nulle : le modèle porte bien une direction.
+
+\emph{(ii) La fluctuation ne voit que la partie réversible.} Pour toute fonction test
+$f:\{1,\dots,5\}\to\R$, la forme de Dirichlet, qui est la variation quadratique de la martingale
+associée, vaut
+\begin{equation}
+  \mathcal{E}(f,f) \;=\; \tfrac12\sum_{j,k}\pi_j P_{jk}\,(f_k-f_j)^2
+                  \;=\; \tfrac12\sum_{j,k}\pi_j (S_\pi)_{jk}\,(f_k-f_j)^2 ,
+  \label{eq:dirichlet}
+\end{equation}
+la contribution de $A_\pi$ s'annulant terme à terme par antisymétrie de $A_\pi$ et symétrie de
+$(f_k-f_j)^2$. L'énergie de fluctuation est donc aveugle à la direction.
+
+\emph{(iii) L'irréversibilité tient en un scalaire.} La production d'entropie
+\begin{equation}
+  \sigma \;=\; \tfrac12\sum_{j,k}\bigl(\pi_j P_{jk}-\pi_k P_{kj}\bigr)
+                \log\frac{\pi_j P_{jk}}{\pi_k P_{kj}} \;\geq\; 0
+  \label{eq:entropie}
+\end{equation}
+est nulle si et seulement si la chaîne est réversible, chaque terme étant du signe de
+$(x-y)\log(x/y)\geq 0$.
+
+\paragraph{Une précaution de vocabulaire, et elle a été demandée.} Les mots \emph{martingale} et
+\emph{variation quadratique} sont employés ici au sens de la théorie des chaînes de Markov, sous
+la mesure physique : $\mathcal{E}(f,f)$ est la forme de Dirichlet de la chaîne, c'est-à-dire
+la variation quadratique de la martingale associée à la fonction test $f$. Il ne s'agit à aucun
+moment d'une mesure risque-neutre, d'un actif répliqué, ni d'un \og{}test de
+martingalité\fg{} au sens des générateurs de scénarios économiques. Ce mémoire ne valorise
+rien : aucune hypothèse de non-arbitrage n'y est faite ni requise, et aucun changement de
+mesure n'y intervient. La confusion est facile ; elle est écartée ici
+parce que le même mot désigne, en tarification, un objet qui n'aurait aucun sens. La
+martingale, sa filtration et sa mesure sont nommées \matcomp, avec les hypothèses de la
+chaîne, la distinction entre ce qui est \emph{testé} et ce qui est \emph{décomposé}, et la
+raison pour laquelle aucun test de martingalité n'est possible sur un facteur latent.
+
+\begin{cle}
+\textbf{Le placebo, relu, et la portée de cette lecture.} Le non-rejet $z=-0{,}33$ est
+compatible avec $\sigma=0$ (équilibre détaillé). Pour une chaîne stationnaire, une statistique
+invariante par renversement du temps a la même loi sous $P$ et sous le noyau renversé $\tilde P$ :
+elle ne \emph{peut pas} voir un courant qui change de signe sous ce renversement, et c'est ce qui
+rend dégénéré le test du \og temps inversé \fg{}. La statistique $T$ du placebo n'est pas de ce
+type, puisqu'elle compare les transitions à leur transposée : elle pouvait détecter un courant, et
+au pas annuel elle n'en détecte aucun. Deux limites bornent cette lecture. $W$ n'est pas
+littéralement un générateur de Markov, et le produit scalaire propre est pondéré par $\pi$, dont le
+$S=(W+W^\top)/2$ euclidien est le cas $\pi$ uniforme. Surtout, l'énoncé ne s'étend pas à la loi
+complète des ensembles de piliers touchés par un sinistre, qui dépend de la direction
+(proposition~\ref{prop:nonid}). La frontière est donc celle des statistiques que les sources
+fournissent, non une impossibilité de principe.
+\end{cle}
+
+\begin{figure}[htbp]
+  \centering
+  \figover{Z11_reversibilite_martingale.png}
+  \caption{La direction $A$ comme courant irréversible, et
+pourquoi une statistique invariante par renversement ne peut pas la voir. (a)~le courant $J_{jk}=\pi_jP_{jk}-\pi_kP_{kj}$
+est non nul : le modèle porte bien une direction. (b)~pour trois cents fonctions test tirées au
+hasard, l'énergie de fluctuation, c'est-à-dire la variation quadratique de la martingale, est la
+même pour la chaîne posée et pour sa symétrisée : les points tombent sur la diagonale, elle ne voit
+que $S$. Seule la production d'entropie distingue les deux chaînes, et elle s'annule à la
+symétrisation.}
+  \label{fig:reversibilite}
+\end{figure}
+% SOURCES-SCRIPTS: 40
+
+\section{La meilleure expérience naturelle disponible : le choc MOVEit}
+
+Avant de conclure, on tente la stratégie la plus ambitieuse que la donnée autorise : une
+expérience quasi naturelle. En mai 2023, l'exploitation de masse de la faille du logiciel de
+transfert MOVEit, édité par un tiers, frappe simultanément des centaines
+d'organisations. C'est un choc exogène, daté, et typé pilier 4. Si la
+contagion dirigée existe, ce choc doit élever, dans les mois suivants et chez les mêmes
+organisations, le risque de défaillances relevant d'autres piliers. C'est une prédiction
+directionnelle testable, par différence de différences (188 organisations financières touchées,
+groupe de contrôle apparié, fenêtres de $180$~jours).
+
+\begin{attention}
+\textbf{Le piège, et ce qu'il apprend.} La différence de différences brute est grande et
+statistiquement significative ($+1{,}17$ jour-brèche par organisation, IC bootstrap
+$[+1{,}07\,;+1{,}27]$). Mais un placebo (le même dispositif calé sur une fausse
+date un an plus tôt) produit presque le même chiffre ($+1{,}11$), alors qu'aucun choc n'a
+eu lieu. L'effet apparent n'est donc pas causal : il vient de la sélection du groupe de
+contrôle, qui revient mécaniquement vers sa moyenne. L'effet net, une fois le
+placebo retranché, tombe à $+0{,}06$, indistinguable de zéro. Et quand bien même un signal
+subsisterait, la cible resterait non attribuable : la taxonomie de la source est un vecteur
+d'attaque (HACK, DISC\dots, $32\,\%$ non déterminés), pas un domaine de contrôle DORA. Même
+la meilleure expérience naturelle ne fait donc pas apparaître de propagation dirigée sur
+donnée agrégée (figure~\ref{fig:moveit}) : l'échec tient à la donnée, pas à la méthode.
+\end{attention}
+
+\begin{figure}[htbp]
+\centering
+\figover{Z6_event_study_moveit.png}
+\caption{Event-study du choc MOVEit. (a)~Fréquence des brèches, groupe touché contre
+contrôle, autour du choc. (b)~La différence de différences brute est dévorée par le
+placebo : l'effet net est nul. (c)~La cible reste non attribuable, la taxonomie étant un
+vecteur d'attaque et non un pilier.}
+\label{fig:moveit}
+\end{figure}
+
+% SOURCES-SCRIPTS: 62 35
+
+\section{Ce qu'un corpus documentaire corrobore}
+\label{sec:postmortems}
+
+Les trois sections précédentes portent sur des bases agrégées. Or la spécification que
+$W$ exige, horodatage fin, taxonomie par domaine de contrôle, causes communes consolidées, est
+introuvable dans une base agrégée mais existe \emph{à l'intérieur} d'un autre type de source :
+le rapport post-incident officiel, où une enquête publique reconstitue la séquence des
+défaillances de contrôle. On procède donc à une analyse de contenu structurée de sept
+post-mortems (Cyber Safety Review Board, FCA et PRA, GAO, SEC, OCC), dont deux portent sur des
+entités financières régulées, en codant chaque rapport en transitions dirigées $k \to j$ telles
+que le rapport les \emph{établit}. Le protocole de codage est explicite et réplicable, et
+l'unité de codage est le couple (incident, paire de piliers).
+
+Le résultat est net. Sur $17$ transitions codées, l'asymétrie observée vaut $17$ contre un
+placebo par permutation de $8{,}4 \pm 2{,}2$, soit $z=+3{,}93$ ($p=0{,}0004$), là où le pas
+annuel d'OpRisk donnait $z=-0{,}33$ ; aucune transition ne va à contre-sens de la
+tendance dominante de sa paire. Surtout, une structure apparaît :
+P1 (gouvernance) n'est jamais une cible ($9$ sorties, $0$ entrée) et P2
+(gestion des incidents) est un puits ($0$ sortie, $7$ entrées). C'est exactement la structure
+que le classeur qualitatif posait par jugement, retrouvée ici sur donnée documentaire et par un
+chemin indépendant. Le compromis est l'inverse de celui d'OpRisk : peu de volume, mais une
+direction établie par l'enquête, dont la qualité du codage fait la puissance.
+
+\begin{attention}
+\textbf{Le confondant, qu'aucun de ces chiffres ne lève.} Le placebo teste la \emph{cohérence}
+du codage, non l'\emph{exogénéité} de la direction. Or une enquête officielle est \emph{mandatée}
+pour établir une cause racine et des responsabilités, et conclut très souvent à une
+\og{}défaillance de gouvernance\fg{} : que P1 ressorte comme source pure peut donc refléter la
+convention d'écriture des rapports autant que la causalité opérationnelle. S'y ajoutent
+un codeur unique, des sources en partie secondaires, et un échantillon raisonné d'incidents
+notoires. Ce corpus corrobore donc la structure ; il ne la \emph{calibre} pas. Le
+codage à juge unique est à ce titre une limite déclarée de ce mémoire, et non une étape
+en attente : son coût est \emph{borné} plutôt que supposé, au \S\ref{sec:biais-narration}, où la
+dégradation complète du rôle de $P_1$ se révèle moins chère que l'ignorance directionnelle que
+le mémoire assume et publie déjà. Deux dispositifs complètent par ailleurs le dossier, documentés en annexe, et leur exécution
+renforcerait l'énoncé sans le sauver : une mesure de fiabilité inter-juges par second
+codeur en aveugle, encore \emph{en attente}, et une relecture par praticiens dont les
+questions portent précisément sur l'ordre P1 vers P2, à partir de leur expérience de terrain et
+non de rapports publics, désormais engagée.
+
+\textbf{Les trois relectures de praticiens reçues vont dans le même sens.} Aucune ne distingue un
+ordre de propagation d'une cause commune, ce qui corrobore la \emph{frontière} et non la matrice ;
+les deux dernières contestent le sens unique de deux arcs sans déplacer le capital publié,
+l'ensemble admissible ne fixant aucune direction (\S\ref{sec:relecture-praticien}).
+\end{attention}
+
+% SOURCES-SCRIPTS: 53
+
+\section{Le corpus étendu, et la matrice ordonnée complète}
+\label{sec:corpus-etendu}
+
+Deux objections restaient ouvertes. Le signal directionnel pouvait tenir au \emph{choix} des
+sept incidents, tous notoires ; et le codage, tel qu'il est exploité ci-dessus, ne compare que
+$n(j\to k)$ à $n(k\to j)$ \emph{à l'intérieur} d'une paire, ce qui élimine le dénominateur et
+ne dit donc rien de l'amplitude. On lève les deux ensemble.
+
+\paragraph{Le corpus passe à dix rapports, et le signal se renforce.} Trois incidents
+s'ajoutent, tous documentés par une enquête publique : CrowdStrike Falcon 2024
+(analyse technique de cause racine du 6 août 2024, où le validateur de contenu laisse passer un
+fichier dont le nombre de champs ne correspond pas au modèle), Log4Shell 2021--2022
+(premier rapport du CSRB, où l'absence d'inventaire des dépendances logicielles
+interdit de savoir où la bibliothèque était déployée) et Raphaels Bank 2015 (amende
+conjointe FCA/PRA pour manquement répété à la gouvernance de
+l'externalisation). Le corpus compte alors $22$ transitions. Le test de direction ne se contente
+pas de tenir, il se renforce, et il survit aux deux restrictions les plus dures.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l r r r r@{}}
+\toprule
+\textbf{Périmètre} & \textbf{Rapports} & \textbf{Transitions} & \textbf{Asym.\ / nul} & $z$ \\
+\midrule
+Corpus initial (chapitre, ci-dessus) & $7$ & $17$ & $17$ / $8{,}4\pm2{,}2$ & $+3{,}93$ \\
+\textbf{Corpus étendu} & $10$ & $22$ & $22$ / $9{,}5\pm2{,}4$ & $\mathbf{+5{,}12}$ \\
+Sources \emph{primaires} seules & $7$ & $18$ & $18$ / $8{,}2\pm2{,}4$ & $+4{,}08$ \\
+Perspective \emph{entité} seule & $6$ & $16$ & $16$ / $8{,}0\pm2{,}2$ & $+3{,}62$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+Les deux dernières lignes comptent autant que la deuxième. Restreindre aux sources
+primaires écarte l'hypothèse que le signal viendrait de la couverture de presse ; restreindre à
+la perspective entité écarte celle qu'il viendrait du mélange des points de vue, une
+défaillance interne d'un fournisseur n'étant pas un risque tiers pour lui-même alors qu'elle
+l'est pour ses clients. Le signal survit aux deux.
+
+\paragraph{La matrice ordonnée, enfin estimable.} Chaque incident déclare désormais, en plus de
+ses transitions, l'ensemble des piliers défaillants, y compris ceux qui ont cédé sans
+rien entraîner. On dispose alors du dénominateur qui manquait, et l'on estime directement
+\begin{equation}
+  p_{jk} \;=\; \Prob(\text{le pilier } k \text{ cède} \mid \text{le pilier } j \text{ a cédé}),
+  \qquad
+  p_{jk}\mid\text{données} \;\sim\; \mathrm{Beta}\bigl(1+m_{jk},\;1+N_j-m_{jk}\bigr),
+  \label{eq:pjk}
+\end{equation}
+où $N_j$ compte les incidents où $j$ a cédé et $m_{jk}$ ceux où le rapport établit $j\to k$.
+C'est la matrice \emph{ordonnée complète}, donc $S$ et $A$, là où la lecture par paire
+ne donnait que le signe de $A$.
+
+\begin{attention}
+\textbf{L'asymétrie du résultat est le point à retenir.} Sur les vingt liens
+ordonnés, douze ont un crédible à $90\,\%$ entièrement \emph{sous} $0{,}5$, et
+\emph{aucun} entièrement au-dessus. Le corpus établit donc très bien \emph{où la contagion ne
+va pas}, et pas du tout où elle va fort : même les liens les plus élevés, $P_3\to P_2$
+($0{,}77$, crédible $[0{,}48\,;0{,}95]$) et $P_1\to P_4$ ($0{,}68$, $[0{,}40\,;0{,}89]$),
+recouvrent encore $0{,}5$. Les douze liens faibles comprennent en revanche les
+\emph{quatre} sorties de $P_2$, soit toutes, et trois des quatre entrées de $P_1$ : le puits est
+donc établi comme tel, la source pure seulement en partie, l'arc $P_5 \to P_1$ n'étant pas établi
+comme faible. Cette asymétrie résiduelle va contre la convention \og{}cause racine =
+gouvernance\fg{} plutôt qu'en sa faveur, et elle est rapportée ici pour cette raison.
+\end{attention}
+
+\begin{cle}
+\textbf{Ce que l'extension confirme, et ce qu'elle ne déplace pas.} La corrélation entre la
+matrice documentaire et le classeur d'expert n'est pas significative, ni sur la matrice
+complète ($\rho=+0{,}08$) ni sur la seule partie antisymétrique ($\rho=+0{,}31$, $p=0{,}19$).
+Le corpus ne reproduit donc pas le classement des coefficients. Ce qu'il reproduit est la structure, et elle seule. Enfin, en
+ajoutant des défaillances non propagées au dénominateur, pour tenir compte de ce qu'une enquête
+documente mal les contrôles qui cèdent sans conséquence, le \emph{niveau} de $p_{jk}$ s'effondre
+(de $0{,}27$ à $0{,}07$ en moyenne) tandis que la part de direction
+$\lVert A\rVert/\lVert W\rVert$ ne bouge pas (elle reste à $60\,\%$). Le corpus établit un
+ordre, pas une magnitude, et l'extension confirme la frontière à trois niveaux sur un
+objet plus riche au lieu de la déplacer.
+\end{cle}
+
+% SOURCES-SCRIPTS: 59
+
+\section{Le biais de narration, mesuré au lieu d'être déclaré}
+\label{sec:biais-narration}
+
+Des trois limites nommées au \S\ref{sec:postmortems}, la troisième est la plus sérieuse et la
+seule qui ne se corrige pas en ajoutant des rapports. Une enquête officielle cherche une
+\emph{cause racine}, et \og défaillance de gouvernance\fg{} est une conclusion de convention : le
+corpus pourrait surreprésenter $P_1$ comme source non parce que la gouvernance émet, mais parce
+que les enquêteurs concluent ainsi. L'enjeu n'est pas mince, puisque onze des vingt-deux
+transitions codées partent de $P_1$. Jusqu'ici cette limite était écrite et non chiffrée, ce
+qui est la différence entre une réserve et un résultat. On la chiffre.
+
+On la chiffre par une loi nulle exacte, obtenue par convolution et sans tirage, sur laquelle
+toutes les décisions se prennent en $p$-valeur exacte plutôt qu'en $z$ ; un jackknife montre
+qu'aucun rapport ne porte le signal à lui seul. On cherche ensuite, en borne adverse sur les
+$2^{11}$ sous-ensembles d'arêtes partant de $P_1$, l'ampleur qu'il faudrait à la convention
+narrative pour renverser la conclusion, en \emph{retirant} ou en \emph{retournant} des arêtes.
+La construction et le jackknife sont déportés \matcomp.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l l l@{}}
+\toprule
+\textbf{Hypothèse sur les $11$ arêtes de $P_1$} & \textbf{Reste} & $p$ \textbf{exacte} \\
+\midrule
+Aucune (corpus tel qu'il est codé) & $22$ transitions & $1{,}5\cdot10^{-5}$ \\
+$4$ arêtes \emph{retournées}, pire configuration & $22$ transitions & $\mathbf{0{,}084}$ \\
+Les $11$ arêtes \emph{retirées} & $11$ transitions & $0{,}0039$ \\
+Les $7$ \emph{rapports} concernés retirés & $3$ transitions & $0{,}50$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+La deuxième ligne donne le point de rupture : il faudrait que la convention narrative ait
+\emph{inversé} quatre des onze arêtes, et dans l'agencement le plus défavorable, pour perdre
+la significativité. La troisième est plus instructive encore : aucun nombre de retraits
+ne suffit. En supprimant la totalité du rôle de la gouvernance, donc la moitié du corpus, la
+direction reste significative, portée par les seules chaînes $P_3\to P_2$ et $P_4\to P_2$, les
+tests qui ne détectent pas et les tiers qui entraînent la gestion d'incident. Ces deux chaînes
+ne doivent rien à la convention \og cause racine = gouvernance\fg{}, puisque $P_1$ n'y figure pas.
+
+La quatrième ligne, qui retire les rapports entiers et non les seules arêtes, jette aussi des
+chaînes que le biais ne concerne pas ; c'est une borne de forme, discutée au même endroit.
+
+\begin{cle}
+\textbf{Ce que le biais coûte en capital, et ce qu'il ne coûte pas.} Un $z$ n'est pas un
+capital. En dégradant l'émission de $P_1$ dans la matrice retenue,
+$W_{1k}\to(1-a)\,W_{1k}$, et en \emph{recalculant} la bande d'identification pour chaque degré
+(la dégradation modifie $S$, donc l'ensemble admissible lui-même), le SCR d'entité passe
+de $169{,}0$ à $127{,}1$~M\euro{} quand $P_1$ devient complètement muette, soit $-24{,}8\,\%$.
+Ce déplacement de $41{,}9$~M\euro{} vaut $0{,}81$ fois la largeur de la bande
+d'identification déjà publiée, $51{,}7$~M\euro. Accorder au critique la totalité de son
+objection coûte donc \emph{moins} cher que l'ignorance directionnelle que le mémoire assume et
+publie : le biais de narration n'est pas la première source d'incertitude du chiffre d'entité,
+et il ne faut pas le présenter comme telle. Ce qui bouge, en revanche, est le pilotage :
+le pilier à remédier en premier passe de $P_1$ à $P_4$ dès $a = 0{,}50$. Le niveau de capital
+résiste au biais, la recommandation opérationnelle en dépend, et les deux ne doivent pas être
+présentés avec la même assurance.
+\end{cle}
+
+Enfin, l'écart entre états de conformité, qui est la thèse du mémoire, survit à tous les degrés
+testés : de $+45{,}2\,\%$ à $a=0$ il descend à $+29{,}1\,\%$ à $a=1$ sans s'annuler, la
+conformité agissant par le gain $g$ sur \emph{toutes} les arêtes et pas seulement sur celles de
+$P_1$. Le second codage en aveugle n'est donc pas le préalable de ce
+résultat : il en serait le renforcement.
+% SOURCES-SCRIPTS: 54
+Ce que le mémoire publie ici est une
+\emph{borne adverse}, et le rapport de $0{,}81$ ci-dessus dit pourquoi elle porte : accorder au
+critique la totalité de son objection déplace le capital d'entité de moins que l'ignorance
+directionnelle déjà assumée. Ce qu'un second codage ajouterait est une mesure
+d'\emph{intersubjectivité}, non une correction de niveau, et son absence ne laisse aucun énoncé
+du mémoire sans borne.
+
+Le dispositif de second codage est préparé et décrit \matcomp.
+% SOURCES-SCRIPTS: 64
+
+\section{Les séquences ordonnées : une voie explorée et refermée}
+\label{sec:sequences-ordonnees}
+
+Des marges par paires ne déterminent pas une loi sur les permutations : un triplet ordonné,
+du type P1 $\to$ P3 $\to$ P2, porte en général une information qu'aucune paire ne porte. Composer
+les arêtes d'un même incident donne $9$ chemins de longueur deux. Le résultat est négatif pour
+trois raisons distinctes : la comparaison la plus naturelle a un support vide, P2 n'émettant
+jamais et P1 n'étant jamais atteint ; le test de dépendance au prédécesseur n'a aucune puissance,
+aucun pilier n'étant à la fois atteint et doté de deux successeurs ; et l'acyclicité du graphe
+agrégé s'obtiendrait deux fois sur trois par hasard, donc ne confirme rien. Un acquis subsiste
+sur le modèle : l'auto-évitement rend la chaîne des piliers dépendante du prédécesseur, de sorte
+que les triplets portent une prédiction testable. Le protocole et le volume requis, $158$ à
+$589$ chemins par un même pilier, sont déportés \matcomp.
+
+% SOURCES-SCRIPTS: 75
+
+\section{La formalisation bayésienne, et sa prudence}
+\label{sec:bayes}
+
+Borner à la main traite toutes les configurations admissibles à égalité, y compris celles que
+les rapports contredisent. Le cadre bayésien fait mieux avec le même matériau, et sans
+élicitation. Pour chaque paire $\{lo,hi\}$, on pose $\theta$ la probabilité qu'une chaîne
+documentée aille de $lo$ vers $hi$, et on la relie au coefficient antisymétrique par
+\[
+  A_{lo,hi} \;=\; S_{lo,hi}\,(2\theta - 1),
+\]
+transformation affine, croissante et bijective de $[0,1]$ sur l'intervalle admissible
+$[-S_{lo,hi},+S_{lo,hi}]$ du chapitre~\ref{chap:partielle}, avec $\theta=1/2$ donnant $A=0$,
+c'est-à-dire $W$ symétrique. Si le corpus documente $n_{lo}$ chaînes allant de $lo$ vers $hi$ et
+$n_{hi}$ dans l'autre sens, la vraisemblance est binomiale et la conjugaison beta-binomiale
+donne un posterieur explicite :
+\begin{equation}
+  \begin{gathered}
+  \theta \sim \mathrm{Beta}(\alpha_0,\beta_0),
+  \qquad
+  n_{lo}\mid\theta \sim \mathcal{B}\mathrm{in}(n_{lo}+n_{hi},\,\theta)
+  \\
+  \Longrightarrow\qquad
+  \theta \mid \text{données} \;\sim\; \mathrm{Beta}\bigl(\alpha_0+n_{lo},\;\beta_0+n_{hi}\bigr).
+  \end{gathered}
+  \label{eq:posterieur-beta}
+\end{equation}
+Aucune simulation par chaînes de Markov n'est nécessaire, et aucun prior d'expert n'intervient.
+Le cas $n_{lo}=n_{hi}=0$, celui des paires que le corpus ne documente pas, rend
+\eqref{eq:posterieur-beta} égal au prior : sous $\mathrm{Beta}(1,1)$, $\theta$ reste uniforme sur
+$[0,1]$ et $A$ balaie donc \emph{tout} l'intervalle admissible.
+
+\begin{cle}
+\textbf{La propriété qui fait l'intérêt du procédé.} Le posterieur reproduit de
+lui-même la structure d'identification partielle : les quatre paires que le corpus ne documente
+pas gardent un $\theta$ uniforme, donc un coefficient qui couvre \emph{tout} l'intervalle
+admissible, sans qu'on ait à poser cette ignorance ; les paires documentées, elles, se
+concentrent. Le bayésien n'ajoute donc pas une hypothèse, il formalise celle qui était déjà là.
+Le capital devient une loi plutôt qu'un encadrement, et son intervalle de crédibilité à
+$90\,\%$ se révèle $81\,\%$ plus resserré que les bornes de pire cas (les niveaux sont établis
+en partie~\ref{part:resultats}). Les deux objets répondent à deux questions distinctes, et le
+mémoire donne les deux : les bornes sont \emph{opposables} car sans prior, le crédible est
+\emph{informatif}.
+\end{cle}
+
+Deux vérifications vont en sens opposés. Sous un prior sceptique, la médiane ne se déplace
+presque pas, donc la conclusion vient des comptes documentés. Mais par paire, seules deux des six
+paires documentées ont un intervalle de crédibilité à $90\,\%$ qui exclut $\theta=1/2$ : c'est
+cette lecture, la plus conservatrice, qui est retenue. Le détail et la figure sont déportés
+\matcomp.
+% SOURCES-SCRIPTS: 56
+
+\section{La frontière, en trois niveaux}
+
+On peut maintenant énoncer précisément ce que la donnée autorise à revendiquer, et c'est un
+énoncé à trois étages plutôt qu'un verdict unique.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{3.2cm} p{7.4cm} p{4.2cm}@{}}
+\toprule
+\textbf{Objet} & \textbf{Ce que la donnée établit} & \textbf{Posture retenue} \\
+\midrule
+\textbf{Structure} \newline (P1 amont, P2 aval) &
+$17$ transitions sur le corpus initial et $22$ sur le corpus étendu, aucune à contre-sens,
+$z=+3{,}9$ puis $+5{,}1$ ; convergence avec le jugement d'expert par un chemin indépendant &
+\textbf{revendiquée}, avec son confondant déclaré \\
+\textbf{Direction} \newline paire par paire &
+$2$ paires sur $6$ seulement ont un crédible concluant &
+\textbf{non revendiquée} ; les bornes restent \\
+\textbf{Amplitude} \newline des coefficients &
+aucune information ; même les dix sens connus, une bande de $656$~M\euro{} subsisterait &
+\textbf{non identifiable} par cette voie \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+La conséquence de méthode est nette : on revendique un ordre partiel entre piliers, non
+une matrice. C'est un objet plus faible, donc bien plus difficile à contester, et il \emph{suffit}
+à porter les conclusions du mémoire, à savoir le classement des piliers et l'ordre de
+remédiation. Ce que la donnée fixe par ailleurs demeure ce qu'établissent les chapitres
+empiriques : la fréquence marginale d'entrée, l'accumulation par cause commune, et l'indice de
+queue de sévérité avec son hétérogénéité par catégorie. Ce qu'elle ne fixe pas relève d'un autre
+régime de connaissance et se lit en bande, jamais en point.
+
+La spécification du registre qui identifierait $W$, et la valeur en capital de cette
+information, sont traitées au chapitre~\ref{ch:livrable}, en partie~\ref{part:limites} : elles
+relèvent de la portée réglementaire du travail plus que de sa démonstration.
+
+\begin{cle}
+\textbf{Ce que ce chapitre apporte au mémoire.} Démontrer, chiffres à l'appui, qu'une dépendance
+que tout le monde \emph{postule} n'est pas \emph{mesurable} sur les données agrégées est rare ;
+en donner la raison théorique l'est davantage ; aller ensuite chercher, dans une source d'un
+autre genre, de quoi en corroborer la structure sans sur-vendre le résultat est ce qui distingue
+une limite \emph{assumée} d'une limite \emph{subie}. Il en sort quatre acquis : une
+\emph{frontière d'identification} à trois niveaux, une discipline sur l'usage de $W$
+(ordre partiel revendiqué, coefficients bornés, jamais présentés comme calibrés), une
+\emph{formalisation} bayésienne qui reproduit cette frontière au lieu de la postuler, et une
+spécification de reporting hiérarchisée qui donne au travail une portée réglementaire
+au-delà du modèle.
+\end{cle}
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 55 59 64
+

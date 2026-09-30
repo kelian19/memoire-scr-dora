@@ -1,0 +1,55 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+========================================================================================
+1. LA NATURE DES DEUX COLONNES
+========================================================================================
+Perimetre de la chaine publiee : 582 incidents ; valeur courante renseignee : 582.
+
+  annee   rapport median valeur courante / montant
+  2000    1.890
+  2004    1.747
+  2010    1.467
+  2015    1.347
+  2020    1.275
+  2023    1.083
+  2024    1.025
+  2025    1.025
+
+  pente du log du rapport sur 2004-2025 : -2.19 % par an (p = 1.50e-13)
+  soit un taux d'inflation implicite de 2.19 % par an
+
+LECTURE. Le rapport vaut un pour les annees recentes et croit vers le passe : la colonne
+utilisee par la chaine publiee est NOMINALE, la valeur courante est corrigee de l'inflation.
+
+========================================================================================
+2. LA TENDANCE DE LA MEDIANE, NOMINALE ET REELLE (section 1bis du script 89)
+========================================================================================
+  nominale (colonne publiee) : +13.0 % par an, p = 0.0003
+  reelle (valeur courante)   : +10.6 % par an, p = 0.0021
+
+========================================================================================
+3. L'ECHELLE DE QUEUE DERIVEE, NOMINALE ET REELLE (section 1ter du script 89)
+========================================================================================
+  nominale : b = +4.00 % par an (ecart-type 1.84), p = 0.0386, 91 exces
+  reelle   : b = +2.00 % par an (ecart-type 1.80), p = 0.2112, 106 exces
+
+LECTURE, ECRITE APRES LES NOMBRES.
+  - l'inflation implicite vaut 2.19 % par an : elle explique 17 % de la derive du corps
+    (13.0 contre 10.6 % une fois deflatee), et la derive reelle du corps
+    reste significative ;
+  - dans la queue, la derive deflatee vaut +2.00 % par an, NON significative (p = 0.211).
+  Le seuil publie est garde fixe dans les deux branches : en valeur courante, davantage
+  de pertes anciennes le franchissent, d'ou un nombre d'exces different.
+
+========================================================================================
+GRANDEURS CITEES (sans separateur ni signe)
+========================================================================================
+inflation_implicite_pct 2.19
+derive_mediane_nominale_pct 13.0
+derive_mediane_reelle_pct 10.6
+p_mediane_reelle 0.0021
+derive_queue_nominale_pct 4.00
+derive_queue_reelle_pct 2.00
+p_queue_reelle 0.2112
+exces_reels 106
+part_inflation_corps_pct 17

@@ -1,0 +1,94 @@
+\chapter{Table des notations}
+
+% MIGRÉ depuis memoire/main.tex (plages 3230-3259).
+% RELECTURE FAITE (août 2026) : la table héritée ne portait AUCUN symbole du
+% modèle de cascade (W, S, A, TRANS, ROOT, g, s_j, e_j, R_0, t, kappa), alors
+% que c'est le modèle central. Elle est réécrite et organisée en cinq blocs.
+\label{not:ann:notations}
+
+\noindent Les symboles sont regroupés par brique du modèle, dans l'ordre où le mémoire les
+introduit. La colonne de droite renvoie au chapitre qui les définit.
+
+% LONGTABLE ET NON TABULAR. Un tabular ne peut pas se couper : la table dépassait le
+% bas de page, et hyperref plaçait alors les liens \ref des sept dernières lignes à des
+% coordonnées NÉGATIVES (sept avertissements « Annotation out of page boundary » à la
+% compilation). Les renvois fonctionnaient mais pointaient sur la mauvaise page du PDF.
+% longtable répartit la table sur plusieurs pages et rejoue l'en-tête à chaque page.
+\renewcommand{\arraystretch}{1.22}
+{\small
+\begin{longtable}{>{\raggedright}p{3.3cm} >{\raggedright\arraybackslash}p{10.2cm} c}
+\toprule
+\rowcolor{lightblue}
+\textbf{Symbole} & \textbf{Signification} & \textbf{Ch.} \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{lightblue}
+\textbf{Symbole} & \textbf{Signification} & \textbf{Ch.} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{r@{}}{\footnotesize\itshape suite page suivante} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Piliers et cascade dirigée}}} \\
+$P_1,\dots,P_5$ & Les cinq piliers DORA : gouvernance, gestion des incidents, tests de résilience, prestataires tiers, partage d'informations & \ref{chap:cascade} \\
+$\mathrm{TRANS}$ & Matrice d'influence brute du classeur qualitatif, asymétrique, non normalisée & \ref{chap:cascade} \\
+$\mathrm{ROOT}$ & Propension de chaque pilier à \emph{amorcer} une chaîne & \ref{chap:cascade} \\
+$s_j$ & Somme de la ligne $j$ de $\mathrm{TRANS}$ ; $s_{\max}=\max_j s_j$ & \ref{chap:cascade} \\
+$g$ & Gain de propagation, part de contagion du pilier le plus exposé. \textbf{Mesure une criticité, jamais un montant} : à ne pas confondre avec l'échelon de sévérité par pilier & \ref{chap:cascade} \\
+$W$ & Matrice de contagion normalisée à la Leontief, $W=g\,\mathrm{TRANS}/s_{\max}$. \textbf{Convention : $W_{jk}$ va de la source $j$ vers la cible $k$ ; la ligne émet, la colonne reçoit} & \ref{chap:cascade} \\
+$e_j$ & Propension à propager depuis $j$, $e_j=g\,s_j/s_{\max}$ & \ref{chap:cascade} \\
+$\rho(W)$ & Rayon spectral de $W$ ; $\rho(W)\le g<1$ garantit la stabilité & \ref{chap:cascade} \\
+$(I-W)^{-1}$ & Inverse de Leontief, descendance espérée avec multiplicité & \ref{chap:cascade} \\
+$M,\ R_0$ & Matrice de génération suivante et son rayon spectral (extinction si $R_0<1$) & \ref{chap:cascade} \\
+$S_a$ & Ensemble des piliers atteints depuis l'amorce $a$ & \ref{chap:cascade} \\
+$K_j,\ u_j$ & Seuil sur la latente ; seuil de matérialité observable (art.~18) & \ref{chap:cascade} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Identifiabilité et identification partielle}}} \\
+$S,\ A$ & Parties symétrique et antisymétrique de $W$ : co-occurrence (identifiée) et direction (non identifiée) & \ref{ch:identifiabilite} \\
+$J_{jk}$ & Courant de probabilité $\pi_jP_{jk}-\pi_kP_{kj}$ ; nul ssi réversibilité & \ref{ch:identifiabilite} \\
+$\pi,\ \tilde P$ & Loi stationnaire ; noyau adjoint (chaîne renversée dans le temps) & \ref{ch:identifiabilite} \\
+$\mathcal{E}(f,f)$ & Forme de Dirichlet, variation quadratique de la martingale ; ne dépend que de $S$ & \ref{ch:identifiabilite} \\
+$\sigma$ & Production d'entropie ; nulle ssi la chaîne est réversible & \ref{ch:identifiabilite} \\
+$T(M),\ z$ & Statistique d'asymétrie et son écart réduit au placebo par permutation & \ref{ch:identifiabilite} \\
+$t$ & Degré d'ignorance directionnelle, $|A_{jk}|\le t\,S_{jk}$ ; $t=1$ = ignorance totale & \ref{chap:partielle} \\
+$\mathcal{W}(t)$ & Ensemble admissible des matrices compatibles avec la donnée & \ref{chap:partielle} \\
+$u_{ij}$ & Excès de propagation propre à la source, $\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ & \ref{chap:partielle} \\
+$L(\mathcal{V}),\ V(\mathcal{I})$ & Largeur de bande de capital ; valeur d'une information & \ref{ch:livrable} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Socle : fréquence et sévérité}}} \\
+$\xi,\ \sigma_{\text{GPD}},\ u$ & Indice de queue, échelle et seuil POT de la GPD de sévérité & \ref{chap:socle} \\
+$\zeta_u=p_u$ & Probabilité de dépassement du seuil, $\Prob(X>u)$ & \ref{chap:socle} \\
+$N_u$ & Nombre d'excès au-delà de $u$ & \ref{chap:socle} \\
+$\lambda_{ref}$ & Fréquence de référence PRC ($341$/an) : \emph{clé de répartition} par vecteur, n'alimente pas le moteur & \ref{chap:donnees} \\
+$\lambda$ & Fréquence d'entrée du moteur, incidents TIC matériels ($21{,}6$/an au secteur) & \ref{chap:donnees} \\
+$\varphi,\ a$ & Facteur de surdispersion ; charge systémique commune du mélange lognormal & \ref{chap:socle} \\
+$r,\ p$ & Paramètres de la loi binomiale négative de fréquence & \ref{chap:socle} \\
+$b$ & Élasticité de la sévérité à la taille de la firme & \ref{chap:donnees} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Conformité multi-états}}} \\
+$C^\star_j,\ \Theta$ & Capacité de conformité latente du pilier $j$ ; facteur systémique commun & \ref{chap:multietats} \\
+$\gamma$ & Charge systémique de la latente de conformité ($0{,}68$) & \ref{chap:multietats} \\
+$K_{\text{bas}},K_{\text{haut}}$ & Seuils ordonnés découpant les états NC / PC / C & \ref{chap:multietats} \\
+$Q$ & Générateur de la chaîne de Markov de mise en conformité (séjours de type phase) & \ref{chap:multietats} \\
+$S_0,S_1,S_2$ & Scénarios conforme / partiel / non conforme (multiplicateurs de fréquence) & \ref{chap:socle} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Capital, allocation et décision}}} \\
+$\VaR_\alpha(L),\ \TVaR_\alpha(L)$ & Value-at-Risk et Tail-VaR de la charge \textbf{annuelle agrégée} $L$, au niveau $\alpha=99{,}5\,\%$ : ce sont les \emph{mesures de capital} & \ref{chap:socle} \\
+$\qsev_\alpha(X),\ \qbarsev_\alpha(X)$ & Quantile de \textbf{sévérité} d'un sinistre unique et sa moyenne de queue. \emph{Ne pas confondre avec les précédents} : le niveau $99{,}5\,\%$ n'a de sens réglementaire que sur un horizon annuel, et une perte isolée n'en porte aucun. Objets \emph{descriptifs}, jamais un besoin de capital & \ref{chap:socle} \\
+$\Delta_{DORA}$ & Surcoût de capital imputable à la non-conformité & \ref{chap:resultats} \\
+$AC_k,\ \phi_j$ & Contribution d'Euler ; valeur de Shapley du pilier $j$ & \ref{chap:resultats} \\
+$\mathrm{CoC}$ & Taux de coût du capital de la marge de risque ($6\,\%$, révisé à $4{,}75\,\%$) & \ref{chap:resultats} \\
+$\ell,\ \ell^\star$ & Portée d'un traité en excès de perte annuel ; portée optimale & \ref{chap:resultats} \\
+$\kappa$ & Coefficient d'inefficacité du transfert (capacité, base, contrepartie) & \ref{chap:resultats} \\
+$\theta$ & Paramètre de la copule de Gumbel, \emph{utilisée comme axe de comparaison} et non comme modèle & \ref{ch:robustesse} \\
+\end{longtable}
+}
+
+\clearpage
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 63 67 22 50

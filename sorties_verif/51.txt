@@ -1,0 +1,77 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+==================================================================================
+Calibration et ensemble d'ambiguite (OpRisk cyber x finance)
+==================================================================================
+  u = 20.0 M€, 91 exces ; xi = 0.598, sigma = 55.7.
+  Bootstrap : 3000 ajustements ; xi IC90 = [0.32 ; 0.84].
+
+==================================================================================
+L'echelle des postures : du point au pire-cas
+==================================================================================
+  CE QUE CHAQUE POSTURE INTEGRE, ET CE QU'ELLE N'INTEGRE PAS
+    point        : quantile d'un ajustement PONCTUEL (xi_hat, sigma_hat). N'integre
+                   aucune incertitude. C'est le plug-in, et il ne se cite jamais seul.
+    predictive   : quantile de la loi MELANGE des GPD sur le bootstrap de (xi, sigma).
+                   L'incertitude entre AVANT le quantile. Point honnete, non prudent.
+    robuste beta : borne haute de la VaR sur l'ambiguite de PARAMETRE, au niveau beta.
+                   C'est le quantile beta de la loi bootstrap de la VaR. Le niveau beta
+                   est un CHOIX de politique prudentielle, pas un resultat de calcul :
+                   90 % dit 'je couvre le risque d'estimation neuf fois sur dix'.
+    pire-cas     : on ajoute l'ambiguite de MODELE, en poussant la famille de queue
+                   jusqu'a xi = 0,90 (script 48). Borne, pas estimation.
+
+  posture                                  VaR 99,5 % (M€)
+  point (branchement xi_hat)                           657
+  predictive (recalculee ici, B = 3000)                645
+  robuste parametre (beta=90%)                         939
+  robuste parametre (beta=95%)                        1037
+  robuste parametre (beta=99%)                        1247
+  robuste parametre+modele (xi=0,90)                  1331
+
+  La VaR robuste a 95 % (1037 M€) est 1.6x le point
+  (657) : c'est la marge de prudence pour le risque d'ESTIMATION. Le pire-cas
+  de MODELE (queue lourde, 1331 M€) ajoute la prudence sur le CHOIX de famille.
+
+==================================================================================
+Combien de chiffres chaque posture supporte-t-elle ? (bruit de simulation)
+==================================================================================
+  4 graines, B = 3000 rechantillons chacune. Les deux extremites de l'echelle
+  sont DETERMINISTES et n'apparaissent donc pas ici : le point est le quantile d'un
+  ajustement unique, le pire-cas celui d'un xi POSE a 0,90. Tout le bruit est au milieu.
+
+  posture          moyenne  ecart-type   etendue      CV
+  predictive         652.0        7.07      16.3    1.1%
+  rob90              930.4       12.55      25.4    1.3%
+  rob95             1030.9        9.49      20.6    0.9%
+  rob99             1250.5       23.81      57.2    1.9%
+
+  CE QU'IL FAUT EN RETENIR, ET C'EST UN RESULTAT.
+  1. La posture la plus prudente est la plus BRUITEE : l'ecart-type vaut 24 M EUR
+     a beta = 99 % contre 13 et 9 a beta = 90 et 95 %, soit environ le
+     double. C'est structurel : un percentile a 99 % de la loi bootstrap est estime sur
+     bien moins de tirages utiles que sa mediane, et la queue est lourde.
+     A NE PAS SURINTERPRETER : avec quatre graines, un ecart-type est lui-meme connu a
+     40 % pres environ. L'ordre entre beta = 90 % (1.3 % de CV) et beta = 95 %
+     (0.9 %) n'est donc PAS resolu ici, et il n'a pas a l'etre : c'est le saut vers
+     beta = 99 % qui est net, pas le classement des deux premiers.
+  2. Donc CHOISIR LA POSTURE LA PLUS PRUDENTE COUTE DE LA PRECISION. Prendre beta = 99 %
+     achete de la prudence au prix d'un chiffre dont le troisieme digit ne tient pas.
+     Cela ne disqualifie pas la posture, cela interdit de la citer a trois chiffres.
+  3. La predictive vaut 652 M EUR a 7 pres. Le 648 du script 46 et le
+     645 de la figure sont donc LE MEME NOMBRE : leur ecart de 3 M EUR vaut moins d'un
+     ecart-type. Le memoire doit publier deux chiffres significatifs, pas trois.
+  4. Comparee au point (deterministe), la predictive en differe de 5 M EUR, soit
+     le meme ordre que le bruit lui-meme. « Quasi egale au plug-in » n'est donc pas une
+     approximation de redaction : c'est tout ce que la mesure permet d'affirmer.
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. Le SCR robuste = borne haute de la VaR sur l'ensemble d'ambiguite (parametre, puis
+     modele). Il repond a Caroline par la PRUDENCE : on ne parie pas sur un point.
+  2. Echelle : point 657 -> predictive 645 -> robuste 95 % 1037 -> pire-cas modele 1331 M€.
+  3. Le niveau de robustesse beta est un CHOIX prudentiel explicite, pas un calcul : on
+     l'affiche, on ne le cache pas. C'est l'exact complement de la lecture en bande.
+
+figure ecrite : exploratory/vasicek_lab/figures/J7_scr_robuste.png

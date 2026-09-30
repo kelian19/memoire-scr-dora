@@ -1,0 +1,32 @@
+﻿
+==================================================================================
+Nos chiffres, et les reperes externes
+==================================================================================
+  Sinistre unique : VaR 99,5 % = 663 M€, TVaR 99,5 % = 1752 M€.
+  SCR annuel (cascade) = 8318 M€ ; conforme 6049 -> non conforme 20188 M€.
+  Socle sans contagion = 5275 M€ ; charge Formule Standard = 450 M€.
+
+  Reperes de sinistres individuels (M€) :
+    Merck (NotPetya)              1288
+    Equifax 2017                  1288
+    Change Healthcare 2024        2208
+    NotPetya total 2017           9200
+  Reperes portefeuille / marche (M€) :
+    SCR_op Formule Standard                      450
+    marche cyber mondial (primes 2025)         14996
+
+==================================================================================
+Lecture
+==================================================================================
+  1. Au niveau du SINISTRE UNIQUE, notre VaR 99,5 % (663 M€) et notre TVaR
+     (1752 M€) sont exactement dans la fourchette des grandes pertes cyber
+     reelles (Merck 1,3 Md€, Equifax 1,3 Md€, Change Healthcare 2,2 Md€). Credible.
+  2. Au niveau ANNUEL, notre SCR (~8-20 Md€) est de
+     l'ordre du marche cyber mondial (~15 Md€ de primes). C'est donc une echelle
+     SYSTEMIQUE / grand portefeuille (OpRisk secteur financier mondial, ~21,6 incidents
+     materiels/an), a lire comme un capital de SECTEUR, pas d'une entite moyenne isolee.
+  3. La charge Formule Standard (450 M€) est ordre(s) de grandeur en dessous : elle
+     ignore la queue et la contagion. Notre modele n'est donc ni gonfle (il colle aux
+     pertes reelles au niveau unitaire) ni aveugle (il capte le risque que la SF manque).
+
+figure ecrite : exploratory\vasicek_lab\figures\J5_benchmark_externe.png

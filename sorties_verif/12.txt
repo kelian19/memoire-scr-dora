@@ -1,0 +1,32 @@
+
+==========================================================================
+SCR en euros par la cascade, scenario S2 non-conforme (comme le memoire)
+==========================================================================
+  g=0 : aucune propagation (|S|=1) = le LDA du memoire sans propagation.
+  g=0,90 : cascade de base -> prime de propagation.
+  source        g  SCR euro (M EUR)     reference memoire
+  OPRISK     0.00              9275   ~9260 M EUR (total)
+  OPRISK     0.90             15163                      
+  PRC        0.00              2973   ~2773 M EUR (total)
+  PRC        0.90              5532                      
+
+==========================================================================
+Prime de propagation (surcout de capital du a la cascade)
+==========================================================================
+  OPRISK   : g=0 ->     9275   g=0,90 ->    15163 M EUR   prime = +63 %
+  PRC      : g=0 ->     2973   g=0,90 ->     5532 M EUR   prime = +86 %
+  g=0 tombe dans la bande du memoire (controle) ; la propagation inter-piliers
+  d'un incident rencherit le capital : contrepartie mecaniste de la brique
+  prestataire + copule de Gumbel du memoire (dependance modelisee, non ajoutee).
+
+==========================================================================
+Effet du gain de propagation g sur le SCR euro (OpRisk, S2)
+==========================================================================
+       g  SCR euro (M EUR)
+    0.00              9514
+    0.30             11059
+    0.60             13135
+    0.90             15244
+    1.00             15920
+
+figure ecrite : exploratory/vasicek_lab/figures/S6_scr_euro_cascade.png

@@ -1,0 +1,5 @@
+figure ecrite : N1_canaux_note.png
+figure ecrite : N1_canaux_note_en.png
+
+effets isoles  : frequence 4328 ; detection 1448 ; propagation 1633 ; accumulation 1728
+effets de fermeture : frequence 8775 ; detection 4562 ; propagation 2402 ; accumulation 3402

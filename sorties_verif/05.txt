@@ -1,0 +1,117 @@
+
+==========================================================================
+SOURCE 1 : Data Breach Chronology
+==========================================================================
+incidents : 74783 | organisations : 25009 | types : 8
+part de la categorie UNKN : 52.7%  <- non informative, et non attribuable a un pilier
+
+date de survenance exploitable (jour ou mois) : 54.8%
+
+manquant de la date de survenance, PAR TYPE (le manquant n'est pas aleatoire) :
+   CARD     2.6%
+   HACK    15.8%
+   INSD    25.1%
+   DISC    32.2%
+   PORT    38.8%
+   STAT    59.7%
+   UNKN    62.3%
+   PHYS    89.4%
+   => amplitude 2.6% -> 89.4%. Ordonner par survenance ELIMINE PHYS du panel.
+
+delai MEDIAN de declaration, PAR TYPE (jours) :
+   DISC       44
+   PORT       44
+   PHYS       50
+   STAT       54
+   CARD       68
+   INSD       89
+   UNKN       92
+   HACK      131
+   => de 44 a 131 jours, facteur 3.0. Ordonner par declaration MESURE LA DETECTION,
+      pas la contagion.
+
+transitions k(t-1)->j(t) sur trimestres consecutifs, types informatifs : 89
+   20 cellules hors-diagonale -> 4.5 obs/cellule
+   secteur financier (BSF) seul : 38 transitions
+
+MEMES incidents (25827), on ne change QUE l'axe temporel :
+   sens de l'asymetrie inverse sur 6/9 paires
+   correlation des asymetries : -0.241
+   (avec si peu de transitions, ceci ne distingue pas 'la date detruit le reseau'
+    de 'le reseau est du bruit'. Les deux lectures condamnent l'exercice.)
+
+==========================================================================
+SOURCE 2 : SAS OpRisk Global Data
+==========================================================================
+evenements 1990-2025 : 37289
+granularite temporelle de la survenance : L'ANNEE (aucune date plus fine)
+secteur financier : 20590 pertes -> 17198 couples (firme, annee, categorie) apres deduplication
+   la deduplication sert aux TRANSITIONS ; xi sera estime sur les pertes brutes
+
+transitions annuelles consecutives : 4329 sur 7 categories Bale
+   42 cellules -> 103 obs/cellule  <- LE VOLUME EST ENFIN SUFFISANT
+
+==========================================================================
+Le placebo : detruire l'anteriorite, garder la co-occurrence
+==========================================================================
+asymetrie reelle          = 119
+asymetrie sous placebo    = 128 +- 27
+z-score du signal reel    = -0.3
+=> l'asymetrie observee est SOUS le bruit. Aucun signal directionnel.
+
+Test binomial par paire, H0 : p = 0,5 (aucune direction privilegiee)
+   18 paires testees | p-value minimale = 0.180
+   significatives a 5% SANS correction : 0
+   significatives apres Bonferroni (0.0028) : 0
+=> la matrice de transition est SYMETRIQUE. Le pas annuel a lessive la direction.
+
+AVERTISSEMENT. Le test du 'temps inverse' est DEGENERE sur un comptage brut :
+renverser la chronologie donne M_inv = M^T par construction, donc une correlation
+des asymetries de -1 quel que soit le contenu. Il ne prouve rien ici. Seul le
+placebo par permutation est valide sur un comptage.
+
+Sous-categories les plus proches du TIC :
+   Systems Security              753 evenements
+   Systems                       335 evenements
+   Vendors & Suppliers            35 evenements
+   Monitoring and Reporting      872 evenements
+   Unauthorized Activity         726 evenements
+   -> 141 transitions seulement : meme mur que la source 1.
+
+==========================================================================
+Ce que la source 2 permet : ancrer l'indice de queue xi
+==========================================================================
+pertes en dollars : n=20590 | plancher de collecte 0.1 M$ (troncature a gauche, comme la sous-declaration)
+
+plus grosse valeur : 81,000,000 M$ -- l'erreur de saisie Citigroup 2024
+(81 000 milliards credites au lieu de 280 dollars, operation ANNULEE : pas une perte)
+
+  seuil (M$)   n_exc   xi brut   xi nettoye
+        75.0    2049     0.953        0.930
+       195.0    1028     0.879        0.832
+      1031.1     206     0.917        0.682
+=> un SEUL point deplace xi de 0,2 au seuil q99. Nettoyage et analyse de
+   sensibilite obligatoires. Valeur retenue : xi ~ 0,90 (scripts 02 et 04).
+
+xi par categorie Bale (seuil q75 propre a chaque categorie) :
+   Clients, Products & Business Practices         n= 9588  xi = 1.03
+   Employment Practices and Workplace Safety      n=  499  xi = 0.92
+   Execution, Delivery & Process Management       n= 1579  xi = 1.27
+   External Fraud                                 n= 4500  xi = 0.98
+   Internal Fraud                                 n= 4184  xi = 1.37
+=> l'heterogeneite de queue entre categories appuie un xi_j PAR PILIER.
+
+==========================================================================
+VERDICT
+==========================================================================
+W n'est calibrable sur AUCUNE des deux sources, pour des raisons OPPOSEES :
+  source 1 : 89 transitions, taxonomie de vecteurs d'attaque,
+             date piegee des deux cotes  -> manque de VOLUME et de TAXONOMIE
+  source 2 : 4329 transitions (volume suffisant), mais z = -0.3
+             contre le placebo           -> manque de RESOLUTION TEMPORELLE
+
+SPECIFICATION DE LA DONNEE MANQUANTE : un registre d'incidents doit horodater la
+SURVENANCE au mois ou a la semaine, et categoriser par DOMAINE DE CONTROLE.
+Sans quoi la structure dirigee restera inidentifiable, QUEL QUE SOIT le volume.
+
+figure ecrite : exploratory/vasicek_lab/figures/M_faisabilite.png

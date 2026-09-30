@@ -1,0 +1,89 @@
+﻿
+==================================================================================
+Chaine de saut inter-piliers construite sur le jugement dirige TRANS
+==================================================================================
+  P_ij = TRANS[i][j] / somme_j TRANS[i][j] (proba de sauter de i vers j).
+
+               P1       P2       P3       P4       P5        pi
+      P1    0.000    0.308    0.269    0.269    0.154     0.131
+      P2    0.133    0.000    0.267    0.200    0.400     0.263
+      P3    0.214    0.357    0.000    0.214    0.214     0.200
+      P4    0.118    0.471    0.176    0.000    0.235     0.192
+      P5    0.143    0.286    0.286    0.286    0.000     0.214
+
+  Loi stationnaire : le saut sejourne surtout en P2 (26%), P5 (21%), P3 (20%).
+  Lecture : pi est un profil de RECEPTACLE (ou la marche s'accumule), a ne pas
+  confondre avec l'ordre des SOURCES (ROOT : P1>P4). Voir 34, l'aplatissement a u=0.
+
+  HYPOTHESES DE LA CHAINE, mesurees :
+    diagonale nulle (pas de boucle sur place)        : True
+    entrees hors diagonale > 0                       : 20 sur 20
+    IRREDUCTIBLE (toutes entrees de (I+P)^4 > 0)     : True
+    APERIODIQUE (cycles de longueur 2 et 3 presents) : True
+    => pi existe et est UNIQUE. Ce n'est donc pas une hypothese de commodite.
+
+  ET L'HYPOTHESE LA PLUS LOURDE, QU'IL FAUT NOMMER : cette chaine est SANS MEMOIRE,
+  alors que la cascade effectivement simulee est AUTO-EVITANTE, un pilier deja tombe
+  eteignant la propagation. Le processus reel n'est donc pas markovien sur les cinq
+  piliers : il l'est sur le couple (pilier courant, ensemble deja tombe), soit 5 x 32 = 160 etats.
+  L'analyse de reversibilite porte donc sur une PROJECTION markovienne du processus.
+  Ce qu'elle capture : la direction des transferts. Ce qu'elle ne capture pas :
+  l'extinction et l'epuisement des piliers deja touches.
+
+==================================================================================
+(1) Courant, reversibilite, renversement du temps
+==================================================================================
+  Courant maximal max|J_ij| = 0.0443 > 0  =>  chaine IRREVERSIBLE :
+  le modele porte bien une direction (equilibre detaille NON satisfait).
+  Les trois plus forts courants nets (sens i -> j si J_ij > 0) :
+     P2 -> P5   |J| = 0.0443
+     P4 -> P2   |J| = 0.0377
+     P5 -> P3   |J| = 0.0181
+
+  Renversement du temps : partie reversible P_s invariante (ecart 5.55e-17),
+  courant P_a change de signe sous renversement (ecart a -P_a : 2.78e-17).
+  Courant de la chaine symetrisee P_s : 6.94e-18 (nul, elle est reversible).
+
+==================================================================================
+(2) La fluctuation ne voit que S : la forme de Dirichlet ignore le courant
+==================================================================================
+  Pour 2000 fonctions test f tirees au hasard :
+  ecart maximal |E_P(f,f) - E_Ps(f,f)| = 1.78e-15  (numeriquement nul).
+  L'energie de la martingale (la fluctuation, la variation quadratique) ne depend
+  QUE de la partie reversible S. La partie antisymetrique A = le courant = la
+  derive ; c'est exactement ce que la martingalisation retire. La donnee de
+  co-occurrence mesure une fluctuation : elle voit S, jamais A.
+
+==================================================================================
+(3) La direction = production d'entropie ; le placebo teste sigma = 0
+==================================================================================
+  Production d'entropie de la chaine posee   : sigma   = 0.0700  (> 0, dirigee)
+  Production d'entropie de la chaine symetrisee : sigma_s = 5.39e-33  (= 0, reversible)
+  L'irreversibilite tient dans ce seul scalaire. Le placebo directionnel du memoire
+  (asymetrie 119 SOUS le nul de permutation 128 +/- 27, z = -0.33) se relit alors
+  comme un test de sigma = 0 : la co-occurrence observee est COMPATIBLE avec une
+  dynamique reversible. Ce n'est pas un echec de calibration, c'est une limite de
+  principe : une statistique invariante par renversement du temps ne peut pas
+  identifier un courant qui, lui, change de signe sous ce renversement.
+
+==================================================================================
+Pont avec le S/A Euclidien du script 32 (cas pi uniforme)
+==================================================================================
+  Part antisymetrique Euclidienne ||A||/||W|| = 40.7% de la matrice de contagion.
+  Ecart entre pi et l'uniforme (1/5) : max |pi_i - 0,2| = 0.069.
+  Le S = (W+W^T)/2 du memoire est la version pi-uniforme du courant pondere ci-dessus :
+  meme objet, meme conclusion, la version ponderee en donne la lecture probabiliste propre.
+
+==================================================================================
+VERDICT (faisabilite pour Hugo)
+==================================================================================
+  Le parallele est FAISABLE et il RENFORCE la these d'identification partielle :
+   - S <-> partie reversible (fluctuation, martingale) : identifiee par la co-occurrence ;
+   - A <-> courant irreversible (derive, compensateur) : non identifie, car il est
+     precisement ce qui s'annule sous la symetrisation par renversement du temps ;
+   - le placebo z = -0.33 = donnee compatible avec sigma = 0 (equilibre detaille).
+  A assumer explicitement (esprit Vasicheck) : produit scalaire pondere par pi, et
+  emprunt d'analogie (W n'est pas un generateur de Markov). C'est une lecture qui
+  fonde la limite sur un theoreme, pas une hypothese de plus.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z11_reversibilite_martingale.png

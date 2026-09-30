@@ -1,0 +1,90 @@
+﻿evaluation des 1024 sommets (une seule fois)...
+  1024/1024 sommets admissibles, evalues.
+
+====================================================================================
+1. La bande d'ignorance directionnelle, avant toute information
+====================================================================================
+  Socle sans contagion (reference) : 5275 M
+  Ignorance TOTALE sur les 10 paires : 1024/1024 sommets admissibles
+  bande [6858 ; 8697] M, largeur 1839 M (34.9 % du socle)
+
+====================================================================================
+2. Ce que le corpus de post-mortems a achete (item 1)
+====================================================================================
+  6 paires sur 10 ont un SENS etabli par les rapports officiels :
+    P1-P3 : P1 precede P3
+    P1-P4 : P1 precede P4
+    P1-P5 : P1 precede P5
+    P2-P3 : P3 precede P2
+    P2-P4 : P4 precede P2
+    P3-P5 : P5 precede P3
+
+  Sommets restants : 16 (4 paires libres) contre 1024 auparavant.
+  bande [7801 ; 8431] M, largeur 630 M (11.9 % du socle)
+
+  RETRECISSEMENT : 66 % de la largeur de bande, soit 1209 M
+  d'ambiguite de capital levee par la seule lecture de 7 rapports publics.
+  C'est la valeur, chiffree, de l'information documentaire acquise a l'item 1.
+
+====================================================================================
+3. Quelle dependance documenter en priorite ? (valeur marginale par paire)
+====================================================================================
+  Pour chaque paire, on fixe le signe de CETTE SEULE paire (au sens des post-mortems
+  quand il est connu, au sens du classeur sinon) et on mesure le retrecissement.
+
+  paire     retrecissement   demi-amplitude   source du signe
+  P1-P2              28.9 %            0.173   classeur
+  P1-P5              24.9 %            0.087   post-mortem
+  P1-P3              24.2 %            0.173   post-mortem
+  P4-P5              17.0 %            0.104   classeur
+  P2-P4              15.5 %            0.190   post-mortem
+  P2-P3              12.5 %            0.156   post-mortem
+  P1-P4               8.6 %            0.156   post-mortem
+  P2-P5               7.8 %            0.138   classeur
+  P3-P5               1.8 %            0.087   post-mortem
+  P3-P4               0.0 %            0.104   classeur
+
+  Lecture : la paire P1-P2 porte l'essentiel de l'ambiguite (29 % a elle seule).
+  C'est LA dependance que le registre DORA devrait documenter en premier. La
+  recommandation reglementaire du chapitre 9 cesse d'etre generique : elle se
+  hierarchise, et cette hierarchie ne depend d'aucun prior.
+
+====================================================================================
+4. Ce qui resterait a gagner, et ce qu'aucune information de SENS ne donnera
+====================================================================================
+  Sur les SOMMETS (|A| = S, la convention du chapitre 10), fixer les 10 signes ne laisse
+  qu'UN seul sommet : la bande y tombe mecaniquement a 0 M. C'est un ARTEFACT
+  de la convention, pas une identification : les sommets sont les configurations
+  directionnelles EXTREMES, et il n'en reste qu'une quand tous les signes sont poses.
+
+  La bonne lecture : a signes connus, l'AMPLITUDE reste inconnue, chaque coefficient
+  vivant dans [0, S] du cote de son signe. On enumere donc les coins de CE pave
+  (chaque coefficient a 0 ou a son maximum) : 1024 configurations d'amplitude.
+  bande a signes TOUS connus : [7768 ; 8424] M, largeur 656 M (12.4 % du socle)
+
+  Autrement dit : meme si le registre DORA etablissait les DIX directions, il resterait
+  une bande de 656 M, soit 36 % de l'ambiguite directionnelle initiale,
+  imputable a la seule AMPLITUDE. Connaitre le sens ne donne pas la force du lien :
+  l'identification resterait PARTIELLE, et la lecture en bande n'est pas provisoire.
+
+  ATTENTION a ne pas soustraire ces deux bandes : la bande de SENS (630 M) est calculee
+  sur les SOMMETS (amplitudes extremes, convention du chapitre 10), la bande d'AMPLITUDE
+  (656 M) sur les coins du pave a signes fixes. Les deux conventions explorent des
+  ensembles differents et ne s'additionnent pas ; elles repondent a deux questions
+  distinctes : « quel sens ? » et « quelle force ? ».
+
+====================================================================================
+VERDICT
+====================================================================================
+  1. La valeur de l'information se chiffre : lire 7 rapports publics a leve
+     66 % de la largeur de bande d'ambiguite directionnelle.
+  2. Elle se HIERARCHISE : la paire P1-P2 vaut a elle seule 29 %, la
+     derniere P3-P4 n'en vaut que 0 %. Le registre DORA devrait
+     documenter en priorite les dependances a forte valeur, pas toutes a egalite.
+  3. Meme les DIX sens etablis, une bande de 656 M subsiste (36 % de
+     l'ambiguite initiale) : elle est imputable a l'AMPLITUDE, que nul rapport ne donne.
+     La lecture en bande n'est donc pas provisoire, elle est structurelle.
+  4. Cela transforme « la donnee manquante est un livrable » en une specification
+     CHIFFREE et HIERARCHISEE, opposable a un superviseur.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z18_valeur_information.png

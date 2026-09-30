@@ -1,0 +1,250 @@
+\chapter{Introduction}
+
+\begin{cle}
+\textbf{Question centrale.} Comment traduire un niveau de non-conformité à DORA, même
+hypothétique ou graduel, en une distribution de pertes puis en une charge de capital ? Le
+mémoire ne pose pas la question \emph{l'entité est-elle conforme aujourd'hui}, mais
+\emph{combien coûte en capital de ne pas se conformer}.
+
+\textbf{Ce que désigne le SCR du titre.} Le capital calculé suit la mesure de risque de
+Solvabilité~II, un quantile à $99{,}5\,\%$ de la charge annuelle, mais il n'est pas un SCR
+réglementaire : aucun module DORA n'existe en Formule Standard. C'est un besoin de capital au
+sens de l'ORSA, et le corps du mémoire le nomme ainsi.
+\end{cle}
+
+Le règlement DORA, entré en application en janvier 2025, impose aux entités financières la
+maîtrise de cinq domaines de résilience opérationnelle numérique : la gouvernance du risque
+lié aux technologies (P1), la gestion et la notification des incidents (P2), les tests de
+résilience (P3), la gestion du risque lié aux prestataires tiers (P4) et le partage
+d'informations sur les cybermenaces (P5). Ces cinq piliers ne sont pas des cases
+indépendantes à cocher : ce sont des domaines de \emph{contrôle}, et la défaillance de l'un
+dégrade la capacité de l'entité à tenir les autres. Une gouvernance défaillante retarde la
+détection des incidents ; une dépendance non maîtrisée à un prestataire ouvre une porte que
+les tests n'ont pas explorée. La non-conformité ne reste pas dans son pilier, elle se
+propage.
+
+% SOURCES-SCRIPTS: 29
+
+\section{Le risque cyber en quelques cas}
+% HARNAIS-HORS-SECTION: section descriptive sans valeur chiffree ; les seuls nombres
+% sont des millesimes d'incidents publics.
+
+Le risque cyber désigne les pertes liées à une défaillance des systèmes d'information, qu'elle
+soit malveillante ou non. Quatre familles d'incidents se distinguent : le rançongiciel, qui
+chiffre les systèmes et conditionne leur restitution à une rançon ; la fuite ou le vol de
+données ; le déni de service, qui rend un service indisponible ; et la défaillance d'un
+prestataire ou d'un logiciel tiers, qui atteint simultanément tous ses clients. DORA ne se limite
+pas aux attaques : il vise tout incident lié aux technologies de l'information et de la
+communication, y compris une panne sans intention de nuire. Trois cas publics montrent pourquoi
+les cinq piliers ne cèdent pas indépendamment.
+
+\paragraph{NotPetya, 2017.} Un logiciel destructeur diffusé par la mise à jour d'un logiciel
+comptable ukrainien s'est propagé aux réseaux de groupes internationaux et en a paralysé
+l'activité pendant plusieurs semaines. L'incident naît chez un prestataire (P4), se propage faute
+de cloisonnement et de gouvernance des accès (P1), et met à l'épreuve la gestion de crise (P2).
+Son traitement assurantiel a en outre donné lieu à des contentieux sur l'exclusion de guerre des
+contrats.
+
+\paragraph{MOVEit, 2023.} Une vulnérabilité d'un logiciel de transfert de fichiers, exploitée par
+un groupe criminel, a permis de dérober des données chez des milliers d'organisations, souvent
+atteintes à travers leurs propres prestataires. C'est un choc de cause commune : une seule
+défaillance tierce produit de nombreux sinistres simultanés. Le mémoire l'utilise comme
+expérience naturelle au chapitre~\ref{ch:identifiabilite}.
+
+\paragraph{CrowdStrike, 2024.} Une mise à jour défectueuse d'un logiciel de sécurité a bloqué des
+millions de postes de travail dans le transport aérien, la banque et la santé. Aucune attaque
+n'est en cause : l'incident relève de la dépendance à un prestataire (P4) et de l'absence de
+tests progressifs avant déploiement (P3), et il entre pleinement dans le champ de DORA.
+
+Ces trois cas ont une structure commune : un incident naît sur un domaine de contrôle et en
+dégrade d'autres, dans un ordre. C'est cette structure que le mémoire modélise.
+
+\section{Le vide que ce mémoire comble}
+Aucun dispositif prudentiel ne traduit aujourd'hui ce niveau de maîtrise en capital. La
+Formule Standard de Solvabilité~II charge le risque opérationnel par un pourcentage de primes
+ou de provisions, entièrement aveugle au fait qu'une entité soit exemplaire ou
+défaillante sur DORA. Une copule capturerait bien la co-occurrence des pertes, mais
+symétriquement : elle ne distingue pas une défaillance qui \emph{entraîne} les autres d'une
+défaillance qui les \emph{subit}. Or c'est précisément cette asymétrie, la direction de la
+propagation, qui devrait commander la priorité de remédiation d'un assureur. C'est le vide
+que le mémoire vient combler, sans prétendre à ce que la donnée ne permet pas.
+
+\section{Le marché français de la cyberassurance}
+\label{sec:lucy}
+
+Le vide décrit ci-dessus n'est pas une particularité de la Formule Standard : il se constate sur
+le marché lui-même. La seule observation continue du marché français en donne la mesure, et elle
+impose au mémoire deux contraintes, l'une sur le choix de la base de calibration, l'autre sur la
+façon de présenter un écart de capital.
+
+\paragraph{Le cadre d'observation.} L'étude LUCY de l'AMRAE, dont l'édition $2026$ porte sur
+l'exercice $2025$, observe le marché français à partir de $20\,996$ polices et $1\,251$ sinistres
+déclarés, recueillis auprès de douze courtiers et d'un assureur \citep{amraeLucy2026}. La série
+est engagée depuis $2019$, ce qui donne sept exercices comparables et permet de distinguer un
+régime d'un accident d'exercice. L'auteur de ce mémoire a co-écrit, avec son tuteur, l'analyse
+actuarielle de cette édition publiée par Nexialog Consulting \citep{RapiorKaddouri2026}. Cette
+source est employée ici sous un statut précis, celui de \emph{citation externe non
+recalculable} : ses valeurs sont reprises telles qu'elle les publie, sans que le mémoire soit en
+mesure de les recalculer depuis la donnée d'origine, qui ne lui appartient pas. Aucune n'entre
+donc dans un calcul du modèle et aucune ne porte un montant de capital. Ce qui est vérifiable
+l'est néanmoins : les valeurs sont recopiées dans un script du dépôt, qui contrôle que le rapport
+des sinistres aux primes redonne bien la série des ratios publiée, que la somme des classes de
+taille redonne la charge annuelle sur les sept exercices, et que chaque multiplicateur cité se
+retrouve à partir des niveaux qui l'encadrent. Ces contrôles portent sur la fidélité de la
+recopie, non sur la collecte ni sur le périmètre de l'étude citée, qui relèvent de celle-ci.
+
+\paragraph{Un marché qui s'élargit en baissant ses prix.} Entre $2024$ et $2025$, le nombre
+d'entreprises assurées croît de $49\,\%$ quand les primes souscrites reculent de $3\,\%$, et le
+ratio sinistres sur primes remonte pour le troisième exercice, de $12\,\%$ en $2023$ à $27\,\%$
+en $2025$, loin toutefois des $169\,\%$ de $2020$. La trajectoire, ses figures et la divergence
+entre prix et risque par segment sont déportées \matcomp.
+
+\paragraph{Deux régimes de risque sous une même trajectoire.} L'indicateur suivi par le marché
+est le \emph{ratio sinistres sur primes}, c'est-à-dire le montant des sinistres payés dans
+l'année rapporté aux primes encaissées la même année : il mesure la part de la prime qui part en
+indemnisation. Ce ratio a monté deux exercices de suite, mais pour deux raisons opposées, et
+seule sa décomposition le montre. La charge d'une année se met en effet sous la forme d'un
+produit de deux termes, le \emph{nombre} de sinistres survenus et le \emph{sinistre moyen},
+c'est-à-dire le coût moyen de l'un d'eux. Le tableau compare chaque terme à sa valeur de l'année
+précédente, sous la forme d'un multiplicateur.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l r r r l@{}}
+\toprule
+& \textbf{nombre} & \textbf{sinistre moyen} & \textbf{charge} & \textbf{régime} \\
+\midrule
+Marché, exercice $2024$ & $\times 0{,}73$ & $\times 1{,}96$ & $\times 1{,}43$ & sévérité \\
+Marché, exercice $2025$ & $\times 2{,}79$ & $\times 0{,}55$ & $\times 1{,}53$ & fréquence \\
+\midrule
+\multicolumn{5}{@{}l}{\emph{Exercice $2025$, par bloc}} \\
+grandes entreprises & $\times 1{,}24$ & $\times 0{,}82$ & $\times 1{,}02$ & absorbé \\
+bloc intermédiaire & $\times 2{,}14$ & $\times 1{,}65$ & $\times 3{,}53$ & les deux \\
+micro-entreprises & $\times 9{,}52$ & $\times 0{,}73$ & $\times 6{,}97$ & nombre seul \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+\noindent En $2024$ le nombre de sinistres a baissé alors que leur
+coût moyen a doublé : la charge a monté parce que les sinistres étaient plus lourds. En $2025$
+c'est l'inverse, le coût moyen a baissé de moitié alors que le nombre a presque triplé : la
+charge a monté parce que les sinistres étaient plus nombreux. Le ratio seul ne permet pas de
+distinguer ces deux situations, qui n'appellent pourtant pas les mêmes mesures. Le bloc
+intermédiaire est le seul segment où le nombre et le coût moyen augmentent en même temps, ce qui
+explique sa charge multipliée par $3{,}53$. Le présent mémoire applique la même démarche à ses
+quatre canaux de conformité au chapitre~\ref{chap:resultats} : un écart de capital se décompose
+en ses causes au lieu de s'annoncer en niveau global.
+
+\noindent Ces multiplicateurs portent sur le \emph{nombre} de sinistres, un total, et non sur la
+\emph{fréquence}, qui le rapporte au nombre d'assurés : l'égalité charge $=$ nombre $\times$ coût
+moyen n'est exacte qu'avec le nombre.
+
+\paragraph{Les sinistres les plus lourds sont trop rares en France pour être modélisés.} Cette
+observation commande directement un choix du mémoire, car elle porte sur la région de la
+distribution qui détermine le capital. Le capital de solvabilité se mesure en effet par un
+\emph{quantile} à $99{,}5\,\%$, c'est-à-dire par le montant de perte annuelle qui n'est dépassé
+qu'une année sur deux cents : il se joue donc entièrement dans les sinistres les plus lourds, et
+non dans les sinistres courants. Or la donnée française y est presque vide. Deux exercices sur
+sept ne portent aucun sinistre de la classe de taille la plus haute ; un exercice en porte
+$135$~M\euro{} et l'exercice sous revue $19$~M\euro, pour un seul sinistre dépassant $10$~M\euro. Le
+maximum de la série vaut $7{,}11$ fois le montant de l'exercice sous revue, ce qui donne la
+mesure de l'irrégularité, dont la figure est déportée \matcomp.
+
+\medskip
+\noindent La conséquence est méthodologique. La méthode usuelle d'estimation d'une queue de
+distribution, dite \emph{par dépassement de seuil}, consiste à ne retenir que les pertes
+au-dessus d'un montant élevé et à ajuster une loi sur ces seules observations. Elle exige donc un
+effectif suffisant au-dessus du seuil, et la donnée française n'en offre aucun : l'historique
+national s'arrête avant le haut de la distribution, là précisément où se joue le quantile
+recherché. Une estimation conduite sur cette base serait instable d'un exercice à l'autre et
+sous-estimerait le risque, faute d'avoir observé les pertes qui le portent. C'est le motif,
+repris au chapitre~\ref{chap:donnees}, de calibrer la sévérité sur une base internationale plutôt
+que française. Cette rareté des événements extrêmes ne traduit pas une protection particulière du
+marché français : les analyses de sinistres européennes relèvent un recul d'environ $20\,\%$ des
+sinistres cyber en $2024$ qui laisse le niveau près d'un tiers au-dessus des exercices $2020$ à
+$2022$ \citep{marsh2025}, et le marché britannique voisin est décrit comme plus développé et plus
+exposé aux sinistres sévères \citep{dsit2025}.
+
+\begin{attention}
+\textbf{Ces montants ne se comparent pas à ceux du mémoire.} La charge citée ci-dessus est une
+charge \emph{indemnisée} : c'est ce que les assureurs ont effectivement versé, donc après
+déduction de la \emph{franchise} (la part du sinistre qui reste à la charge de l'assuré) et après
+application de la \emph{capacité} du contrat (le montant maximal que l'assureur s'est engagé à
+payer). Elle vaut $83{,}2$~M\euro{} en $2025$ contre $54{,}5$ l'exercice précédent, soit une
+hausse de $53\,\%$. La sévérité que le présent mémoire modélise est d'une tout autre nature :
+c'est la perte \emph{brute} subie par une entité financière, avant toute assurance. Les deux
+grandeurs portent sur des périmètres différents et ne se comparent ni en niveau ni en quantile ;
+les rapprocher conduirait à lire un écart de définition comme une contradiction.
+\end{attention}
+
+% SOURCES-SCRIPTS: 63
+
+\section{Un seul fil, en cinq mouvements}
+Le mémoire poursuit une seule question, \emph{combien coûte la non-conformité à DORA, et
+jusqu'où ce chiffre peut-il être affirmé}, à travers cinq mouvements. Il construit d'abord le
+mécanisme, la cascade dirigée, et en démontre les propriétés (chapitre~\ref{chap:cascade}). Il
+fait ensuite de la conformité un état qui évolue et pilote le capital
+(chapitre~\ref{chap:multietats}). Il délimite alors ce que la donnée permet d'en estimer : la
+frontière d'identifiabilité (chapitre~\ref{ch:identifiabilite}). Il transforme cette limite en
+méthode, l'identification partielle, qui borne le capital plutôt que de poser un paramètre
+inconnu (chapitre~\ref{chap:partielle}). Il en tire enfin le surcoût, son attribution, la
+trajectoire du capital et l'ordre de remédiation, et met en regard ce que les cadres existants
+savent en exprimer (chapitre~\ref{chap:resultats}). Ces résultats ne sont pas une thèse
+parallèle : ils sont l'\emph{objet} que les chapitres précédents apprennent à lire avec la bonne
+prudence. Chaque niveau qu'ils affichent est illustratif, chaque hiérarchie qu'ils proposent est
+ce qui reste vrai une fois la limite d'identification prise en compte.
+
+\section{Contribution et plan}
+Le mémoire s'articule autour de trois apports, et il est aussi explicite sur ce qu'il
+\emph{n'affirme pas} que sur ce qu'il établit.
+
+\begin{enumerate}[leftmargin=1.4em,itemsep=3pt]
+\item Un mécanisme de dépendance dirigée et à l'ordre entre les piliers, la cascade,
+      dont trois propriétés sont démontrées (chapitre~\ref{chap:cascade},
+      annexe~\ref{ann:cascade}) :
+      la criticité dépend de l'\emph{ordre} de la chaîne et non du seul ensemble des piliers
+      touchés, ce qu'aucune dépendance symétrique ne reproduit ; la normalisation de Leontief
+      borne la propagation ; et une matrice et sa transposée, indiscernables pour les
+      statistiques que les sources disponibles permettent de construire, donnent un capital et
+      une décision différents.
+\item Une frontière d'identifiabilité, démontrée au
+      chapitre~\ref{ch:identifiabilite}, puis muée en méthode au
+      chapitre~\ref{chap:partielle} : la direction n'étant pas
+      identifiable, le mémoire ne la pose pas, il borne le capital sur l'ensemble des matrices
+      admissibles et chiffre en euros la valeur de la donnée manquante.
+\item Une lecture décisionnelle : le surcoût $\Delta_{\text{DORA}}$, son attribution
+      par pilier (Shapley, Euler) et l'ordre de remédiation, présentés en rapports et en
+      bornes plutôt qu'en niveaux (chapitre~\ref{chap:resultats}).
+\end{enumerate}
+
+\begin{cle}
+\textbf{Le résultat en bref.} Entre l'état conforme et l'état non conforme sur les quatre canaux
+que la conformité déplace, le besoin de capital passe de $6\,049$ à $20\,188$~M\euro{} à
+l'échelle du secteur, soit un facteur $3{,}34$ et un écart de $14\,139$~M\euro{}
+(\S\ref{sec:chiffre-de-tete}). Ce montant est un besoin de capital au sens de l'ORSA et non un
+SCR réglementaire : il sert à comparer deux états, non à remplacer la Formule Standard. Les
+canaux interagissent, l'interaction portant $5\,001$~M\euro{}, soit $35\,\%$ de l'écart, et la
+fréquence seule en produit davantage qu'aucun autre canal, à $10\,377$~M\euro{} contre
+$11\,413$ pour les trois autres réunis. Les niveaux de propagation sont posés, mais la thèse ne
+dépend que de leur ordre, le besoin de capital étant croissant en ce paramètre.
+
+\textbf{Guide de lecture.} Un lecteur pressé trouve la thèse dans cette introduction, le chiffre
+de tête et sa décomposition au chapitre~\ref{chap:resultats}, l'inventaire des hypothèses et
+leur coût au chapitre~\ref{ch:robustesse}, et la validation hors échantillon au
+\S\ref{soc:sec:backtest}. Les démonstrations du modèle de cascade sont en annexe ; celles du
+socle et les pièces justificatives sont déportées \matcomp.
+\end{cle}
+
+\begin{attention}
+\textbf{Ce que le mémoire ne prétend pas.} La matrice de contagion n'est jamais présentée
+comme calibrée : elle est normative, posée à dire d'expert, et bornée par une analyse de
+sensibilité. Le
+niveau absolu du capital est illustratif, non une mesure : c'est l'effet \emph{relatif} de la
+conformité et la hiérarchie des piliers qui sont défendus. Cette discipline est un
+résultat du travail, et le fil directeur du document.
+\end{attention}
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 29 43 68 92 66

@@ -1,0 +1,203 @@
+﻿
+========================================================================================
+1. Les seize configurations, et les coefficients de Mobius
+========================================================================================
+  V(aucun canal NC)  =    6049.0 M€   (etat conforme)
+  V(tous canaux NC)  =   20187.7 M€   (etat non conforme)
+  DELTA DORA         =   14138.7 M€   <- c'est LUI le delta, et non 9 138
+
+  Decomposition de Mobius par ORDRE (elle doit redonner le delta) :
+    ordre 1 ( 4 termes) :     9138.1 M€
+    ordre 2 ( 6 termes) :     5345.3 M€
+    ordre 3 ( 4 termes) :     -691.2 M€
+    ordre 4 ( 1 termes) :      346.4 M€
+    somme des 15 termes  :    14138.7 M€   contre delta 14138.7
+    ecart : 0.000000 M€ (identite, a la precision machine)
+
+========================================================================================
+2. LA REPONSE A LA QUESTION DU DOUBLE COMPTAGE, par identite
+========================================================================================
+  Canal                   isole   fermeture    Shapley
+  Frequence                4328        8775       6546
+  Detection                1448        4562       2928
+  Propagation W            1633        2402       2088
+  Accumulation P4          1728        3402       2576
+  ----------------------------------------------------
+  somme des colonnes       9138       19141      14139
+  delta a expliquer       14139       14139      14139
+
+  CHAQUE COLONNE EST UNE SOMME DE TERMES DE MOBIUS, ET C'EST CE QUI TRANCHE.
+    isole(i)     = m({i})                         -> ne prend QUE l'ordre 1
+    fermeture(i) = somme des m(S) pour S contenant i  -> prend chaque ordre EN ENTIER
+    Shapley(i)   = somme des m(S)/|S| pour S contenant i -> partage chaque ordre
+
+  D'OU LES TROIS IDENTITES, verifiees numeriquement ci-dessous :
+    somme des isoles     = ordre 1                    =     9138.1  mesure     9138.1  ecart 0.000000
+    somme des fermetures = somme_S |S| x m(S)         =    19141.0  mesure    19141.0  ecart 0.000000
+    somme des Shapley    = somme_S m(S) = DELTA       =    14138.7  mesure    14138.7  ecart 0.000000
+
+  ET LA SOMME DES FERMETURES SE DECOMPOSE EXACTEMENT AINSI :
+    1 x (ordre 1) = 1 x    9138.1 =     9138.1
+    2 x (ordre 2) = 2 x    5345.3 =    10690.6
+    3 x (ordre 3) = 3 x    -691.2 =    -2073.5
+    4 x (ordre 4) = 4 x     346.4 =     1385.8
+    total            =    19141.0
+
+  IL N'Y A DONC PAS DE DOUBLE COMPTAGE DANS LE CALCUL. Un croise d'ordre 2 est compte
+  DEUX fois dans la somme des fermetures, un croise d'ordre 3 TROIS fois, et ainsi de
+  suite, parce que fermer un canal lui fait porter l'INTEGRALITE des croises auxquels il
+  participe. C'est la definition de la fermeture, et c'est aussi son interet de gestion :
+  une entite qui remedie UN canal recupere bien tout le croise que ce canal portait.
+
+  MAIS LA REMARQUE TOUCHE UN VRAI DEFAUT, ET IL EST DE PRESENTATION. Puisque la somme des
+  fermetures vaut somme_S |S| x m(S), elle ne mesure RIEN : ce n'est ni un capital, ni un
+  ecart, ni un budget. Or le memoire et le deck impriment une ligne « somme » sous cette
+  colonne. C'est cette ligne qui invite a la comparer au delta, donc a y voir un double
+  comptage. ELLE DOIT ETRE RETIREE OU ETIQUETEE COMME NON ADDITIVE. Seule la colonne de
+  Shapley se somme, et c'est deja ce que le memoire ecrit ailleurs.
+
+  ENFIN, LA COINCIDENCE ARITHMETIQUE QUI A MIS LA PUCE A L'OREILLE EST FORTUITE :
+    2 x somme des isoles = 2 x 9138 = 18276, contre 19141 pour les fermetures.
+    Ecart : 865 M€, soit 4.5 %. Ce n'est donc pas « exactement le double ».
+    Et le delta vaut 14139, pas 9138 : le rapport fermeture / delta vaut 1.35, pas 2.
+
+  LE VRAI ENCADREMENT, LUI, EST UNE PROPRIETE ET IL VAUT D'ETRE ECRIT :
+    somme des isoles      9138  <=  DELTA     14139  <=  somme des fermetures     19141
+  Cet encadrement tient des que la fonction de capital est SUR-MODULAIRE, ce que la
+  cascade est. Les isoles manquent l'interaction, les fermetures la comptent plusieurs
+  fois, et le partage de Shapley est la seule lecture qui la repartisse sans la perdre
+  ni la dupliquer.
+
+========================================================================================
+3. EULER, DEFINI, et la subtilite qui change les chiffres
+========================================================================================
+  LA REGLE D'EULER. Pour une mesure de risque rho positivement homogene de degre 1 et une
+  charge L = somme des L_j, la contribution d'Euler du pilier j est la derivee de
+  rho(L + h L_j) en h = 0. Pour la VaR au niveau alpha cette derivee vaut
+      contribution_j = E[ L_j | L = VaR_alpha(L) ]
+  et les contributions somment alors EXACTEMENT a la VaR (homogeneite d'Euler). Pour la
+  CTE au meme niveau elle vaut
+      contribution_j = E[ L_j | L >= VaR_alpha(L) ]
+  et les contributions somment a la CTE.
+
+  LA SUBTILITE EST LA, ET ELLE N'EST PAS COSMETIQUE : conditionner par L >= VaR alloue la
+  CTE et non la VaR. Comme la CTE vaut ici environ deux fois la VaR, on n'alloue pas la
+  meme grandeur. Les PARTS peuvent differer, parce que la composition de la queue au-dela
+  du quantile n'est pas celle du quantile lui-meme. Le script mesure les deux.
+
+  Perimetre OpRisk, etat non conforme, 4 graines, 40 000 annees, alpha = 99.5 %.
+  Somme des contributions d'Euler de la VaR : 19423 M€ contre VaR = 20188 M€, soit 96.2 %.
+  Somme des contributions d'Euler de la CTE : 41755 M€ contre CTE = 41887 M€, soit 99.7 %.
+  Les deux sommes retombent sur la grandeur qu'elles allouent, ce qui valide chaque
+  estimateur separement. LE RESIDU DE 3.8 % SUR LA VaR EST UNE PROPRIETE DE
+  L'ESTIMATEUR ET NON UN DEFAUT : on approche E[. | L = VaR] par les 200 annees les plus
+  proches du quantile, et la densite y est decroissante, donc la bande contient un peu plus
+  d'annees en dessous qu'au-dessus. C'est un biais de bande, connu et borne, et il se
+  reduit en resserrant la bande au prix de la variance.
+
+  UNE PRECAUTION DE LECTURE AVANT DE COMPARER AU MEMOIRE. Les parts citees dans le deck
+  (P2 23 %, P4 22 %, P1 20 %) viennent du script 20 sur le perimetre PRC, que le memoire
+  rapporte precisement parce que la queue OpRisk est de variance infinie. Les parts
+  ci-dessous sont OpRisk : elles ne sont donc PAS comparables terme a terme aux siennes, et
+  ce qui suit porte sur l'ECART ENTRE LES DEUX CONDITIONNEMENTS, mesure a perimetre egal.
+
+  Pilier               Euler VaR     part   Euler CTE     part  ecart de part
+  P1                        4490    23.1 %        9350    22.4 %          -0.7 pt
+  P2                        4355    22.4 %        7953    19.0 %          -3.4 pt
+  P3                        3969    20.4 %        9175    22.0 %          +1.5 pt
+  P4                        3200    16.5 %        7172    17.2 %          +0.7 pt
+  P5                        3409    17.6 %        8106    19.4 %          +1.9 pt
+
+  Ecart maximal de part entre les deux allocations : 3.4 points.
+  DONC LE CHOIX DE CONDITIONNEMENT N'EST PAS ANODIN, et le memoire doit dire lequel il
+  publie. Les parts citees jusqu'ici, obtenues par L >= VaR, sont celles de la CTE.
+
+  ETENDUE DES PARTS ENTRE 4 GRAINES, et c'est la que la prudence s'impose :
+  Pilier      part Euler VaR   etendue   part Euler CTE   etendue
+  P1                   23.1 %      3.6            22.4 %     15.3
+  P2                   22.4 %      4.5            19.0 %      9.3
+  P3                   20.4 %      0.5            22.0 %     17.9
+  P4                   16.5 %      2.1            17.2 %     24.3
+  P5                   17.6 %      3.6            19.4 %      8.0
+
+  L'ECART ENTRE LE PREMIER ET LE DERNIER PILIER VAUT 6.6 POINTS, quand les etendues
+  entre graines montent jusqu'a 24.3. LE CLASSEMENT D'EULER N'EST DONC PAS UN
+  SIGNAL a cette resolution, et c'est exactement ce que le memoire declare deja : a
+  xi = 0,595 la severite est de variance infinie, et une allocation de queue s'estime sur
+  les seules annees de queue. Les parts se citent, leur ORDRE ne se cite pas.
+
+========================================================================================
+4. LA COLONNE PART D'AMORCE, demandee au point tuteur
+========================================================================================
+  La demande etait de confronter l'ordre de PROPAGATION theorique a l'ordre des
+  contributions. Trois colonnes suffisent, et il faut les distinguer :
+    part d'amorce    : la propension ROOT, ce que le modele SEME (aucune simulation) ;
+    part par amorce  : la part de la QUEUE portee par les sinistres amorces en j ;
+    part par touche  : ou le capital se LOGE, l'allocation d'Euler de la CTE.
+
+  ET IL FAUT LA MESURER A TROIS ETATS, faute de quoi la colonne se lit a l'envers. Un
+  premier passage a l'etat non conforme donnait un exces de +13 points pour P4 et NEGATIF
+  pour les quatre autres, ce qu'on aurait pu prendre pour un effet de propagation. Ce n'en
+  est pas un : a cet etat P4 porte le CHOC COMMUN (phi_cs = 0,68), qui lui fait entrainer
+  chaque autre pilier avec probabilite 0,68. Trois etats separent donc les deux canaux :
+    conforme            g = 0,45, pas de choc commun   -> propagation faible, seule ;
+    non conf. sans P4   g = 0,90, pas de choc commun    -> propagation forte, seule ;
+    non conforme        g = 0,90 + choc commun          -> les deux.
+
+  Pilier    part amorce                conforme   non conf. sans accum.            non conforme
+                 (ROOT)            part / exces            part / exces            part / exces
+  P1              30.3 %           32.3 %    +2.0           36.9 %    +6.6           27.9 %    -2.4
+  P2              18.2 %           22.9 %    +4.7           21.9 %    +3.7           16.9 %    -1.3
+  P3              15.2 %           13.7 %    -1.5           12.6 %    -2.6            9.6 %    -5.6
+  P4              27.3 %           24.8 %    -2.5           22.4 %    -4.9           41.1 %   +13.8
+  P5               9.1 %            6.4 %    -2.7            6.3 %    -2.8            4.6 %    -4.5
+
+  ordre des parts d'amorce (ROOT) : P1 > P4 > P2 > P3 > P5
+  ordre a l'etat conforme              : P1 > P4 > P2 > P3 > P5
+  ordre a l'etat non conf. sans accum. : P1 > P4 > P2 > P3 > P5
+  ordre a l'etat non conforme          : P4 > P1 > P2 > P3 > P5
+
+  CE QUE LA DECOMPOSITION MONTRE, ET CE N'EST PAS CE QU'ON LIRAIT SUR LA SEULE COLONNE
+  NON CONFORME. L'exces de P4 passe de -2.5 pt a l'etat conforme, a -4.9 sans le choc commun,
+  puis a +13.8 avec lui. LES +18.7 POINTS DE DIFFERENCE SONT DONC LE CANAL
+  D'ACCUMULATION, PAS LA PROPAGATION. Attribuer l'exces de P4 a la cascade serait une
+  erreur d'imputation, et c'est precisement le genre de confusion que la table demandee
+  permet d'eviter.
+
+  A PROPAGATION SEULE (etat conforme), les piliers en exces sont : P2 (+4.7 pt), P1 (+2.0 pt).
+  C'est CETTE liste qui mesure un effet propre de la cascade, et c'est elle qu'un lecteur
+  doit regarder pour juger si la propagation deplace l'attribution.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. IL N'Y A PAS DE DOUBLE COMPTAGE DANS LA COLONNE FERMETURE, et c'est une identite :
+     la somme des fermetures vaut somme_S |S| x m(S), donc un croise d'ordre k y est
+     compte k fois. Verifie a 0.000000 M pres. Fermer un canal lui fait porter
+     l'integralite des croises qu'il portait, ce qui est le sens meme de la colonne.
+  2. MAIS LA LIGNE « SOMME » SOUS CETTE COLONNE NE MESURE RIEN, et c'est le vrai defaut que
+     la remarque a fait trouver. Elle doit etre retiree du memoire et du deck, ou
+     etiquetee comme non additive. Seule la colonne de Shapley se somme.
+  3. LA COINCIDENCE EST FORTUITE : 19141 contre 2 x 9138 = 18276, soit 4.5 % d'ecart,
+     et le delta vaut 14139 et non 9138. Le rapport fermeture / delta vaut 1.35.
+  4. L'ENCADREMENT, LUI, EST UNE PROPRIETE A PUBLIER : 9138 <= 14139 <= 19141, valable
+     des que le capital est sur-modulaire. C'est un enonce plus fort que les trois colonnes
+     prises separement.
+  5. EULER EST DESORMAIS DEFINI, et la definition change les chiffres : conditionner par
+     L >= VaR alloue la CTE, conditionner SUR le quantile alloue la VaR. Les parts
+     diffèrent de 3.4 points au maximum. Les parts publiees jusqu'ici sont celles
+     de la CTE, et le memoire doit le dire.
+  6. ET L'ORDRE D'EULER N'EST PAS UN SIGNAL : 6.6 points entre le premier et le dernier
+     pilier pour des etendues entre graines allant jusqu'a 24.3. Les parts se citent,
+     leur classement non.
+  7. LA COLONNE PART D'AMORCE EST AJOUTEE, et elle a immediatement evite une erreur
+     d'imputation. A l'etat non conforme P4 est en exces de +13.8 points sur sa part
+     d'amorce, ce qu'on aurait pu lire comme un effet de cascade. Mesure aux trois etats,
+     cet exces vaut -2.5 a l'etat conforme et -4.9 sans le choc commun : LES +18.7 POINTS
+     VIENNENT DONC DU CANAL D'ACCUMULATION, PAS DE LA PROPAGATION.
+  8. ET L'ORDRE DES AMORCES EST CELUI DE ROOT AUX DEUX ETATS SANS CHOC COMMUN, P1 > P4 >
+     P2 > P3 > P5, y compris a propagation forte. Seul le choc commun le reordonne, en
+     faisant passer P4 devant P1. La propagation seule deplace donc les PARTS sans
+     renverser l'ORDRE, et les piliers qu'elle avantage sont P2 (+4.7 pt) et P1 (+2.0 pt).
+
+figure ecrite : exploratory\vasicek_lab\figures\S38_colonnes_attribution.png

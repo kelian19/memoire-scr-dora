@@ -1,0 +1,48 @@
+﻿
+==========================================================================
+Cascade de reference (OpRisk, canaux frequence + propagation + detection)
+==========================================================================
+  SCR tous C = 6085 M   SCR tous NC = 17012 M   Delta = 10927 M
+
+==========================================================================
+TEST 1  La photo : memes marges, seule la dependance change (tous C)
+==========================================================================
+
+  modele            SCR tous C  ecart vs cascade  co-extremes queue
+  cascade                 6085              0.0%               1.12
+  gaussienne              6089              0.1%               1.27
+  Student nu=4            7143             17.4%               2.28
+  independance            5623             -7.6%               1.06
+  Lecture (rapportee telle quelle, contraire a l'intuition copule) : en queue
+  lourde la queue annuelle est portee par la perte unique dominante, si bien que
+  la dependance compte peu pour le NIVEAU de base : la gaussienne retombe sur le
+  SCR cascade. La Student nu=4 le surestime en forcant des co-extremes que le
+  mecanisme ne produit pas. Le niveau n'identifie pas la dependance ; le choix de
+  copule est non identifiable ET consequent. La cascade n'a pas ce degre de
+  liberte : sa dependance est produite par le mecanisme, pas choisie.
+
+==========================================================================
+TEST 2  L'intervention : basculer un pilier, copule figee vs cascade
+==========================================================================
+
+  pilier bascule en NC     Delta_k cascade  Delta_k copule
+  P1 gouvernance                     3481M           1897M
+  P4 tiers                           2658M           1771M
+  P2 incidents                       1634M           1301M
+  P3 tests                           1094M           1346M
+  P5 partage                          665M            777M
+
+  Delta total (tous NC)        cascade    10927 M    copule     6760 M
+  interaction en perte MOYENNE cascade     +560 M    copule       +0 M
+  priorite impliquee  cascade : P1 > P4 > P2 > P3 > P5  (= ROOT)
+  priorite impliquee  copule  : P1 > P4 > P3 > P2 > P5
+
+  Lecture : trois manques structurels du monde copule.
+  1. La propagation n'a nulle part ou vivre : le Delta total est sous-estime
+     (le canal g, 0,45 -> 0,90, est inexprimable dans des marges).
+  2. L'interaction moyenne copule est ~0 PAR CONSTRUCTION (marges par etat propre,
+     copule figee) : l'interaction cascade mesuree est une signature falsifiable.
+  3. La dependance ne durcit pas avec la non-conformite, alors que la cascade
+     fait monter g : la copule fige precisement ce que DORA fait bouger.
+
+figure ecrite : exploratory\vasicek_lab\figures\S18_benchmark_copule.png

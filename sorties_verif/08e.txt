@@ -1,0 +1,52 @@
+﻿
+==============================================================================
+Cas d'usage P2 : incidents du secteur financier avec les deux dates
+==============================================================================
+incidents BSF avec les deux dates, delai valide : 5530
+delai occurrence -> declaration (jours) :
+   mediane = 94 | q90 = 302 | q99 = 977 | moyenne = 151
+
+KPI DELAI : part des incidents respectant chaque echeance DORA
+   <= 24 h   :  0.52%
+   <= 72 h   :  0.80%
+   <= 1 mois : 14.95%
+   => 85.0% des incidents sont declares APRES un mois, l'echeance FINALE de DORA.
+
+KPI DETECTION : delai median par type d'incident
+   Physique         n=   46  mediane=    31 j
+   Divulgation      n=  397  mediane=    38 j
+   Perte de support n=  110  mediane=    41 j
+   Carte            n=   41  mediane=    46 j
+   Non precise      n= 2155  mediane=    86 j
+   Interne          n=  161  mediane=    89 j
+   Piratage         n= 2601  mediane=   117 j
+
+==============================================================================
+Definition operationnelle de l'INCIDENT SIGNIFICATIF (double lecture)
+==============================================================================
+Un incident est SIGNIFICATIF s'il declenche l'obligation de gestion P2. Deux
+lentilles complementaires, chacune adossee a une source :
+  - impact FINANCIER : perte en euros au-dessus d'un seuil        (SAS OpRisk)
+  - impact REPUTATIONNEL : revelation publique / mediatisation     (Data Breach)
+Elles ne selectionnent pas les memes incidents : un ransomware paye discretement
+pese en euros sans presse ; une fuite de donnees pese en presse sans perte directe.
+La maille P2 doit unir les deux, d'ou un score de criticite plutot qu'un montant.
+
+==============================================================================
+Traduction du SCORE DE CRITICITE en KPI (la demande du praticien)
+==============================================================================
+Le modele qualitatif produit une criticite = f(probabilite, gravite). Pour le
+pilier P2, chacun de ses deux facteurs se lit comme un KPI MESURABLE :
+
+  criticite P2
+   |-- PROBABILITE  <->  KPI 1  frequence d'incidents significatifs
+   |                            0,10 a 0,21 / entite / an       (script 08b)
+   |-- GRAVITE      <->  KPI 2  impact financier, indice de queue xi ~ 0,90
+   |                                                            (script 05)
+                    <->  KPI 3  delai de notification, mediane 94 j (ce script)
+
+Le score abstrait devient ainsi un tableau de bord de 3 quantites observables,
+plus 1 KPI d'accumulation (part portee par les causes communes = 20 %, script 08d).
+C'est la reponse concrete a 'transformer le score en quelques KPI'.
+
+figure ecrite : exploratory\vasicek_lab\figures\Q_cas_usage_p2.png

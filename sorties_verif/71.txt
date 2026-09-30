@@ -1,0 +1,106 @@
+﻿
+========================================================================================
+1. L'etage de PARAMETRE, porte sur l'AGREGAT et non sur le quantile unitaire
+========================================================================================
+  xi = 0.3044 (borne basse IC90)   -> SCR =     3042 M
+  xi = 0.5954 (calibration figee) -> SCR =     8159 M
+  xi = 0.8313 (borne haute IC90)   -> SCR =    27152 M
+  xi = 0.9000 (axe FAMILLE)       -> SCR =    39901 M
+
+  Etage PARAMETRE sur l'agrege : [3042 ; 27152] M, facteur 8.93.
+
+========================================================================================
+2. LE RECOUVREMENT, et c'est le resultat que je n'attendais pas
+========================================================================================
+  L'etage de parametre monte xi jusqu'a 0.8313. L'axe de FAMILLE de l'etage de
+  modele le pousse a 0.90. C'est le MEME parametre a deux valeurs voisines.
+
+  SCR a la borne haute du parametre : 27152 M
+  SCR a la valeur de l'axe famille   : 39901 M
+  extension apportee par l'axe famille au-dela du parametre : +12748 M, soit +53 %
+  de la largeur que l'etage de parametre couvre deja.
+
+  CE QUI EST EN JEU N'EST DONC PAS UNE TAILLE, C'EST UNE NATURE. L'extension est grande,
+  le capital etant violemment convexe en xi. Mais les deux etages poussent LE MEME
+  parametre : il n'y a qu'un xi, et une bande doit dire une seule fois jusqu'ou on le
+  laisse aller. Or 0.8313 est une BORNE ESTIMEE, celle de l'IC90 bootstrap, tandis que
+  0.90 est une valeur POSEE, hors de cet intervalle. Les melanger dans le meme
+  intervalle revient a mettre un scenario et une borne de confiance sur la meme echelle.
+
+  La borne BASSE de l'axe famille, la lognormale a 4330 M, est en revanche une autre
+  FAMILLE et non un autre xi : celle-la est un apport propre, et le recouvrement est donc
+  asymetrique, il porte sur la borne haute et non sur la borne basse.
+
+  RESERVE A NE PAS PERDRE, ET ELLE BORNE TOUT CE QUI PRECEDE. Ce script fait varier xi
+  SEUL, sigma reste a sa valeur publiee. Or le bootstrap estime le couple (xi, sigma)
+  conjointement et ses deux composantes sont correlees : la vraie bande de parametre suit
+  le nuage bootstrap, pas le segment en xi a sigma fixe. Les largeurs de parametre
+  ci-dessous sont donc des MAJORANTS, et il ne faut pas en conclure que l'incertitude de
+  parametre ecrase celle d'identification sans avoir refait le calcul sur le nuage.
+
+========================================================================================
+3. La bande composee, avec et sans l'etage de modele
+========================================================================================
+  etage, sur la charge annuelle        borne basse   borne haute    largeur   facteur
+  parametre (xi sur son IC90)                 3042         27152      24111      8.93
+  identification (direction W)                6858          8697       1839      1.27
+  modele, axe dependance                      5322          9806       4484      1.84
+  modele, axe famille de queue                4330         39901      35571      9.21
+  -----------------------------------------------------------------------------------
+  DEUX etages (retenu)                        3042         27152      24111      8.93
+  TROIS etages (ancienne annonce)             3042         39901      36859     13.12
+
+  LA HIERARCHIE AINSI RETABLIE N'EST PAS CELLE QU'ON ANNONCE D'ORDINAIRE : l'etage de
+  modele N'ECRASE PAS les autres, il est du meme ordre que celui de parametre, et les deux
+  dominent largement l'identification. Le retirer ne peut donc pas se justifier par sa
+  taille, contrairement a ce que le memoire ecrivait en comparant un facteur d'agregat a
+  un facteur de quantile unitaire.
+
+  Le retrait de l'etage de modele retire 12748 M de largeur, soit 35 % de la bande
+  a trois etages. Le facteur entre bornes tombe de 13.12 a 8.93.
+
+========================================================================================
+4. « Est-ce que cela ameliore les resultats ? » Trois reponses, et elles diffèrent
+========================================================================================
+  Il faut distinguer trois sens du mot, parce que la reponse change avec le sens.
+
+  (a) PLUS LISIBLE : oui, et franchement. La bande passe d'un facteur 13.12 a 8.93
+      entre ses bornes. Un intervalle qui varie d'un facteur cinq n'est pas un
+      intervalle de confiance, c'est un aveu d'ignorance, et un lecteur n'en fait rien.
+
+  (b) PLUS EXACT : non, et il ne faut pas le laisser croire. L'incertitude sous-jacente
+      ne bouge pas d'un euro. Ce qui change est ce qu'on met dans un intervalle et ce
+      qu'on publie a cote comme axe de sensibilite. Rien n'est retire du document.
+
+  (c) PLUS HOMOGENE : OUI, et c'est l'argument qu'il ne faut pas rater. La bande a trois
+      etages avait pour borne haute un xi POSE a 0.90, hors de l'IC90 bootstrap, place
+      sur la meme echelle qu'une borne ESTIMEE a 0.8313. Un intervalle qui melange une
+      borne de confiance et un scenario ne se lit pas : le lecteur ne sait plus si la
+      borne haute est un aleas defavorable ou une autre theorie de la queue. Le retrait
+      rend la bande homogene, ce qui est plus qu'un gain de lisibilite.
+
+  CE QUI JUSTIFIE LE PLUS LE RETRAIT N'EST DONC PAS LA LARGEUR, C'EST L'HOMOGENEITE de ce
+  qu'on met dans un intervalle. Et cela renforce la position de Caroline par un chemin
+  qu'elle n'avait pas emprunte : elle proposait de simplifier, et il se trouve que la
+  composition qu'on simplifie melangeait deux natures d'incertitude sur un seul parametre.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. Le cumul des trois etages n'avait JAMAIS ete compose : le panneau qui l'annonce est
+     du texte. La bande a trois etages est construite ici pour la premiere fois.
+  2. Etage de parametre porte sur l'agrege : [3042 ; 27152] M, facteur 8.93, a ne
+     PAS confondre avec le facteur 2,5 du quantile unitaire : le quantile agrege amplifie
+     l'incertitude sur xi, donc le 2,5 publie ne mesure pas ce que le parametre fait au
+     CAPITAL. Majorant toutefois, xi variant seul a sigma fixe (voir la reserve du 2).
+  3. L'axe famille (xi = 0.90) et l'etage de parametre (xi <= 0.8313) poussent LE
+     MEME parametre. L'extension vaut +12748 M, donc elle n'est pas negligeable : le
+     probleme est de nature, une borne posee melangee a une borne estimee, pas de taille.
+  4. Retirer l'etage de modele fait tomber la bande d'un facteur 13.12 a 8.93.
+  5. Reponse a la question posee : plus lisible OUI, plus exact NON, plus homogene OUI.
+     C'est le troisieme point qui emporte la decision, pas le premier.
+  6. Et un constat qui n'etait pas cherche : la bande d'identification ([6858 ; 8697])
+     est ENTIEREMENT contenue dans la bande de parametre lue sur l'agrege. A confirmer sur
+     le nuage bootstrap avant d'en tirer une hierarchie, mais c'est a instruire.
+
+figure ecrite : exploratory\vasicek_lab\figures\S27_test_etage_modele.png

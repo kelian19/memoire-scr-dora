@@ -1,0 +1,115 @@
+﻿Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+====================================================================================
+0. Le point de base, identique au script 15
+====================================================================================
+  u = 20.03 M€ | xi = 0.598 | sigma = 55.7 | p_u = 0.156
+  lambda_ref = 21.56/an | g = 0.9 | phi = 9.2
+  ecart entre etats a la base = 6640 M€
+
+====================================================================================
+1. Le levier « seuil » n'est pas un levier : il en contient quatre
+====================================================================================
+  Deplacer le seuil REAJUSTE la loi de queue. Voici ce que le refit change vraiment.
+
+  seuil         u (M€)       xi     sigma      p_u
+  p80            12.88    0.750      37.9    0.198
+  p85            22.03    0.601      56.6    0.151
+  p90            47.42    0.534      78.1    0.101
+
+  DECOMPOSITION : on deplace du percentile 80 au percentile 90, d'abord tout ensemble
+  comme le fait le script 15, puis une composante a la fois, les autres restant a la base.
+
+  composante        bas (p80)   haut (p90)   effet signe
+  LE PAQUET             12944         4862         -8081
+  u seul                 6628         6948          +320
+  xi seul               18533         4540        -13993
+  sigma seul             4617         9299         +4682
+  p_u seul               7339         4814         -2525
+  somme des 4                                     -11517
+
+  DEUX CHOSES A LIRE ICI, ET LA SECONDE EST LA PLUS GENANTE.
+  (i) La composante qui porte tout est XI SEUL, dont l'effet propre vaut
+      -13993 M€. La barre « seuil » du tornado publie ne mesure donc pas la
+      sensibilite au seuil : elle mesure surtout celle a l'INDICE DE QUEUE, que le refit
+      entraine. Le seuil PRIS SEUL ne deplace que +320 M€.
+  (ii) LES COMPOSANTES NE S'ADDITIONNENT PAS, ELLES SE COMPENSENT. Leur somme signee
+      vaut -11517 M€ quand le paquet en deplace -8081 : il y a
+      +3436 M€ de compensation, xi tirant vers le bas et sigma vers le
+      haut. La longueur de la barre publiee est donc PLUS COURTE que l'effet du seul
+      indice de queue, tout en lui etant attribuee sous le nom de « seuil ».
+
+  Comparer cette barre a celle du gain de propagation, qui ne deplace qu'un parametre,
+  n'a pas de sens : ce sont deux objets de nature differente.
+
+====================================================================================
+2. Elasticites : la seule normalisation qui rende les leviers comparables
+====================================================================================
+  Une elasticite d log(ecart) / d log(parametre) est SANS DIMENSION et SANS PLAGE. On
+  applique la MEME perturbation relative de +/- 10 % a chaque levier, un a la fois.
+  Aucun refit : chaque parametre bouge seul, ce qui est precisement ce qui manquait.
+
+  levier                    statut          -10 %      +10 %  elasticite
+  frequence lambda          estime           6122       6697        0.45
+  indice de queue xi        estime           4650       9950        3.79
+  echelle sigma             estime           6005       7299        0.97
+  seuil u                   choix            6636       6670        0.03
+  taux de depassement p_u   estime           5867       6922        0.82
+  gain de propagation g     pose             6343       6833        0.37
+  surdispersion phi         pose             6909       6320       -0.44
+
+  CLASSEMENT PAR ELASTICITE ABSOLUE : indice de queue xi > echelle sigma > taux de depassement p_u > frequence lambda > surdispersion phi > gain de propagation g > seuil u
+
+  Le gain de propagation a une elasticite de 0.37, l'indice de queue de 3.79
+  et la frequence de 0.45. Rapport queue sur propagation : 10.2, frequence sur propagation : 1.2.
+
+====================================================================================
+3. Estime contre pose : la plage legitime n'existe que pour les premiers
+====================================================================================
+  Une elasticite dit la sensibilite par point de pourcentage. Elle ne dit pas de combien
+  le parametre PEUT bouger. Pour cela il faut une plage, et une plage n'est defendable
+  que si elle vient d'une incertitude MESUREE.
+
+  levier                    plage                         ecart bas  ecart haut    ampl.
+  indice de queue xi        IC90 publie [0.304 ; 0.831]        1908       32666    30757
+  frequence lambda          +/- 1,645 ET, ET = 1.34            6450        6917      467
+  gain de propagation g     AUCUNE : parametre POSE               -           -        -
+  surdispersion phi         AUCUNE : parametre POSE               -           -        -
+
+  C'EST LE POINT QUE LE TORNADO D'ORIGINE MASQUAIT. Deux des quatre leviers n'ont pas
+  d'intervalle d'incertitude parce qu'ils ne sont pas estimes : la plage qu'on leur
+  donne est un CHOIX D'AFFICHAGE. Leur barre peut donc etre allongee ou raccourcie a
+  volonte, et la comparer a celle d'un parametre estime revient a comparer une
+  incertitude a une convention.
+
+====================================================================================
+VERDICT : ce qui survit de la conclusion du script 15
+====================================================================================
+  1. LE LEVIER « SEUIL » EST A RETIRER DU CLASSEMENT tel quel : il deplace quatre
+     parametres a la fois, et c'est xi seul qui porte son effet, avec en prime une
+     compensation entre composantes. Sa premiere place dans le tornado publie est une
+     consequence de sa composition, pas une mesure.
+
+  2. LA CONCLUSION DE FOND SURVIT A LA NORMALISATION : True.
+     Sur une perturbation relative identique, la propagation a l'elasticite la plus
+     faible des leviers SUBSTANTIELS (0.37), contre 3.79 pour l'indice de queue,
+     0.97 pour l'echelle et 0.45 pour la frequence.
+
+     UNE PRECISION QUI COMPTE, ET QUI VA DANS LE SENS DU POINT 1 : le seuil PRIS SEUL a
+     une elasticite de 0.03, plus faible encore que la propagation. Dire que la
+     propagation est « le levier le moins sensible » sans cette precision serait donc
+     inexact. Mais ce classement-la est instructif plutot que genant : il montre que le
+     seuil en lui-meme ne fait presque rien, et que tout ce qu'on lui attribuait venait
+     de l'indice de queue qu'il entraine.
+
+  3. CE QU'IL FAUT DIRE DESORMAIS, ET C'EST PLUS FORT QUE L'ANCIENNE FORMULATION :
+     la sensibilite du modele a la contagion est faible PAR POINT DE POURCENTAGE, ce qui
+     ne depend d'aucune convention d'affichage. L'ancienne formulation comparait des
+     amplitudes et pouvait etre retournee en changeant une plage ; celle-ci non.
+
+  4. RESERVE A CONSERVER : une elasticite est locale, mesuree autour du point de base.
+     Elle ne dit pas ce qui se passe loin de ce point, et sur un parametre POSE comme g
+     la question « et si g valait 1,5 » reste legitime. La reponse est ailleurs, dans
+     l'invariance de l'ordre en g du script 66, et non dans ce tornado.
+
+figure ecrite : exploratory\vasicek_lab\figures\S32_tornado_normalise.png

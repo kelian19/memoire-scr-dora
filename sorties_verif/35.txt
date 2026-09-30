@@ -1,0 +1,63 @@
+﻿
+================================================================================
+1. Le choc MOVEit comme experience quasi naturelle
+================================================================================
+  fenetre 2023-05-25 -> 2023-06-15 : 419 evenements, 188 organisations financieres touchees
+  part du secteur BSF sur la periode : 38.4% des evenements de la fenetre elargie
+
+================================================================================
+2. Difference de differences : le choc P4 eleve-t-il le hasard ensuite ?
+================================================================================
+  MOVEit (2023)
+    traite   :  188 orgs, pre 0.064 -> post 0.149  (delta +0.085)
+    controle :  194 orgs, pre 1.139 -> post 0.057  (delta -1.082)
+    DiD = +1.168 jour-breche/org
+    IC bootstrap 95 % : [+1.066 ; +1.269]  (significatif)
+
+================================================================================
+3. Placebo : meme dispositif sur une fausse date, un an plus tot
+================================================================================
+  placebo (2022)
+    traite   :   20 orgs, pre 0.150 -> post 0.250  (delta +0.100)
+    controle :  181 orgs, pre 1.094 -> post 0.088  (delta -1.006)
+    DiD = +1.106 jour-breche/org
+    Le placebo doit etre proche de zero si le dispositif ne fabrique pas d'effet.
+
+================================================================================
+4. Le mur : la cible est-elle attribuable a un pilier ?
+================================================================================
+  breches des organisations traitees dans les 180 j suivants : 50
+  par type de vecteur :
+    HACK       30  (60%)
+    UNKN       16  (32%)
+    DISC        3  (6%)
+    PORT        1  (2%)
+
+  Part NON attribuable a un vecteur precis (UNKN) : 32%
+  Et surtout : meme les types renseignes (HACK, DISC...) sont des VECTEURS
+  d'attaque, pas des domaines de controle DORA. On ne peut donc PAS dire vers
+  quel pilier le choc P4 s'est propage. L'experience mesure un hasard global,
+  pas une direction pilier-a-pilier.
+
+================================================================================
+5. Verdict
+================================================================================
+  DiD MOVEit    : +1.168  [+1.066 ; +1.269]
+  DiD placebo   : +1.106  (fausse date, aucun choc reel)
+  EFFET NET (MOVEit - placebo) : +0.062 jour-breche/org
+
+  LE PIEGE, ET LA LECON. Le DiD MOVEit brut est grand et 'significatif'. Mais le
+  placebo produit quasiment le MEME chiffre, alors qu'aucun choc n'a eu lieu a cette
+  date. L'effet apparent n'est donc PAS causal : il vient de la selection du groupe
+  de controle (actif dans le pre par construction), qui revient mecaniquement vers
+  sa moyenne et fabrique un DiD positif quelle que soit la date. Une fois le placebo
+  retranche, l'effet net tombe a +0.062, indistinguable de zero.
+
+  CONCLUSION, alignee sur le chapitre identifiabilite. Meme la meilleure experience
+  naturelle disponible (un choc P4 exogene, date, massif) NE FAIT PAS apparaitre de
+  propagation directionnelle nette, et sa cible serait de toute facon non attribuable
+  (taxonomie = vecteur, pas pilier ; 32 % d'UNKN). La direction demande un registre
+  horodate ET taxonomise par domaine de controle. La tentative la plus dure a ete
+  faite ; elle bute sur la donnee, pas sur la methode. C'est un resultat, pas un echec.
+
+figure ecrite : exploratory\vasicek_lab\figures\Z6_event_study_moveit.png
