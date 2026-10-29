@@ -1,0 +1,70 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+131 — LES CARACTÉRISTIQUES OBSERVÉES AMÉLIORENT-ELLES LA PRÉVISION DES PERTES IMPORTANTES ?
+570 pertes 2000-2026, 86 au-dessus de 20.03 M EUR ; 2026 incomplète exclue (5 pertes).
+Cible : dépassement du seuil PARMI LES PERTES ENREGISTRÉES, probabilité conditionnelle à l’enregistrement.
+scikit-learn 1.9.0 ; hyperparamètres fixés avant évaluation : logistique L2 C = 1.0 ; boosting profondeur 2, 100 itérations, pas 0.05, feuilles d’au moins 20.
+
+DISPONIBILITÉ DES ACTIFS : renseignés pour 518 pertes sur 565 ; information financière postérieure à l’année de l’événement pour 209 pertes (37 %). Sensibilités : modèles sans les actifs, et actifs connus au plus tard l’année de l’événement (319 pertes).
+  écart entre année d’information financière et année de l’événement : médiane 0 ans, de -3 à 10 ; même année 22 %, antérieure 41 %, postérieure 37 %.
+  médiane du log des actifs : 11.21 sous le seuil, 10.35 au-dessus (soit 74,037 et 31,199 M USD).
+
+PARTIE 1. ORIGINE GLISSANTE 2014-2025, actifs tels que déclarés
+  2014 :  14 pertes,  4 dépassements ; p moyen M0 0.084 ; M1 0.231 ; M2 0.135 ; M3 0.112
+  2015 :  12 pertes,  1 dépassements ; p moyen M0 0.094 ; M1 0.293 ; M2 0.257 ; M3 0.251
+  2016 :  22 pertes,  3 dépassements ; p moyen M0 0.093 ; M1 0.268 ; M2 0.278 ; M3 0.239
+  2017 :  16 pertes,  1 dépassements ; p moyen M0 0.096 ; M1 0.239 ; M2 0.322 ; M3 0.223
+  2018 :  36 pertes,  5 dépassements ; p moyen M0 0.095 ; M1 0.208 ; M2 0.208 ; M3 0.114
+  2019 :  22 pertes,  5 dépassements ; p moyen M0 0.099 ; M1 0.191 ; M2 0.241 ; M3 0.154
+  2020 :  29 pertes,  1 dépassements ; p moyen M0 0.106 ; M1 0.217 ; M2 0.216 ; M3 0.169
+  2021 :  26 pertes,  5 dépassements ; p moyen M0 0.101 ; M1 0.172 ; M2 0.163 ; M3 0.089
+  2022 :  32 pertes, 11 dépassements ; p moyen M0 0.106 ; M1 0.188 ; M2 0.240 ; M3 0.170
+  2023 :  21 pertes,  7 dépassements ; p moyen M0 0.121 ; M1 0.247 ; M2 0.269 ; M3 0.228
+  2024 :  29 pertes,  6 dépassements ; p moyen M0 0.130 ; M1 0.283 ; M2 0.246 ; M3 0.233
+  2025 :  21 pertes, 11 dépassements ; p moyen M0 0.134 ; M1 0.283 ; M2 0.434 ; M3 0.345
+
+280 pertes notées, 60 dépassements ; 35 pertes notées viennent d’une firme déjà présente dans l’apprentissage.
+Scores par perte notée (log-score : plus grand = mieux ; Brier : plus petit = mieux)
+modèle                                      log-score    Brier  PR-AUC  p moyen pente cal.
+M0 taux constant                              -0.5605   0.1782   0.330    0.106       2.72
+M1 tendance logistique                        -0.5214   0.1689   0.229    0.229       0.36
+M2 logistique pénalisée + caractéristiques    -0.5436   0.1762   0.320    0.247       0.39
+M3 boosting + caractéristiques                -0.5021   0.1605   0.365    0.187       0.62
+  taux observé sur les années notées : 0.214
+
+DIFFÉRENCE DE LOG-SCORE CONTRE M1 (bootstrap des années notées, intervalle à 90 %)
+  actifs déclarés              M0 moins M1 : -0.0391 [-0.0937 ; +0.0118] ; années où M0 fait mieux : 5 sur 12
+  actifs déclarés              M2 moins M1 : -0.0222 [-0.0912 ; +0.0364] ; années où M2 fait mieux : 5 sur 12
+  actifs déclarés              M3 moins M1 : +0.0193 [-0.0371 ; +0.0571] ; années où M3 fait mieux : 9 sur 12
+  sans actifs                  M0 moins M1 : -0.0391 [-0.0935 ; +0.0119] ; années où M0 fait mieux : 5 sur 12
+  sans actifs                  M2 moins M1 : +0.0125 [-0.0471 ; +0.0638] ; années où M2 fait mieux : 7 sur 12
+  sans actifs                  M3 moins M1 : +0.0241 [-0.0240 ; +0.0646] ; années où M3 fait mieux : 7 sur 12
+
+M2 AJUSTÉ SUR 2000-2025, coefficients standardisés (descriptifs, pas une inférence)
+  annee                            +0.782
+  metier_Payment and Settlement    +0.616
+  bdsf                             +0.568
+  region_Asia                      +0.229
+  metier_Insurance                 +0.166
+  metier_Retail Banking            -0.161
+  region_North America             -0.077
+  actifs_manquants                 -0.041
+  log_actifs                       -0.027
+  region_Europe                    +0.025
+
+PARTIE 2. SÉVÉRITÉ DES EXCÈS : échelle en tendance (D) contre tendance + log actifs + catégorie (DX)
+  60 excès notés ; densité nulle attribuée à un excès observé : D 0, DX 1 (forme estimée négative, queue bornée sous l’excès observé).
+  sur les 59 excès où les deux densités sont positives : log-score moyen D -5.7122, DX -5.7767 ; DX moins D -0.0645 [-0.1738 ; +0.0691]
+  ajustement complet (84 excès) : xi 0.478 ; log sigma : année +0.0516, log actifs +0.042, interruption d’activité +0.623
+
+SENSIBILITÉ : ACTIFS CONNUS AU PLUS TARD L’ANNÉE DE L’ÉVÉNEMENT (manquants sinon)
+  M2 moins M1 : +0.0081 [-0.0491 ; +0.0574] ; années où M2 fait mieux : 6 sur 12
+  M3 moins M1 : +0.0227 [-0.0232 ; +0.0592] ; années où M3 fait mieux : 8 sur 12
+
+CONCLUSION DÉRIVÉE DES INTERVALLES
+  aucun modèle à caractéristiques ne bat la tendance seule avec un intervalle à 90 % au-dessus de zéro.
+  sévérité : les covariables n’améliorent pas le score hors apprentissage de façon résolue.
+
+Limites : registre d’événements déclarés, pas d’exposition ; probabilité conditionnelle à l’enregistrement ;
+douze années notées, donc douze blocs de bootstrap ; firmes répétées entre apprentissage et test ;
+aucune modification du moteur de capital ni des valeurs publiées.
+Durée 32.6 s ; résultats agrégés : 131.json

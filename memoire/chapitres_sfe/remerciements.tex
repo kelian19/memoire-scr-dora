@@ -1,0 +1,103 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : remerciements.
+% Copie a texte constant de remerciements.tex.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+% =====================================================================
+% EXERGUE ET REMERCIEMENTS
+%
+% Fichier PARTAGÉ par les quatre versions du document, au même titre que les
+% chapitres et que la page de garde : main.tex, main_v2.tex, main_v3.tex et
+% main_ensae.tex l'appellent tous. NE PAS LE DUPLIQUER pour faire évoluer une
+% version, ce serait quatre textes à maintenir.
+%
+% UN CHAMP RESTE À COMPLÉTER, ET IL N'APPARTIENT PAS À L'ASSISTANT : le nom de
+% famille du fondateur de Nexialog Consulting. Il s'imprime en gras entre
+% crochets tant qu'il n'est pas renseigné, donc un dépôt avec un nom absent est
+% visible à la relecture plutôt que silencieux.
+% =====================================================================
+
+% --- Le champ à compléter --------------------------------------------
+\newcommand{\fondateurnexialog}{Ali~BEHBAHANI}
+% ---------------------------------------------------------------------
+
+% =====================================================================
+%  EXERGUE
+%
+%  La citation est la « loi de la crédibilité décroissante » de Manski, qui
+%  ouvre Identification Problems in the Social Sciences. Elle est à sa place
+%  ici et pas seulement par ornement : le mémoire refuse de poser la direction
+%  de la contagion et publie un capital en bornes, ce qui est exactement
+%  l'arbitrage qu'elle énonce.
+%
+%  ELLE EST CITÉE DANS SA LANGUE D'ORIGINE DEPUIS LE 28 SEPTEMBRE 2026, demande
+%  de Kélian. Elle portait jusque-là une traduction de l'auteur, signalée comme
+%  telle ; l'anglais évite d'avoir à défendre une traduction qui n'apporte rien,
+%  la phrase étant courte et le lecteur d'un mémoire d'actuariat la lisant sans
+%  peine. Pour mémoire, la traduction retirée : « La crédibilité d'une inférence
+%  décroît avec la force des hypothèses que l'on maintient. »
+%
+%  LA CÉSURE EST INTERDITE DANS CE BLOC, et ce n'est pas cosmétique : babel est
+%  chargé en français SEUL, donc il couperait cette phrase anglaise sur des
+%  motifs français. Interdire la césure ici coûte deux lignes bien réparties et
+%  évite de toucher au préambule à deux jours du dépôt.
+% =====================================================================
+\thispagestyle{empty}
+\vspace*{0.30\textheight}
+
+\begin{flushright}
+\begin{minipage}{0.72\textwidth}
+\itshape\hyphenpenalty=10000 \exhyphenpenalty=10000
+The credibility of inference decreases with the strength of the assumptions
+maintained.
+
+\vspace{10pt}
+\normalfont\small\raggedleft
+Charles F. Manski, \emph{Partial Identification of Probability Distributions}, 2003.
+\end{minipage}
+\end{flushright}
+
+\clearpage
+
+% =====================================================================
+%  REMERCIEMENTS
+% =====================================================================
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+% Voir la note de 20_notes_synthese : un \chapter* laisse le titre courant sur
+% la marque precedente. Sans effet visible ici, la page etant unique, mais la
+% regle vaut pour les quatre versions et le texte peut s'allonger.
+\markboth{Remerciements}{}
+
+% REECRITS LE 1er OCTOBRE 2026 AU SOIR, demande de Kelian : memes personnes, meme ordre, memes fonctions,
+% phrases simples, sans formule litteraire ni phrase de cloture. Retires : le paragraphe
+% d'ouverture et trois phrases (« Un travail de cette nature... », « Ces quelques mois... »,
+% « Son soutien n'a jamais... Ce travail lui revient... »).
+Je remercie \fondateurnexialog, fondateur de Nexialog Consulting, de m'avoir accueilli dans
+son cabinet et de la confiance qu'il m'a accordée.
+
+Je remercie mon maître de stage, Hugo RAPIOR, responsable R\&D en actuariat, pour son accueil
+dans son équipe, sa disponibilité et son encadrement. Nos points d'avancement hebdomadaires et
+ses conseils ont beaucoup apporté à ce travail.
+
+Je remercie également les équipes du pôle Actuariat de Nexialog Consulting pour leur accueil et
+nos échanges. Je remercie en particulier les trois praticiens qui ont confronté les affirmations
+du modèle à leur expérience.
+
+% LES TROIS RELECTEURS NE SONT PAS NOMMÉS, et cette règle ne bouge pas : décision de
+% Kélian du 9 septembre 2026, tenue alors même que la première répondante avait coché
+% « citez-moi par mon nom ». Ils ne sont désignés ici que par leur nombre, et par leur
+% rôle au § de la relecture de praticien de l'annexe C, où leurs réponses sont rapportées.
+% Le 28 septembre, la phrase ne citait que la première : elle les cite tous les trois.
+
+Mes remerciements vont aussi au corps enseignant de l'ENSAE Paris et à la filière Actuariat,
+pour la qualité de leurs enseignements. Je remercie ma tutrice académique, Caroline HILLAIRET,
+pour son suivi et ses remarques sur le traitement de l'incertitude, qui ont fait évoluer ce travail.
+
+Je remercie enfin ma famille pour son soutien.
+
+\clearpage

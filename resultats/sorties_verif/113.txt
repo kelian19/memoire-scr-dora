@@ -1,0 +1,62 @@
+﻿
+========================================================================================
+113 - LES TROIS BAREMES D'EXPERT DU MODELE QUALITATIF : ROOT, TRANS, GBASE
+========================================================================================
+  source : exploratory/cascade_qualitative/cascade_model.py (source unique)
+  controles : cinq piliers dans les trois baremes, vingt entrees TRANS, asymetrie totale 3.10 (> 0)
+
+========================================================================================
+1. ROOT : propension a amorcer une chaine, et part d'amorce dans le moteur
+========================================================================================
+  P1 : ROOT = 1.00   part d'amorce = 30.3 %   (arrondie 30 %)
+  P4 : ROOT = 0.90   part d'amorce = 27.3 %   (arrondie 27 %)
+  P2 : ROOT = 0.60   part d'amorce = 18.2 %   (arrondie 18 %)
+  P3 : ROOT = 0.50   part d'amorce = 15.2 %   (arrondie 15 %)
+  P5 : ROOT = 0.30   part d'amorce = 9.1 %   (arrondie 9 %)
+  somme des parts : 100.0 %
+  classement ROOT : P1 > P4 > P2 > P3 > P5
+
+========================================================================================
+2. TRANS : force dirigee « a entraine b », ligne = source, colonne = cible
+========================================================================================
+             P1     P2     P3     P4     P5   emission (somme de ligne)
+  P1        -   0.80   0.70   0.70   0.40   2.60
+  P2     0.20      -   0.40   0.30   0.60   1.50
+  P3     0.30   0.50      -   0.30   0.30   1.40
+  P4     0.20   0.80   0.30      -   0.40   1.70
+  P5     0.10   0.20   0.20   0.20      -   0.70
+  reception (somme de colonne) : P1 0.80  P2 2.30  P3 1.60  P4 1.50  P5 1.70
+  entrees de 0.10 a 0.80 ; plus grande emission : P1 avec 2.60
+  exemple d'asymetrie : TRANS[1][2] = 0.80 contre TRANS[2][1] = 0.20
+
+========================================================================================
+3. GBASE : gravite intrinseque du pilier s'il tombe seul (ordinale)
+========================================================================================
+  P4 : GBASE = 7
+  P1 : GBASE = 6
+  P2 : GBASE = 4
+  P3 : GBASE = 3
+  P5 : GBASE = 1
+  classement GBASE : P4 > P1 > P2 > P3 > P5
+
+========================================================================================
+3bis. LES COTES DU MODELE QUALITATIF, calculees sur toutes les chaines ordonnees
+========================================================================================
+  325 chaines ordonnees notees ; probabilite et gravite cotees dans [1 ; 10], criticite dans [1 ; 8]
+  echelle de notation des trois cotes : 1 a 10 (bornes posees par proba_score et gravite_score)
+  exemple : 1->2 criticite 8, 2->1 criticite 2
+
+  figure ecrite : exploratory/vasicek_lab/figures/Z_baremes_expert.png
+
+========================================================================================
+4. GRANDEURS CITEES PAR LE MEMOIRE (sans separateur)
+========================================================================================
+  ROOT P1 P4 P2 P3 P5 : 1.00 0.90 0.60 0.50 0.30
+  parts d'amorce P1 P4 P2 P3 P5 (%) : 30 27 18 15 9
+  GBASE P4 P1 P2 P3 P5 : 7 6 4 3 1
+  TRANS min max : 0.10 0.80
+  emission P1 : 2.60 ; reception P2 : 2.30
+
+========================================================================================
+FIN 113
+========================================================================================

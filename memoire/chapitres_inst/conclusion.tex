@@ -1,0 +1,106 @@
+﻿% =====================================================================
+% VERSION ENSAE, REDUCTION SFE : conclusion.
+% Phase 3 : copie de chapitres/14_conclusion.tex. Phase 4 (1er octobre 2026) : reecrite selon la
+% regle n°2 de la mission et ramenee a deux pages, en suivant les consignes MS (situer le point
+% d'arrivee, ce qui a pu etre realise, ce qui n'a pu l'etre, la suite possible). Rapport :
+% reduction/chapitres/conclusion.md, qui liste ce qui est parti et ou.
+% Reprise le 1er octobre 2026 tard le soir (« une ecriture plus humaine ») : registre cale sur
+% des memoires d'actuariat publies avant 2022 (style/registre_humain.md), longueur inchangee, la
+% derniere page etant pleine. Fond inchange.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex.
+% =====================================================================
+
+\chapter*{Conclusion}
+\phantomsection
+\addcontentsline{toc}{chapter}{Conclusion}
+\markboth{Conclusion}{}
+
+\section*{Apports et résultats}
+Ce travail calcule des écarts conditionnels de capital entre états de conformité supposés, puis
+examine leur dépendance à la direction de la contagion et au coût des piliers touchés. Sur le
+périmètre financier étudié, et non pour un assureur, le besoin de capital lié au risque
+opérationnel informatique passe de $6\,049$ à $20\,188$~M\euro{} entre l'état conforme et
+l'état non conforme, soit un facteur $3{,}34$. Les deux états diffèrent sur quatre canaux : la
+fréquence, la détection, la propagation et l'accumulation. Cet écart, $14\,139$~M\euro{}, a un écart-type de
+$734$~M\euro{} entre quatre graines ; il ne mesure pas un effet causal de DORA.
+Les canaux se composent presque multiplicativement : l'effet d'une correction dépend de
+l'état des autres contrôles. Un plan de remédiation doit donc citer l'effet de fermeture
+depuis son état de départ, en incluant les interactions.
+
+La cascade distingue des ordres d'atteinte qu'un score statique des seuls piliers touchés ne représente pas :
+$22$ des $26$ ensembles de piliers changent de criticité (note de $1$ à $10$) selon l'ordre d'atteinte.
+La normalisation de Leontief garantit la stabilité du système latent, cycles compris. Un processus de Hawkes
+ne se distingue pas de la cascade à la résolution disponible, et nous retenons la cascade par parcimonie.
+
+La queue de sévérité et la fréquence d'entrée sont ajustées sur les données ; la propagation et
+l'accumulation sont posées. Hors échantillon, la binomiale négative couvre davantage d'années
+que le Poisson et la forme de queue n'est pas rejetée, mais douze années donnent peu de puissance.
+Le niveau de la charge annuelle est rejeté
+(Kolmogorov-Smirnov, $p = 0{,}0042$), sans que la dérive de l'échelle de queue soit confirmée. La
+Formule Standard n'exprime pas l'écart entre états : à volume égal, sa charge ne dépend pas de la
+conformité, et ses six limites pour cette question (tableau~\ref{tab:critique-formule-standard})
+trouvent chacune une réponse conditionnelle dans les chapitres~4 à~10.
+
+% SOURCES-SCRIPTS: 28 39 43 68 92 47 89 91 85 100 74 32
+
+\section*{Non-identifiabilité de la direction}
+La direction de la contagion n'est pas identifiable sur les trois sources étudiées
+(chronologie américaine, SAS OpRisk, VERIS), pour des raisons distinctes. L'expérience
+MOVEit ne distingue pas son effet net de zéro après le placebo. Les deux champs manquants existent
+dans le schéma VERIS, mais ne sont renseignés ensemble que dans \emph{un} incident sur $10\,591$.
+
+Le socle sans contagion ne dépend pas de la direction, mais conserve des paramètres posés
+(surdispersion, accumulation). Dans le calage de référence (sévérité OpRisk), le capital total se situe entre
+$6\,858$ et $8\,697$~M\euro{} sur les $1\,024$ sommets de l'ensemble admissible. Cette plage, large de $1\,839$~M\euro{}, est calculée aux sommets ; recalculée sur quatre graines, sa largeur a un écart-type de $189$~M\euro. Elle n'intègre pas l'incertitude sur la partie symétrique posée par l'expert.
+
+% SOURCES-SCRIPTS: 30 34 28 110 134
+
+\section*{Conséquences pour le régulateur et pour l'entité}
+Un registre mieux renseigné permettrait d'éprouver la contagion : survenance à la semaine, classement
+par domaine de contrôle, consolidation des causes communes et ensemble des piliers
+touchés. Dans le modèle, leur loi jointe peut distinguer une matrice de sa transposée.
+
+La notification DORA pourrait rendre obligatoires les deux premiers champs, déjà
+prévus dans VERIS. Fixer les six sens documentés par sept rapports post-incident
+réduirait la plage de $32{,}7\,\%$ en moyenne, de $22$ à $44\,\%$ selon la graine,
+ordre de grandeur et non promesse. Les dépendances les plus utiles, dont
+gouvernance--incidents, en lèveraient chacune $11$ à $13\,\%$, sans ordre résolu.
+
+% SOURCES-SCRIPTS: 66 55 117
+
+Remédier, détenir ou transférer le risque se comparent ensuite en euros par an, avec une prime de réassurance
+calculée sur un ratio de sinistralité de $48{,}5\,\%$. Pour l'entité notionnelle de $20\,000$~M\$ d'actifs,
+dont le besoin de capital ($24$~M\euro{}) est une extrapolation d'ordre de grandeur, le coût annuel
+de détention représente $1{,}35$ à $1{,}71$ fois la sinistralité attendue. Dans le scénario de traité en excès de perte idéalisé, le coût de financement baisse d'environ deux tiers, et de près de moitié pertes conservées comprises ; la capacité du marché, les
+exclusions et le risque de contrepartie l'entament. Plusieurs fréquences réelles restent compatibles
+avec les mêmes comptes du registre (\S\ref{sec:entites-capture}).
+
+
+
+% SOURCES-SCRIPTS: 58 65 67 136
+
+\section*{Limites}
+L'élicitation structurée a été préparée et diffusée, mais elle est restée sans réponse (annexe~\ref{ch:elicitation}). La lecture centrale de la direction repose donc sur un barème d'expert
+qualitatif. Deux hypothèses pèsent le plus sans être testables sur la donnée : les niveaux de
+propagation, posés, et l'additivité des coûts entre piliers touchés. L'élasticité de cette dernière atteint $0{,}95$ à
+l'état non conforme contre $0{,}39$ à l'état conforme (\S\ref{sec:additivite-couts}).
+Ces sensibilités évaluent l'effet des conventions, sans déterminer leur valeur empirique.
+
+Dans la construction additive, sur les sensibilités étudiées, le signe du surcoût et les deux piliers les plus coûteux, la gouvernance et la gestion des
+prestataires tiers, sont conservés. L'ordre de remédiation entre ces deux piliers dépend en revanche du
+niveau d'émission de la gouvernance : il tient tant que celle-ci n'est dégradée que du
+quart, et bascule à la moitié. Le niveau de capital reste illustratif ; les bandes de calibration
+en montrent l'incertitude, conditionnellement aux autres hypothèses.
+
+L'unité de perte modifie l'amplitude et l'attribution de l'écart
+(\S\ref{sec:institut-unite-perte}) : une perte unique neutralise financièrement les
+canaux agissant sur le nombre de piliers. Le bootstrap conjoint propage l'incertitude
+de calibration de la sévérité (\S\ref{sec:institut-bootstrap-joint}) ; ses bandes
+restent conditionnelles à la fréquence et aux hypothèses d'expert.
+
+La comparaison de scénarios est l'usage accessible sous ces conventions. Pour chiffrer un
+investissement ou arrêter un capital propre à l'entité, il reste à confronter les états et les coûts
+par pilier à des observations indépendantes. Un panel renseignerait le barème ; des séquences
+d'incidents et des coûts ventilés permettraient d'éprouver la contagion et sa traduction financière.
+
+% SOURCES-SCRIPTS: 74 64 65 119 120

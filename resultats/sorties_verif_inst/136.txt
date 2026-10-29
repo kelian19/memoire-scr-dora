@@ -1,0 +1,160 @@
+
+============================================================================================
+1. Pourquoi l'exposant du registre est aplati : la fenetre d'observation
+============================================================================================
+classe d actifs         firmes  annees observees  incidents/firme/an
+moins de 1 Md USD         1349              1.44               0.088
+1 a 10 Md USD             1119              2.46               0.087
+10 a 100 Md USD           1059              3.58               0.070
+plus de 100 Md USD        1402              4.31               0.123
+Les petites firmes ont des fenetres plus courtes : biais de fenetre plausible, non demontre.
+
+panel restreint aux actifs >=       beta      ET   lignes  firmes
+                   0 M USD         0.074   0.010    14544    4929
+               1,000 M USD         0.139   0.014    12600    3580
+              10,000 M USD         0.269   0.022     9842    2461
+              50,000 M USD         0.375   0.033     7267    1697
+             100,000 M USD         0.494   0.043     6048    1402
+             300,000 M USD         0.513   0.066     4251     956
+
+exposant retenu (firmes >= 100 Md USD) : beta = 0.494 (ET 0.043), dispersion r = 0.594, ancre exp(xbar) = 570 Md USD
+
+============================================================================================
+2. Le moteur et son controle sur la methode publiee
+============================================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+pertes sous le seuil u = 20.03 M EUR : 484, mediane 0.92, moyenne 2.83 M EUR
+controle, methode publiee, point :   169.0  (publie 169.0)
+controle, methode publiee, lo    :   131.5  (publie 131.5)
+controle, methode publiee, hi    :   183.3  (publie 183.3)
+controle, methode publiee, g45   :   116.4  (publie 116.4)
+controle, methode publiee, g68   :   143.2  (publie 143.2)
+controle, methode publiee, a1    :   127.1  (publie 127.1)
+Les valeurs des scripts 60, 64 et 66 sont reproduites : le moteur est le bon.
+secteur, meme protocole : besoin 8123 M EUR, perte moyenne 983 M EUR
+
+============================================================================================
+3. L'entite notionnelle sous le modele retenu
+============================================================================================
+actifs 20,000 M USD, soit 19,231 M EUR ; multiplicateur de severite 0.854
+lambda 0.0209 par an (registre : 0.0917) ; annees sans incident 97.9 %
+besoin a 99,5 % : 24.1 M EUR ; sommets [15.8 ; 27.5], largeur 11.7
+sensibilite a la pente seule, beta a +-1,96 ET [0.409 ; 0.579], intercept et dispersion fixes : besoin [12.3 ; 41.9] (pas un IC du capital, voir 137)
+frequence estimee sur les firmes >= 300 Md USD (beta 0.513) : besoin 20.3 a dispersion du seuil 100 (r 0.594) ; 20.6 en reestimation complete (r 0.566)
+xi sur son IC 90 % [0.304 ; 0.831] : besoin 24.1 a 24.2 ; TVaR 105.4 a 256.2
+A cette frequence, P(perte > 0) est de l'ordre de 2 % : le quantile a 99,5 % se lit pres du seuil
+de queue et depend peu de xi ; la moyenne des pires annees porte la sensibilite a la queue.
+moyenne des 0,5 % pires annees (TVaR) 155.9 ; perte moyenne 0.85 ; P(perte > 0) 2.06 %
+publie : 169.0 ; nouveau / publie = 0.143
+secteur / entite : lambda / 1,031, perte moyenne / 1,158, besoin / 336
+au levier median, SCR 1932 M EUR : besoin = 1.2 % du SCR
+facteur entre notifications PRC (341/an) et lambda d'entite : 16,307
+
+============================================================================================
+4. Le gain de propagation a l'echelle de l'entite
+============================================================================================
+grille de vingt valeurs de g, nombres communs : croissance True
+elasticite d'arc du besoin au gain sur [0,20 ; 0,95] : 0.59
+plus grand g (pas de 0,01) donnant un ecart d'au moins 10 % avec g = 0,90 : 0.84
+application                                  C      PC      NC    ecart  ordre
+etroite (0,70 / 0,80 / 0,90)              18.0    20.9    24.1   +33.8%  True
+retenue (0,45 / 0,68 / 0,90)              13.2    17.7    24.1   +83.0%  True
+large (0,20 / 0,55 / 0,90)                10.1    15.7    24.1  +138.4%  True
+conformite faible (0,45/0,55/0,65)        13.2    15.7    16.9   +27.9%  True
+tres etroite (0,85 / 0,875 / 0,90)        22.3    23.1    24.1    +8.1%  True
+
+============================================================================================
+5. L'emission de P1 degradee, a l'echelle de l'entite
+============================================================================================
+     a    point             bande  largeur  premier pilier
+  0.00     24.1     [15.8 ; 27.5]     11.7  P1
+  0.25     21.3     [15.3 ; 24.5]      9.2  P1
+  0.50     18.9     [13.8 ; 21.6]      7.8  P4
+  0.75     16.7     [12.8 ; 19.2]      6.4  P4
+  1.00     15.0     [11.9 ; 16.7]      4.9  P4
+a = 0 : ecart entre etats (g 0,45 -> 0,90) 13.2 -> 24.1, +83.0 %
+a = 1 : ecart entre etats (g 0,45 -> 0,90) 10.7 -> 15.0, +40.6 %
+P1 muette : 24.1 -> 15.0 M EUR (-37.7 %), deplacement 9.1 = 0.78 fois la largeur de bande 11.7
+
+============================================================================================
+6. Detenir ou transferer, a l'echelle corrigee
+============================================================================================
+besoin 24.1 ; perte moyenne 0.85 ; multiple besoin / perte moyenne 28.4 (secteur 8.3)
+cout de detention : 1.15 M EUR/an a 4,75 %, 1.45 a 6 % ; soit 1.35 a 1.71 fois la perte moyenne
+financement : tout detenir 1.15, optimum L* = 24.1 cout 0.39 (-66 %) ; seuil global 65.8 %
+economique : tout detenir 2.00, optimum L* = 24.1 cout 1.05 (-47 %) ; seuil global 82.4 %
+lambda divise par deux (0.0105) : besoin 4.7 M EUR ; cout economique optimal -55 %
+
+============================================================================================
+7. Les entites, modele retenu face a la lecture du registre
+============================================================================================
+entite                    actifs  lambda  besoin         bande   bande beta    TVaR  /actifs   /SCR registre   C->NC
+Petite entite (posee)        500  0.0034     0.0       [0 ; 0]      [0 ; 0]    22.5   0.000%      -     85.5      -
+Assureur non-vie A         2,319  0.0074     1.0       [1 ; 1]      [0 ; 5]    50.6   0.043%   0.2%    112.1    +57%  el. TVaR 0.53
+Assureur non-vie B         5,305  0.0111     4.7       [3 ; 5]     [1 ; 13]    77.8   0.089%   0.6%    135.5    +85%  el. TVaR 0.52
+Entite notionnelle        19,231  0.0209    24.1     [16 ; 28]    [12 ; 42]   155.9   0.126%      -    169.0    +83%  el. TVaR 0.54
+Assureur vie C            37,845  0.0292    47.8     [33 ; 54]    [32 ; 68]   244.1   0.126%   3.0%    195.8    +72%  el. TVaR 0.66
+Assureur vie D           309,800  0.0825   192.6   [156 ; 209]  [187 ; 208]   591.2   0.062%   1.3%    294.4    +36%  el. TVaR 0.42
+Grand groupe (pose)    2,400,000  0.2269   528.6   [437 ; 556]  [477 ; 570]  1325.7   0.022%      -    397.8    +29%  el. TVaR 0.39
+croissance du besoin avec les actifs : True
+assureur vie D / assureur non-vie A : besoin x194 (registre x2.6) pour des actifs x134 ; TVaR x11.7
+taille de bascule (plus petite taille a besoin positif a 99,5 %) : 1,015 M EUR d'actifs
+
+============================================================================================
+8. Agregation au capital total, a l'echelle corrigee
+============================================================================================
+entite                   BSCR >=  ecart D        d  tau 0,25   1/tau   D/SCR  niveau 1/tau
+Assureur non-vie A         366.0      0.4   0.0010     25.0%    3.99   0.08%          3.98
+Assureur non-vie B         772.3      2.2   0.0028     25.1%    3.98   0.27%          3.95
+Assureur vie C            1220.8     20.0   0.0164     25.8%    3.88   1.26%          3.73
+Assureur vie D           11384.6     50.8   0.0045     25.2%    3.97   0.34%          3.88
+assureur non-vie A, marge sous le plafond 0,3 BSCR : 50.8 M EUR ; besoin = 0.02 fois la marge, ecart = 0.01 fois
+
+============================================================================================
+9. Plafond par l'exposition, a l'echelle corrigee
+============================================================================================
+entite                   besoin  kappa a -50 %  soit M EUR
+Assureur non-vie A          1.0    hors grille           -
+Assureur non-vie B          4.7    hors grille           -
+Entite notionnelle         24.1        0.059 %          11
+Assureur vie C             47.8        0.059 %          22
+Assureur vie D            192.6    hors grille           -
+
+============================================================================================
+10. Grandeurs citees (sans separateur, pour le harnais)
+============================================================================================
+beta 0.494 ET 0.043 beta300 0.513 dispersion 0.594
+exposant au seuil 0 : 0.074 ET 0.010
+exposant au seuil 1000 : 0.139 ET 0.014
+exposant au seuil 10000 : 0.269 ET 0.022
+exposant au seuil 50000 : 0.375 ET 0.033
+exposant au seuil 100000 : 0.494 ET 0.043
+exposant au seuil 300000 : 0.513 ET 0.066
+annees observees moins de 1 Md USD : 1.44
+annees observees 1 a 10 Md USD : 2.46
+annees observees 10 a 100 Md USD : 3.58
+annees observees plus de 100 Md USD : 4.31
+notionnelle lambda 0.0209 besoin 24.1 bande 15.8 27.5 largeur 11.7 bandebeta 12.3 41.9 tvar 155.9 moyenne 0.85 sansincident 97.9
+notionnelle xi 24.1 24.2 tvarxi 105.4 256.2 beta300 20.3 levier 1.2 pperte 2.06 beta300complet 20.6
+secteur besoin 8123 moyenne 983
+rapports lambda 1031 moyenne 1158 besoin 336 prc 16307
+g 0.45 13.2 0.68 17.7 0.90 24.1 ecart 83.0
+elasticite d'arc 0.59 ; g a 10 % d'ecart 0.84
+correspondance etroite (0,70 / 0,80 / 0,90) : 18.0 20.9 24.1 33.8
+correspondance retenue (0,45 / 0,68 / 0,90) : 13.2 17.7 24.1 83.0
+correspondance large (0,20 / 0,55 / 0,90) : 10.1 15.7 24.1 138.4
+correspondance conformite faible (0,45/0,55/0,65) : 13.2 15.7 16.9 27.9
+correspondance tres etroite (0,85 / 0,875 / 0,90) : 22.3 23.1 24.1 8.1
+P1 muette 15.0 bande 11.9 16.7 variation -37.7 deplacement 9.1 rapport 0.78
+detention 1.15 1.45 fois 1.35 1.71 multiple 28.4
+transfert financement 1.15 0.39 -66 seuil 65.8
+transfert economique 2.00 1.05 -47 seuil 82.4
+lambda moitie 0.0105 besoin 4.7 cout -55
+Petite entite (posee) : besoin 0.0 bande 0 0 bandebeta 0 0 tvar 23 registre 85.5 conforme 0.0 pperte 0.36 ecartetats 0
+Assureur non-vie A : besoin 1.0 bande 1 1 bandebeta 0 5 tvar 51 registre 112.1 conforme 0.6 pperte 0.74 ecartetats 57 ratio 0.2
+Assureur non-vie B : besoin 4.7 bande 3 5 bandebeta 1 13 tvar 78 registre 135.5 conforme 2.5 pperte 1.10 ecartetats 85 ratio 0.6
+Entite notionnelle : besoin 24.1 bande 16 28 bandebeta 12 42 tvar 156 registre 169.0 conforme 13.2 pperte 2.06 ecartetats 83
+Assureur vie C : besoin 47.8 bande 33 54 bandebeta 32 68 tvar 244 registre 195.8 conforme 27.8 pperte 2.82 ecartetats 72 ratio 3.0
+Assureur vie D : besoin 192.6 bande 156 209 bandebeta 187 208 tvar 591 registre 294.4 conforme 141.8 pperte 7.42 ecartetats 36 ratio 1.3
+Grand groupe (pose) : besoin 528.6 bande 437 556 bandebeta 477 570 tvar 1326 registre 397.8 conforme 410.8 pperte 17.41 ecartetats 29
+bascule 1015

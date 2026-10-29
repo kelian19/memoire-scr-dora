@@ -1,0 +1,102 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE : introduction.
+% Phase 3 : copie de l'ancienne sous-section 1.5.3 (chapitres/02b_cadre_cyber_dora.tex,
+% lignes 684 a 743). Phase 4 (1er octobre 2026) : reecrite selon la regle n°2 de la mission, et
+% completee de ce que les consignes MS demandent a une introduction (situer le stage, le
+% probleme, le contexte et les moyens employes), avec des faits pris dans le chapitre du stage,
+% le chapitre 1 et la cartographie des sources du chapitre 3. Rapport :
+% reduction/chapitres/00_introduction.md.
+% Reprise le 1er octobre 2026 tard le soir, demande de Kelian (« une ecriture plus humaine ») :
+% registre cale sur six memoires d'actuariat publies avant 2022 (style/registre_humain.py,
+% style/registre_humain.md) : phrases plus longues et plus variees, connecteurs et « nous » des
+% memoires de reference, moins de points-virgules et de verbes « porter ». Fond inchange.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex.
+% Le script 74 est cite pour le bruit de simulation de l'ecart (± 734 M€), publie au chapitre 10.
+% =====================================================================
+
+\chapter*{Introduction}
+\phantomsection
+\addcontentsline{toc}{chapter}{Introduction}
+\markboth{Introduction}{}
+\label{subsec:problematique-positionnement}
+% SOURCES-SCRIPTS: 43 68 92 74 33 65 67
+
+Depuis $2025$, le règlement européen sur la résilience opérationnelle numérique (DORA) impose aux
+entités financières de maîtriser cinq domaines, que nous appelons piliers. Il rend ainsi observable un
+niveau de maîtrise qui ne l'était pas, mais aucun dispositif prudentiel ne le traduit en capital. La Formule
+Standard de Solvabilité~II, la formule réglementaire de calcul du capital des assureurs, charge le risque
+opérationnel par un forfait assis sur les primes ou les provisions techniques. Deux entités de même bilan
+se voient donc exiger le même capital, quelle que soit leur maturité sur les cinq piliers.
+
+Ce travail a été mené lors d'un stage de fin d'études chez Nexialog Consulting, cabinet de conseil
+en risques pour le secteur financier, de juin à fin novembre $2026$, sous la direction de Hugo Rapior.
+Le stage a produit un second livrable, écrit avec le maître de stage : l'analyse actuarielle de
+l'édition $2026$ d'une étude du marché français de la cyberassurance \citep{RapiorKaddouri2026}. Le
+chapitre~\ref{chap:cadre-cyber-dora} en reprend les constats. Des outils d'IA générative ont été
+utilisés pour l'aide à l'écriture du texte et le développement du code ; la démarche et les choix de
+modélisation sont ceux de l'auteur (voir annexe~\ref{ann:ia}).
+
+Nous cherchons à traduire un niveau de non-conformité à DORA, même hypothétique ou graduel, en une
+distribution de pertes, puis en besoin de capital. Les pertes sont celles du risque opérationnel
+d'origine informatique de l'entité ; les pénalités réglementaires et le risque des polices cyber
+qu'un assureur vend ne sont pas modélisés. Le SCR réglementaire correspond à une VaR à $99{,}5\,\%$ de la variation des fonds propres de base sur un an. Notre modèle en retient un substitut : le quantile à $99{,}5\,\%$ de la charge annuelle de pertes, dépassé avec une probabilité de $0{,}5\,\%$. La
+Formule Standard ne comportant aucun module DORA, il ne s'agit pas d'un capital de solvabilité requis (SCR) réglementaire : nous parlons de besoin de capital, au sens de l'évaluation interne des risques et de la solvabilité
+(ORSA).
+
+Le modèle assemble quatre composantes. Le nombre d'incidents par an suit une loi binomiale négative, et
+leur coût une loi de Pareto généralisée au-delà d'un seuil, adaptée aux pertes rares et très lourdes. Une
+cascade dirigée fait passer un incident d'un pilier aux autres selon une matrice de contagion, qui indique
+quel pilier en entraîne quel autre. Une couche multi-états, fondée sur une chaîne de Markov, décrit
+l'état de conformité de chaque pilier et son évolution. Le capital s'obtient par simulation de Monte-Carlo
+de la charge annuelle.
+
+Trois sources alimentent la calibration. La base internationale de pertes opérationnelles SAS
+OpRisk Global fournit la sévérité et le nombre annuel d'incidents utilisé par le modèle, et la base \emph{Privacy
+Rights Clearinghouse} (PRC) une fréquence de comparaison ainsi qu'une sévérité alternative. Quant à la
+base Hackmageddon, elle donne la répartition des attaques par vecteur, ce qui pondère le multiplicateur
+de fréquence entre les deux états, sans fixer le nombre d'incidents de référence.
+
+La première contribution porte sur la représentation de la dépendance : la cascade, une
+dépendance dirigée entre les piliers, dont le chapitre~\ref{chap:cascade} démontre trois propriétés. D'abord, le
+coût d'une chaîne de défaillances y dépend de l'ordre dans lequel les piliers sont atteints, ce qu'aucune dépendance
+symétrique ne reproduit. Ensuite, la normalisation de Leontief, une règle de mise à l'échelle de la matrice, y garantit que la
+contagion s'éteint. Enfin, une
+matrice et sa transposée, que les données publiques ne distinguent pas au premier ordre, y conduisent
+en général à un capital différent.
+
+La deuxième contribution est une frontière d'identifiabilité. Le
+chapitre~\ref{ch:identifiabilite} montre que, sur les trois sources publiques agrégées examinées, les défaillances ne sont pas observées dans un panel homogène par pilier. Un corpus de rapports d'incidents suggère un ordre partiel, sans identifier les coefficients de propagation. Nous posons une matrice à dire d'expert, sans la présenter
+comme calibrée, puis explorons le capital aux sommets en faisant varier la seule direction, la partie symétrique restant posée, et chiffrons ce
+qu'un registre d'incidents mieux spécifié resserrerait l'intervalle de capital (chapitre~\ref{chap:partielle}). La troisième contribution, au
+chapitre~\ref{chap:resultats}, donne le surcoût de la non-conformité, son attribution par pilier et
+l'ordre de remédiation.
+
+La conformité agit sur quatre paramètres, que nous appelons canaux. Entre les deux états,
+le nombre d'incidents par an passe de $21{,}6$ à $53{,}6$. Pour chaque pilier touché,
+la probabilité de dépasser le seuil de sévérité passe de $0{,}128$ à $0{,}181$. La force de propagation entre piliers passe de
+$0{,}45$ à $0{,}90$, et l'accumulation par un prestataire commun de $0$ à $0{,}68$. Les niveaux de
+référence des deux premiers sont calibrés sur les données. L'écart entre les deux états est posé pour
+les quatre, celui de la fréquence à partir d'effets publiés.
+
+Les montants concernent le périmètre financier étudié, qui compte $21{,}6$ incidents informatiques enregistrés par an, et non un assureur.
+Une perte isolée dépasse $663$~M\euro{} une fois sur deux cents. À $21{,}6$ événements par an,
+l'approximation par perte unique associe au quantile annuel à $99{,}5\,\%$ un quantile individuel proche de $99{,}977\,\%$,
+soit environ $4\,530$~M\euro{} (chapitre~\ref{chap:socle}).
+
+Pour une entité de $15\,000$~M\euro{} de provisions, la mise à l'échelle du calage sectoriel donne
+$131{,}5$--$183{,}3$~M\euro{} selon la matrice admissible. Cette extrapolation fournit un ordre de grandeur,
+sans garantie de majoration, et ne remplace pas la Formule Standard (chapitre~\ref{chap:resultats}).
+
+Les niveaux de propagation sont posés : le sens de l'écart ne dépend que de leur
+ordre, puisque les essais numériques donnent un besoin de capital croissant avec ce paramètre, mais son amplitude en dépend. Le niveau
+varie d'un facteur $41$ selon la loi de sévérité et la fréquence retenues (chapitre~\ref{chap:partielle}),
+et nous n'en interprétons que les écarts entre états et l'ordre des piliers les plus coûteux (P1, gouvernance, et P4, prestataires tiers, en tête ; chapitre~\ref{chap:cadre-cyber-dora}).
+
+Pour le périmètre financier étudié, le besoin de capital passe de
+$6\,049$ à $20\,188$~M\euro{} entre l'état conforme et l'état non conforme des quatre canaux, soit un
+facteur $3{,}34$. L'écart de $14\,139$~M\euro{} présente un écart-type de $734$~M\euro{} entre quatre graines de simulation.
+L'interaction entre canaux représente $5\,001$~M\euro{}, soit $35\,\%$ de l'écart : elle correspond au total moins les effets des canaux pris séparément. À lui seul, le nombre d'incidents
+fait passer le capital de $6\,049$ à $10\,377$~M\euro{}, davantage qu'aucun autre canal isolé ; les trois
+autres canaux réunis le font passer à $11\,413$~M\euro{} ($\pm 548$ et $\pm 245$~M\euro{}).
+
+Le cadre, la littérature et les données précèdent le modèle (chapitres~\ref{chap:cadre-cyber-dora} à~\ref{chap:multietats}). Viennent ensuite l'identification, les extrema numériques, les résultats et leurs limites (chapitres~\ref{ch:identifiabilite} à~\ref{ch:robustesse}).

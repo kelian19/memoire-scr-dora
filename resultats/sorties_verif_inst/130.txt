@@ -1,0 +1,125 @@
+
+============================================================================================
+1. Ce que la base dit de la taille, et ce qu'elle ne peut pas dire
+============================================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+pertes cyber x finance 2000-2026 : 570 ; avec actifs connus : 521
+sous-population               n           MCO           q50           q75           q90
+toutes tailles              521  -0.07 (0.03)  -0.07 (0.04)  -0.13 (0.06)  -0.13 (0.06)
+actifs >= 10 Md USD         354  -0.08 (0.07)  -0.02 (0.08)  -0.29 (0.12)  -0.15 (0.12)
+actifs >= 50 Md USD         278  -0.18 (0.10)  -0.08 (0.12)  -0.53 (0.16)  -0.39 (0.21)
+pente de log(perte) sur log(actifs), entre parentheses l'erreur-type.
+
+part des pertes au-dela du seuil u par cinquieme d'actifs (du plus petit au plus grand) :
+  13 %  17 %  11 %  17 %  4 %
+
+pertes de firmes a moins de 1 Md USD d'actifs : 50 sur 521 ; 12 des 66 pertes au-dela de u
+les cinq pertes les plus grandes rapportees aux actifs viennent de firmes aux actifs de 8, 8, 32, 178, 60 M USD
+Lecture : aucune pente positive. La base ne permet pas d'estimer un effet de taille sur la
+severite, et l'exposant de frequence qu'elle donne vaut pour ce qu'elle enregistre.
+
+============================================================================================
+2. Le panel, l'exposant du registre, et l'identite de partage
+============================================================================================
+panel firme-annee avec actifs : 14,544 lignes ; 808 firmes actives par an en moyenne
+incidents du panel par an (Lambda) : 79.0
+exposant de frequence du registre b_lambda = 0.0744 (ET 0.0098, z = 7.59)
+exposant central beta_c = sqrt(b_lambda) = 0.2728 ; borne haute beta = 1
+
+Identite de partage : la somme des lambda_i sur les firmes actives vaut Lambda.
+  beta = 0.0744 : somme des lambda_i = 79.0000 (Lambda = 79.0000)
+  beta = 0.2728 : somme des lambda_i = 79.0000 (Lambda = 79.0000)
+  beta = 1.0000 : somme des lambda_i = 79.0000 (Lambda = 79.0000)
+
+Controle d'emboitement : a beta = b_lambda, le partage redonne la descente actuelle.
+  Assureur non-vie A     lambda partage 0.0784 contre 0.0783 (rapport 1.0011)
+  Assureur non-vie B     lambda partage 0.0834 contre 0.0833 (rapport 1.0011)
+  Assureur vie C         lambda partage 0.0965 contre 0.0964 (rapport 1.0011)
+  Assureur vie D         lambda partage 0.1129 contre 0.1128 (rapport 1.0011)
+  ecart maximal : 0.11 %
+
+============================================================================================
+3. Le capital par entite et par lecture de la taille
+============================================================================================
+sommets admissibles : 1024 / 1024
+
+controle : entite notionnelle, descente actuelle : 169.0 et [131.5 ; 183.3] (publie : 169.0 et [131.5 ; 183.3])
+
+entite                    actifs M EUR    registre (lam)   point           bande     central (lam)   point           bandeproportionnel (lam)   point           bande
+Petite entite (posee)              500            0.0699    85.5       [63 ; 93]            0.0235     0.0         [0 ; 0]            0.0001     0.0         [0 ; 0]
+Assureur non-vie A                2319            0.0783   112.1      [88 ; 122]            0.0357     0.0        [0 ; 15]            0.0006     0.0         [0 ; 0]
+Assureur non-vie B                5305            0.0833   135.5     [104 ; 146]            0.0448    35.3       [23 ; 40]            0.0014     0.0         [0 ; 0]
+Entite notionnelle               19231            0.0917   169.0     [132 ; 183]            0.0636    99.0      [76 ; 109]            0.0050     0.0         [0 ; 0]
+Assureur vie C                   37845            0.0964   195.8     [149 ; 213]            0.0765   141.4     [110 ; 156]            0.0099     0.0         [0 ; 0]
+Assureur vie D                  309800            0.1128   294.4     [233 ; 316]            0.1358   347.0     [277 ; 371]            0.0812   188.6     [142 ; 204]
+Grand groupe (pose)            2400000            0.1313   397.8     [318 ; 428]            0.2374   690.0     [561 ; 738]            0.6292  1371.4   [1137 ; 1465]
+
+besoin ORSA en M EUR, point a la matrice d'expert au gain non conforme et bande sur les
+sommets admissibles ; lambda en incidents par an ; severite multipliee par m(A) comme au script 65.
+
+============================================================================================
+4. Ce que la lecture centrale change, et ses proprietes
+============================================================================================
+lecture registre      : croissance du besoin avec les actifs : True
+lecture central       : croissance du besoin avec les actifs : True
+lecture proportionnel : croissance du besoin avec les actifs : True
+
+lecture registre      : grand groupe / assureur non-vie A = 3.5 ; grand groupe / assureur vie D = 1.35 ; petite entite = 85.5
+lecture central       : grand groupe / assureur non-vie A = non defini (besoin nul) ; grand groupe / assureur vie D = 1.99 ; petite entite = 0.0
+lecture proportionnel : grand groupe / assureur non-vie A = non defini (besoin nul) ; grand groupe / assureur vie D = 7.27 ; petite entite = 0.0
+facteur sur les actifs, grand groupe / assureur non-vie A : 1035 ; grand groupe / petite entite : 4800
+lecture registre      : grand groupe / assureur non-vie b = 2.9 (facteur sur les actifs 452)
+lecture registre      : grand groupe / assureur vie c = 2.0 (facteur sur les actifs 63)
+lecture central       : grand groupe / assureur non-vie b = 19.5 (facteur sur les actifs 452)
+lecture central       : grand groupe / assureur vie c = 4.9 (facteur sur les actifs 63)
+lecture proportionnel : grand groupe / assureur non-vie b = non defini (besoin nul) (facteur sur les actifs 452)
+lecture proportionnel : grand groupe / assureur vie c = non defini (besoin nul) (facteur sur les actifs 63)
+
+Rapport du besoin central au SCR publie (repere, pas une part) :
+  Assureur non-vie A           0.0 /    425.0 =   0.0 %   (registre :  26.4 %)
+  Assureur non-vie B          35.3 /    812.5 =   4.3 %   (registre :  16.7 %)
+  Assureur vie C             141.4 /   1587.0 =   8.9 %   (registre :  12.3 %)
+  Assureur vie D             347.0 /  14800.0 =   2.3 %   (registre :   2.0 %)
+
+Taille de bascule : plus petite taille dont le besoin au niveau 99.5 % n'est pas nul
+  lecture central       : 2517 M EUR d'actifs
+  lecture proportionnel : 141079 M EUR d'actifs
+Sous cette taille, la probabilite annuelle d'une charge de queue strictement positive est inferieure
+a 0.5 % : le quantile a 99.5 % est nul, comme tout quantile de niveau inferieur. Un incident compte
+peut avoir une charge nulle, la severite retenue etant nulle sous le seuil : cette probabilite est donc
+inferieure a celle d'au moins un incident (tableau ci-dessous). Le risque se lit a un niveau plus
+eleve, ou par une mesure de queue. Taille obtenue sur une seule graine : ordre de grandeur.
+
+Probabilite annuelle d'au moins un incident, et d'une charge de queue strictement positive
+(etat suppose, lecture centrale puis proportionnelle) :
+  Petite entite (posee)    central : 0.65 % / 0.33 % ; proportionnel : 0.00 % / 0.00 %
+  Assureur non-vie A       central : 0.99 % / 0.49 % ; proportionnel : 0.02 % / 0.01 %
+  Assureur non-vie B       central : 1.23 % / 0.61 % ; proportionnel : 0.04 % / 0.02 %
+  Entite notionnelle       central : 1.73 % / 0.88 % ; proportionnel : 0.14 % / 0.07 %
+  Assureur vie C           central : 2.06 % / 1.07 % ; proportionnel : 0.27 % / 0.13 %
+  Assureur vie D           central : 3.63 % / 1.84 % ; proportionnel : 2.18 % / 1.11 %
+  Grand groupe (pose)      central : 6.25 % / 3.22 % ; proportionnel : 15.67 % / 8.27 %
+
+============================================================================================
+5. Grandeurs citees
+============================================================================================
+exposant du registre 0.074
+exposant central 0.273
+Petite entite (posee) lecture registre : lambda 0.0699 point 86 bande 63 93
+Petite entite (posee) lecture central : lambda 0.0235 point 0 bande 0 0
+Petite entite (posee) lecture proportionnel : lambda 0.0001 point 0 bande 0 0
+Assureur non-vie A lecture registre : lambda 0.0783 point 112 bande 88 122
+Assureur non-vie A lecture central : lambda 0.0357 point 0 bande 0 15
+Assureur non-vie A lecture proportionnel : lambda 0.0006 point 0 bande 0 0
+Assureur non-vie B lecture registre : lambda 0.0833 point 135 bande 104 146
+Assureur non-vie B lecture central : lambda 0.0448 point 35 bande 23 40
+Assureur non-vie B lecture proportionnel : lambda 0.0014 point 0 bande 0 0
+Assureur vie C lecture registre : lambda 0.0964 point 196 bande 149 213
+Assureur vie C lecture central : lambda 0.0765 point 141 bande 110 156
+Assureur vie C lecture proportionnel : lambda 0.0099 point 0 bande 0 0
+Assureur vie D lecture registre : lambda 0.1128 point 294 bande 233 316
+Assureur vie D lecture central : lambda 0.1358 point 347 bande 277 371
+Assureur vie D lecture proportionnel : lambda 0.0812 point 189 bande 142 204
+Grand groupe (pose) lecture registre : lambda 0.1313 point 398 bande 318 428
+Grand groupe (pose) lecture central : lambda 0.2374 point 690 bande 561 738
+Grand groupe (pose) lecture proportionnel : lambda 0.6292 point 1371 bande 1137 1465

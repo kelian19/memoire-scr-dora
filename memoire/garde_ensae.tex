@@ -1,0 +1,163 @@
+% =============================================================================
+%  PAGE DE COUVERTURE DE LA VERSION ENSAE : MODELE DU SERVICE DES STAGES
+%
+%  Reproduit le « Modele de page de couverture du rapport a respecter » de
+%  l'annexe 1 des consignes « Stage de fin d'etudes ENSAE, Masteres Specialises,
+%  2025-2026 » (page 12 du PDF du service des stages), que le rapport doit
+%  « respecter imperativement ». Demande de Caroline Hillairet le 1er octobre
+%  2026 : la couverture deposee le 30 septembre, gabarit du memoire d'actuariat,
+%  n'etait pas conforme pour le rapport de stage.
+%
+%  NE SERT QU'A LA VERSION ENSAE (phase 2 de la reduction SFE). La version
+%  Institut garde page_de_garde.tex, le gabarit du memoire d'actuariat, avec ses
+%  logos et ses deux signatures : amendement de Kelian du 1er octobre 2026, qui
+%  laisse main_institut.tex tel quel, donc ni garde_institut.tex ni booleen
+%  \ifversioninstitut.
+%
+%  Le modele ne porte ni date de soutenance, ni case a cocher, ni signature : n'en
+%  ajouter aucun. Deux ajouts au modele, tous deux demandes par Kelian le 1er octobre
+%  2026 : la ligne « Tutrice ecole : Caroline HILLAIRET », et un bandeau de logos (ENSAE
+%  a gauche, a la place ou la page du modele montre le logo de l'ecole ; Nexialog
+%  Consulting a droite). Le modele ne prevoit pas de logo d'entreprise : retirer le
+%  bandeau se fait en passant \sfelogosfalse ci-dessous. Sa note « 1 Ecrire le nom du
+%  MS » est une consigne, pas un element de la page. La police est celle du modele,
+%  le Times (TeX Gyre Termes) du corps du document.
+%
+%  CONFIDENTIALITE : le memoire n'est pas confidentiel (decision du 16 septembre
+%  2026). S'il le devenait, remplir \mentionconf ci-dessous ET renommer le fichier
+%  depose en KADDOURI_Kelian_MS25_CONF.pdf, comme les consignes l'exigent.
+% =============================================================================
+\newcommand{\sfeeleve}{KADDOURI Kélian}
+\newcommand{\sfems}{Mastère Spécialisé Actuariat}
+\newcommand{\sfeannee}{2025-2026}
+\newcommand{\sfeentreprise}{Nexialog Consulting}
+\newcommand{\sfeville}{Paris, France}
+\newcommand{\sfemaitre}{Hugo RAPIOR}
+\newcommand{\sfetutrice}{Caroline HILLAIRET}
+\newcommand{\sfedates}{Du 1\textsuperscript{er} juin au 27 novembre 2026}
+\newcommand{\mentionconf}{}
+\newif\ifsfelogos
+\sfelogostrue   % bandeau ENSAE / Nexialog ; \sfelogosfalse retire les logos
+\newif\ifsfemodeleofficiel
+% false : mise en page centree demandee par Kelian le 1er octobre 2026 (Latin Modern, petites
+% capitales, filet sous le titre, blocs Auteur et Encadrement), qui garde tous les champs du
+% modele ; true : modele strict de l'annexe 1, en Times.
+\sfemodeleofficielfalse
+
+\ifsfemodeleofficiel
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{singlespace}
+\ifsfelogos
+\noindent
+\begin{minipage}[c]{0.50\textwidth}
+  \includegraphics[height=2.6cm]{logos/ensae.png}
+\end{minipage}%
+\begin{minipage}[c]{0.50\textwidth}
+  \raggedleft\includegraphics[height=1.35cm]{logos/nexialog.png}
+\end{minipage}
+
+\vspace*{1.2cm}
+\fi
+\noindent
+\begin{minipage}[t]{0.50\textwidth}
+  {\fontsize{16}{19}\selectfont\bfseries \sfeeleve}
+\end{minipage}%
+\begin{minipage}[t]{0.50\textwidth}
+  \centering
+  {\fontsize{14}{17}\selectfont\bfseries \sfems\par
+   Stage de fin d'études\par}
+  {\fontsize{12}{15}\selectfont\bfseries\itshape Année scolaire \sfeannee\par}
+\end{minipage}
+
+\vspace*{0.23\textheight}
+
+\noindent\fbox{\begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+  \centering
+  \vspace{12pt}
+  {\fontsize{24}{30}\selectfont\bfseries Quantification du SCR lié\\[2pt]
+   à la non-conformité au règlement DORA\par}
+  % Encadre du modele : le titre, puis la mention de confidentialite si besoin. Le sous-titre
+  % (« Une cascade dirigee entre les cinq piliers ») en est retire le 1er octobre 2026, la
+  % place etant celle de cette mention dans le modele de l'annexe 1.
+  \mentionconf
+  \vspace{12pt}
+\end{minipage}}
+
+\vspace*{0.17\textheight}
+
+\noindent
+\begin{minipage}[t]{0.50\textwidth}
+  {\fontsize{14}{17}\selectfont\bfseries \sfeentreprise\par
+   \vspace{6pt}\sfeville\par}
+\end{minipage}%
+\begin{minipage}[t]{0.50\textwidth}
+  {\fontsize{14}{17}\selectfont\bfseries Maître de stage : \sfemaitre\par}
+  \vspace{4pt}
+  {\fontsize{14}{17}\selectfont\bfseries Tutrice école : \sfetutrice\par}
+  \vspace{6pt}
+  {\fontsize{12}{15}\selectfont\bfseries \sfedates\par}
+\end{minipage}
+\vfill
+\end{singlespace}
+\end{titlepage}
+\else
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{singlespace}
+\fontfamily{lmr}\selectfont
+\centering
+\ifsfelogos
+\noindent
+\begin{minipage}[c]{0.50\textwidth}
+  \raggedright\includegraphics[height=2.4cm]{logos/ensae.png}
+\end{minipage}%
+\begin{minipage}[c]{0.50\textwidth}
+  \raggedleft\includegraphics[height=1.25cm]{logos/nexialog.png}
+\end{minipage}\par
+\vspace{1.0cm}
+\fi
+{\Large \textsc{ENSAE Paris}\par}
+\vspace{0.25cm}
+{\normalsize \textsc{\sfems}\par}
+{\normalsize \textsc{Rapport de stage de fin d'études}\par}
+{\normalsize \textsc{Année scolaire \sfeannee}\par}
+
+\vspace{2.2cm}
+
+{\LARGE \bfseries Quantification du SCR lié\par}
+\vspace{0.25cm}
+{\LARGE \bfseries à la non-conformité au règlement DORA\par}
+\mentionconf
+
+\vspace{0.8cm}
+\rule{0.8\textwidth}{0.6pt}
+
+\vfill
+
+\begin{minipage}[t]{0.48\textwidth}
+  \raggedright
+  {\large \textbf{Auteur}\par}
+  \vspace{0.3cm}
+  {\large Kélian \textsc{Kaddouri}\par}
+  \vspace{0.7cm}
+  {\large \textbf{Entreprise}\par}
+  \vspace{0.3cm}
+  {\large \sfeentreprise\par}
+  {\large \sfeville\par}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \raggedleft
+  {\large \textbf{Encadrement}\par}
+  \vspace{0.3cm}
+  {\large Maître de stage : Hugo \textsc{Rapior}\par}
+  {\large Tutrice école : Caroline \textsc{Hillairet}\par}
+\end{minipage}
+
+\vspace{1.5cm}
+
+{\large \textsc{\sfedates}\par}
+\end{singlespace}
+\end{titlepage}
+\fi

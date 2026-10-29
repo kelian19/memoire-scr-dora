@@ -1,0 +1,55 @@
+126 — DÉPENDANCE ENTRE COÛTS D’UN MÊME INCIDENT, VERSION INSTITUT
+Montants en M EUR du périmètre financier étudié. Mêmes marges pour toutes les dépendances.
+Calcul par Fourier incliné ; pas 2 M EUR ; 65536 cases ; inclinaison 16.
+Pas doublé faute de portée pour : exposant_1.25 (4), exposant_1.5 (4).
+Aucune de ces constructions n’est validée par la donnée : la marge observée porte sur l’incident,
+la réutiliser comme marge de chaque composante est une hypothèse.
+Contrôle : le mélange à rho = 0 et à rho = 1 redonne l’additive et l’amplifiée aux seize configurations ;
+des blocs de taille un et cinq les redonnent aussi aux deux états de référence.
+Contrôle : avec K = 1, toutes les dépendances donnent le même capital, 4774.0.
+La perte annuelle moyenne ne dépend pas de la dépendance : 623.0 (conforme), 3862.0 (non conforme) ; seule la forme de la loi change.
+
+CHEMIN DE DÉPENDANCE : MÉLANGE DE COPULES (rho = probabilité du choc commun)
+  rho   conforme  non conforme     écart  rapport  interaction
+ 0.00     5944.0       19890.0   13946.0    3.346       4410.0
+ 0.10     6044.0       20766.0   14722.0    3.436       4738.0
+ 0.25     6192.0       22036.0   15844.0    3.559       5198.0
+ 0.50     6436.0       24046.0   17610.0    3.736       5904.0
+ 0.75     6674.0       25944.0   19270.0    3.887       6548.0
+ 0.90     6814.0       27036.0   20222.0    3.968       6908.0
+ 1.00     6908.0       27746.0   20838.0    4.017       7148.0
+
+CHEMIN DE DÉPENDANCE : BLOCS DE COMPOSANTES COMONOTONES, BLOCS INDÉPENDANTS
+ bloc   conforme  non conforme     écart  rapport  interaction
+    1     5944.0       19890.0   13946.0    3.346       4410.0
+    2     6666.0       23574.0   16908.0    3.536       5434.0
+    3     6872.0       25664.0   18792.0    3.735       6182.0
+    4     6906.0       27140.0   20234.0    3.930       6846.0
+    K     6908.0       27746.0   20838.0    4.017       7148.0
+
+AMPLIFICATION AU-DELÀ DE LA COMONOTONIE : exposant posé eta, K**eta fois un seul Y
+  eta   conforme  non conforme     écart  rapport  interaction
+    1     6908.0       27746.0   20838.0    4.017       7148.0
+ 1.25     7924.0       36980.0   29056.0    4.667      10544.0
+  1.5     9264.0       50004.0   40740.0    5.398      15416.0
+
+MONOTONIE SUR UNE GRILLE FINE DE rho (21 valeurs de 0 à 1, pas 0,05)
+  conforme      croissant en rho : oui ; plus forte baisse entre deux pas 0.000
+  non_conforme  croissant en rho : oui ; plus forte baisse entre deux pas 0.000
+  rapport       croissant en rho : oui ; plus forte baisse entre deux pas 0.000
+
+DÉCOMPOSITION DE LA DIFFÉRENCE ENTRE L’INCIDENT UNIQUE ET L’AMPLIFICATION POSÉE (M EUR)
+                incident unique  + nombre  + dépendance  + amplification 1,25   = total
+conforme                 4774.0    1170.0         964.0                1016.0    7924.0
+non_conforme            10720.0    9170.0        7856.0                9234.0   36980.0
+rapport entre états : incident unique 2.245, K indépendants 3.346, comonotonie 4.017, exposant 1,25 4.667.
+
+GRANDEURS CITÉES
+de l'indépendance à la comonotonie : conforme +16 %, non conforme +39 %, rapport entre états +20 %.
+part de la dépendance dans l'écart entre l'incident unique et la comonotonie : 45 % (conforme), 46 % (non conforme).
+rapport entre états à mi-chemin (rho 0,5) : 3.74 ; interaction entre canaux : +62 % de l'indépendance à la comonotonie.
+
+Limites : deux familles de dépendance parmi d’autres ; marges des composantes posées égales à celle de l’incident ;
+aucune dépendance n’est estimée sur la donnée, qui ne contient que le coût de l’incident complet ;
+le choc commun et les blocs sont des scénarios, et la monotonie en rho est un constat numérique, pas un théorème.
+Durée 1.7 s ; résultats agrégés : 126.json

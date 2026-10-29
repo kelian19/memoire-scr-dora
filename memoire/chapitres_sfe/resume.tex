@@ -1,0 +1,113 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : resume.
+% Copie a texte constant de 01_resume.tex.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+% Un \chapter* ne met pas le titre courant a jour : sans cette ligne, la seconde page du
+% resume portait << Remerciements >> en tete.
+\markboth{Résumé}{}
+
+% LONGUEUR CONTRAINTE PAR LE § 5.1.c DES RECOMMANDATIONS JURY : 150 A 250 MOTS, pour le
+% resume francais comme pour l'abstract anglais, ces deux textes servant a l'indexation sur
+% le site de l'Institut. Mesure du 23 septembre 2026 AVANT resserrage : 322 et 305 mots sur
+% le PDF, soit +29 % et +22 %. Ce qui a ete retire est du DETAIL, jamais un resultat ni une
+% reserve : le compte des sources qui echouent et le champ VERIS rempli une fois sur 10 591,
+% et le mecanisme de la decroissance de la charge avec la taille. Tous trois vivent dans la
+% note de synthese et dans l'executive summary, qui n'ont AUCUNE limite de longueur.
+% NE PAS REGROSSIR CES DEUX BLOCS : recompter sur le PDF apres toute retouche.
+% REECRITS LE 30 SEPTEMBRE 2026, 247 et 239 mots : la bande dite hors des deux etats, le
+% chiffre d'entite en majorant, la seule dependance gouvernance-incidents, le groupe de tete
+% des piliers, les deux canaux a bornes posees, et trois antitheses retirees. L'abstract
+% passe en romain, comme le resume francais.
+Le règlement européen DORA impose aux entités financières de maîtriser leurs risques
+informatiques. Nous chiffrons en capital le coût d'une non-conformité pour le risque opérationnel d'origine
+informatique de l'entité. Nous posons qu'une entité non conforme subit davantage d'incidents, les détecte plus tard et les voit se propager davantage. Les pénalités réglementaires et le risque de souscription cyber sont exclus.
+
+Le modèle associe le nombre annuel d'incidents, leur coût à queue lourde et leur propagation entre domaines de DORA. Le besoin de capital est le quantile à $99{,}5\,\%$ de la perte annuelle.
+
+Les montants suivants valent pour le périmètre financier étudié, non pour un assureur,
+et la borne haute explorée varie d'un facteur $41$ selon la sévérité et la fréquence : seuls
+l'écart entre les deux états et l'ordre des domaines les plus coûteux sont interprétés. Entre
+l'état conforme et l'état non conforme, posés, le besoin de capital passe de $6\,049$ à
+$20\,188$~M\euro, soit $3{,}34$ fois plus. Une entité de $15\,000$~M\euro{} de provisions se situe
+entre $131{,}5$ et $183{,}3$~M\euro, une extrapolation d'ordre de grandeur.
+
+Les sources examinées ne permettent pas de calibrer la propagation entre domaines.
+Nous calculons le capital aux $1\,024$ sommets de l'ensemble admissible, la partie
+symétrique étant posée à dire d'expert. Les valeurs y vont de $6\,858$ à $8\,697$~M\euro{}
+(largeur : $1\,839$~M\euro{}).
+
+Sur une grille discrète, connaître six directions de propagation réduit la plage de $32{,}7\,\%$ en moyenne ($22$ à $44\,\%$ selon la graine).
+
+\paragraph{Mots-clés.} Risque cyber ; DORA ; SCR ; Solvabilité II ; théorie des valeurs
+extrêmes ; cascade dirigée ; identification partielle ; bornes de capital ; inférence
+bayésienne ; valeur de l'information.
+
+% =====================================================================
+% LE PARAGRAPHE D'USAGE DE L'IA N'EST PLUS ICI DANS LA VERSION ENSAE (1er octobre 2026, nuit,
+% decision de Kelian). Sa place « a la fin du resume » vient du § 5.1.c des Recommandations Jury
+% de l'Institut des actuaires, qui vaut pour le jury de l'Institut : la version Institut garde ce
+% paragraphe. Les consignes MS du service des stages ne disent rien de l'IA. La declaration reste
+% complete en annexe C (ann:ia), et l'introduction l'appelle a la fin du paragraphe sur le stage :
+% les consignes MS veulent des annexes appelees depuis le corps, et ce paragraphe etait le seul
+% appel de l'annexe. Ne supprimer ni l'annexe ni la phrase de l'introduction ; audit_pdf.py ensae
+% controle les deux.
+% =====================================================================
+
+% << ABSTRACT >> EST UN TITRE, ET NON UNE AMORCE EN GRAS. La liste de controle
+% de l'ecole l'exige nommement : << le titre de votre resume francais est
+% Resume et le titre de votre resume en anglais est Abstract >>. Il portait
+% jusqu'au 28 septembre 2026 un simple  \textbf{Abstract.}  en tete de
+% paragraphe, qui n'est pas un titre et n'apparaissait pas au sommaire.
+%
+% ET LA PAGE NEUVE NE COUTE RIEN. La meme liste demande un resume d'UNE page au
+% plus dans chaque langue : le francais et l'anglais tenaient sur la meme page,
+% donc l'anglais aurait debordé sur la suivante des qu'on lui pose un titre. Les
+% deux blocs occupent desormais une page chacun, et le document n'en gagne
+% aucune, le paragraphe d'usage de l'IA occupant deja seul la seconde.
+% \chapter* ET NON \section* : le titre de l'abstract doit avoir le meme
+% rang que celui du resume francais, la liste de controle les citant cote a
+% cote. Un \chapter* ouvre sa page lui-meme, d'ou l'absence de \newpage.
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\markboth{Abstract}{}
+
+\begin{otherlanguage*}{english}
+The European DORA regulation requires financial entities to control their IT risks. We express in capital terms what non-compliance costs for the entity's own IT-related
+operational risk. We posit that a non-compliant entity suffers more incidents, detects them later and sees them spread more.
+Regulatory penalties and the cyber policies an insurer sells are not modelled. 
+
+The model combines the annual number of incidents, their cost (heavy-tailed law) and the spread from one DORA area to another. Capital need is the $99.5\,\%$ quantile of the annual loss.
+
+The amounts below are for the financial sample, not for one insurer, and
+the explored upper endpoint varies by a factor of $41$ across severity and frequency calibrations: only the gap
+between the two states and the order of the costliest areas are interpreted. Between the compliant
+and the non-compliant entity, posited states, capital need rises from $6\,049$ to
+$20\,188$~M\euro, a factor of $3.34$. An entity with $15\,000$~M\euro{} of provisions lies between
+$131.5$ and $183.3$~M\euro, an extrapolated order of magnitude.
+
+The available sources cannot calibrate propagation between areas. We compute
+capital at the $1\,024$ vertices of the admissible set, whose symmetric part is set by expert judgement. In this calibration the vertex values range from $6\,858$ to $8\,697$~M\euro{} (width:
+$1\,839$~M\euro{}).
+
+On a discrete grid, knowing six propagation directions narrows the range by $32.7\,\%$ on average ($22$ to $44\,\%$ across seeds).
+\end{otherlanguage*}
+
+% =====================================================================
+% SOMMAIRE AU NIVEAU DES SECTIONS, et non des sous-sections. Mesure du
+% 22 septembre 2026 : en listant les sous-sections il occupait SIX pages, sur un
+% document que Kelian veut imperativement sous 200. Rien n'est retire du
+% memoire, seule la profondeur du sommaire change ; les sous-sections gardent
+% leur numero et leur titre dans le corps.
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 28 39 33 43 68 92 66 89 91 100 30 55 65 117

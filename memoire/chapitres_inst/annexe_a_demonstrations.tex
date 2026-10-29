@@ -1,0 +1,209 @@
+﻿% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : annexe A, demonstrations.
+% Copie a texte constant de chapitres/15b_demonstrations_cascade.tex.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+%
+% PARTI AU SUPPLEMENT (S5) le 1er octobre 2026 au soir, pour tenir sous 100 pages ; REVENU EN
+% ANNEXE A le meme soir, demande de Kelian (« enrichissons le memoire et allons chercher les
+% 100 pages ») : c'est l'annexe A du plan cible de la mission. Le supplement passe a S1-S4. Les
+% demonstrations sont inchangees ; seule la section sur l'efficience de Shapley est reprise dans
+% le registre de la mission (sentence et justification retirees, intertitres en gras supprimes, renvoi
+% a « l'annexe des adaptations par pilier » corrige en supplement S1).
+% =====================================================================
+
+\chapter{Démonstrations du modèle de cascade}
+\label{ann:cascade}
+
+% HARNAIS-HORS-SCRIPT: chapitre de demonstrations de la cascade : memes constantes d'enonce ; les valeurs numeriques correspondantes sont verifiees au chapitre cascade, qui cite ses scripts.
+
+Les propriétés énoncées à la section~\ref{sec:formalisation} se démontrent avec les
+notations du chapitre~\ref{chap:cascade} : $P=\{1,\dots,5\}$, $W\in[0,1]^{P\times P}$
+avec $W_{jj}=0$, et la cascade indépendante de la définition~\ref{def:cascade}.
+
+\section*{Forme réduite et descendance espérée (proposition~\ref{prop:reduite})}
+
+\begin{proof}
+Par définition du produit matriciel, la somme sur les marches dirigées
+$a=v_0\to v_1\to\cdots\to v_n=k$ de $\prod_t W_{v_{t-1}v_t}$ vaut $(W^n)_{ak}$. La série
+$\sum_{n\ge0}W^n$ est la série de Neumann de $W$ ; elle converge vers $(I-W)^{-1}$ si et seulement si
+$\rho(W)<1$.
+
+Soit $\mathcal C_n(a,k)$ le nombre de chemins vivants de longueur $n$ de $a$ vers $k$, un chemin
+étant une marche sans pilier répété. Les arêtes d'un chemin sont distinctes, donc indépendantes, et
+un chemin est vivant avec probabilité $\prod_t W_{v_{t-1}v_t}$. Ce n'est pas le cas d'une marche qui
+repasse par une arête, celle-ci n'étant tirée qu'une fois. Les chemins formant une partie des
+marches, $\mathbb E\,\mathcal C_n(a,k)\le (W^n)_{ak}$. L'indicatrice $\mathbf 1\{k\in S_a\}$ vaut $1$
+dès qu'\emph{au moins un} chemin vivant relie $a$ à $k$, donc
+$\mathbf 1\{k\in S_a\}\le \sum_{n\ge0}\mathcal C_n(a,k)$ presque sûrement. En prenant l'espérance
+puis en sommant sur $k$,
+\[
+  \mathbb E\,|S_a|=\sum_k \mathbb P(k\in S_a)\le \sum_k\bigl((I-W)^{-1}\bigr)_{ak}
+  =\bigl[(I-W)^{-1}\mathbf 1\bigr]_a .
+\]
+L'inégalité est stricte dès que la série compte des marches qui répètent un pilier, ou deux
+chemins distincts vers un même pilier : l'écart mesure ces deux contributions.
+\end{proof}
+
+\section*{Sous-criticité par normalisation (proposition~\ref{prop:leontief})}
+
+\begin{proof}
+Par construction~\eqref{eq:norm}, $W=(g/s_{\max})\,T\ge 0$ et, pour toute ligne
+$j$, $\sum_k W_{jk}=(g/s_{\max})\sum_k t_{jk}\le (g/s_{\max})\,s_{\max}=g$, puisque
+$s_{\max}$ est la plus grande somme de ligne de $T$. Pour une matrice à
+coefficients positifs, le rayon spectral est majoré par toute norme d'opérateur subordonnée,
+en particulier la norme infinie, qui est le maximum des sommes de lignes :
+$\rho(W)\le\lVert W\rVert_\infty=\max_j\sum_k W_{jk}\le g\le 1$. Pour $g<1$, on a $\rho(W)<1$ et la
+série de Neumann converge donc
+et $(I-W)^{-1}=\sum_{n\ge0}W^n$ existe, à coefficients positifs. À la borne $g=1$ du domaine, cette
+majoration ne donne que $\rho(W)\le 1$ : la convergence tient alors par la valeur calculée de
+$\rho(W)$, strictement inférieure à $1$ (chapitre~\ref{chap:cascade}).
+\end{proof}
+
+\section*{Loi exacte de l'ensemble atteint (proposition~\ref{prop:loi})}
+
+\begin{proof}
+Fixons $A\ni a$. L'événement $\{S_a=A\}$ est l'intersection de deux événements portant sur des
+arêtes disjointes, donc indépendants. Selon (i), aucune arête ne relie $A$ à son complémentaire (sans
+quoi $S_a$ dépasserait $A$) ; selon (ii), $a$ atteint tout $A$ par les seules arêtes internes à $A$.
+L'événement (i) ne concerne que les arêtes $j\to k$ avec $j\in A$, $k\notin A$, chacune absente
+avec probabilité $1-W_{jk}$ indépendamment ; sa probabilité est $B(A)=\prod_{j\in A,k\notin A}(1-W_{jk})$.
+L'événement (ii) ne concerne que les arêtes internes à $A$ ; notons $R(A)$ sa probabilité.
+Par indépendance, $\mathbb P(S_a=A)=R(A)\,B(A)$.
+
+Pour $R(A)$, on partitionne selon le sous-ensemble $A'$ atteint par les arêtes internes. $A'$
+contient $a$, et il est \emph{propre} ($A'\subsetneq A$) si et seulement si $A$ n'est pas atteint
+tout entier. Sachant que les arêtes internes atteignent exactement $A'$, aucune arête ne va de $A'$
+vers $A\setminus A'$ : cet événement a pour probabilité
+$\prod_{j\in A',k\in A\setminus A'}(1-W_{jk})$ et il est indépendant de la réalisation interne à
+$A'$. On somme les probabilités de ces sous-ensembles propres, puis on passe au complémentaire :
+\[
+  R(A)=1-\sum_{\substack{A'\subsetneq A\\ a\in A'}} R(A')\!\!\prod_{j\in A',k\in A\setminus A'}\!\!(1-W_{jk}),
+\]
+avec $R(\{a\})=1$. La récursion sur les sous-ensembles emboîtés est finie et détermine $R$ de
+proche en proche.
+\end{proof}
+
+\section*{Monotonie stochastique (proposition~\ref{prop:mono})}
+
+\begin{proof}
+On construit un \emph{couplage}. Soit $(U_{jk})$ une famille de variables uniformes sur $[0,1]$
+indépendantes, commune aux deux matrices. Pour une matrice $M$, déclarons l'arête $j\to k$
+vivante si $U_{jk}<M_{jk}$ ; le graphe obtenu a la bonne loi (arête vivante avec probabilité
+$M_{jk}$). Si $W\le W'$ terme à terme, alors $U_{jk}<W_{jk}\Rightarrow U_{jk}<W'_{jk}$ : toute
+arête vivante sous $W$ l'est sous $W'$. Le graphe sous $W$ est donc un sous-graphe de celui sous
+$W'$, et l'accessibilité étant croissante par ajout d'arêtes, $S_a(W)\subseteq S_a(W')$ presque
+sûrement.
+
+Pour toute fonctionnelle $\varphi$ croissante pour l'inclusion,
+$\varphi(S_a(W))\le\varphi(S_a(W'))$ p.s., d'où la domination stochastique et la monotonie de
+l'espérance et des quantiles. Enfin, pour une perturbation antisymétrique $A$, l'entrée $W_{jk}$
+croît quand $W_{kj}$ décroît : les deux effets jouent en sens contraire sur $S_a$, la monotonie
+en $A_{jk}$ n'a plus lieu, et aucune monotonie coordonnée ne garantit l'optimum aux sommets du pavé $\{|A_{jk}|\le t\,S_{jk}\}$. Leur exploration exhaustive reste un contrôle numérique limité.
+\end{proof}
+
+\section*{Dépendance à l'ordre et co-occurrence (propositions~\ref{prop:ordre} et~\ref{prop:nonid})}
+
+\begin{proof}
+\emph{Ordre.} Pour une chaîne de deux piliers, $\ell(i,j)=\mathrm{ROOT}_i\,t_{ij}$ et
+$\ell(j,i)=\mathrm{ROOT}_j\,t_{ji}$ : l'invariance par permutation équivaut à
+$\mathrm{ROOT}_i\,t_{ij}=\mathrm{ROOT}_j\,t_{ji}$. Une invariance valable
+pour toute longueur l'impose en particulier aux chaînes de deux piliers, d'où la nécessité. Au-delà
+de deux piliers, la condition ne suffit pas : même avec $T$ symétrique et des poids
+d'amorce égaux, $\ell(1,2,3)$ et $\ell(1,3,2)$ diffèrent dès que
+$t_{12}t_{23}\neq t_{13}t_{32}$. Le barème donne
+$\mathrm{ROOT}_1\,t_{12}\neq\mathrm{ROOT}_2\,t_{21}$, donc l'ordre de la paire (P1, P2) change la vraisemblance. La différence des criticités arrondies se vérifie séparément dans l'exemple numérique ; elle ne découle pas en général d'une différence de vraisemblance.
+
+Un
+score additif est une fonction de l'ensemble. Une copule, échangeable ou non, décrit la loi jointe
+des indicatrices de défaillance, donc elle aussi une fonction de l'ensemble atteint et non de
+l'ordre d'atteinte. Aucun des deux ne reproduit cette dépendance.
+
+\emph{Co-occurrence.} La décomposition $W=\tfrac12(W+W^\top)+\tfrac12(W-W^\top)=S+A$ est
+unique car $S$ est symétrique, $A$ antisymétrique, et cette somme directe est celle des
+matrices en parties symétrique et antisymétrique.
+
+(i) Pour que $j$ et $k$ soient tous deux atteints depuis une amorce $a\notin\{j,k\}$, il faut au
+moins deux arêtes vivantes, événement de probabilité $O(\lVert W\rVert^2)$. Depuis l'amorce $j$,
+le pilier $k$ est atteint par l'arête directe avec la probabilité $W_{jk}$, et par tout autre
+chemin, de longueur au moins deux, avec une probabilité $O(\lVert W\rVert^2)$ ; symétriquement
+depuis l'amorce $k$. En sommant sous l'amorce uniforme, la probabilité de co-occurrence vaut
+$r\,(W_{jk}+W_{kj})+O(\lVert W\rVert^2)$, et le terme d'ordre un, $2r\,S_{jk}$, est le même pour
+$W$ et pour $W^\top$.
+
+(ii) Deux contre-exemples suffisent. Sous une amorce non uniforme de poids $r_a$, le terme
+d'ordre un devient $r_j W_{jk}+r_k W_{kj}$, qui change par transposition dès que $r_j\neq r_k$ et
+$W_{jk}\neq W_{kj}$. Sous l'amorce uniforme, prenons trois piliers avec $W_{12}=W_{13}=w>0$ et
+toutes les autres entrées nulles. Sous $W$, une amorce en $1$ touche $2$ et $3$ ensemble avec la
+probabilité $w^2$, si bien que la paire $\{2,3\}$ co-occurre avec la probabilité $r\,w^2>0$. Sous
+$W^\top$, les seules arêtes vont de $2$ et de $3$ vers $1$, et aucun sinistre ne touche $2$ et $3$
+ensemble. Les deux matrices ont la même partie symétrique : la co-occurrence d'ordre deux
+distingue la fourche du collisionneur, ce qui est la structure en V de l'identification des
+graphes causaux \citep{verma1990equivalence}.
+
+(iii) Un changement de signe de $A$ modifie la loi de l'ensemble atteint, donc la loi de la perte
+et le SCR en général ; la section~\ref{sec:verif-proprietes} en donne la mesure sur la matrice
+publiée.
+\end{proof}
+
+\section*{Efficience de la valeur de Shapley}
+\label{sec:ann-efficience-shapley}
+
+Le chapitre~\ref{chap:resultats} attribue le surcoût de capital aux piliers par la valeur de
+Shapley, dont les parts somment à cent. Cette somme est la propriété d'efficience
+\citep{Shapley1953}. Elle permet de présenter l'attribution comme une \emph{partition} du surcoût,
+et non comme une pondération arbitraire.
+
+\begin{proposition}[Efficience]
+\label{prop:efficience}
+Soit $v$ une fonction caractéristique sur $\{1,\dots,n\}$ avec $v(\emptyset)=0$, et
+\[
+  \varphi_i \;=\; \frac1n \sum_{u \subseteq \{1,\dots,n\}\setminus\{i\}} \binom{n-1}{|u|}^{-1}
+                  \bigl[v(u \cup \{i\}) - v(u)\bigr].
+\]
+Alors $\sum_{i=1}^{n} \varphi_i = v(\{1,\dots,n\})$.
+\end{proposition}
+
+\begin{proof}
+La démonstration repose entièrement sur la réécriture du poids. Pour $|u|=s$,
+\begin{equation}
+  \frac1n \binom{n-1}{s}^{-1} \;=\; \frac1n \cdot \frac{s!\,(n-1-s)!}{(n-1)!}
+  \;=\; \frac{s!\,(n-s-1)!}{n!},
+  \label{eq:poids-shapley}
+\end{equation}
+de sorte que $\varphi_i$ est exactement la moyenne, sur les $n!$ permutations de
+$\{1,\dots,n\}$, de la contribution marginale de $i$ à l'ensemble de ses prédécesseurs. En effet,
+un sous-ensemble $u$ de cardinal $s$ ne contenant pas $i$ est l'ensemble des prédécesseurs de $i$
+dans exactement $s!\,(n-s-1)!$ permutations : $s!$ ordres pour les éléments de $u$, puis
+$(n-s-1)!$ pour ceux qui suivent $i$. En notant $\Pi$ l'ensemble des permutations et $P_i(\pi)$
+les prédécesseurs de $i$ dans $\pi$,
+\[
+  \varphi_i \;=\; \frac{1}{n!} \sum_{\pi \in \Pi}
+              \bigl[v\bigl(P_i(\pi) \cup \{i\}\bigr) - v\bigl(P_i(\pi)\bigr)\bigr].
+\]
+Sommons alors sur $i$ \emph{à permutation fixée}. Si $\pi = (\pi(1),\dots,\pi(n))$, posons $S_0=\emptyset$ et $S_j=\{\pi(1),\dots,\pi(j)\}$ pour $1\le j\le n$. Ainsi $P_{\pi(j)}(\pi)=S_{j-1}$, et la somme des contributions marginales est télescopique :
+\[
+  \sum_{i=1}^{n} \bigl[v\bigl(P_i(\pi)\cup\{i\}\bigr)-v\bigl(P_i(\pi)\bigr)\bigr]
+  \;=\; \sum_{j=1}^{n} \bigl[v(S_j)-v(S_{j-1})\bigr]
+  \;=\; v(\{1,\dots,n\}) - v(\emptyset),
+\]
+et cette valeur ne dépend pas de $\pi$. En moyennant sur les $n!$ permutations,
+$\sum_i \varphi_i = v(\{1,\dots,n\})$, puisque $v(\emptyset)=0$.
+\end{proof}
+
+L'efficience fait de l'attribution une partition du surcoût, quels que soient l'interaction et son
+signe : rien n'est perdu ni compté deux fois. Elle ne fait pas de la part d'un joueur une
+prédiction de ce qu'on obtiendrait en l'écartant seul ; cette prédiction est la contribution
+marginale, qui ne somme pas au total. Le chapitre~\ref{chap:resultats} tient cette distinction
+entre les lectures d'un même canal, et l'annexe~\ref{chap:adaptations} donne l'identité correspondante pour
+chaque colonne. Une part de Shapley est donc une convention d'attribution, pas un budget de
+remédiation : deux des quatre canaux du modèle sont bornés et non calibrés.
+
+La réécriture~\eqref{eq:poids-shapley} rend aussi le calcul praticable : elle ramène l'évaluation à
+une moyenne sur les permutations, forme sur laquelle reposent les algorithmes d'approximation en
+temps polynomial \citep{CastroGomezTejada2009, SongNelsonStaum2016}, nécessaires quand la dimension
+croît. Avec cinq piliers, les $5!$ permutations et les $2^5$ valeurs de $v$ sont énumérées en
+entier : les valeurs publiées sont exactes au bruit de simulation de $v$ près, sans erreur
+d'approximation combinatoire.

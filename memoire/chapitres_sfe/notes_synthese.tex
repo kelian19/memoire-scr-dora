@@ -1,0 +1,199 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 4, 1er octobre 2026) : notes de synthese.
+% Consignes MS 2025-2026 du service des stages : deux notes autonomes, francaise puis
+% anglaise, d'une a deux pages chacune, en fin de fichier. La version de quatre pages
+% chacune, avec la figure LUCY et la figure N1, reste celle de la version Institut
+% (chapitres/20_notes_synthese.tex) et l'historique Git de ce fichier.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex.
+%
+% Chaque nombre est une valeur publiee dans le corps ; la note n'en calcule aucun. Elle cite
+% ses scripts comme une section, pour rester sous harnais.
+% =====================================================================
+
+\providecommand*{\notesec}[1]{\par\smallskip\noindent{\bfseries #1}\par}
+
+\chapter*{Note de synthèse}
+\addcontentsline{toc}{chapter}{Note de synthèse}
+\markboth{Note de synthèse}{}
+
+% SOURCES-SCRIPTS: 28 30 43 48 60 63 67 68 74 91 92 95 110 08b 89 99 65 66 76 38
+
+\notesec{Contexte et objectif}
+Depuis janvier 2025, le règlement européen DORA impose aux banques et aux assureurs de maîtriser
+cinq domaines de résilience numérique, que nous appelons piliers : la gouvernance du risque
+informatique (P1), la gestion des incidents (P2), les tests (P3), les prestataires tiers (P4) et le
+partage d'informations (P5). Le règlement et Solvabilité~II ne disent pas ce que coûte une non-conformité : la charge de risque opérationnel de la Formule Standard est la même, qu'une entité soit conforme ou non. Dans ce stage, mené chez Nexialog
+Consulting sous la direction de Hugo Rapior, nous chiffrons en capital l'écart entre ces deux
+situations.
+
+Le risque mesuré est le risque opérationnel d'origine informatique de l'entité. Les pénalités réglementaires et le risque de souscription des polices cyber
+qu'un assureur vend ne sont pas modélisés. Nous répartissons l'écart entre les cinq piliers et entre
+quatre paramètres du modèle que la non-conformité modifie, que nous appelons canaux : la fréquence
+des incidents, leur détection, leur propagation d'un pilier à l'autre et la dépendance à un
+prestataire commun. Le résultat est un besoin de capital au sens de l'ORSA (évaluation interne des risques), non un SCR réglementaire.
+
+Les montants sont en millions d'euros et valent pour le périmètre financier étudié ($21{,}6$ incidents par an), non pour un assureur ; l'ordre de grandeur d'une entité de $15\,000$~M\euro{} de provisions figure avec les résultats.
+Le niveau change d'un facteur $22$ selon la seule source de sévérité : nous interprétons l'écart
+entre les deux états et l'ordre des piliers, pas le niveau.
+
+\notesec{Démarche}
+La base SAS OpRisk Global fournit $582$ pertes informatiques d'institutions financières. La fréquence conserve un dénominateur conventionnel de $27$ ans, à réconcilier avec les événements antérieurs à 2000. Une loi de Pareto généralisée, ajustée au-delà de $20{,}03$~M\euro{} sur $91$ excès, décrit les
+pertes élevées (indice de queue $0{,}5954$). Le nombre annuel d'incidents suit une loi binomiale négative. Un incident naît sur
+un pilier, puis se transmet aux autres selon une matrice d'influence dirigée, posée à dire d'expert
+puis bornée.  Le
+capital est le quantile à $99{,}5\,\%$ de la charge annuelle, calculé dans chaque état.
+
+La non-conformité n'ajoute pas de pénalité : elle change la valeur de quatre paramètres. La fréquence est multipliée par $2{,}49$ : les parts des vecteurs d'attaque de la base
+Hackmageddon sont pondérées par des surcroîts d'incidents tirés de résultats publiés.
+La détection agit sur chaque pilier touché. Nous multiplions sa probabilité de sévérité supérieure à
+$20{,}03$~M\euro{} par $0{,}85$ à l'état conforme et par $1{,}20$ à l'état non conforme.
+La probabilité obtenue est de $0{,}128$ contre $0{,}181$ par pilier touché.
+
+Le gain de la cascade, nombre de piliers
+que le pilier le plus contagieux touche directement, vaut $0{,}45$ à l'état conforme et $0{,}90$ à
+l'état non conforme. L'accumulation chez un prestataire commun passe de $0$ à
+$0{,}68$, valeur fixée d'après un indicateur de concentration des fournisseurs de cloud.
+
+Ces écarts entre états sont posés. Cinq correspondances état--gain donnent le même classement. La fréquence est testée de $41{,}7$ à $65{,}6$ incidents/an. L'accumulation fait varier le capital de $7\,694$ à $10\,096$~M\euro{} entre $0$ et $0{,}68$. Les multiplicateurs de détection ne sont pas balayés ; seule l'élasticité au taux de dépassement, $0{,}82$, est mesurée.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}l l r r r r@{}}
+\toprule
+\textbf{Canal} & \textbf{Paramètre} & \textbf{Conforme} & \textbf{Non conforme} &
+\textbf{Effet isolé} & \textbf{Effet de fermeture} \\
+\midrule
+Fréquence & incidents par an & $21{,}6$ & $53{,}6$ & $4\,328$ & $8\,775$ \\
+Détection & dépassement par pilier & $0{,}128$ & $0{,}181$ & $1\,448$ & $4\,562$ \\
+Propagation & gain de la cascade & $0{,}45$ & $0{,}90$ & $1\,633$ & $2\,402$ \\
+Accumulation & prestataire commun & $0$ & $0{,}68$ & $1\,728$ & $3\,402$ \\
+\midrule
+\multicolumn{2}{@{}l}{\textbf{Besoin de capital} (M\euro)} & $6\,049$ & $20\,188$ & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\notesec{Résultats}
+À l'échelle du périmètre financier étudié, le besoin de capital est multiplié par $3{,}34$ entre
+l'entité conforme et l'entité non conforme sur les quatre canaux, soit un écart de $14\,139$~M\euro.
+Les canaux pris un à un en expliquent $9\,138$~M\euro, et leurs interactions $5\,001$~M\euro, soit
+$35\,\%$. L'effet isolé est le capital ajouté par un canal seul, depuis l'état conforme. L'effet de
+fermeture est le capital retiré en corrigeant ce canal seul, depuis l'état non conforme sur les trois
+autres : un plan de remédiation doit citer ce second effet.
+
+La fréquence seule (le nombre d'incidents informatiques) porte le capital
+à $10\,377$~M\euro, alors que les trois autres canaux réunis n'atteignent que $11\,413$~M\euro. Les données publiques ne disent pas quel pilier entraîne l'autre : nous calculons le capital aux
+$1\,024$ sommets de l'ensemble des matrices d'influence admissibles, la structure symétrique étant
+posée à dire d'expert. Dans le calage de référence (fréquence conforme, gain $0{,}90$), les valeurs aux sommets vont de $6\,858$ à
+$8\,697$~M\euro.  Pour une entité notionnelle de $15\,000$~M\euro{} de provisions, le capital du secteur est
+ramené à sa taille : le besoin est de l'ordre de $169$~M\euro, une extrapolation d'ordre de grandeur. Ces valeurs dépendent de la structure posée à dire d'expert et de la calibration.
+
+\notesec{Limites et recommandations}
+La propagation et l'accumulation sont posées. Pour la propagation, les correspondances testées conservent le signe de l'écart ; son amplitude dépend de ces choix. L'hypothèse la plus lourde est que les coûts des
+piliers touchés par un même incident s'additionnent.
+
+Le choix de la loi binomiale négative s'appuie sur un test du rapport de vraisemblance, qui rejette
+la loi de Poisson (statistique de $130{,}5$). Un backtest sur $2004$--$2025$ place ensuite $11$
+années sur $12$ dans l'intervalle à $90\,\%$ de la loi binomiale négative, contre $9$ sur $12$ pour
+Poisson, ce qui conforte le choix sans le démontrer sur douze années. Le backtest détecte aussi une dérive de l'échelle des pertes, qui rend le niveau publié plutôt trop bas. Le quantile à $99{,}5\,\%$ ne peut être testé sur aucun historique existant : il faudrait $1\,811$ années.
+
+Pour l'entité, la priorité est de maîtriser la fréquence de ses incidents informatiques, et de chiffrer toute remédiation par son effet de fermeture. Pour le
+régulateur, un registre d'incidents daté, classé par domaine de contrôle et consignant tous les
+piliers touchés rendrait la direction de la propagation mesurable. VERIS prévoit déjà ces champs ; ils sont renseignés ensemble dans un incident sur $10\,591$.
+
+% =====================================================================
+
+\chapter*{Executive summary}
+\addcontentsline{toc}{chapter}{Executive summary}
+\markboth{Executive summary}{}
+
+% SOURCES-SCRIPTS: 28 30 43 48 60 63 67 68 74 91 92 95 110 08b 89 99 65 66 76 38
+
+\begin{otherlanguage*}{english}
+\notesec{Context and objective}
+Since January 2025, the European DORA regulation has required banks and insurers to master five
+areas of digital operational resilience, which we call pillars: IT risk governance (P1), incident
+management (P2), testing (P3), third-party providers (P4) and information sharing (P5). The
+regulation does not say what non-compliance costs, and neither does Solvency~II: the Standard
+Formula operational risk charge is the same for a compliant entity and for one that is not. In this
+internship, carried out at Nexialog Consulting under the supervision of Hugo Rapior, we express in
+capital terms the gap between these two situations.
+
+The risk measured is the entity's own IT-related operational risk, that is its own incidents.
+Regulatory penalties and the underwriting risk of the cyber policies an insurer sells are not
+modelled. We split the gap across the five pillars and across four model parameters that
+non-compliance changes, which we call channels: incident frequency, detection, propagation from one
+pillar to another, and dependence on a shared provider. The result is a capital need in the ORSA
+sense, the internal assessment of risks and solvency. It is not a regulatory SCR.
+
+The amounts are in millions of euros and are for the financial sample taken as a whole
+($21.6$ incidents a year in the loss database), not for one insurer; the order of magnitude for an
+entity with $15\,000$~M\euro{} of provisions is given with the results. The level changes by a factor of $22$ with the severity source alone: we interpret the gap
+between the two states and the ordering of pillars, not the level.
+
+\notesec{Approach}
+SAS OpRisk Global provides $582$ IT losses at financial institutions. Frequency retains a conventional $27$-year denominator, which requires reconciliation with events before 2000. A generalised Pareto distribution, fitted above $20.03$~M\euro{} on $91$ exceedances, describes
+the high losses (tail index $0.5954$). The annual
+incident count is negative binomial. An incident starts in one pillar, then spreads to the others
+through a directed influence matrix, posited by expert judgement and then bounded.  Capital is the $99.5\,\%$ quantile
+of the annual loss, computed in each state.
+
+Non-compliance does not add a penalty: it changes the value of four parameters. Frequency is multiplied by $2.49$: the attack-vector shares of the Hackmageddon database are
+weighted by excess incident rates taken from published results. Detection acts on each affected pillar.
+We multiply its probability of a severity above $20.03$~M\euro{} by $0.85$ in the compliant state and by $1.20$ in the non-compliant state.
+This gives $0.128$ against $0.181$ per affected pillar.
+
+The cascade gain, the number of pillars directly hit by the most contagious
+pillar, is $0.45$ in the compliant state and $0.90$ in the non-compliant one.
+Accumulation at a shared provider goes from $0$ to $0.68$, a value set from a cloud-provider
+concentration indicator.
+
+These differences between states are posited. Five state--gain mappings preserve the ranking. Frequency is tested from $41.7$ to $65.6$ incidents/year. Accumulation takes capital from $7\,694$ to $10\,096$~M\euro{} between $0$ and $0.68$. Detection multipliers are not swept; only the elasticity to the exceedance rate, $0.82$, is measured.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}l l r r r r@{}}
+\toprule
+\textbf{Channel} & \textbf{Parameter} & \textbf{Compliant} & \textbf{Non-compliant} &
+\textbf{Standalone} & \textbf{Closure} \\
+\midrule
+Frequency & incidents per year & $21.6$ & $53.6$ & $4\,328$ & $8\,775$ \\
+Detection & exceedance per pillar & $0.128$ & $0.181$ & $1\,448$ & $4\,562$ \\
+Propagation & cascade gain & $0.45$ & $0.90$ & $1\,633$ & $2\,402$ \\
+Accumulation & shared provider & $0$ & $0.68$ & $1\,728$ & $3\,402$ \\
+\midrule
+\multicolumn{2}{@{}l}{\textbf{Capital need} (M\euro)} & $6\,049$ & $20\,188$ & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\notesec{Results}
+At the scale of the financial sample, capital need is multiplied by $3.34$ between the
+compliant entity and the entity that is non-compliant on all four channels, a gap of $14\,139$~M\euro.
+The channels taken one by one explain $9\,138$~M\euro, and their interactions $5\,001$~M\euro, or
+$35\,\%$. The standalone effect is the capital added by one channel alone, from the compliant state. The
+closure effect is the capital removed by fixing that channel alone, from the state that is
+non-compliant on the other three: a remediation plan should quote the second.
+
+Frequency alone, that is the number of IT incidents at the entity, takes capital to
+$10\,377$~M\euro, while the three other channels together reach only $11\,413$~M\euro. Public data do not say which pillar drives the other: we compute capital at the $1\,024$
+vertices of the set of admissible influence matrices, the symmetric structure being set by expert
+judgement. In the reference calibration (compliant-state frequency, gain $0.90$),
+the vertex values range from $6\,858$ to $8\,697$~M\euro.  For a notional entity with $15\,000$~M\euro{} of provisions, sector capital is scaled down to its
+size: the need is about $169$~M\euro, an extrapolated order of magnitude. These values depend on the structure set by expert judgement and on the calibration.
+
+\notesec{Limitations and recommendations}
+Propagation and accumulation are posited. For propagation, the tested mappings preserve the sign of the gap; its size depends on these choices. The heaviest assumption is that the costs of the pillars hit
+by one incident add up.
+
+The choice of the negative binomial rests on a likelihood ratio test that rejects the Poisson
+distribution (statistic of $130.5$). A backtest over $2004$--$2025$ then places $11$ years out of
+$12$ inside the $90\,\%$ interval of the negative binomial, against $9$ out of $12$ for the Poisson.
+This supports the choice without proving it over twelve years. The backtest also detects a drift in loss scale, which makes the published level probably too low. The $99.5\,\%$ quantile cannot be tested on any existing history: it would take $1\,811$ years.
+
+For the entity, the priority is to control the number of IT incidents, that is the frequency of its
+operational risk, and to cost any remediation by its closure effect. For the regulator, a dated
+incident register, classified by control domain and recording every pillar hit, would make the
+direction of propagation measurable. VERIS already provides these fields; they are filled in together in only one incident out of
+$10\,591$.
+\end{otherlanguage*}

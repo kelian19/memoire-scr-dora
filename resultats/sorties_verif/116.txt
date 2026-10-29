@@ -1,0 +1,84 @@
+
+====================================================================================
+116 : valeur de l'information sur l'ensemble contraint par les signes
+====================================================================================
+Meme moteur, meme graine, memes 40 000 annees que le script 55. Un sens connu laisse le
+coefficient dans [0, S] du cote du signe : on enumere les coins 0 et maximum ; un sens
+inconnu garde les coins -S et +S, comme dans le 55.
+
+  controle : les trois bandes du 55 et ses 16 sommets sont retrouves a l'unite.
+
+====================================================================================
+1. Six sens connus : sommets filtres (55) contre ensemble contraint
+====================================================================================
+  paires de sens connu : P1-P3, P1-P4, P1-P5, P2-P3, P2-P4, P3-P5
+  ensemble                                   bande (M EUR)   largeur  configurations  resserrement
+  ignorance totale                           [6858 ; 8697]      1839            1024          0.0 %
+  six sens, sommets filtres (55)             [7801 ; 8431]       630              16         65.7 %
+  six sens, ensemble contraint               [7611 ; 8632]      1021            1024         44.5 %
+  dix sens, ensemble contraint               [7768 ; 8424]       656            1024         64.3 %
+
+  Le resserrement publie (66 %) tombe a 44.5 % une fois l'amplitude laissee libre.
+  Les ensembles sont desormais emboites : six sens (1021 M) puis dix sens (656 M).
+
+====================================================================================
+2. Bruit de simulation du resserrement corrige (quatre graines)
+====================================================================================
+  graine 20260721 : totale 1839 M, six sens 1021 M, resserrement 44.5 %
+  graine 20260722 : totale 1871 M, six sens 1218 M, resserrement 34.9 %
+  graine 20260723 : totale 1461 M, six sens 1120 M, resserrement 23.3 %
+  graine 20260724 : totale 1787 M, six sens 1440 M, resserrement 19.4 %
+  resserrement : moyenne 30.5 %, ecart-type 11.4 point, etendue [19.4 ; 44.5]
+  largeur de la bande totale : de 1461 a 1871 M selon la graine (ecart-type 189 M).
+  La graine du 55 donne le resserrement le plus fort des quatre. A 40 000 annees, la largeur
+  d'une bande de quantiles extremes porte un bruit du meme ordre que l'effet mesure : le
+  resserrement se cite en moyenne avec son etendue, jamais a la seule graine de reference.
+
+====================================================================================
+3. Quelle dependance documenter en priorite ? (ensemble contraint, quatre graines)
+====================================================================================
+  Pour chaque paire, son seul sens est connu (post-mortem s'il existe, classeur sinon) :
+  son coefficient vit dans [0, S] du cote du signe, les neuf autres restent libres.
+
+  paire     moyenne           etendue  graine du 55   source du signe
+  P1-P2       12.0 %      [7.4 ; 18.5]         18.5 %   classeur
+  P4-P5       11.0 %      [4.6 ; 17.0]         17.0 %   classeur
+  P1-P5       10.8 %      [0.7 ; 16.7]         16.7 %   post-mortem
+  P1-P3       10.1 %      [6.6 ; 16.5]          6.6 %   post-mortem
+  P2-P4        8.1 %     [-0.6 ; 15.5]         15.5 %   post-mortem
+  P2-P3        2.7 %     [-4.1 ; 12.5]         12.5 %   post-mortem
+  P2-P5        2.5 %      [-1.2 ; 7.4]          7.4 %   classeur
+  P3-P4        2.4 %       [0.0 ; 7.7]          0.0 %   classeur
+  P3-P5        1.3 %      [-3.3 ; 5.5]          1.1 %   post-mortem
+  P1-P4        1.2 %      [-1.4 ; 5.3]          5.3 %   post-mortem
+
+  Rangs de P1-P2 sur les quatre graines : [1, 3, 3, 3] ; de P4-P5 : [2, 2, 4, 5].
+  Paire(s) sans aucune valeur sur les quatre graines : aucune.
+  Les etendues des paires de tete se recouvrent : leur ordre n'est pas resolu. Ce qui
+  tient est la separation entre les paires de tete et celles qui ne levent presque rien.
+
+====================================================================================
+LECTURE
+====================================================================================
+  La connaissance du sens de six dependances reduit la bande de 31 % en moyenne,
+  de 19 a 44 % selon la graine, et non de 66 %.
+  C'est un ordre de grandeur conditionnel : au S d'expert maintenu, a la convention des
+  coins, et sans rien dire de ce qu'un registre futur etablirait vraiment.
+
+====================================================================================
+GRANDEURS CITEES (sans separateur de milliers, pour le harnais)
+====================================================================================
+  bande six sens contraint 7611 8632 largeur 1021
+  resserrement corrige 44.5 publie 55 65.7
+  bruit resserrement moyenne 30.5 ecart-type 11.4 minimum 19.4 maximum 44.5
+  largeur totale selon la graine minimum 1461 maximum 1871
+  paire P1-P2 moyenne 12.0 minimum 7.4 maximum 18.5 graine55 18.5
+  paire P4-P5 moyenne 11.0 minimum 4.6 maximum 17.0 graine55 17.0
+  paire P1-P5 moyenne 10.8 minimum 0.7 maximum 16.7 graine55 16.7
+  paire P1-P3 moyenne 10.1 minimum 6.6 maximum 16.5 graine55 6.6
+  paire P2-P4 moyenne 8.1 minimum -0.6 maximum 15.5 graine55 15.5
+  paire P2-P3 moyenne 2.7 minimum -4.1 maximum 12.5 graine55 12.5
+  paire P2-P5 moyenne 2.5 minimum -1.2 maximum 7.4 graine55 7.4
+  paire P3-P4 moyenne 2.4 minimum 0.0 maximum 7.7 graine55 0.0
+  paire P3-P5 moyenne 1.3 minimum -3.3 maximum 5.5 graine55 1.1
+  paire P1-P4 moyenne 1.2 minimum -1.4 maximum 5.3 graine55 5.3

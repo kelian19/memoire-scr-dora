@@ -1,0 +1,84 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : glossaire.
+% Copie a texte constant de 00_glossaire.tex.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+% =====================================================================
+% GLOSSAIRE DES SIGLES
+%
+% PIÈCE PROPRE À LA VERSION ENSAE, placée en tête avant les notes de synthèse, sur
+% le modèle du mémoire de F. Dountio (ENSAE, 2026). La table des notations
+% mathématiques reste en annexe : ce glossaire ne porte que les sigles et les
+% termes qu'un lecteur non spécialiste rencontre dès les notes de synthèse.
+% =====================================================================
+
+\chapter*{Glossaire}
+\addcontentsline{toc}{chapter}{Glossaire}
+\markboth{Glossaire}{}
+
+% HARNAIS-HORS-SECTION: glossaire de sigles ; les seuls nombres sont des numeros
+% de pilier, un numero de reglement et un niveau de quantile reglementaire.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.05}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{12.2cm}@{}}
+\toprule
+\textbf{Sigle ou terme} & \textbf{Signification} \\
+\midrule
+\endhead
+AMRAE & Association pour le management des risques et des assurances de l'entreprise, qui publie l'étude LUCY \\
+AMDEC / RPN & Analyse des modes de défaillance, de leurs effets et de leur criticité ; indice de priorité obtenu en multipliant gravité, occurrence et détection \\
+Bootstrap & Réestimation sur des échantillons tirés avec remise ; paramétrique si les nouvelles observations sont simulées sous la loi ajustée \\
+Bonferroni & Correction qui divise le seuil d'un test par le nombre de comparaisons menées simultanément \\
+BSCR & \emph{Basic Solvency Capital Requirement}, capital de solvabilité de base de la Formule Standard \\
+Calibration & Estimation des paramètres sur les observations ; une valeur posée est une hypothèse de scénario \\
+Cascade & Propagation d'une défaillance entre piliers ; l'amorce est le premier pilier atteint \\
+Copule / marge & La marge est la loi d'une variable seule ; la copule décrit comment plusieurs marges forment une loi jointe \\
+Crédibilité & Un intervalle de crédibilité contient le paramètre avec la probabilité annoncée sous la loi a posteriori, qui met à jour la loi a priori par les observations ; la loi bêta, sur $[0,1]$, a deux paramètres de forme \\
+Downscaling & Descente à l'échelle d'une entité : adaptation de la fréquence et des pertes à ses actifs, puis recalcul du quantile annuel \\
+DORA & \emph{Digital Operational Resilience Act}, règlement (UE) 2022/2554 sur la résilience opérationnelle numérique du secteur financier \\
+Effet de fermeture & Capital retiré en corrigeant un seul canal à partir de l'état non conforme \\
+Effet isolé & Capital ajouté par un seul canal à partir de l'état conforme \\
+État absorbant & État qu'une chaîne de Markov ne quitte plus une fois atteint \\
+Fisher & L'information de Fisher est la courbure moyenne de la log-vraisemblance ; son inverse approche la variance de l'estimateur du maximum de vraisemblance \\
+Frobenius & Le produit de Frobenius de deux matrices somme les produits de leurs entrées de même position \\
+GPD & \emph{Generalized Pareto Distribution}, loi de Pareto généralisée, loi des excès au-dessus d'un seuil élevé \\
+GEV & \emph{Generalized Extreme Value}, famille limite des maxima de blocs \\
+Hackmageddon & Recensement public d'incidents cyber, utilisé pour la répartition par vecteur d'attaque \\
+IC & Intervalle de confiance d'un paramètre ; son niveau est la couverture obtenue en répétant le protocole. Un intervalle de prévision porte sur une réalisation future \\
+Identification partielle & Caractérisation de valeurs admissibles sous des observations et des hypothèses. Ici, la force des liens reste posée et le capital est exploré aux sommets \\
+Indicatrice & $\mathbf 1\{E\}$ vaut un si l'événement $E$ se produit, zéro sinon \\
+KS / AD & Tests de Kolmogorov--Smirnov et d'Anderson--Darling, qui comparent une répartition observée à une loi ajustée : le premier retient le plus grand écart, le second pondère davantage les extrémités \\
+EMV / PWM & Maximum de vraisemblance ; moments pondérés par les probabilités de rang, deux méthodes d'estimation \\
+Log-score / nat & Logarithme de la probabilité, ou de la densité, attribuée à l'observation réalisée, plus élevé pour une meilleure prévision ; le nat est son unité en logarithme naturel \\
+Logit & $\mathrm{logit}(p)=\ln[p/(1-p)]$, qui envoie $]0,1[$ sur la droite réelle \\
+Markov & Propriété d'un processus dont l'état présent suffit à décrire les probabilités de transition futures \\
+LUCY & \emph{Lumière sur la cyberassurance}, étude annuelle du marché français de la cyberassurance \\
+MFA & \emph{Multi-Factor Authentication}, authentification multifacteur \\
+Monte-Carlo & Estimation par tirages pseudo-aléatoires ; une graine permet de reproduire les tirages \\
+$\mathcal N(0,1)$, $\Phi$ & Loi normale de moyenne nulle et de variance unité ; $\Phi$ est sa fonction de répartition, $\Phi^{-1}$ sa fonction quantile \\
+ORSA & \emph{Own Risk and Solvency Assessment}, évaluation interne des risques et de la solvabilité \\
+P1 à P5 & Les cinq piliers de DORA : gouvernance du risque TIC, gestion des incidents, tests de résilience, risque lié aux prestataires tiers, partage d'informations \\
+POT & \emph{Peaks Over Threshold}, méthode d'estimation de queue par les dépassements d'un seuil \\
+PD & Probabilité de défaut sur un horizon donné dans le modèle de crédit ; l'analogie cyber emploie un seuil latent d'incident majeur \\
+PRC & \emph{Privacy Rights Clearinghouse}, base publique de notifications de violations de données \\
+Probit ordonné & Classement en états par des seuils posés sur une variable normale non observée \\
+Puissance & Probabilité qu'un test détecte une déviation donnée \\
+p-value & Probabilité, sous la loi testée, d'une statistique au moins aussi défavorable que celle observée \\
+Rayon spectral & Plus grand module des valeurs propres d'une matrice \\
+SAS OpRisk Global & Base commerciale de pertes opérationnelles publiques, en montants \\
+SCR & \emph{Solvency Capital Requirement}, capital de solvabilité requis sous Solvabilité~II : VaR à 99,5\,\% de la variation des fonds propres de base sur un an ; le quantile de perte du mémoire en est un substitut ORSA \\
+SFCR & \emph{Solvency and Financial Condition Report}, rapport public sur la solvabilité et la situation financière \\
+Shapley & Règle d'attribution qui partage un écart entre plusieurs causes en moyennant leurs contributions sur tous les ordres d'introduction \\
+TIC & Technologies de l'information et de la communication \\
+Sévérité / queue & Montant d'une perte ; partie de la distribution correspondant aux pertes élevées \\
+TVaR & \emph{Tail Value-at-Risk}, moyenne de la perte au-delà de la VaR \\
+VaR & \emph{Value-at-Risk}, quantile de la loi de perte ; dans ce mémoire, réservée à la charge annuelle agrégée \\
+VERIS & \emph{Vocabulary for Event Recording and Incident Sharing}, schéma de description d'incidents ; VCDB en est la base communautaire \\
+\bottomrule
+\end{longtable}
+\end{center}

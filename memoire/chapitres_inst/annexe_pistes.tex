@@ -1,0 +1,110 @@
+% =====================================================================
+% PISTES POUR DE FUTURS MEMOIRES D'ACTUARIAT
+%
+% ANNEXE EXIGEE PAR L'INSTITUT DES ACTUAIRES. Le paragraphe 5.1.h des
+% Recommandations Jury applicables depuis le 1er avril 2026 impose deux
+% annexes, dont celle-ci : << Pistes eventuelles pour de futurs memoires
+% actuariels >>, qui << peuvent reprendre de facon non limitative des pistes
+% d'enrichissement du memoire presente mais aussi des axes d'etudes
+% abandonnees et n'ayant pas conduit a une impasse definitive >>, et qui
+% << constituent un legs a l'entreprise ayant accueilli l'etudiant mais aussi
+% un apport pour la communaute actuarielle >>.
+%
+% CREE LE 21 SEPTEMBRE 2026. Aucune piste inventee : chacune est un travail
+% deja instruit dans le memoire et laisse ouvert pour une raison ecrite. Les
+% grandeurs chiffrees reprises ici viennent toutes d'ailleurs dans le memoire et
+% citent le script qui les imprime : 66 % et 28,9 % du chapitre de la donnee
+% manquante, et les elasticites 0,95 / 0,39 / 2,42 du script 74.
+%
+% DEUX PISTES DE STRUCTURE AJOUTEES LE 23 SEPTEMBRE 2026, sur demande de Kelian.
+% Motif : sur les six pistes d'origine, CINQ demandaient de la donnee et une
+% seule etait une evolution de modelisation. L'annexe se lisait donc comme
+% << il manque des donnees a ce travail >>, ce qui est defensif. Les deux
+% ajoutees portent sur la STRUCTURE du modele, aux deux endroits ou il se sait
+% le plus contraint : l'additivite des couts et le perimetre d'une seule entite.
+% Elles sont placees en fin, l'annexe etant ordonnee du plus executable au plus
+% exploratoire, et l'encadre de cloture est mis a jour avec elles.
+% =====================================================================
+
+\chapter{Pistes pour de futurs mémoires d'actuariat}
+\label{ann:pistes}
+
+Les pistes suivantes prolongent des travaux préparés dans ce mémoire et restés ouverts.
+Elles vont de la mise en œuvre d'un protocole existant à la construction d'un nouveau modèle.
+
+\section{Exécuter l'élicitation structurée}
+
+L'annexe~\ref{ch:elicitation} décrit un protocole de Cooke complet, préparé et diffusé, resté sans
+réponse. Le questionnaire est rédigé ; son étalonnage comporte dix questions de graine, dont les
+valeurs vraies sont calculées et contrôlées. Il manque le panel. Un futur mémoire partirait d'un
+instrument prêt : il constituerait le panel, mesurerait la calibration des experts, pondérerait leurs
+avis, puis confronterait les poids obtenus aux directions que le corpus indique déjà.
+
+Les réponses aux questions de graine restent confidentielles afin de préserver l'étalonnage du questionnaire.
+
+\section{Documenter la dépendance entre gouvernance et gestion des incidents}
+
+La section~\ref{ch:livrable} hiérarchise les données manquantes par leur valeur d'information.
+Fixer le seul sens de la dépendance entre la gouvernance du risque TIC et la gestion des incidents
+lèverait $13{,}3\,\%$ de l'ambiguïté de capital en moyenne sur quatre graines, de $10{,}6$ à
+$18{,}5\,\%$. Fixer celui du lien entre tests et prestataires tiers n'en lèverait que $2{,}3\,\%$.
+Le corpus public ne couvre pas les deux dépendances les plus utiles. Un mémoire conduit chez un
+assureur disposant d'une chronologie interne d'incidents, horodatée et classée par domaine de
+contrôle, mesurerait de combien la bande se resserre réellement.
+
+% SOURCES-SCRIPTS: 55 117
+
+\section{Le second codage en aveugle du corpus}
+
+La direction des dépendances est codée par un seul lecteur, limite déclarée. La réception d'un
+second codage est outillée : le script d'accord ne produit rien sans le second jeu. Il dirait si la
+direction retenue tient à la lecture ou au texte.
+
+\section{Calibrer l'amplitude des liens, et non leur seul sens}
+
+Même avec les dix directions connues, une bande de capital subsisterait, imputable à l'amplitude des
+coefficients. Connaître le sens d'un lien ne donne pas sa force. Toute la valeur d'information
+mesurée ici, $32{,}7\,\%$ de resserrement en moyenne si l'on retenait le sens documenté par les
+rapports publics, porte sur la direction. Un mémoire qui estimerait les amplitudes, par exemple sur
+des séries d'incidents d'une même entité où la sévérité transmise est observable, traiterait la moitié
+du problème que celui-ci laisse intacte.
+
+% SOURCES-SCRIPTS: 66 55 117
+
+\section{Dérive d'échelle et passage à l'entité}
+
+Le backtest couvre la forme de la queue et la loi de fréquence, mais pas le niveau de la charge
+annuelle : une dérive est examinée, sans validation hors échantillon d'un modèle non stationnaire. Un mémoire sur
+la non-stationnarité de la sévérité cyber partirait de ce diagnostic chiffré. De même, le besoin de
+capital est ramené à l'entité par ses actifs et des lectures d'exposition, sans seuil de
+validité statistique démontré. Un mémoire conduit dans une entité, avec son exposition et son registre de
+prestataires, remplacerait cet ancrage par une mesure directe.
+
+\section{Le coût d'un sinistre multi-piliers}
+
+Lorsqu'un incident touche plusieurs piliers, le mémoire additionne leurs coûts. C'est la plus lourde
+des hypothèses qu'il ne teste pas ; il la relâche par un exposant sur le nombre de piliers touchés
+(\S\ref{sec:additivite-couts}). Sur la plage étudiée, l'écart reste positif et du même ordre de grandeur.
+Le sens du biais d'additivité reste inconnu : mutualiser la remédiation réduit les coûts,
+alors que saturer la capacité de réponse les augmente.
+
+Un modèle de coût
+à contrainte de capacité ferait du sens de l'effet une conséquence plutôt qu'un scénario. L'enjeu
+se mesure : élasticités de $0{,}95$ à l'état non conforme contre $0{,}39$ à l'état conforme, soit un
+facteur $2{,}42$, car l'exposant ne pèse que sur les sinistres multi-piliers. Il faudrait un registre
+interne donnant le coût de chaque incident et le nombre de domaines touchés.
+
+% SOURCES-SCRIPTS: 74
+
+\section{La contagion entre entités, par le prestataire partagé}
+
+La cascade court entre les cinq piliers d'une entité, non entre entités (chapitre~\ref{ch:positionnement}).
+Le canal d'accumulation est pourtant ancré sur ce que les entités \emph{partagent} : la concentration
+du marché de l'informatique en nuage et les prestataires critiques. Une cascade à deux étages, entre
+piliers puis entre entités, donnerait un besoin de capital de place. Le registre d'informations exigé
+par le règlement liste les prestataires de chaque entité : en croiser les registres donne un graphe de
+fournisseurs partagés \emph{observé}, sans identifier pour autant les probabilités de transmission. Mais l'énumération des sommets
+deviendrait impossible, et l'identification partielle devrait passer par une optimisation.
+
+
+% =====================================================================

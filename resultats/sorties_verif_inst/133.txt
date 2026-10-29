@@ -1,0 +1,55 @@
+133 — CODAGE DES 570 DESCRIPTIONS SAS EN PILIERS DORA
+570 descriptions (471 fraudes externes, 99 interruptions d’activité), dont les 50 du pilote.
+Codeur unique : assistant IA, grille fixée avant lecture, non validé par un second codeur.
+
+NIVEAU STRICT
+  fraude externe           : 471 incidents ; au moins un pilier 147 (31.2 %) ; au moins deux piliers  39 (8.3 %)
+  interruption d’activité  :  99 incidents ; au moins un pilier  98 (99.0 %) ; au moins deux piliers  26 (26.3 %)
+  ensemble                 : 570 incidents ; au moins un pilier 245 (43.0 %) ; au moins deux piliers  65 (11.4 %)
+  incidents touchant chaque pilier : P1 188 ; P2 72 ; P3 19 ; P4 43 ; P5 2
+  piliers par incident identifiable : moyenne 1.32
+  paire   observé  attendu  obs/att    phi   p Fisher
+  P1-P2      46     23.7     1.94  +0.250   0.0000
+  P1-P3      17      6.3     2.71  +0.223   0.0000
+  P1-P4      14     14.2     0.99  -0.003   1.0000
+  P1-P5       1      0.7     1.52  +0.021   0.5513
+  P2-P3       9      2.4     3.75  +0.194   0.0002
+  P2-P4       5      5.4     0.92  -0.009   1.0000
+  P2-P5       0      0.3     0.00  -0.023   1.0000
+  P3-P4       0      1.4     0.00  -0.053   0.3859
+  P3-P5       1      0.1    15.00  +0.154   0.0656
+  P4-P5       0      0.2     0.00  -0.017   1.0000
+  corrélation de rang avec S posée : co-occurrences brutes +0.67 ; phi +0.33 sur 10 paires ; paires jamais observées 3 ; paires à p Fisher < 0,05 : 3
+
+NIVEAU LARGE
+  fraude externe           : 471 incidents ; au moins un pilier 325 (69.0 %) ; au moins deux piliers 134 (28.5 %)
+  interruption d’activité  :  99 incidents ; au moins un pilier  98 (99.0 %) ; au moins deux piliers  69 (69.7 %)
+  ensemble                 : 570 incidents ; au moins un pilier 423 (74.2 %) ; au moins deux piliers 203 (35.6 %)
+  incidents touchant chaque pilier : P1 397 ; P2 112 ; P3 81 ; P4 82 ; P5 2
+  piliers par incident identifiable : moyenne 1.59
+  paire   observé  attendu  obs/att    phi   p Fisher
+  P1-P2     108     78.0     1.38  +0.288   0.0000
+  P1-P3      81     56.4     1.44  +0.269   0.0000
+  P1-P4      60     57.1     1.05  +0.031   0.5172
+  P1-P5       2      1.4     1.44  +0.039   1.0000
+  P2-P3      22     15.9     1.38  +0.077   0.0712
+  P2-P4      16     16.1     0.99  -0.001   1.0000
+  P2-P5       1      0.4     2.54  +0.045   0.3547
+  P3-P4      12     11.7     1.03  +0.005   0.8654
+  P3-P5       1      0.3     3.52  +0.061   0.2642
+  P4-P5       1      0.3     3.48  +0.060   0.2672
+  corrélation de rang avec S posée : co-occurrences brutes +0.75 ; phi +0.12 sur 10 paires ; paires jamais observées 0 ; paires à p Fisher < 0,05 : 2
+
+S POSÉE (dix paires) : P1-P2 0.173 ; P1-P3 0.173 ; P1-P4 0.156 ; P1-P5 0.087 ; P2-P3 0.156 ; P2-P4 0.190 ; P2-P5 0.138 ; P3-P4 0.104 ; P3-P5 0.087 ; P4-P5 0.104
+
+LECTURE DÉRIVÉE DES COMPTES
+  les co-occurrences brutes ordonnent surtout les paires par la fréquence de P1 ; la mesure qui
+  compare à S est phi, corrigée des marges. Son signe et son ordre ne valent que pour ce codage.
+
+Limites : un seul codeur, non humain ; descriptions de presse et de procédures, biais de narration ;
+le niveau large ajoute des défaillances supposées ; aucune direction n’est codée, donc A reste hors
+de portée ; la co-occurrence dans un texte n’est pas la co-occurrence de défaillances du modèle.
+
+GRANDEURS CITÉES
+  rho_strict_brut 0.67 rho_strict_phi 0.33
+  rho_large_brut 0.75 rho_large_phi 0.12

@@ -1,0 +1,47 @@
+% =============================================================================
+%  PREAMBULE COMMUN DES SCHEMAS DU SUPPORT DE SOUTENANCE (ENSAE, octobre 2026)
+%
+%  Les schemas sont des VISUELS DE DIAPOSITIVE, pas des figures de donnees : ils
+%  prennent donc la palette du gabarit de presentation Nexialog, recopiee de
+%  build_soutenance_ppt.py, et jamais celle de style_nexialog.py, qui reste la
+%  source unique des couleurs des figures du memoire.
+%
+%  AUCUN NOMBRE DE RESULTAT N'Y FIGURE. Un nombre dessine dans une image echappe
+%  au controle du support, qui verifie chaque nombre de texte contre le rapport.
+%  Les schemas portent des symboles et des equations, recopiees du rapport.
+%
+%  Polices : Segoe UI pour le texte, comme le corps du gabarit ; Latin Modern Math
+%  pour les formules, celle du rapport. Chaque schema se dessine A SA TAILLE FINALE
+%  sur la diapositive, si bien qu'un corps de 14 pt ici vaut 14 pt a l'ecran.
+% =============================================================================
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Segoe UI}
+\setsansfont{Segoe UI}
+\setmathfont{latinmodern-math.otf}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds,shapes.geometric,decorations.pathreplacing}
+
+\definecolor{ardoise}{HTML}{223E55}   % titres et aplats du gabarit
+\definecolor{profond}{HTML}{192E3F}
+\definecolor{acier}{HTML}{435B6E}
+\definecolor{encre}{HTML}{122738}     % texte courant
+\definecolor{gris}{HTML}{595959}      % texte secondaire
+\definecolor{accent}{HTML}{B10031}    % rouge de marque
+\definecolor{clair}{HTML}{F2F2F2}
+\definecolor{filet}{HTML}{D9D9D9}
+
+\newcommand{\corps}{\fontsize{14}{17}\selectfont}
+\newcommand{\petit}{\fontsize{12}{14.5}\selectfont}
+\newcommand{\grand}{\fontsize{16}{19}\selectfont}
+\tikzset{
+  >={Stealth[length=7pt,width=6pt]},
+  bloc/.style={draw=ardoise, line width=0.9pt, fill=white, rounded corners=3pt,
+               inner sep=6pt, align=center, text=encre, font=\corps},
+  bloc plein/.style={fill=ardoise, draw=ardoise, rounded corners=3pt, inner sep=6pt,
+               align=center, text=white, font=\corps\bfseries},
+  bloc accent/.style={fill=accent, draw=accent, rounded corners=3pt, inner sep=6pt,
+               align=center, text=white, font=\corps\bfseries},
+  fleche/.style={->, line width=1.3pt, draw=acier},
+  fleche accent/.style={->, line width=1.6pt, draw=accent},
+  legende/.style={font=\petit, text=gris, align=center},
+}

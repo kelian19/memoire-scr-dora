@@ -1,0 +1,169 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : supplement S3, questionnaire d'elicitation reproduit (ancien C.3).
+% Copie a texte constant de chapitres/18_elicitation_protocole.tex, lignes 97 a 252.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Contenu RETIRE de la version ENSAE et destine au supplement en ligne : aucun
+% fichier maitre ne le lit. Voir supplement/README.md.
+% =====================================================================
+
+% Declaration reprise telle quelle de chapitres/18_elicitation_protocole.tex (ligne 40),
+% qui couvrait ce questionnaire quand il vivait dans l'annexe :
+% HARNAIS-HORS-SCRIPT: les quantiles demandes a l'expert sont une propriete de CONCEPTION du
+% questionnaire, non une grandeur calculee : aucun script ne les imprime et aucun ne le devrait.
+
+%--------------------------------------------------------------
+\chapter{Questionnaire d'élicitation}
+\label{sec:questionnaire-reproduit}
+%--------------------------------------------------------------
+% LES VALEURS VRAIES DES GRAINES NE SONT PAS PUBLIEES ICI, ET C'EST DELIBERE : les imprimer
+% BRULERAIT l'instrument, un expert qui a lu le memoire ne pouvant plus etre note dessus. Le
+% script 105 les calcule, leur applique quatre controles et les imprime dans sa sortie de
+% travail ; si l'elicitation etait lancee apres publication, les graines se retirent du meme jeu
+% de donnees par ce meme script. Ce qui est cite ci-dessous est donc le seul nombre que
+% l'arbitrage de conception exige de montrer, la valeur du candidat ecarte.
+% SOURCES-SCRIPTS: 105
+
+Décrire un instrument ne suffit pas à établir qu'il existe. Il est donc reproduit ici dans la
+forme sous laquelle il aurait été soumis, de façon qu'un lecteur puisse juger sur pièce ce que
+la section précédente affirme, et le réutiliser si la décision était rouverte. Le formulaire
+complet, avec sa consigne, son exemple traité, sa mention d'usage et de conservation et son
+accord signé du répondant, est versionné à part dans le dépôt du mémoire ; la présente annexe en
+reprend les deux tables et l'essentiel de la consigne.
+
+\begin{attention}
+\textbf{L'instrument reproduit ici est la version révisée, et il diffère de l'exemplaire de
+travail.} Celui-ci portait une question d'étalonnage sur l'indice de queue de sévérité, retirée
+pour les deux motifs exposés plus haut. Elle n'est pas corrigée mais \emph{remplacée}, et le
+remplacement a lui-même été arbitré : un indice de Gini de la concentration avait d'abord été
+retenu, puis écarté parce qu'il fait doublon avec la question qui compte les incidents portant la
+moitié du volume, et parce qu'une valeur vraie de $0{,}97$ se devine sans rien connaître du
+dossier. La graine retenue porte sur la durée de confinement, qui est une performance de
+résilience et donc du même domaine que les cibles. L'exemplaire de travail ne doit pas
+être soumis en l'état.
+\end{attention}
+
+\paragraph{La règle que s'impose l'instrument, vérifiée graine par graine.} Une graine doit être une
+\emph{grandeur réalisée}, reproductible par une sortie de script versionnée, et jamais un
+paramètre estimé. Les dix graines retenues sont donc des comptages, des parts, des délais ou des
+quantiles observés : aucune ne demande d'ajuster un modèle. Un script les calcule et leur applique
+quatre contrôles, portant sur ce caractère réalisé, sur la non-dégénérescence de la valeur, sur le
+respect des bornes naturelles, et sur le pouvoir de séparation entre experts. Une seule graine est
+signalée comme potentiellement devinable, celle qui porte sur la part du piratage ; elle est
+conservée avec son motif : sa valeur vraie est nettement au-dessus de la réponse spontanée, si
+bien qu'elle sépare malgré son caractère extrême.
+
+\paragraph{Aucune graine ne porte une grandeur de capital, choix délibéré.} Un praticien de la
+résilience observe des incidents, des délais et des concentrations ; il n'observe pas un quantile
+de charge annuelle. Noter un expert sur une telle grandeur mesurerait sa familiarité avec le
+présent mémoire, non son jugement sur le risque.
+
+\section*{Consigne remise à l'expert}
+
+\begin{cle}
+\textbf{Comment répondre.} Pour chaque quantité, donnez trois nombres : une valeur \emph{basse}
+($5\,\%$), une valeur \emph{médiane} ($50\,\%$), une valeur \emph{haute} ($95\,\%$), telles que
+vous estimez à $90\,\%$ de chances que la vraie valeur soit comprise entre votre $5\,\%$ et votre
+$95\,\%$. Il n'y a pas de réponse attendue : donnez votre meilleure estimation \emph{et} votre
+incertitude. Répondez même incertain, un intervalle large étant une réponse honnête et
+parfaitement valable. Ne cherchez pas les vraies valeurs : l'objet est de mesurer votre jugement.
+\end{cle}
+
+\section*{Partie A, les dix questions d'étalonnage}
+
+Des quantités observées dans les bases du mémoire, dont la valeur vraie est connue de l'analyste
+et n'est pas affichée au répondant. Elles servent à pondérer les experts, non à les piéger. Les
+trois colonnes de droite sont vides dans les deux tables qui suivent : c'est l'espace de réponse
+du formulaire, non une donnée manquante.
+
+{\small
+\renewcommand{\arraystretch}{1.22}
+\begin{longtable}{@{}l p{8.0cm} c c c@{}}
+\toprule
+& \textbf{Quantité, sur les incidents notifiés de la chronologie} & $\mathbf{5\,\%}$ &
+$\mathbf{50\,\%}$ & $\mathbf{95\,\%}$ \\
+\midrule
+\endfirsthead
+\toprule
+& \textbf{Quantité (suite)} & $\mathbf{5\,\%}$ & $\mathbf{50\,\%}$ & $\mathbf{95\,\%}$ \\
+\midrule
+\endhead
+G1 & Délai médian entre la survenance d'un incident et sa déclaration, en jours & & & \\
+G2 & Part des incidents déclarés plus de quatre-vingt-dix jours après leur survenance,
+     en \% & & & \\
+G3 & Délai médian de déclaration d'un incident de type piratage, en jours & & & \\
+G4 & Durée médiane entre le début et la fin d'exposition d'un incident, en jours & & & \\
+G5 & Nombre médian d'enregistrements touchés par incident & & & \\
+G6 & Nombre d'incidents qui portent à eux seuls la moitié du volume touché
+     sur sept exercices & & & \\
+G7 & Part des incidents dont l'exposition a duré plus de trente jours, en \% & & & \\
+G8 & Part des incidents de type piratage parmi ceux dont le vecteur est renseigné,
+     en \% & & & \\
+G9 & Part des lignes de la chronologie qui sont des doublons de notification d'un même
+     incident, en \% & & & \\
+G10 & Rapport du quatre-vingt-dix-neuvième centile à la médiane des pertes cyber du
+      secteur financier & & & \\
+\bottomrule
+\end{longtable}}
+
+\vspace{2pt}
+\noindent\textbf{Ce que chaque graine cherche à mesurer.} G1 à G3 portent sur le \emph{délai de
+détection}, qui est le canal que la conformité déplace le plus directement. G4 et G7 portent sur
+le \emph{confinement}. G5, G6 et G10 portent sur la \emph{concentration} de la perte, c'est-à-dire
+sur l'intuition de queue lourde. G8 porte sur la structure des vecteurs et G9 sur la qualité de la
+donnée déclarative, dont un praticien de la notification a une expérience directe.
+
+\section*{Partie B, les six liens dirigés entre piliers}
+
+Force du lien dirigé de $j$ vers $k$, entre $0$ et $1$ : $0$ signifie qu'une défaillance du
+pilier $j$ n'entraîne jamais celle de $k$, $1$ qu'elle l'entraîne quasi certainement dans la
+foulée. Les trois mêmes quantiles sont demandés.
+
+\begin{attention}
+\textbf{Le sens des lettres n'est pas une coquette\-rie de notation.} La matrice du modèle
+s'écrit $W_{jk}$ avec $j$ la \emph{source} et $k$ la \emph{cible} : la ligne émet, la colonne
+reçoit, et deux scripts vérifient cette convention avant tout calcul. Un formulaire qui
+demanderait la force du lien \emph{de $k$ vers $j$} ferait donc saisir la matrice
+\emph{transposée}. Or c'est précisément entre une matrice et sa transposée que le
+chapitre~\ref{ch:identifiabilite} montre que la donnée ne tranche pas, et le
+chapitre~\ref{chap:cascade} que le capital et la décision diffèrent. Une inversion de lettres
+dans l'instrument produirait donc exactement l'erreur que tout le mémoire s'emploie à ne pas
+commettre, et elle ne serait rattrapée par aucun contrôle numérique.
+\end{attention}
+
+{\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}l p{8.2cm} c c c@{}}
+\toprule
+& \textbf{Lien dirigé $j \rightarrow k$, $j$ émet} & $\mathbf{5\,\%}$ & $\mathbf{50\,\%}$ &
+$\mathbf{95\,\%}$ \\
+\midrule
+\endfirsthead
+\toprule
+& \textbf{Lien dirigé (suite)} & $\mathbf{5\,\%}$ & $\mathbf{50\,\%}$ & $\mathbf{95\,\%}$ \\
+\midrule
+\endhead
+B1 & P1 $\rightarrow$ P2 : une défaillance de gouvernance entraîne des incidents & & & \\
+B2 & P2 $\rightarrow$ P1 : des incidents entraînent une défaillance de gouvernance & & & \\
+B3 & P4 $\rightarrow$ P2 : une défaillance d'un tiers entraîne des incidents & & & \\
+B4 & P1 $\rightarrow$ P4 : une défaillance de gouvernance entraîne une défaillance côté
+     tiers & & & \\
+B5 & P3 $\rightarrow$ P1 : une défaillance des tests de résilience entraîne une défaillance
+     de gouvernance & & & \\
+B6 & P5 $\rightarrow$ P2 : une défaillance du partage d'information entraîne des
+     incidents & & & \\
+\bottomrule
+\end{longtable}}
+
+\paragraph{Le couple B1 et B2 est l'objet même du mémoire.} Les deux questions portent sur le
+\emph{même} couple de piliers, dans les deux sens. Une donnée de co-occurrence ne les distingue
+pas ; un expert, lui, peut les séparer. C'est précisément la quantité que le
+chapitre~\ref{ch:identifiabilite} montre non identifiable : ce
+questionnaire aurait donc eu une valeur que nulle autre source du dossier ne porte.
+
+\paragraph{Ce qui est fait des réponses.} La partie~A mesure la calibration du répondant, c'est-à-dire
+la justesse de ses intervalles, et son information, c'est-à-dire leur finesse ; ces deux
+grandeurs fixent son poids dans l'agrégation. La partie~B, pondérée par ce poids et croisée avec
+les réponses des autres experts, produirait chaque lien de la matrice sous forme d'\emph{intervalle}
+et non de point. Le traitement est automatique et aucune donnée d'incident n'est requise, seulement
+le jugement.

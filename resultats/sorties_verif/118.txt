@@ -1,0 +1,69 @@
+﻿
+========================================================================================
+118 : sinistre simule contre incident unique, meme loi calibree (cascade seule, hors choc P4)
+========================================================================================
+Loi calibree : xi = 0.5954, sigma = 57.97, u = 20.03, p_u de base = 0.1509.
+5 000 000 sinistres par etat, graine 20261019. Le taux de depassement ELEMENTAIRE (par pilier
+touche) est tenu a sa valeur de base dans les deux etats, pour n'isoler que l'effet du nombre
+de piliers touches. Cascade seule, hors choc commun P4 (le moteur des quatre canaux l'ajoute
+a l'etat non conforme) : ces etats ne sont pas ceux du chiffre de tete.
+
+  controle : quantile 99,5 % d'un incident unique 660.1 contre 663.0 en forme
+  fermee ; moyennes de K 1.380 et 1.931, comme le script 74.
+
+========================================================================================
+1. Rapports sinistre simule / incident unique (cascade seule, hors choc P4, p_u elementaire de base)
+========================================================================================
+  etat             E[K]  E[K]^xi   moyenne     q 0.99    q 0.995    q 0.999
+  conforme        1.380    1.211     1.395      1.288      1.270      1.250
+  non conforme    1.931    1.480     1.938      1.629      1.578      1.538
+
+  quantiles d'un incident unique : 99 % : 411 M, 99.5 % : 660 M, 99.9 % : 1842 M
+
+========================================================================================
+1bis. CONTROLE : etat non conforme AVEC le choc commun P4 (comme le moteur des quatre canaux)
+========================================================================================
+  Part des sinistres touchant plus d'un pilier (loi exacte) : conforme 31.15 % ; non conforme (cascade seule) 62.31 % ; non conforme avec choc P4 73.25 %
+  E[K] = 2.436 piliers touches, contre 1.931 sans le choc. Memes tirages de
+  severite, meme p_u elementaire de base. Rapports sinistre simule / incident unique :
+  q 0.99 : 1.930  q 0.995 : 1.853  q 0.999 : 1.767
+  Ce n'est pas un facteur de correction du capital annuel : il isole l'effet du nombre de
+  piliers touches, a p_u elementaire fixe, et ne mesure ni un ecart aux pertes historiques
+  ni l'effet sur le capital.
+
+========================================================================================
+1ter. INCIDENTS MATERIELS PAR AN : moteur contre donnee de calibration (calcul exact)
+========================================================================================
+  donnee : 91 exces sur 27 ans, soit 3.37 incidents materiels par an
+  conforme                                     P(incident materiel) 0.1697   3.66 par an   (1.09 fois la donnee)
+  parametres de base (p_u de base, g = 0,90)   P(incident materiel) 0.2631   5.67 par an   (1.68 fois la donnee)
+  non conforme, choc P4 inclus                 P(incident materiel) 0.3679   19.72 par an   (5.85 fois la donnee)
+  Le taux p_u, calibre par incident, est applique a chaque pilier touche : le moteur produit
+  plus d'incidents materiels par an que la donnee, des l'etat conforme. Sens : le niveau du
+  capital est majore par rapport a la donnee ; ce n'est pas un facteur de correction.
+
+========================================================================================
+LECTURE
+========================================================================================
+  Perimetre : cascade seule, hors choc commun P4, a p_u elementaire de base fixe.
+  Au quantile 99,5 %, un sinistre simule pese 1.27 fois un incident unique a l'etat
+  conforme et 1.58 fois a l'etat non conforme de ce diagnostic. Si chaque perte
+  observee couvrait deja toutes les consequences d'un incident, ces facteurs mesureraient
+  le surplus de niveau du au changement d'unite. Le rapport des deux vaut
+  1.24 dans ce perimetre.
+  Ce n'est pas un test contre la donnee : elle ne dit pas combien de piliers chaque
+  incident observe a touches. Ce n'est pas non plus un facteur de correction du capital
+  annuel, et il ne couvre pas le choc commun P4 de l'etat non conforme des quatre canaux.
+  Aucune recalibration (gel du 7 aout 2026).
+
+========================================================================================
+GRANDEURS CITEES (sans separateur de milliers, pour le harnais)
+========================================================================================
+  conforme moyenne 1.395 q0.99 1.288 q0.995 1.270 q0.999 1.250
+  non conforme moyenne 1.938 q0.99 1.629 q0.995 1.578 q0.999 1.538
+  rapport non conforme sur conforme a 99.5 1.242
+  non conforme avec choc P4 moyenne K 2.436 q0.99 1.930 q0.995 1.853 q0.999 1.767
+  donnee incidents materiels par an 3.37
+  conforme P(incident materiel) 0.1697 par an 3.66 rapport 1.09
+  parametres de base (p_u de base, g = 0,90) P(incident materiel) 0.2631 par an 5.67 rapport 1.68
+  non conforme, choc P4 inclus P(incident materiel) 0.3679 par an 19.72 rapport 5.85

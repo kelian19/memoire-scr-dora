@@ -1,0 +1,157 @@
+% =====================================================================
+% VERSION INSTITUT A 150 PAGES : protocole d'elicitation prepare et relectures de praticiens.
+% Reprise de supplement/S4 (sections « methode de Cooke » a « cout de l'absence »), reecrite en
+% phrases courtes. Les nombres, etiquettes et references sont ceux de l'original. Les destinataires
+% de l'appel et les repondants ne sont pas nommes. Lue par main_institut_150.tex seul.
+% =====================================================================
+
+\chapter{Protocole d'élicitation et relectures de praticiens}
+\label{ch:elicitation}
+
+Le protocole d'élicitation de la matrice de contagion a été préparé, diffusé, puis laissé sans panel.
+Trois relectures qualitatives ont été reçues à la place.
+
+\section{Méthode de Cooke}
+% HARNAIS-HORS-SCRIPT: quantiles demandes a l'expert (5, 50 et 95 %) : propriete de conception du questionnaire, non une grandeur calculee.
+% HARNAIS-HORS-SCRIPT: quantiles demandes a l'expert (5, 50 et 95 %) : propriete de conception du questionnaire, non une grandeur calculee.
+
+Le modèle classique de Cooke \citep{Cooke1991} ne traite pas les experts comme interchangeables. Il les note sur des
+questions dont l'analyste connaît la réponse, puis pondère leurs avis par cette note. La méthode se
+déroule en quatre temps.
+\begin{enumerate}[itemsep=3pt,topsep=3pt]
+\item Chaque expert donne trois quantiles, à $5$, $50$ et $95\,\%$, plutôt qu'un point. Son incertitude
+      déclarée devient mesurable.
+\item Sur les questions-graines, dont la réponse est connue de l'analyste et masquée à l'expert, on
+      compare la fréquence empirique des réalisations dans les intervalles déclarés à la fréquence
+      théorique. L'écart se lit comme une statistique d'information de Kullback-Leibler, et son niveau
+      de signification est le score de calibration.
+\item Un expert bien calibré qui déclare des intervalles très larges n'apporte rien. Le score
+      d'information mesure donc la concentration de ses distributions par rapport à une loi de référence.
+\item Le poids d'un expert est le produit des deux scores, et il est nul sous un seuil de calibration.
+      L'avis agrégé est la combinaison linéaire pondérée des distributions individuelles.
+\end{enumerate}
+Le quatrième point fait la force et la fragilité de la méthode. Un expert mal calibré est écarté, ce qui
+protège des avis péremptoires, mais la taille effective du panel diminue d'autant.
+
+\section{Protocole construit pour la matrice de contagion}
+
+Le questionnaire comporte deux parties. La partie d'étalonnage pose des questions à réponse connue, tirées
+de sources publiques vérifiables, sur des grandeurs du même domaine que les cibles. La partie cible
+interroge un à un les liens dirigés entre piliers, sous la forme d'une probabilité conditionnelle : sachant
+que le pilier source est défaillant, quelle est la probabilité que le pilier cible le devienne ?
+
+Le dispositif complet demande seize questions par expert, dont dix questions-graines. Ce nombre est un choix de l'instrument, pas un minimum statistique universel. La stabilité des poids resterait à examiner sur les réponses recueillies. Le protocole, le questionnaire et le gabarit de réponses
+sont versionnés dans le dépôt, et deux scripts implémentent l'agrégation : l'un sur des réponses fictives,
+pour valider la chaîne de traitement, l'autre prêt à recevoir des réponses réelles.
+% SOURCES-SCRIPTS: 26 47 63
+
+Une graine a été retirée de la première version. Elle portait sur l'indice de queue de sévérité
+$\xi$, de valeur vraie annoncée $0{,}90$. Or $0{,}90$ est la valeur posée du scénario de pire cas, la
+calibration figée donnant $\hat\xi = 0{,}5954$ ; dans la méthode de Cooke, une graine fausse inverse
+les poids en pénalisant le répondant qui vise juste. De plus, $\xi$ est une estimation dont
+l'intervalle $[0{,}30\,;0{,}83]$ a une largeur proche de la valeur elle-même, alors qu'une graine doit
+être une grandeur réalisée. Les dix graines de l'instrument révisé sont toutes reproductibles par une
+sortie de script versionnée.
+
+\section{Documents produits et diffusés}
+% HARNAIS-HORS-SECTION: cette section rapporte une demarche et son issue, non une grandeur
+% calculee. Ses comptes sont ecrits en lettres, aucun script ne les imprime et aucun ne le
+% devrait : ce qui les atteste est le materiel verse au depot, pas une sortie numerique.
+
+Quatre pièces sont versionnées au dépôt : le protocole, qui fixe la méthode, les seuils et la règle
+d'agrégation ; le questionnaire, dans sa troisième version ; un formulaire en ligne reprenant ses
+questions ; le gabarit de réponses, qui alimente la chaîne d'agrégation. L'appel a été adressé à une
+commission de l'Institut des Actuaires et à des praticiens du cabinet, qui ne sont pas nommés. Il est
+resté sans réponse, et aucun panel n'a pu être constitué. Ce fait de démarche n'est pas présenté comme
+un résultat : il dit la difficulté d'obtenir un jugement quantitatif structuré sur un objet aussi
+récent, et rien de la disposition des personnes sollicitées.
+
+\section{Portée de l'absence de panel}
+
+L'absence de panel limite la confrontation externe du barème. Une à deux réponses auraient aussi
+laissé un panel fragile : un seul expert pourrait franchir le seuil, ou les poids dépendre fortement
+des dix graines. Cela ne démontre pas qu'un petit panel serait nécessairement sans information.
+
+Une élicitation biaisée pourrait aussi être trompeuse. Dans l'expérience, un panel biaisé déplace le SCR de $777$~M\euro{}
+sans qu'aucun signal n'avertisse le lecteur (chapitre~\ref{chap:partielle}), alors que l'approche par
+bornes reste invariante si seule la direction change et si la partie symétrique d'expert reste fixée. Cette invariance ne protège pas d'un biais sur la force des liens : sans panel, celle-ci demeure posée.
+% SOURCES-SCRIPTS: 31
+
+Ce travail s'appuie pourtant ailleurs sur un jugement d'expert : le codage, par un seul codeur, du
+corpus de rapports post-incident. Trois différences le justifient. Le codage est auditable, car le
+protocole est écrit et les récits sont publics. Son biais principal est testé contre une loi nulle
+exacte (\S\ref{sec:biais-narration}). Son produit est un ordre partiel, que la suite borne, et non des
+coefficients qui entreraient directement dans le capital. Le codage à juge unique reste une limite
+déclarée, bornée au \S\ref{sec:biais-narration} ; un second codage en aveugle la réduirait.
+
+\section{Dispositifs de substitution}
+
+Trois dispositifs complètent le jugement d'expert, sans remplacer la partie symétrique posée.
+\begin{itemize}[itemsep=3pt,topsep=3pt]
+\item Les rapports post-incident officiels sont codés selon un protocole écrit, et le sens des
+      transitions est testé contre une loi nulle exacte de permutation ($z = +5{,}12$ sur le corpus
+      étendu).
+\item Une échelle de repli suppose la direction de rang faible. Son premier cran capte $74{,}1\,\%$
+      de la variance de la direction posée et resserre le capital dans $[7\,761\,;\,8\,316]$~M\euro,
+      soit une largeur de $555$~M\euro{} contre $1\,839$ sous ignorance totale. C'est une hypothèse
+      structurelle, déclarée comme telle.
+\item Les niveaux d'exigence des textes et les publications des autorités fournissent des repères
+      externes sur les états de conformité.
+\end{itemize}
+% SOURCES-SCRIPTS: 30 34 59
+
+\section{Relectures de praticiens}
+\label{sec:relecture-praticien}
+
+La direction de $W$ n'étant pas identifiable sur les données disponibles
+(chapitre~\ref{ch:identifiabilite}), un seul contrôle externe reste possible : le jugement de
+praticiens qui ont vu des défaillances réelles. Un praticien peut corroborer ou contredire une
+structure, non la calibrer. L'instrument soumet donc sept affirmations qualitatives du modèle, dont
+deux sur l'ordre de P1 vers P2, en demandant de les contredire : un désaccord argumenté désigne
+l'endroit où le modèle s'écarte du terrain, un accord ne discrimine rien.
+
+\emph{Première réponse.} Une consultante de Nexialog, en gestion des risques et du contrôle depuis
+une dizaine d'années, ne contredit aucune des sept phrases (deux accords pleins, cinq nuancés). Elle
+juge les trois indicateurs pilotables cohérents et produisibles, et décrit l'usage établi d'un
+tableau de bord des incidents par prestataire pour évaluer, au titre de DORA, la fréquence de
+défaillance système et le taux d'indisponibilité sur douze mois. Sa nuance principale distingue
+l'occurrence et la maîtrise : une gouvernance solide ne change pas le fait qu'un prestataire critique
+tombe, mais la capacité à en limiter les conséquences. Dans le modèle, cela déplacerait l'arc de la
+gouvernance vers les tiers de la matrice de propagation vers le canal de détection. Cette réserve est
+déclarée sans être traitée, le gel interdisant la recalibration. Sur la gestion des incidents comme
+puits, elle avance un argument de précédence (les tests précèdent la mise en service), que le corpus
+ne code pas. Cette réponse a conduit à ajouter trois questions à choix forcé, dont l'une offre la
+modalité \emph{je ne peux pas trancher}, qui corroborerait la frontière d'identifiabilité.
+
+\emph{Deuxième réponse.} Un consultant de Nexialog, expert de la résilience dans les services
+financiers depuis sept ans, donne quatre accords nuancés et deux désaccords argumentés. Il note que
+plusieurs domaines peuvent céder ensemble par une cause partagée (manque de ressources,
+transformation mal pilotée, architecture vieillissante) : c'est la frontière d'identifiabilité
+formulée par un praticien. Il conteste que la gouvernance soit une source pure et la gestion des
+incidents un puits. La plupart de ses exemples décrivent une rétroaction corrective, qui relève de
+l'évolution des états de conformité (chapitre~\ref{chap:multietats}). Un seul décrit une dégradation
+en retour, de la gestion des incidents vers le partage d'information, sens qu'aucun rapport du corpus
+ne code. Ce désaccord ne déplace pas le capital publié, l'ensemble admissible du
+chapitre~\ref{chap:partielle} ne fixant aucune direction ; il affaiblit la structure suggérée par le
+corpus, déjà déclarée corroborée et non calibrée. Il juge le registre réaliste sous condition de règles
+de qualification précises, et signale un manque : la gestion des changements et des vulnérabilités,
+déclencheurs transversaux sans place propre dans le modèle.
+
+\emph{Troisième réponse.} Un consultant en données, qui exerce depuis un an, conteste les deux mêmes
+phrases et juge le registre réaliste mais risqué pour la confidentialité. Il n'apporte pas d'argument
+nouveau et a demandé à n'être cité que par sa fonction.
+
+Trois réponses ne font pas un panel. Cette relecture n'entre dans aucune table de robustesse et ne
+modifie aucun niveau publié.
+
+\section{Coût de l'absence et réversibilité}
+
+L'élicitation devait départager P1 et P4 en tête du classement des piliers sources. Sans elle, les
+deux restent presque à égalité sur $220$ sommets admissibles tirés au hasard, P1 arrivant premier dans
+$43{,}6\,\%$ des tirages et P4 dans $37{,}7\,\%$, pour un écart de regret maximal observé de $1{,}5\,\%$
+(\S\ref{sec:res-robustesse}). P1 et P4 devancent nettement les trois autres piliers, et l'analyse ne
+tranche pas entre eux par un avis.
+% SOURCES-SCRIPTS: 30 31
+
+Le protocole, le questionnaire, le gabarit et la chaîne d'agrégation sont prêts et testés ; il manque
+un panel d'une dizaine de répondants. La reprise demanderait recrutement et contrôle des réponses. Elle pourrait départager P1 et P4 et resserrer la bande, sans gain garanti à l'avance.

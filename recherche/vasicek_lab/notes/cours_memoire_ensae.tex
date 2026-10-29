@@ -1,0 +1,1480 @@
+% =====================================================================
+% LE COURS, VERSION ENSAE : parties I a IX, recale le 19 octobre 2026 sur le rapport ENSAE de 100 pages.
+% Le preambule est commun avec cours_memoire_questions_ensae.tex, voir
+% cours_preambule.tex : ne pas le dupliquer.
+% =====================================================================
+\input{cours_preambule}
+
+\title{\vspace{-1.3cm}\color{navy}\bfseries Le mémoire (version ENSAE), concept par concept\\[3pt]
+  \large Ce que chaque outil résout, comment il marche,
+  et la phrase qui l'explique en trente secondes}
+\author{Kélian Kaddouri}
+\date{Mise à jour du 28 octobre 2026}
+
+\begin{document}
+\maketitle
+\vspace{-0.8cm}
+
+\begin{cle}
+\textbf{À quoi sert ce document.} Le mémoire empile une vingtaine d'outils, chacun choisi
+pour une raison précise, et il est facile de les manipuler correctement sans savoir les
+\emph{défendre}. Chaque section suit le même gabarit~: le problème que l'outil résout,
+l'idée en langage courant, la formule, ce que ça donne dans notre cas, la phrase à dire à
+voix haute quand on vous interroge, et le piège à éviter.
+
+\textbf{La phrase encadrée en vert est le livrable de chaque section.} Si vous ne retenez
+qu'elle, vous tenez l'oral.
+
+\textbf{Un second document, \texttt{cours\_memoire\_questions\_ensae}, reprend le rapport ENSAE chapitre par chapitre (partie~X).} Pour chacun : le chapitre en une
+phrase, un encadré de ce qu'il faut savoir \emph{par c\oe ur}, puis les questions que le jury peut
+poser, avec la réponse à tenir et le folio où s'appuyer. C'est le document à relire la veille de la
+soutenance.
+\end{cle}
+
+\smallskip
+\noindent\textcolor{accent}{\textbf{Base ENSAE du 19 octobre ; réponses actualisées au 28 octobre 2026.}}
+Ce cours conserve les folios du rapport ENSAE de $100$~pages (\texttt{memoire/main\_ensae.pdf}),
+corrigé le 19 octobre. Les réponses intègrent les rectifications de portée les plus récentes.
+Une partie finale, explicitement hors rapport déposé, présente les compléments Institut du 27 octobre.
+L'exposé ENSAE doit tenir en \textbf{15 minutes au maximum}, questions séparées. Trois points ont changé depuis la version pour le manuscrit de $199$~pages :
+la \textbf{valeur de l'information} (la réduction de la plage par un registre d'incidents est de
+$32{,}7\,\%$ en moyenne, de $22$ à $44\,\%$ selon la graine, et non $66\,\%$ ; aucune paire ne se
+détache, quatre dépendances levant chacune de $11{,}2$ à $13{,}3\,\%$) ; le \textbf{transfert du
+risque} (coût de financement de $8{,}0$ à $2{,}9$~M\euro, soit $-64\,\%$ ; pertes conservées
+comprises, de $11{,}67$ à $5{,}12$, soit $-56\,\%$ ; seuil de $64\,\%$ de portée sans allègement de
+capital, et non $78\,\%$) ; et la \textbf{part insensible au sens} ($79\,\%$ du capital : socle
+$61\,\%$ et plancher commun aux sommets $18\,\%$). Rappel des erreurs de fond déjà corrigées à
+l'oral : le capital est une $\mathrm{VaR}_{99{,}5\,\%}$ \emph{non centrée} ; seul le \emph{groupe de
+tête}, P1 et P4, résiste à l'ignorance de la direction ; l'écart entre les deux états de conformité
+est \emph{posé} pour les quatre canaux, seuls les niveaux de référence de la fréquence et de la
+détection étant calibrés. Les nombres du cours se retrouvent dans le rapport, ou dans le supplément
+en ligne, ou dans les sorties versionnées.
+
+\bigskip
+\noindent\textbf{Le schéma d'ensemble.} Cinq étages, de la donnée au capital. Chaque partie de ce
+document en traite un.
+
+\begin{center}
+\begin{tikzpicture}[node distance=4.5mm]
+\node[brique] (d) {\textbf{Données}\\OpRisk, PRC\\Hackmageddon};
+\node[brique,right=of d] (f) {\textbf{Fréquence}\\binomiale\\négative};
+\node[brique,right=of f] (s) {\textbf{Sévérité}\\seuil\,+\,excès GPD\\$\xi=0{,}5954$};
+\node[brique,right=of s] (c) {\textbf{Cascade}\\dirigée $W$\\$\rho(W)<1$};
+\node[brique,right=of c] (m) {\textbf{Conformité}\\multi-états\\(Markov)};
+\node[brique,right=of m,fill=vert!15,draw=vert!70!black] (k)
+  {\textbf{Capital}\\$\mathrm{VaR}_{99{,}5\%}(L)$};
+\draw[fleche] (d)--(f); \draw[fleche] (f)--(s); \draw[fleche] (s)--(c);
+\draw[fleche] (c)--(m); \draw[fleche] (m)--(k);
+\draw[flechef] (d.south) to[out=-60,in=-120] node[etiq,below,pos=0.5]
+  {la direction de $W$ n'est PAS identifiable ici} (c.south);
+\end{tikzpicture}
+\end{center}
+
+\noindent La flèche rouge situe l'information manquante sur les liens entre piliers.
+Les lois de pertes et la fréquence de référence sont ajustées sur les données ; la force des
+liens et la correspondance entre conformité et paramètres restent posées. L'identification
+partielle examine ici la direction, conditionnellement à la force symétrique retenue.
+
+\tableofcontents
+\newpage
+
+% =====================================================================
+\part*{I. D'où viennent les nombres}
+\addcontentsline{toc}{part}{I. D'où viennent les nombres}
+
+\section{Les trois sources, et ce que chacune peut dire}
+
+\lequoi{Pour chiffrer un capital, il faut trois choses~: combien d'incidents par an, combien
+coûte un incident, et comment les incidents s'enchaînent. Aucune source publique ne porte
+les trois.}
+
+\lidee{On ne cherche pas \emph{la} bonne base, on répartit les questions entre les sources
+selon ce que chacune peut porter, et on déclare ce qui manque.}
+
+\cheznous{Trois bases pour les marges, un corpus pour l'ordre, deux sources de contrôle.
+\begin{itemize}[itemsep=1pt,topsep=2pt]
+\item \textbf{SAS OpRisk Global Data}~: pertes opérationnelles en dollars, catégories de Bâle ;
+$582$ pertes cyber $\times$ finance sur 2000--2026 pour la sévérité, $4\,329$ transitions
+annuelles pour le test de direction. Elle porte le \textbf{niveau} de sévérité et la fréquence
+d'entrée. Son pas est annuel, ce qui efface l'ordre des événements.
+\item \textbf{Privacy Rights Clearinghouse (PRC)}~: $15\,053$ incidents retenus, exprimés en
+\emph{nombre d'enregistrements compromis}, pas en euros. Elle sert d'\textbf{axe de sensibilité}
+après conversion, et de clé de répartition ($\lambda_{ref}=341$).
+\item \textbf{Hackmageddon}~: $1\,041$ incidents, $840$ à vecteur identifié. Elle donne les
+\textbf{parts par vecteur d'attaque}, jamais un niveau ; c'est une citation, non recalculable.
+\item \textbf{Dix rapports post-incident} ($22$ transitions)~: peu de volume, mais une enquête y
+reconstitue la \emph{séquence} des défaillances. C'est la seule source qui porte
+l'\textbf{ordre}.
+\item \textbf{VERIS} ($10\,591$ incidents) montre que le bon schéma existe sans être rempli, et
+\textbf{quatre SFCR} donnent l'échelle d'entité.
+\end{itemize}}
+
+\laphrase{Aucune base ne dit tout. OpRisk donne le niveau mais pas l'ordre, PRC donne du volume
+mais pas d'euros, Hackmageddon la structure par vecteur, et les rapports d'enquête donnent l'ordre
+mais pas le volume. Je les utilise pour ce que chacune peut porter, et je dis explicitement ce qui
+reste absent.}
+
+\lepiege{Ne jamais laisser croire qu'on a \og une base de données DORA\fg{}. Elle n'existe pas.
+Le règlement met en place le reporting qui la produira, et c'est justement l'objet de la
+recommandation finale du mémoire.}
+
+\section{La conversion Jacobs}
+
+\lequoi{PRC compte des enregistrements compromis, pas des euros. Il faut passer de l'un à
+l'autre.}
+
+\lidee{Une régression publiée établit, sur un échantillon d'incidents dont on connaît à la
+fois le nombre d'enregistrements et le coût, une relation log-log entre les deux.}
+
+\laformule{$\ln L = 7{,}68 + 0{,}76\,\ln X + \varepsilon$, où $X$ est le nombre
+d'enregistrements et $L$ la perte en dollars. Le résidu a un écart-type de $0{,}523$ en logarithme :
+à volume donné, le coût réel varie d'un facteur $2{,}4$ autour de la droite, à $90\,\%$.}
+
+\cheznous{L'exposant $0{,}76 < 1$ dit que le coût croît \emph{moins vite} que le nombre
+d'enregistrements~: un incident dix fois plus gros ne coûte pas dix fois plus cher, mais
+environ six fois. Il y a un coût fixe important dans tout incident.}
+
+\laphrase{Jacobs n'est pas un lien fréquence-sévérité, c'est une conversion de sévérité
+seule~: elle transforme un nombre d'enregistrements en montant. Et mon capital principal
+n'en dépend pas, il est calculé sur OpRisk, qui est déjà en dollars.}
+
+\lepiege{Le modèle traitait d'abord cette conversion comme \emph{exacte}, en ignorant le résidu.
+En le réinjectant enregistrement par enregistrement, le niveau du surcoût PRC bouge de $7\,\%$ mais
+l'intervalle ne s'élargit presque pas, le bruit se moyennant dans l'ajustement GPD ($\xi$ passe de
+$1{,}03$ à $1{,}07$, matériel complémentaire). Et ne jamais lire $\xi_{\text{PRC}}=1{,}03$ comme un
+risque plus lourd : une puissance multiplie l'indice de queue par son exposant, donc cet indice
+décrit la queue des \emph{enregistrements} transportée en euros.}
+
+% =====================================================================
+\section{Le seuil de collecte, et les trois fréquences}
+
+\lequoi{Trois nombres du mémoire portent le nom de \og{}fréquence\fg{} et vont de $0{,}092$ à
+$341$ par an. Confondre deux d'entre eux fait dire n'importe quoi.}
+
+\lidee{Ils ne comptent pas la même chose, parce qu'ils ne sont pas lus au même endroit. Une
+base ne retient que les pertes au-dessus d'un \textbf{seuil de collecte} : le taux qu'on y lit
+est celui des incidents \emph{matériels}, générateurs d'une perte enregistrée, et non celui de
+tous les incidents au sens du reporting réglementaire.}
+
+\cheznous{\;\\[-6pt]
+\begin{center}\small
+\begin{tabular}{@{}l l l@{}}
+\toprule
+$\lambda_{ref}=341$/an & notifications PRC, organisations financières & \emph{clé de répartition} par vecteur \\
+$\lambda=21{,}6$/an & incidents TIC matériels, secteur & \textbf{l'entrée du moteur} \\
+$\lambda_{\text{entité}}=0{,}092$/an & les mêmes, lus à la taille de l'entité & l'échelle d'une entité \\
+\bottomrule
+\end{tabular}
+\end{center}
+Les seaux du panel valent $0{,}10$ (toutes firmes) et $0{,}21$ (firmes à au moins dix événements),
+mais ils ne décrivent aucune entité : la lecture juste estime $\lambda$ en fonction de la taille et
+la lit à celle de l'entité visée. La base PRC entière compte $2\,150$ notifications par an ; le
+$341$ ne porte que sur les organisations financières.}
+
+\laphrase{Le facteur $3\,719$ entre ma plus grande et ma plus petite fréquence n'est pas une
+incohérence, c'est trois niveaux d'observation. Un seul alimente le moteur, les deux autres servent
+à répartir et à interpréter. Le seuil de collecte est ce qui les sépare.}
+
+\lepiege{Le taux $\lambda$ est une propriété d'\textbf{entité}, lisible sur un panel
+firme-année ; la charge systémique commune, elle, ne se lit qu'au niveau \textbf{agrégé} et
+après retrait de tendance. Les confondre revient à imputer au risque systémique ce qui n'est
+qu'un effet de taille des firmes.}
+
+\section{Mesurer un biais au lieu de le déclarer}
+
+\lequoi{Tout le monde déclare que sa base est biaisée. Presque personne ne dit de combien. Or
+déclarer ne coûte rien, mesurer engage.}
+
+\lidee{Deux biais classiques d'une base de pertes se mesurent avec la base elle-même. Le
+\textbf{biais de taille}, parce que la base porte les actifs de la firme sinistrée. La
+\textbf{troncature à droite}, parce qu'elle porte la date de saisie en plus de l'année de
+survenance.}
+
+\laformule{Pour la taille, une régression log-log $\ln L = a + b\ln(\text{actifs})$ donne
+l'élasticité $b$. Mais elle est biaisée par le seuil de collecte : une petite firme n'entre
+dans la base que si sa perte est anormalement grande, ce qui \emph{aplatit} la pente. On
+corrige par un maximum de vraisemblance sur une lognormale \textbf{tronquée à gauche} en $u_0$,
+où la contribution de chaque observation est divisée par $1-\Phi\bigl((\ln u_0-\mu)/s\bigr)$.
+Pour la troncature à droite, on construit le triangle survenance $\times$ délai de remontée et
+l'on applique un \textbf{chain-ladder} aux comptes.}
+
+\cheznous{Élasticité brute $0{,}042$ avec un $R^2$ de $0{,}005$ (matériel complémentaire), ce qui
+\emph{réfuterait} l'explication usuelle. Corrigée de la troncature, elle double à
+$\mathbf{0{,}087}$ $[0{,}026\,;0{,}148]$ et devient significative, mais reste faible : la sévérité
+transposée à l'entité notionnelle n'est multipliée que par $0{,}85$ environ ($0{,}854$ au
+chapitre~10). Côté remontée, le délai médian est de trois ans (matériel complémentaire) et les
+$97$ événements observés sur 2023--2025 deviennent \textbf{$255$} à l'ultime, soit $+163\,\%$.}
+
+\laphrase{Mes deux biais les plus souvent opposés, je ne me contente pas de les signaler : je
+les chiffre. Le biais de taille coûte quinze pour cent environ, pas un facteur dix. Et la baisse
+apparente des incidents après 2022 n'est pas une baisse du risque, c'est une remontée
+incomplète que le chain-ladder rattrape.}
+
+\lepiege{Les deux corrections vont en sens opposés et se compensent presque exactement sur la
+\emph{perte moyenne} ($0{,}861\times1{,}147=0{,}987$). Elles ne se compensent \textbf{pas} sur
+le capital : à queue lourde, le quantile suit la sévérité et non la fréquence. Deux biais qui
+s'annulent sur l'espérance peuvent ne pas s'annuler sur le quantile, et c'est le quantile qui
+fait le SCR.}
+
+% =====================================================================
+\part*{II. Combien d'incidents par an}
+\addcontentsline{toc}{part}{II. Combien d'incidents par an}
+
+\section{Le processus de Poisson, et pourquoi il ne suffit pas}
+
+\lequoi{Modéliser un nombre d'événements par an, sans savoir quand ils tombent.}
+
+\lidee{Si les événements arrivent indépendamment, à un rythme constant, et jamais deux
+exactement en même temps, alors leur nombre annuel suit une loi de Poisson. C'est le modèle
+de comptage par défaut, et il n'a qu'un paramètre.}
+
+\laformule{$\mathbb{P}(N=k)=e^{-\lambda}\lambda^k/k!$, avec la propriété caractéristique
+\[
+  \mathbb{E}[N]=\mathrm{Var}(N)=\lambda .
+\]
+Moyenne et variance sont \emph{égales}. C'est à la fois sa force et sa faiblesse.}
+
+\cheznous{Cette égalité est testable, et elle est rejetée massivement. Sur $14\,944$
+cellules entité-année, un test du rapport de vraisemblance donne $p\approx10^{-30}$.
+Autrement dit~: la probabilité d'observer nos données si Poisson était vrai est de l'ordre
+d'un sur $10^{30}$.}
+
+\laphrase{Poisson impose que la variance égale la moyenne. Sur les cellules firme-année, la
+variance dépasse la moyenne d'un facteur $1{,}19$ : cela paraît peu, mais sur quinze mille
+cellules c'est un rejet à $10^{-30}$. Donc j'ai changé de loi.}
+
+\lepiege{Ne pas dire \og Poisson sous-estime le risque\fg{}. Poisson donne la \emph{bonne}
+moyenne, il se trompe sur la \emph{dispersion}, donc sur la queue. Le SCR est un quantile
+extrême~: c'est la dispersion qui le fait, pas la moyenne.}
+
+\section{La surdispersion et la négative binomiale}
+
+\lequoi{Les données montrent beaucoup plus de variabilité que Poisson n'en autorise. Pourquoi,
+et comment en tenir compte ?}
+
+\lidee{Parce que le rythme lui-même varie. Certaines années sont plus exposées que
+d'autres, certaines entités plus que d'autres. On rend donc $\lambda$ \emph{aléatoire} au
+lieu de le fixer. Un mélange de Poisson par une loi Gamma donne exactement la négative
+binomiale.}
+
+\laformule{Si $N\mid\Lambda\sim\mathcal{P}(\Lambda)$ et $\Lambda\sim\mathrm{Gamma}$, alors
+$N$ est négative binomiale et
+\[
+  \mathbb{E}[N]=\lambda, \qquad \mathrm{Var}(N)=\varphi\,\lambda, \qquad \varphi>1 .
+\]
+Le facteur $\varphi$ est la \textbf{surdispersion}~: le rapport variance sur moyenne.}
+
+\cheznous{L'indice de dispersion d'un mélange de Poisson vaut $1+\lambda/r$ : il n'est pas
+invariant d'échelle. Il vaut $1{,}19$ sur les cellules firme-année, $2{,}24$ sur la série annuelle
+détendancée, et le moteur retient $\varphi=9{,}20$, choix de prudence posé et non mesure. Ce
+$9{,}20$ et la charge systémique $a=0{,}60$ du modèle multi-états décrivent la même surdispersion
+agrégée à $5\,\%$ près ($a=0{,}57$). À variance égale, la \emph{forme} du mélange (Gamma ou
+lognormale) déplace encore la queue du nombre de $11\,\%$ ($74$ contre $82$).}
+
+\laphrase{La négative binomiale, c'est Poisson dont le rythme est lui-même incertain.
+Concrètement, certaines années sont plus exposées que d'autres, et ce sont ces années-là
+qui font le capital.}
+
+\lepiege{Le changement de loi de comptage \textbf{ne déplace pas la moyenne}, il déplace la
+VaR, et de $+9\,\%$ seulement : à $\xi\approx0{,}6$, le quantile annuel est porté par la perte
+unique dominante. Sur la série détendancée, la surdispersion mesurée ($2{,}24$) est quatre fois
+plus faible que celle retenue ($9{,}20$) : le calage est conservateur, pas calibré, et il faut le
+dire soi-même.}
+
+\section{Pourquoi pas un processus de Hawkes}
+
+\lequoi{Un processus auto-excité, où chaque événement augmente temporairement la
+probabilité du suivant, serait un candidat naturel pour de la contagion.}
+
+\lidee{Hawkes modélise la contagion \emph{dans le temps}~: un incident aujourd'hui rend un
+autre incident plus probable demain. Notre cascade modélise la contagion \emph{entre
+domaines}~: un incident sur un pilier rend un incident plus probable sur un autre pilier.
+Ce ne sont pas les mêmes axes.}
+
+\cheznous{Le test a été fait, sur la chronologie PRC datée, contre les noyaux de la
+littérature (Bessy-Roland, Boumezoued et Hillairet ; Boumezoued, Cherkaoui et Hillairet).
+L'excitation mesurée est intra-journalière, avec un pic à $3{,}3$~heures, et le ratio de
+branchement de $0{,}551$ tombe vers zéro dès que les co-occurrences du même jour sont traitées
+comme exogènes. Surtout, une cascade \emph{sans aucune} auto-excitation, simulée puis ajustée comme
+une chronologie réelle, donne déjà $0{,}480$ au jour : à la résolution disponible, les deux
+modèles ne sont pas distinguables.}
+
+\laphrase{Hawkes décrit la contagion dans le temps, ma cascade décrit la contagion entre domaines.
+Je l'ai testé contre les noyaux de la littérature, et à la résolution des données il n'est pas
+distinguable d'une cascade sans auto-excitation. Je retiens la cascade par parcimonie, parce
+qu'elle porte en plus la structure entre piliers.}
+
+\lepiege{Ne pas dire que Hawkes est rejeté ou réfuté : c'est une équivalence observationnelle
+suivie d'un choix de parcimonie. Attention au sens : dégrader la résolution fait \emph{monter} le
+ratio de branchement estimé. Et ne pas présenter ce choix comme une critique de cette littérature,
+qui travaille sur des données horodatées plus finement.}
+
+% =====================================================================
+\part*{III. Combien coûte un incident}
+\addcontentsline{toc}{part}{III. Combien coûte un incident}
+
+\section{Pourquoi la théorie des valeurs extrêmes}
+
+\lequoi{Le SCR est un quantile à $99{,}5\,\%$. On veut donc décrire précisément la région
+où l'on a le moins d'observations. Ajuster une loi sur l'ensemble des données optimise
+l'ajustement là où il y a le plus de points, c'est-à-dire au \emph{centre}, exactement là
+où l'on s'en moque.}
+
+\lidee{On abandonne l'idée d'une loi unique pour tout. On modélise \emph{seulement} la
+queue, avec une famille dont on peut démontrer qu'elle est la seule limite possible.}
+
+\laphrase{Une loi ajustée sur toutes les données est calée sur le centre, or je n'ai besoin
+que de la queue. La théorie des valeurs extrêmes dit quelle famille de lois est la seule
+possible tout au bout, et je n'ajuste que celle-là.}
+
+\section{Les deux théorèmes fondateurs}
+
+\lidee{Deux résultats, structurés exactement comme le théorème central limite~: ils disent
+qu'\emph{une seule} famille peut apparaître à la limite, quelle que soit la loi de départ.}
+
+\laformule{\textbf{Fisher-Tippett-Gnedenko.} Si le maximum renormalisé de $n$ variables
+indépendantes converge en loi, la limite ne peut être que la loi des valeurs extrêmes
+généralisée~:
+\[
+  G_\xi(x)=\exp\!\left\{-\left(1+\xi x\right)^{-1/\xi}\right\}, \qquad 1+\xi x>0 .
+\]
+\textbf{Pickands-Balkema-de Haan.} De façon équivalente, la loi des \emph{excès} au-dessus
+d'un seuil $u$ converge, quand $u$ monte vers le point terminal, vers la loi de Pareto
+généralisée~:
+\[
+  \mathbb{P}(X-u\le y \mid X>u)\;\longrightarrow\;
+  1-\left(1+\frac{\xi y}{\sigma}\right)^{-1/\xi}.
+\]}
+
+\cheznous{C'est le second qu'on utilise, parce qu'il exploite \emph{tous} les dépassements
+de seuil et pas seulement le maximum de chaque bloc. On perd beaucoup moins d'information.}
+
+\laphrase{C'est le même genre de résultat que le théorème central limite. Là où le TCL dit
+que les moyennes tendent vers une gaussienne quelle que soit la loi de départ, ces deux
+théorèmes disent que les extrêmes tendent vers une seule famille. Je n'ai donc pas
+\emph{choisi} la loi de queue, elle est imposée.}
+
+\lepiege{Ces théorèmes sont \emph{asymptotiques}. Ils ne garantissent pas que la GPD est
+correcte à un seuil fini~: ils garantissent qu'aucune autre famille ne peut l'être à la
+limite. C'est plus faible, il faut le dire, et c'est pourquoi on teste l'adéquation.}
+
+\section{La méthode des excès et la loi de Pareto généralisée}
+
+\lidee{On fixe un seuil $u$. En dessous, on garde la distribution empirique telle quelle. Au
+dessus, on ajuste une GPD. La loi obtenue est dite \emph{recollée} (spliced).}
+
+\laformule{La fonction de survie s'écrit, pour $x>u$~:
+\[
+  \mathbb{P}(X>x)\;=\;p_u\left(1+\frac{\xi (x-u)}{\sigma}\right)^{-1/\xi},
+  \qquad p_u=\mathbb{P}(X>u).
+\]}
+
+\cheznous{$\xi=0{,}5954$ sur OpRisk, $\xi=1{,}03$ sur PRC. Le paramètre $\xi$ est
+l'\textbf{indice de queue}, et il commande tout~:
+\begin{itemize}[itemsep=1pt,topsep=2pt]
+\item $\xi<1/2$~: variance finie ;
+\item $1/2\le\xi<1$~: variance \emph{infinie}, moyenne finie : c'est le cas de la calibration
+publiée ;
+\item $\xi\ge1$~: moyenne elle-même infinie.
+\end{itemize}
+Le $\xi=1{,}03$ de la PRC dépasse $1$, mais il ne mesure pas un risque plus lourd : la sévérité
+PRC est une puissance du nombre d'enregistrements, et une puissance multiplie l'indice de queue par
+son exposant. C'est pourtant ce régime qui fait tomber la TVaR comme mesure de couverture : sous
+lui, elle n'existe pas.}
+
+\laphrase{L'indice de queue mesure à quel point les catastrophes dominent. Sur ma calibration il
+vaut $0{,}6$ : la variance des pertes est infinie, leur moyenne finie, et un seul sinistre peut
+peser plus que tous les autres réunis. C'est ce qu'on observe en cyber : sur OpRisk, le décile
+supérieur porte plus de $92\,\%$ de la perte totale.}
+
+\lepiege{Avec $\xi$ proche de $1$, la moyenne empirique n'est pas un estimateur stable et
+les intervalles de confiance sont larges par nature. Ne jamais annoncer un SCR ponctuel
+sans sa bande dans ce régime.}
+
+\section{Le choix du seuil}
+
+\lequoi{Le seuil $u$ arbitre entre biais et variance~: trop bas, on inclut le corps de la
+distribution et l'approximation GPD est fausse ; trop haut, il reste trop peu de points et
+l'estimation devient bruitée.}
+
+\lidee{On ne le choisit pas au hasard : on le lit sur des diagnostics, puis on vérifie qu'une
+règle écrite le retrouve.}
+
+\laformule{\textbf{Vie résiduelle moyenne.} Pour une GPD, la fonction
+$e(u)=\mathbb{E}[X-u\mid X>u]$ est \emph{linéaire} en $u$ : on choisit $u$ au début de la zone
+linéaire. \textbf{Diagnostic GPD.} On trace $\hat\xi$ en fonction de $u$ : le seuil doit se
+situer là où $\xi$ passe sous $1$ (espérance finie) en gardant au moins trente excès.}
+
+\cheznous{Seuil retenu $u=20{,}03$~M\euro{} sur le périmètre cyber $\times$ finance d'OpRisk, soit
+$91$ excès, et $p_u=0{,}1509$, valeur gelée (le recomptage donnerait $91/582=0{,}1564$, écart
+chiffré au chapitre~11). Une règle de stabilité écrite, appliquée à dix percentiles candidats,
+retrouve $19{,}87$~M\euro{} avec le même quantile ; la règle la plus permissive descendrait à
+$12{,}88$ et donnerait un quantile supérieur de $16\,\%$. Attention : $\hat\xi$ n'est stable qu'au
+\emph{voisinage} du seuil ; de $0{,}60$ il descend à $0{,}38$ quand on remonte au percentile $95$,
+dans l'intervalle déjà publié.}
+
+\cheznous{\textbf{Complément après le dépôt (script~119, hors rapport).} Une règle de stabilité
+choisit un seuil ; un test d'adéquation le contrôle. J'ai calibré le test de
+Kolmogorov-Smirnov : la table usuelle est trop indulgente quand les paramètres sont estimés sur
+les données testées. La $p$-value vient donc d'un bootstrap paramétrique, où la GPD est
+réestimée sur chaque échantillon simulé ($1\,000$ tirages par seuil, dix seuils de $8{,}62$ à
+$105{,}39$~M\euro{}). Au seuil retenu ($91$ excès), $D=0{,}043$, $p=0{,}938$ pour
+Kolmogorov-Smirnov et $p=0{,}963$ pour Anderson-Darling. Seuls les deux seuils les plus bas
+($8{,}62$ et $10{,}95$) sont rejetés à $5\,\%$, et par Anderson-Darling seulement. Au-dessus de
+$20$~M\euro{}, $\hat\xi$ reste dans l'intervalle à $95\,\%$ de chaque seuil. Les quatre estimateurs
+au seuil retenu, avec leur intervalle à $95\,\%$ par bootstrap de $2\,000$ tirages des excès :
+maximum de vraisemblance $0{,}598$ $[0{,}250\,;0{,}890]$, moments pondérés $0{,}507$
+$[0{,}255\,;0{,}622]$, moments de Dekkers, Einmahl et de Haan $0{,}864$ $[0{,}524\,;1{,}081]$,
+Hill $1{,}377$ $[1{,}183\,;1{,}585]$. Le quantile de sévérité à $99{,}5\,\%$, au taux gelé,
+vaut $642$ $[369\,;1\,091]$ par maximum de vraisemblance et $560$ $[360\,;774]$ par moments
+pondérés. La méthode reprend la structure du mémoire de F.~Dountio (test et bootstrap), pas ses
+valeurs : sa variable est un nombre de dossiers, la nôtre une perte en euros.}
+
+\lepiege{Une $p$-value élevée à haut seuil peut venir du faible nombre d'excès, donc d'une
+puissance faible : le test écarte des seuils, il ne désigne pas un optimum. La sélection du
+seuil sur les mêmes données n'est pas corrigée. Et le réajustement sur la base courante donne
+$\hat\xi=0{,}598$ et un quantile de $642$, contre $0{,}595$ et $663$ publiés : les paramètres
+publiés viennent de l'échantillon 2000-2026 ($86$ excès).}
+
+\laphrase{Le seuil se lit sur la vie résiduelle moyenne, qui devient droite au-delà de vingt
+millions, et une règle de stabilité écrite le retrouve à un pour cent près. Et il ne m'arrange pas :
+la règle la plus permissive donnerait un capital plus élevé.}
+
+\lepiege{Ne pas dire que le graphique de Hill confirme le seuil : Hill vaut $1{,}32$ au seuil
+retenu, plus du double du maximum de vraisemblance, et le mémoire en fait une corroboration d'un
+autre genre, puisque c'est exactement ce que Hill produit en échantillon fini sous $\xi=0{,}595$.
+Et ne pas confondre avec les $4{,}176$~M\euro{} d'une table descriptive : c'est le percentile $85$
+de la sévérité PRC dérivée, jamais un seuil.}
+
+% =====================================================================
+\part*{IV. Comment les pertes s'additionnent}
+\addcontentsline{toc}{part}{IV. Comment les pertes s'additionnent}
+
+\section{Le modèle collectif}
+
+\lidee{On ne modélise pas la perte annuelle directement. On modélise séparément
+\emph{combien} d'incidents et \emph{combien coûte} chacun, puis on somme. C'est le cadre
+standard en actuariat non-vie.}
+
+\laformule{
+\[
+  L \;=\; \sum_{i=1}^{N} X_i,
+\]
+avec $N$ le nombre d'incidents (fréquence) et $X_i$ leurs coûts (sévérité), les $X_i$
+indépendants de $N$ et entre eux.}
+
+\cheznous{Des dizaines de milliers d'années simulées par Monte-Carlo, avec le bruit de simulation
+publié à côté de chaque grandeur. La loi de $L$ n'a pas de forme fermée simple avec une queue
+lourde et une cascade, mais elle se calcule sans simuler par inversion de Fourier de sa fonction
+génératrice : c'est le contrôle du moteur, qui retrouve le quantile à moins d'une erreur type
+($5\,945$ contre $6\,049$ au conforme).}
+
+\laphrase{Je sépare deux questions qui n'ont rien à voir~: combien d'incidents par an, et
+combien coûte un incident. Chacune se calibre sur ses propres données, et la perte annuelle
+est leur somme.}
+
+\lepiege{L'indépendance entre $N$ et les $X_i$ est une hypothèse, et elle a été testée hors
+échantillon : elle tient sur les excès. La pente négative qu'on voit sur toute la distribution
+disparaît au-delà du seuil, c'est un artefact de profondeur de collecte. Et la cascade ne rend pas
+$N$ et $X$ dépendants : elle fait dépendre le coût d'un sinistre du nombre de piliers qu'il
+touche.}
+
+\section{VaR, TVaR, et pourquoi le SCR est une VaR}
+
+\lidee{La VaR à $99{,}5\,\%$ est le montant qu'on ne dépasse que dans une année sur deux
+cents. La TVaR est la moyenne des pertes \emph{au-delà} de ce seuil.}
+
+\laformule{
+\[
+  \mathrm{VaR}_\alpha(L)=\inf\{x:\ \mathbb{P}(L\le x)\ge\alpha\},
+  \qquad
+  \mathrm{TVaR}_\alpha(L)=\mathbb{E}[L\mid L>\mathrm{VaR}_\alpha(L)].
+\]}
+
+\cheznous{Solvabilité~II impose la VaR à $99{,}5\,\%$ à horizon un an, et le mémoire la prend
+\emph{non centrée} : la perte attendue d'une non-conformité n'étant couverte par aucune provision,
+elle n'est pas déduite. La TVaR sert de diagnostic, jamais de couverture : noyau de l'allocation
+d'Euler, et indicateur de forme, $\mathrm{TVaR}/\mathrm{VaR}\approx2{,}1$ contre l'asymptote
+$1/(1-\xi)=2{,}5$.}
+
+\laphrase{Le capital, c'est la perte annuelle qu'on ne dépasse qu'une année sur deux cents. Ce
+n'est pas mon choix de mesure, c'est celui de Solvabilité~II. La TVaR, je m'en sers pour
+diagnostiquer la queue, pas pour couvrir.}
+
+\lepiege{La VaR n'est pas sous-additive, la TVaR est cohérente : c'est vrai, et le mémoire ne dit
+pas le contraire. Mais l'argument décisif contre une couverture en TVaR n'est pas de degré, il est
+d'existence : sous la calibration PRC, $\xi=1{,}03>1$, l'espérance est infinie et la TVaR n'existe
+pas. Une mesure de couverture qui cesse d'être définie selon la source ne peut pas porter un
+capital.}
+
+% =====================================================================
+\part*{V. Comment un problème en entraîne un autre}
+\addcontentsline{toc}{part}{V. Comment un problème en entraîne un autre}
+
+\section{La convention d'indices, à ne jamais improviser}
+
+\lequoi{Une matrice dirigée a deux lectures possibles, et les deux sont défendables. Si le
+document en utilise l'une ici et l'autre là, tous ses énoncés directionnels deviennent
+ambigus.}
+
+\lidee{On fixe la convention une fois, on l'écrit, et on la vérifie sur un fait connu.}
+
+\laformule{\[
+  W_{jk}\;=\;\text{propension de } j \text{ (\textbf{source}) à entraîner la défaillance de }
+  k \text{ (\textbf{cible}).}
+\]
+La \textbf{ligne} $j$ décrit ce que $j$ \emph{émet}, la \textbf{colonne} $k$ ce que $k$
+\emph{reçoit}. La somme de ligne $s_j$ mesure donc une \textbf{émission}.}
+
+\cheznous{Vérification sur la matrice d'expert : P1 a la plus grande somme de ligne ($2{,}6$)
+et une somme de colonne trois fois inférieure à celle de P2. C'est exactement la revendication
+centrale \og{}P1 émet fort et reçoit peu\fg{}, et elle serait \emph{fausse} sous la convention
+inverse. La forme réduite du modèle latent s'écrit alors $(I-W^{\top})^{-1}$, le rayon spectral
+étant de toute façon invariant par transposition.}
+
+\laphrase{La ligne émet, la colonne reçoit. Je le vérifie sur ma matrice : le pilier que je dis
+émetteur a bien la plus grosse somme de ligne. Une convention n'est pas un détail de notation,
+c'est ce qui rend un énoncé directionnel falsifiable.}
+
+\lepiege{Ce défaut a réellement existé dans le mémoire : l'équation structurelle sommait sur
+les lignes alors que la définition de la cascade et tout le code sommaient sur les colonnes. Le
+code et le classeur ont tranché. Vérifier une convention sur un fait connu coûte trente
+secondes et évite une matrice transposée.}
+
+\section{La matrice de contagion et sa normalisation}
+
+\lequoi{On veut dire \og un problème sur le pilier $j$ aggrave le pilier $k$\fg{}, avec une
+intensité. Mais si on met des coefficients au hasard, la cascade peut exploser.}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\node[pilier] (p1) at (90:2.0)  {P1};
+\node[pilier] (p2) at (18:2.0)  {P2};
+\node[pilier] (p3) at (-54:2.0) {P3};
+\node[pilier] (p4) at (234:2.0) {P4};
+\node[pilier] (p5) at (162:2.0) {P5};
+\node[etiq,above=1pt of p1] {gouvernance TIC};
+\node[etiq,above right=0pt and 1pt of p2] {incidents};
+\node[etiq,below=1pt of p3] {tests};
+\node[etiq,below=1pt of p4] {tiers};
+\node[etiq,left=1pt of p5]  {partage};
+% P1 emet fort, recoit peu
+\draw[flechef] (p1) to[bend left=12] (p2);
+\draw[flechef] (p1) to[bend left=12] (p3);
+\draw[flechef] (p1) to[bend right=12] (p4);
+\draw[fleche]  (p4) to[bend right=12] (p2);
+\draw[fleche]  (p4) to[bend left=12]  (p3);
+\draw[flechep] (p5) to[bend left=12]  (p1);
+\draw[flechep] (p3) to[bend left=12]  (p2);
+\node[align=left,font=\scriptsize,text=navy!75,anchor=west] at (4.3,0.9)
+  {\textbf{Lire la matrice~:}\\$W_{jk}$ = propension de $j$\\à entraîner $k$.\\
+   \emph{La ligne émet, la colonne reçoit.}};
+\node[align=left,font=\scriptsize,text=accent,anchor=west] at (4.3,-0.9)
+  {P1 émet fort et reçoit peu.\\C'est pourquoi il sort\\premier en vue Shapley.};
+\end{tikzpicture}
+\end{center}
+
+\noindent La cascade est un \emph{processus de branchement}~: un incident amorcé sur un pilier
+tire, pour chaque arc, une pièce de Bernoulli de probabilité $W_{jk}$, et recommence depuis les
+piliers atteints. Sans garde-fou, ce processus peut ne jamais s'éteindre.
+
+\lidee{On part du jugement dirigé (la matrice \textsc{trans} du classeur), et on la
+renormalise pour garantir mathématiquement que la propagation s'éteint.}
+
+\laformule{
+\[
+  W \;=\; g\,\frac{T}{\max_j \sum_k T_{jk}},
+  \qquad g=0{,}90 ,
+\]
+ce qui garantit $\rho(W)\le g<1$, où $\rho$ est le rayon spectral (la plus grande valeur
+propre en module).}
+
+\cheznous{Le facteur $g$ est un curseur de propagation~: $g=0$ signifie aucune contagion,
+$g\to1$ signifie une cascade au bord de l'explosion. On le fixe à $0{,}90$, ce qui est
+volontairement élevé.}
+
+\laphrase{La normalisation garantit que la cascade s'éteint. Sans elle, un choc pourrait
+s'amplifier indéfiniment en tournant en boucle entre les piliers, et le capital serait
+infini.}
+
+\lepiege{Les valeurs de $g$, $0{,}45$ au conforme, $0{,}68$ au partiel et $0{,}90$ au non
+conforme, sont des \emph{choix}, pas des mesures. À dire ainsi : \og elles sont posées, mais la
+signe est conservé sur les cinq correspondances testées et sur la grille en $g$, avec la cascade
+indépendante. Cette vérification ne démontre pas la monotonie pour toute valeur de $g$, ni pour
+tous les moteurs. L'amplitude reste un scénario\fg{}.}
+
+\section{L'inverse de Leontief et la sous-criticité}
+
+\lidee{Le choc initial se propage, ce qu'il déclenche se propage à son tour, et ainsi de
+suite. La somme de tous les tours est une série géométrique matricielle.}
+
+\laformule{
+\[
+  (I-W)^{-1} \;=\; I + W + W^2 + W^3 + \cdots
+\]
+Cette série converge \emph{si et seulement si} $\rho(W)<1$. Le terme $I$ est le choc
+initial, $W$ ce qu'il déclenche directement, $W^2$ ce que cela déclenche à son tour.}
+
+\cheznous{L'objet vient de l'économie (Leontief, tableaux entrées-sorties)~: la même algèbre
+décrit comment une commande dans un secteur en génère dans les autres. Sur la matrice du mémoire,
+$\rho(W)=0{,}562\,g$, soit $0{,}506$ à $g=0{,}9$ ; le seuil critique $\rho(W)=1$ serait atteint à
+$g=1{,}78$, hors du domaine admissible.}
+
+\laphrase{C'est la même formule que les tableaux entrées-sorties en économie. Le premier
+terme est le choc direct, le deuxième ce qu'il déclenche, le troisième ce que cela déclenche
+à son tour. La condition de convergence est exactement la condition pour que la cascade
+s'éteigne.}
+
+\lepiege{Le passage à $W^2$ est celui où la \emph{direction} commence à compter, alors
+qu'elle ne compte pas dans $W$ seul si on ne regarde que les co-occurrences. C'est le point
+technique le plus important du mémoire, voir la section~\ref{sec:trace}.}
+
+\section{Le seuil de déclenchement, et le rôle de la loi normale}
+
+\lequoi{À partir de quand un pilier bascule ? Il faut un mécanisme, pas seulement une
+probabilité.}
+
+\lidee{On suppose une variable latente $X_j$ qui mesure la fragilité du pilier $j$, et le
+pilier bascule quand elle franchit un seuil. C'est le mécanisme de Merton, repris par
+Vasicek pour le risque de crédit.}
+
+\laformule{Le pilier $j$ bascule quand
+\[
+  X_j \;\ge\; K_j \;=\; F^{-1}(1-p_j),
+\]
+où $p_j$ est sa probabilité marginale de basculement et $F$ la fonction de répartition de la
+latente.}
+
+\cheznous{$K_4=1{,}03$ pour le pilier des prestataires, dont la probabilité de déclenchement
+vaut $p_4=0{,}151$.}
+
+\laphrase{Il y a deux questions derrière le mot seuil, et il ne faut pas les mélanger. Pour
+savoir \emph{quand un pilier bascule tout seul}, la loi normale est inoffensive~: elle ne
+sert que d'unité de mesure, la vraie queue lourde est dans la sévérité, pas ici. Pour savoir
+\emph{combien de piliers basculent ensemble}, c'est autre chose, et là le gaussien pose un
+vrai problème.}
+
+\cheznous{\textbf{Un seuil par entité ?} Le cadre général est $K_{ij}=F_{ij}^{-1}(1-p_{ij})$ : $i$
+est l'entité, $j$ le pilier, $F_{ij}$ la loi du stress latent et $p_{ij}$ la probabilité cible de
+dépassement. Écrire $F_i$ seul suppose la même marge pour les cinq piliers d'une entité, ce que la
+propagation ne garantit pas. Avec des chocs gaussiens, $\sigma_{ij}^2=[(I-W^{\top})^{-1}\Sigma_i
+(I-W)^{-1}]_{jj}$ et $K_{ij}=\sigma_{ij}\Phi^{-1}(1-p_{ij})$. L'écriture est possible ;
+l'estimation ne l'est pas : aucune base n'observe la perte par pilier ni par entité, et un écart de
+$0{,}10$ sur une sensibilité demande environ $813$ périodes. Le mémoire garde donc un seuil $K_j$
+commun, et le capital passe par la cascade, une sévérité commune puis la descente d'échelle.}
+
+\lepiege{À probabilités et dépendance inchangées, transformer ensemble une marge et son seuil ne
+change aucun déclenchement. Changer $F_i$ ne personnalise donc rien : il faudrait des $p_{ij}$
+différents, une autre dépendance, ou une autre loi de perte. Et cette loi latente, sans unité, ne
+remplace pas la GPD des sévérités en euros.}
+
+\lepiege{Le choix de la loi de la latente est une \emph{normalisation} pour la marge~:
+n'importe quelle loi continue donnerait la même probabilité marginale, seul le seuil change
+de valeur. Ce n'est pas vrai pour la dépendance. Confondre les deux est l'erreur classique.}
+
+\section{Les copules et la dépendance de queue}
+
+\lequoi{Comment plusieurs piliers basculent-ils \emph{ensemble} ? La probabilité marginale
+de chacun ne suffit pas à le dire.}
+
+\lidee{Une copule sépare les marges de la structure de dépendance. On peut garder les mêmes
+marges et changer complètement la façon dont les événements extrêmes se coordonnent.}
+
+\laformule{Le coefficient de \textbf{dépendance de queue supérieure} mesure la
+co-occurrence extrême~:
+\[
+  \lambda_U \;=\; \lim_{q\to1^-}\ \mathbb{P}\bigl(U_2>q \mid U_1>q\bigr).
+\]
+Pour la copule gaussienne, $\lambda_U = 0$ dès que la corrélation est $<1$. Pour la copule
+de Gumbel de paramètre $\theta$,
+\[
+  \lambda_U \;=\; 2-2^{1/\theta}.
+\]}
+
+\cheznous{Avec $\theta=1{,}8$, on a $\lambda_U = 0{,}53$. À $\tau$ de Kendall \emph{égal},
+la gaussienne donne $0$ et Gumbel $0{,}53$. La probabilité que les cinq piliers basculent
+ensemble passe de $0{,}17$ à $0{,}39$ selon la copule retenue. On encadre au lieu de
+trancher~: plancher gaussien, plafond de Gumbel. Le co-déclenchement d'un autre pilier avec P4
+tient alors dans $[0{,}48\,;0{,}58]$, sous la borne $\gamma=0{,}68$ du choc commun, qui reçoit
+ainsi son origine structurelle.}
+
+\laphrase{Une dépendance gaussienne a une propriété gênante~: dans les extrêmes, elle prédit
+que les choses se \emph{découplent}. C'est le contraire de ce qu'on observe en crise. Donc
+je n'ai pas tranché entre les deux, j'ai encadré, et l'écart entre le plancher et le plafond
+est un résultat en soi.}
+
+\lepiege{Deux copules peuvent avoir le \emph{même} $\tau$ de Kendall, donc la même
+dépendance \og moyenne\fg{}, et des comportements extrêmes opposés. Comparer deux copules par
+leur corrélation ne dit rien sur la queue.}
+
+\section{Les états de conformité : Vasicek à l'échelle rapide, Markov à l'échelle lente}
+\label{sec:conformite}
+
+\lequoi{Être conforme à DORA n'est ni un oui ni un non, et cela change avec le temps. Comment
+mettre un état de conformité dans un modèle de capital, sans le figer et sans le réduire à un
+interrupteur ?}
+
+\lidee{On sépare deux horloges. À l'échelle \emph{rapide}, celle des incidents et de leur
+cascade dans l'année, l'état de conformité est une photographie : chaque pilier est non
+conforme (NC), partiellement conforme (PC) ou conforme (C), et le moteur calcule le capital
+\emph{sachant} cette configuration. Cet état est tiré par un Vasicek. À l'échelle \emph{lente},
+celle des mois et des années, une chaîne de Markov fait progresser la conformité, et son état
+règle les paramètres de la couche rapide. On sépare les deux pour qu'une tendance longue
+n'explique pas un enchaînement de quelques heures.}
+
+\begin{center}
+\begin{tikzpicture}[node distance=7mm]
+\node[brique] (nc) {NC\\non conforme};
+\node[brique,right=of nc] (pc) {PC\\partiellement};
+\node[brique,right=of pc] (c) {C\\conforme};
+\draw[fleche] (nc)--(pc); \draw[fleche] (pc)--(c);
+\node[etiq,above=2mm of pc] {échelle lente : chaîne de Markov, séjours d'Erlang-$k$, C absorbant};
+\node[brique,below=17mm of nc] (v) {Vasicek\\multi-états};
+\node[brique,right=of v] (q) {Quatre canaux\\$\lambda,\ g,\ p_u$, accumulation};
+\node[brique,right=of q,fill=vert!15,draw=vert!70!black] (k) {Capital\\sachant l'état};
+\draw[fleche] (v)--(q); \draw[fleche] (q)--(k);
+\draw[flechef] (pc.south) -- node[etiq,right,pos=0.45] {l'état règle les canaux} (q.north);
+\node[etiq,below=2mm of q] {échelle rapide : les incidents et leur cascade dans l'année};
+\end{tikzpicture}
+\end{center}
+
+\laformule{\textbf{D'où vient le seuil.} Merton pose qu'un défaut survient quand une variable
+latente franchit un seuil. Vasicek y ajoute un facteur commun, qui crée la dépendance :
+\[
+  X_i \;=\; \sqrt{\rho}\,Y + \sqrt{1-\rho}\,\varepsilon_i,
+  \qquad \text{défaut si } X_i \ge K_i = \Phi^{-1}(1-\mathrm{PD}_i).
+\]
+\textbf{Notre version, à trois états.} Chaque pilier a une capacité de conformité latente,
+décomposée à la Vasicek en un facteur systémique $\Theta$ et un choc propre :
+\[
+  C^\star \;=\; \gamma\,\Theta + \sqrt{1-\gamma^2}\,\varepsilon,
+  \qquad \gamma = 0{,}68 .
+\]
+Au lieu d'un seuil de défaut, on en pose deux, ordonnés, $K_{\text{bas}} < K_{\text{haut}}$ :
+\[
+  \text{NC si } C^\star \le K_{\text{bas}}, \qquad
+  \text{PC si } K_{\text{bas}} < C^\star \le K_{\text{haut}}, \qquad
+  \text{C si } C^\star > K_{\text{haut}},
+\]
+avec $K_{\text{bas}} = \Phi^{-1}(p_{NC})$ et $K_{\text{haut}} = \Phi^{-1}(p_{NC}+p_{PC})$. C'est
+un probit ordonné. Sachant l'environnement $\Theta$ :
+\[
+  \mathbb{P}(\mathrm{NC}\mid\Theta) = \Phi\!\Bigl(\tfrac{K_{\text{bas}}-\gamma\Theta}{\sqrt{1-\gamma^2}}\Bigr),
+  \qquad
+  \mathbb{P}(\mathrm{C}\mid\Theta) = 1-\Phi\!\Bigl(\tfrac{K_{\text{haut}}-\gamma\Theta}{\sqrt{1-\gamma^2}}\Bigr).
+\]}
+
+\cheznous{Les probabilités d'état sont ancrées sur les enquêtes de conformité de fin 2025 :
+NC $35\,\%$, PC $35\,\%$, C $30\,\%$. Les cinq piliers partagent $\Theta$ avec la charge
+$\gamma=0{,}68$, soit une corrélation $\gamma^2 = 0{,}462$ entre deux piliers quelconques. En
+crise systémique ($\Theta$ très négatif), la masse bascule vers la non-conformité. L'état agit
+ensuite par quatre canaux : la fréquence $\lambda$ passe de $21{,}56$ à $53{,}62$ incidents par an,
+le gain de propagation $g$ de $0{,}45$ (C) à $0{,}68$ (PC) puis $0{,}90$ (NC), le taux de
+matérialité $p_u$ est multiplié par $0{,}85$ (C) ou $1{,}20$ (NC), et l'accumulation par un
+prestataire commun apparaît à l'état NC, avec une charge de $0{,}68$.}
+
+\laformule{\textbf{L'échelle lente.} Une chaîne de Markov à temps continu NC $\to$ PC $\to$ C,
+dont l'état conforme est absorbant dans le cas de base. Les séjours sont de type phase
+(Erlang-$k$) : une exponentielle autoriserait une remédiation quasi instantanée, alors qu'un
+projet DORA a une durée minimale. Avec $Q$ le générateur et $v_0$ la distribution initiale,
+\[
+  \bigl(\mathbb{P}(\mathrm{NC},t),\,\mathbb{P}(\mathrm{PC},t),\,\mathbb{P}(\mathrm{C},t)\bigr)
+  \;=\; v_0\, e^{Qt}\ \text{(sommes de phases)},
+  \qquad
+  \mathrm{SCR}(t) \;=\; \sum_{e\in\{\mathrm{NC},\mathrm{PC},\mathrm{C}\}} \mathbb{P}(e,t)\,\mathrm{SCR}_e .
+\]
+\textbf{Le couplage.} Le même $\Theta$ agit sur les deux couches : un environnement dégradé
+ralentit la remédiation, $\mu(\Theta)=\mu_0\,e^{\beta_{\text{rem}}\Theta}$, et durcit la cascade,
+$\mathrm{SCR}_e(\Theta)=\mathrm{SCR}_e\,e^{-\beta_{\text{casc}}\Theta}$. La dispersion de $\Theta$
+engendre la bande d'incertitude de la trajectoire.}
+
+\cheznous{De l'état marginal actuel (NC $35\,\%$, PC $35\,\%$, C $30\,\%$), le capital OpRisk
+passe de $10\,752$ à $7\,041$~M\euro{} en cinq ans. La formule $\mathrm{SCR}(t)$ est une moyenne
+de quantiles : elle diffère du quantile à 99,5\,\% de la loi mélangée, de $9{,}3\,\%$ sur le
+mélange des $32$ configurations. La trajectoire se lit donc comme l'espérance du besoin de capital
+sous l'incertitude d'état.}
+
+\laphrase{À l'échelle rapide, l'état de conformité est un probit ordonné à la Vasicek : une
+capacité latente et deux seuils qui découpent trois états. À l'échelle lente, une chaîne de
+Markov le fait progresser de NC à C, et son état règle les quatre paramètres du moteur. Le seuil
+vient de Merton, le facteur commun de Vasicek, la migration d'état du risque de crédit : la
+chaîne joue le rôle de la migration d'un rating de conformité, le Vasicek celui du défaut
+conditionnel au rating.}
+
+\lepiege{\textbf{Deux latentes de sens opposé.} Dans la cascade, $X$ mesure le \emph{stress} :
+un $X$ élevé est une mauvaise nouvelle. Ici $C^\star$ est une \emph{capacité} : élevée, elle
+est bonne, et la non-conformité est en bas. Le facteur $\Theta$ de conformité n'est pas non plus
+le facteur $Y_j$ par pilier de la cascade.}
+
+\lepiege{\textbf{Les trois valeurs de $g$ sont posées}, parce que l'état de conformité DORA des
+entités n'est pas publié. La cascade indépendante respecte l'ordre du capital sur la grille de vingt
+points et les cinq correspondances testées. Cela ne démontre ni une monotonie pour tout $g$ ni la
+même propriété pour le moteur de marche. L'écart \og $116$ à $169$~M\euro{}\fg{} reste conditionnel
+aux valeurs posées.}
+
+\lepiege{La loi d'Erlang est \emph{posée}. Elle n'a aucun rapport avec la loi mélangeante de la
+fréquence du chapitre sur le modèle fréquence-sévérité, dont la forme estimée est $0{,}63$. Et
+les données ne mesurent pas le niveau de conformité d'une entité : c'est pourquoi l'état est
+supposé, jamais observé.}
+
+% =====================================================================
+\part*{VI. Ce qu'on ne peut pas savoir, et pourquoi}
+\addcontentsline{toc}{part}{VI. Ce qu'on ne peut pas savoir, et pourquoi}
+
+\section{La décomposition $W = S + A$}
+
+\lidee{Toute matrice se coupe de manière unique en une partie symétrique et une partie
+antisymétrique. La première dit \emph{qui est lié à qui}, la seconde dit \emph{dans quel
+sens}.}
+
+\laformule{
+\[
+  S=\tfrac12\bigl(W+W^{\top}\bigr), \qquad A=\tfrac12\bigl(W-W^{\top}\bigr),
+  \qquad W=S+A .
+\]
+Les deux parties sont \textbf{orthogonales}~: $\langle S,A\rangle=0$, d'où un Pythagore
+$\|W\|^2=\|S\|^2+\|A\|^2$.}
+
+\cheznous{Sur la matrice ordonnée estimée à partir du corpus de rapports, la part de direction
+$\|A\|/\|W\|$ vaut $60\,\%$, et elle ne bouge pas quand on corrige le dénominateur, alors que le
+niveau des $p_{jk}$ tombe de $0{,}27$ à $0{,}07$. La direction n'est pas un détail de la matrice.}
+
+\laphrase{On coupe la matrice en deux~: une partie qui dit quels piliers sont liés, et une partie
+qui dit dans quel sens. Les deux sont orthogonales, et la co-occurrence que voit la donnée ne
+dépend, au premier ordre, que de la première.}
+
+\lepiege{La décomposition propre porte sur le \emph{flux stationnaire} $\pi_j P_{jk}$, pas
+sur la matrice de transition brute. Notre $S=(W+W^{\top})/2$ en est le cas où $\pi$ est
+uniforme, et l'écart mesuré est de $0{,}069$, donc faible. Le dire soi-même met à l'abri.}
+
+\medskip
+\noindent\textbf{Le schéma qui fait comprendre la thèse en dix secondes.} Deux matrices
+opposées, une seule statistique observable, deux décisions contraires.
+
+\begin{center}
+\begin{tikzpicture}
+% cas W
+\node[pilier] (a1) at (0,1.1) {P1};
+\node[pilier] (b1) at (0,-0.5) {P2};
+\draw[flechef] (a1) -- (b1);
+\node[font=\scriptsize\bfseries,text=navy] at (0,1.9) {matrice $W$};
+\node[etiq,align=center] at (0,-1.3) {P1 entraîne P2\\\emph{remédier P1}};
+% cas W transpose
+\node[pilier] (a2) at (3.4,1.1) {P1};
+\node[pilier] (b2) at (3.4,-0.5) {P2};
+\draw[flechef] (b2) -- (a2);
+\node[font=\scriptsize\bfseries,text=navy] at (3.4,1.9) {matrice $W^{\top}$};
+\node[etiq,align=center] at (3.4,-1.3) {P2 entraîne P1\\\emph{remédier P2}};
+% ce que la donnee voit
+\node[draw=vert!70!black,fill=vert!8,rounded corners=2pt,align=center,
+      font=\footnotesize,inner sep=6pt] (obs) at (8.4,0.3)
+  {\textbf{Ce que la donnée agrégée voit}\\
+   \og P1 et P2 tombent ensemble\fg{}\\[2pt]
+   au premier ordre, $\Prob(j \text{ et } k)$\\
+   ne dépend que de $S$, et $S(W)=S(W^{\top})$};
+\draw[fleche] (1.0,0.3) -- (obs.west |- 0,0.3);
+\draw[fleche] (4.4,0.3) -- (obs.west |- 0,0.3);
+\node[align=center,font=\scriptsize,text=accent] at (4.25,-2.3)
+  {\textbf{Indiscernables pour la donnée. Matériellement différentes pour la décision.}};
+\end{tikzpicture}
+\end{center}
+
+\noindent C'est l'énoncé de la frontière d'identification, et il ne repose sur \emph{aucun} dire
+d'expert : au premier ordre et sous amorce uniforme, la co-occurrence est une fonction de $S$ seule,
+et $S$ est identique pour $W$ et pour sa transposée. \textcolor{accent}{Ce n'est pas une
+impossibilité de principe} : au-delà du premier ordre, la loi complète des piliers touchés par
+incident distingue $W$ de $W^\top$, une fourche d'un collisionneur ($62{,}31\,\%$ de sinistres
+multi-piliers sous $W$, $50{,}77\,\%$ sous $W^\top$). La frontière est celle des statistiques que
+les sources fournissent, et c'est pourquoi le registre recommandé consigne tous les piliers
+touchés.
+
+\section{Le renversement du temps et la fluctuation martingale}
+
+\lequoi{Pourquoi n'arrive-t-on pas à mesurer $A$ ? Et est-ce une limite de méthode ou une
+limite de principe ?}
+
+\lidee{Passer le film à l'envers. La partie symétrique ne change pas, la partie
+antisymétrique s'inverse. Et la fluctuation d'un processus, une fois la tendance retranchée,
+ne dépend que de la première.}
+
+\laformule{La chaîne renversée a pour flux $F^{*}=F^{\top}=S-A$. Et pour toute fonction test
+$f$, l'intensité de la fluctuation vaut
+\[
+  \mathbb{E}_\pi\bigl[\Gamma(f,f)\bigr]
+  \;=\;\sum_{j,k} S_{jk}\bigl(f(k)-f(j)\bigr)^2 ,
+\]
+la partie $A$ y contribuant exactement zéro. La démonstration tient en une ligne~:
+$(f(k)-f(j))^2$ est symétrique en $(j,k)$, $A$ est antisymétrique, les termes $(j,k)$ et
+$(k,j)$ se compensent.}
+
+\cheznous{Vérifié sur trois cents fonctions test tirées au hasard : l'énergie de fluctuation est
+la même pour la chaîne posée et pour sa symétrisée, les points tombent sur la diagonale (figure du
+chapitre~8, \S~8.3).}
+
+\laphrase{Renverser le temps laisse la partie symétrique intacte et retourne le signe de la partie
+directionnelle. Or la fluctuation d'un processus, sa partie martingale, ne dépend que de la
+symétrique. Donc une statistique invariante par renversement du temps ne peut pas voir la
+direction. La loi complète des piliers touchés par incident, elle, le pourrait : c'est une donnée
+qui manque, pas une impossibilité.}
+
+\lepiege{Ne pas dire que $W$ \emph{est} une chaîne de Markov. C'est un noyau de contagion~: on
+emprunte l'algèbre de la réversibilité comme cadre de lecture, on n'ajoute pas une hypothèse. Et le
+mot martingale s'entend au sens des chaînes de Markov, sous la mesure physique : aucune mesure
+risque-neutre, aucun test de martingalité.}
+
+\section{Le test placebo}
+\label{sec:placebo}
+
+\lequoi{Même des données sans aucune direction produisent un déséquilibre, par simple
+fluctuation d'échantillonnage. Observer un déséquilibre ne prouve donc rien tant qu'on ne
+sait pas ce que le hasard produit tout seul.}
+
+\lidee{On fabrique une version des données dont la direction a été \textbf{détruite
+volontairement}, tout le reste étant conservé, et on compare. C'est l'essai clinique~: si le
+médicament ne fait pas mieux que la pilule vide, il ne fait rien.}
+
+\laformule{On mesure l'asymétrie de la matrice de transitions comptées~:
+\[
+  \mathcal{A}(M)=\frac{\|M-M^{\top}\|_1}{2}
+  =\frac12\sum_{j,k}\bigl|M_{jk}-M_{kj}\bigr| ,
+\]
+c'est-à-dire le surplus de transitions d'un sens sur l'autre, sommé sur toutes les paires.
+Puis on \textbf{permute les années à l'intérieur de chaque entité}~: l'ensemble des
+catégories touchées chaque année est conservé, seul l'ordre est détruit. On recompte, on
+recalcule, et on compare~:
+\[
+  z=\frac{\mathcal{A}(M_{\text{obs}})-\overline{\mathcal{A}^{\,\text{null}}}}
+        {\widehat{s}(\mathcal{A}^{\,\text{null}})} .
+\]}
+
+\cheznous{
+\begin{center}\small
+\begin{tabular}{@{}l r r r l@{}}
+\toprule
+\textbf{Source} & \textbf{observée} & \textbf{sous placebo} & \textbf{$z$} & \textbf{Verdict}\\
+\midrule
+OpRisk, pas annuel & $119$ & $128\pm27$ & $-0{,}33$ & aucun signal \\
+7 post-mortems & \multicolumn{2}{c}{\emph{même protocole}} & $+3{,}93$ & signal net \\
+\bottomrule
+\end{tabular}
+\end{center}
+Sur OpRisk, l'observé est \emph{sous} la moyenne du bruit. Un test binomial par paire le
+confirme~: aucune paire ne survit à la correction de Bonferroni.}
+
+\laphrase{Je voulais savoir si la direction que je crois voir est réelle. Le problème, c'est
+que même des données au hasard produisent un déséquilibre. Alors j'ai pris mes données, j'ai
+détruit l'ordre en gardant tout le reste, et j'ai comparé. Mes vraies données font
+$119$, le hasard fait $128$~: elles font moins bien que le hasard. Puis j'ai refait
+exactement le même test sur les sept rapports d'enquête, et là le signal apparaît nettement.
+Même test, autre source, résultat opposé~: le problème venait de la donnée, pas de la
+méthode.}
+
+\lepiege{Trois choses à ne pas dire. \textbf{(i)} Le test du \og temps inversé\fg{} est
+\emph{dégénéré} sur un comptage~: renverser la chronologie donne $M^{\top}$ par
+construction, donc une corrélation de $-1$ quel que soit le contenu. Il ne prouve rien.
+\textbf{(ii)} Un test non rejeté n'est pas une preuve d'absence~: la donnée est
+\emph{compatible} avec l'absence de direction. \textbf{(iii)} Sur les post-mortems, le test
+établit la \emph{cohérence} du codage, pas son \emph{exogénéité}~: le biais de narration des
+rapports d'enquête n'est pas levé par le calcul.}
+
+\section{La production d'entropie}
+
+\lidee{Un seul nombre qui dit à quel point le processus est dirigé, et qui a une
+interprétation exacte~: à quel point le film à l'endroit est distinguable du film à
+l'envers.}
+
+\laformule{
+\[
+  \sigma=\sum_{j<k} 2A_{jk}\,\ln\!\frac{S_{jk}+A_{jk}}{S_{jk}-A_{jk}} \;\ge\; 0,
+\]
+nulle si et seulement si $A=0$. Elle est aussi le taux d'entropie relative entre la loi de
+la trajectoire lue à l'endroit et celle lue à l'envers.}
+
+\cheznous{$\sigma$ est strictement positive pour la chaîne posée et s'annule à la
+symétrisation (figure du chapitre~8, \S~8.3). \textbf{Et la conséquence qui compte}, qui se lit
+sur la formule : chaque terme de la somme est \emph{pair} en $A_{jk}$, donc $\sigma$ ne dépend que
+des \emph{amplitudes} de la direction, pas de ses signes. Les $1\,024$ sommets de l'ensemble
+admissible, qui ne diffèrent que par les signes, ont donc la même production d'entropie, alors
+que le capital y varie d'un facteur $1{,}27$.}
+
+\laphrase{La production d'entropie mesure à quel point on peut distinguer le film à l'endroit du
+film à l'envers. Si elle est nulle, personne ne peut dire dans quel sens le temps coule. Mais
+attention~: elle ne voit que la \emph{quantité} de direction, jamais son \emph{sens}. Les mille
+vingt-quatre configurations ont la même production d'entropie, et pourtant elles étalent le
+capital de plus d'un quart.}
+
+\lepiege{Conséquence à tirer~: ce n'est pas $\sigma$ qu'il faut chercher à estimer, ce sont
+les \emph{signes}, un par un. C'est ce qui justifie que la valeur d'information se
+hiérarchise par paire et non globalement.}
+
+\section{$z$ scalaire ou $z$ par paire}
+
+\lequoi{L'écriture $P=S+zA$ est ambiguë tant qu'on n'a pas dit si $z$ est un nombre ou dix.}
+
+\laformule{\textbf{Lecture globale}~: $z\in[-1,1]$ règle l'\emph{intensité} d'un motif de
+direction fixé. Un seul degré de liberté. Elle ne peut pas changer quel pilier précède
+quel autre.
+\textbf{Lecture par paire}, celle du mémoire~:
+\[
+  A_{jk}=z_{jk}\,t\,S_{jk}, \qquad z_{jk}\in[-1,1], \qquad j<k,
+\]
+soit \textbf{dix degrés de liberté}. Le paramètre $t$ est l'amplitude maximale d'asymétrie,
+les $z_{jk}$ portent chacun un sens indépendant.}
+
+\cheznous{Les $2^{10}=1024$ sommets sont exactement les configurations $z_{jk}=\pm1$. La
+contrainte de positivité du flux impose $|A_{jk}|\le S_{jk}$, donc $t\le1$~; $t=1$ est
+l'ignorance totale.}
+
+\laphrase{Un $z$ global ne fait que renforcer ou affaiblir un ordre déjà choisi. Ce qu'il me
+faut, c'est un curseur par paire, parce que c'est le \emph{sens} de chaque lien que je ne
+connais pas, pas son intensité globale.}
+
+\section{Le troisième échec : le schéma existe, il n'est pas rempli}
+
+\lequoi{Deux bases ont échoué à identifier la direction, l'une faute de taxonomie, l'autre
+faute de résolution temporelle. On pouvait encore croire que personne n'avait \emph{prévu} de
+collecter la bonne donnée.}
+
+\lidee{On teste l'hypothèse la plus favorable : un standard de description d'incidents qui,
+lui, prévoit exactement les bons champs. Le schéma \textsc{veris}, référence de la profession
+et support du \emph{Data Breach Investigations Report}, porte littéralement les deux objets
+manquants : un champ \texttt{control\_failure} qui nomme le domaine de contrôle défaillant, et
+une chronologie en quatre étapes qui porte l'antériorité.}
+
+\cheznous{Sur les $10\,591$ incidents de la base publique associée : \texttt{control\_failure}
+renseigné dans \textbf{$0{,}12\,\%$} des cas ($13$ incidents, dont un seul en secteur
+financier), chronologie datée sur au moins deux étapes dans \textbf{$1{,}19\,\%$}. Et
+l'\textbf{intersection} des deux, qui est ce qu'identifier $W$ exigerait simultanément, ne
+compte qu'\textbf{un seul incident}, et \textbf{aucun} en secteur financier.}
+
+\laphrase{Le champ qui donnerait la réponse existe dans le standard de la profession. Il est
+rempli treize fois sur dix mille incidents. Le problème n'est donc pas de savoir quoi collecter, il
+est d'en
+rendre le remplissage obligatoire, et c'est précisément ce qu'un régime de notification
+réglementaire peut imposer là où une base déclarative volontaire ne le peut pas.}
+
+\lepiege{C'est le plus utile des trois échecs, parce qu'il transforme la recommandation. On ne
+demande plus d'inventer une taxonomie, ce qui serait long et contestable, on demande de rendre
+obligatoires deux champs \textbf{déjà normalisés}. Coût de conception nul.}
+
+\section{La matrice ordonnée $p_{jk}$}
+
+\lequoi{Le codage documentaire, tel qu'on l'exploite d'abord, compare $n(j\to k)$ à
+$n(k\to j)$ \emph{à l'intérieur} d'une paire. Ce rapport élimine le dénominateur, donc il
+donne un \emph{sens} et ne dit rien de l'\emph{amplitude}.}
+
+\lidee{On ajoute le dénominateur. Chaque incident déclare non seulement ses transitions, mais
+l'ensemble des \textbf{piliers défaillants}, y compris ceux qui ont cédé sans rien entraîner.
+On peut alors estimer directement chaque case de la matrice ordonnée.}
+
+\laformule{Avec $N_j$ le nombre d'incidents où $j$ a cédé et $m_{jk}$ ceux où le rapport
+établit $j\to k$ :
+\[
+  p_{jk}=\Prob(k \text{ cède}\mid j \text{ a cédé}),
+  \qquad
+  p_{jk}\mid\text{données}\ \sim\ \mathrm{Beta}\bigl(1+m_{jk},\ 1+N_j-m_{jk}\bigr).
+\]
+C'est la matrice ordonnée \emph{complète}, donc $S$ \textbf{et} $A$.}
+
+\cheznous{Sur dix rapports et $22$ transitions : \textbf{douze} liens sur vingt ont un crédible
+à $90\,\%$ entièrement \emph{sous} $0{,}5$, et \textbf{aucun} au-dessus. Les plus élevés,
+$P_3\to P_2$ ($0{,}77$, $[0{,}48\,;0{,}95]$) et $P_1\to P_4$ ($0{,}68$, $[0{,}40\,;0{,}89]$),
+recouvrent encore $0{,}5$. Les douze liens faibles comprennent les \emph{quatre} sorties de
+$P_2$, soit toutes, et trois des quatre entrées de $P_1$, l'arc $P_5\to P_1$ n'étant pas établi
+comme faible : le puits est établi comme tel, la source pure seulement en partie.}
+
+\laphrase{Mon corpus établit très bien où la contagion \emph{ne va pas}, et pas du tout où elle
+va fort. Le puits et la source pure sont donc établis en tant que tels, mais aucun coefficient
+n'est établi comme grand. C'est un ordre, ce n'est pas une magnitude.}
+
+\lepiege{Une enquête raconte la \emph{chaîne} qui a produit le sinistre : elle documente bien
+les contrôles qui ont cédé \emph{et} propagé, mal ceux qui ont cédé sans propager, pas du tout
+ceux qui ont tenu. Le dénominateur $N_j$ est donc sous-estimé et $p_{jk}$ est une \textbf{borne
+supérieure}. En ajoutant des défaillances non propagées, le \emph{niveau} s'effondre de
+$0{,}27$ à $0{,}07$ tandis que la part de direction $\lVert A\rVert/\lVert W\rVert$ ne bouge
+pas ($60\,\%$). Le corpus établit un ordre, pas une magnitude, et cette phrase-là est robuste.}
+
+\section{L'identification partielle}
+
+\lidee{Quand la donnée ne détermine pas un paramètre, on peut étudier les résultats compatibles
+avec un ensemble d'hypothèses déclaré. Ici, la partie symétrique $S$ est posée à dire d'expert ;
+seule la direction varie. L'exploration numérique est donc conditionnelle à ce choix.}
+
+\laformule{On définit l'ensemble admissible
+\[
+  \mathcal{W}=\bigl\{\,W=S+A \ :\ |A_{jk}|\le t\,S_{jk}\ \bigr\},
+\]
+et l'on rapporte $\bigl[\inf_{\mathcal{W}}\mathrm{SCR},\ \sup_{\mathcal{W}}\mathrm{SCR}\bigr]$
+au lieu d'un point.}
+
+\cheznous{Socle sans contagion $5\,275$~M\euro. Avec contagion et ignorance totale, plage calculée aux sommets
+dans $[6\,858\,;\,8\,697]$~M\euro, un facteur $1{,}27$ : la contagion ajoute entre $+30$ et
+$+65\,\%$ au socle. L'énumération porte sur $1\,024$ sommets, et $3\,000$ points intérieurs
+tirés au hasard ne sortent pas de l'enveloppe des sommets, ni en VaR ni en perte moyenne (bornée
+dans $[849\,;1\,100]$). Le point d'expert, $8\,110$, est un point de l'ensemble, jamais sa
+mesure.}
+
+\laphrase{Je ne prétends pas connaître la direction, donc je ne donne pas un chiffre, je
+donne une fourchette. Ce n'est pas de la prudence, c'est la seule réponse possible~: une
+grandeur qui compte pour le résultat et qui est invisible dans mes données.}
+
+\lepiege{L'atteinte des extrêmes aux sommets est une \emph{propriété vérifiée
+numériquement}, pas un théorème démontré. C'est déclaré comme telle dans le mémoire.}
+
+\medskip
+\noindent\textbf{Le schéma à projeter si l'on vous demande \og quel est votre SCR\fg{}.}
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.0]
+\def\y{0}
+% axe
+\draw[->,draw=navy!60] (-0.4,\y-1.25) -- (11.2,\y-1.25) node[right,font=\scriptsize,text=navy]{M\euro};
+\foreach \x/\v in {0/5275, 3.6/6858, 7.4/8697} {
+  \draw[draw=navy!60] (\x,\y-1.15) -- (\x,\y-1.35);
+  \node[font=\scriptsize,text=navy] at (\x,\y-1.62) {$\v$};
+}
+% socle
+\fill[vert!25,draw=vert!70!black] (0,\y-0.35) rectangle (3.6,\y+0.35);
+\node[font=\scriptsize,align=center,text=vert!35!black] at (1.8,\y) {\textbf{socle}\\sans contagion};
+% bande d'ignorance
+\fill[accent!18,draw=accent!80!black] (3.6,\y-0.35) rectangle (7.4,\y+0.35);
+\node[font=\scriptsize,align=center,text=accent!70!black] at (5.5,\y)
+  {\textbf{bande d'ignorance}\\largeur $1\,839$};
+% resserrement
+\draw[decorate,decoration={brace,amplitude=4pt},draw=navy] (7.4,\y+0.5) -- (5.1,\y+0.5)
+  node[midway,above=4pt,font=\scriptsize,text=navy,align=center]{un registre spécifié\\en retire $66\,\%$};
+\draw[densely dashed,draw=navy!70] (5.1,\y+0.36) -- (5.1,\y+0.5);
+\node[align=left,font=\scriptsize,text=navy,anchor=west] at (7.9,\y+0.15)
+  {$1\,024$ sommets\\énumérés};
+\end{tikzpicture}
+\end{center}
+
+\noindent La largeur de la bande n'est pas une incertitude subie~: c'est une grandeur
+\textbf{calculée à l'avance}, et le mémoire dit combien elle se réduirait si telle donnée
+existait. C'est ce qui transforme une limite en livrable.
+
+\section{Pourquoi $A$ compte quand même}
+\label{sec:trace}
+
+\lequoi{Si $A$ est invisible dans la donnée, pourquoi s'en soucier ?}
+
+\laformule{Parce que le capital passe par $(I-W)^{-1}=I+W+W^2+\cdots$, et dès le terme
+quadratique $W^2=S^2+SA+AS+A^2$ fait apparaître $A$. En prenant la trace~:
+\[
+  \operatorname{tr}(W^2)\;=\;\|S\|^2-\|A\|^2 .
+\]
+Le signe moins vient de l'antisymétrie~: $A^{\top}=-A$ implique $A^2=-AA^{\top}$.}
+
+\laphrase{La direction est invisible au premier ordre mais elle apparaît dès qu'on met la
+matrice au carré, et le calcul du capital passe par là. Une grandeur qui compte pour la
+réponse et qui est absente de la donnée~: c'est la définition exacte d'une identification
+partielle.}
+
+% =====================================================================
+\part*{VII. À quel point on y croit}
+\addcontentsline{toc}{part}{VII. À quel point on y croit}
+
+\section{Le bootstrap}
+
+\lidee{On ne connaît pas la loi de l'estimateur. Alors on la fabrique~: on rééchantillonne
+les données avec remise, on réestime à chaque fois, et la dispersion des estimations
+obtenues approche la dispersion vraie.}
+
+\cheznous{L'intervalle de confiance bootstrap du quantile de sévérité à $99{,}5\,\%$,
+$[411\,;1\,037]$~M\euro, vaut un \textbf{facteur $2{,}5$} entre ses deux bouts. Le bootstrap est
+aussi utilisé en version
+\emph{paramétrique} pour les tests d'adéquation~: on simule sous la loi ajustée pour obtenir
+la loi de la statistique de test.}
+
+\laphrase{Le bootstrap fabrique la loi de mon estimateur en rééchantillonnant mes propres
+données. Et le résultat est brutal~: rien que cette incertitude-là vaut un facteur deux et
+demi sur le quantile d'un sinistre, et près de neuf sur la charge annuelle.}
+
+\lepiege{Le bootstrap capture l'incertitude \emph{de paramètre} à modèle fixé. Il ne dit rien du
+risque que le modèle lui-même soit faux. Et le facteur $2{,}5$ porte sur le quantile d'\emph{un}
+sinistre : porté sur la charge annuelle, le même intervalle de $\xi$ donne un facteur $8{,}93$. Ne
+jamais comparer tel quel ce $2{,}5$ à un facteur lu sur la charge annuelle.}
+
+\section{Les tests d'adéquation}
+
+\lidee{Une loi ajustée peut être fausse. On teste la distance entre la loi ajustée et les
+données, et on regarde si cette distance est anormalement grande.}
+
+\laformule{Kolmogorov-Smirnov mesure l'écart maximal entre les fonctions de répartition.
+Anderson-Darling pondère ce même écart pour donner davantage de poids aux \emph{queues}, ce
+qui est exactement la région qui nous intéresse.}
+
+\cheznous{Par bootstrap paramétrique : Anderson-Darling $p=0{,}96$ et Kolmogorov-Smirnov
+$p=0{,}89$ pour la famille GPD ; avec les paramètres publiés imposés, $0{,}99$ et $0{,}89$, ce
+qui atteste le chiffre et pas seulement le choix de loi. La couverture réelle de l'intervalle à
+$90\,\%$ de $\xi$ vaut $86\,\%$ : l'intervalle est \emph{trop étroit}, et il faudrait élargir sa
+demi-largeur d'environ $10\,\%$. La binomiale négative bat Poisson avec $p\approx10^{-30}$.}
+
+\laphrase{Les tests ne rejettent pas, avec des valeurs $p$ de $0{,}89$ à $0{,}99$. Attention à ce
+que cela veut dire~: les \emph{formes} ne sont pas rejetées, mais c'est le \emph{niveau} qui reste une
+bande, et la couverture des quantiles de sévérité est, elle, rejetée hors échantillon.}
+
+\lepiege{Les valeurs critiques tabulées de KS et AD sont fausses quand les paramètres sont
+\emph{estimés} sur les mêmes données. Il faut passer par un bootstrap paramétrique, ce que
+nous faisons, et il faut le dire, parce que beaucoup de mémoires ne le font pas.}
+
+\section{Les trois étages d'incertitude}
+
+\lidee{L'incertitude ne se réduit pas à l'intervalle de confiance. Elle a trois sources qui
+se cumulent et dont les tailles n'ont rien à voir.}
+
+\cheznous{
+\begin{center}\small
+\begin{tabular}{@{}l l r r@{}}
+\toprule
+\textbf{Étage, sur la charge annuelle} & \textbf{Ce qui varie} & \textbf{Bande (M\euro)} &
+\textbf{Facteur} \\
+\midrule
+Paramètre & $\xi$ sur son intervalle à $90\,\%$ & $[3\,042\,;27\,152]$ & $8{,}93$ \\
+Identification & la direction, non identifiée & $[6\,858\,;8\,697]$ & $1{,}27$ \\
+Modèle, dépendance & de l'indépendance au comonotone & $[5\,322\,;9\,806]$ & $1{,}84$ \\
+Modèle, famille de queue & de la lognormale à la queue lourde & $[4\,330\,;39\,901]$ & $9{,}21$ \\
+\bottomrule
+\end{tabular}
+\end{center}}
+
+\laphrase{Lues sur la même grandeur, la charge annuelle, l'incertitude de paramètre et celle de
+modèle sont du même ordre, un facteur de l'ordre de neuf chacune, et elles écrasent celle de
+l'identification. La bande que je reporte cumule le paramètre et l'identification ; le choix de
+famille, qui ne se moyenne pas, est publié comme axe de sensibilité. Et le résultat qui tient est
+ailleurs : \textbf{le niveau bouge dans la bande, l'ordre d'amorce des piliers ne bouge pas d'une
+famille à l'autre}.}
+
+\lepiege{Deux fautes à éviter. Comparer le facteur $2{,}5$ du quantile d'un sinistre au facteur
+$5{,}5$ de la famille de queue (lognormale $4\,330$ contre GPD à $\xi=0{,}90$, $24\,016$) : ce sont
+deux échelles. Et laisser croire que rien ne tient : toujours enchaîner avec les tests d'adéquation
+et l'invariance de l'ordre. Les largeurs de paramètre font varier $\xi$ seul : elles ne sont ni des intervalles conjoints
+ni des majorants garantis de l'incertitude totale.}
+
+\section{VaR prédictive et VaR robuste}
+
+\lequoi{La remarque de Caroline Hillairet~: prendre un quantile d'un objet incertain est
+mauvais. Comment y répondre sans abandonner la VaR, qui est imposée ?}
+
+\lidee{Deux réponses différentes, à ne pas confondre.
+\textbf{La VaR prédictive} intègre l'incertitude de paramètre dans la loi elle-même~: on
+mélange les lois sur la loi a posteriori des paramètres, puis on prend le quantile du
+mélange.
+\textbf{La VaR robuste} prend le pire cas sur un ensemble d'ambiguïté~: on ne mélange pas,
+on borne.}
+
+\laformule{
+\[
+  \mathrm{VaR}^{\text{préd}}_\alpha = \mathrm{VaR}_\alpha\!
+  \left(\int f(\cdot\mid\theta)\,\pi(\theta)\,d\theta\right),
+  \qquad
+  \mathrm{VaR}^{\text{rob}}_\alpha = \sup_{\theta\in\Theta}\ \mathrm{VaR}_\alpha
+  \bigl(f(\cdot\mid\theta)\bigr).
+\]}
+
+\cheznous{Six postures, en M\euro{} : point $657$ ; prédictive $645\pm7$ (le $648$ d'un autre
+calcul est le même nombre à la précision du bruit) ; robuste à $\beta=90\,\%$ $939\pm13$, à
+$95\,\%$ $1\,037\pm9$, à $99\,\%$ $1\,247\pm24$ ; pire cas de modèle, $\xi$ poussé à $0{,}90$ :
+$1\,331$. \textbf{La prédictive coïncide presque avec le point} à $99{,}5\,\%$, à deux fois le
+bruit ; elle ne s'en écarte qu'en profondeur, $+4\,\%$ à $99{,}9\,\%$. Et la robuste à $95\,\%$
+est exactement la borne haute de l'intervalle déjà publié, $1\,037$ : la même quantité sous deux
+noms. Le mémoire reporte donc le point avec sa bande.}
+
+\laphrase{Caroline a raison, et c'est mesurable. Ma réponse n'est pas d'abandonner la VaR,
+qui est imposée, mais de rendre l'incertitude visible sur trois étages. Et j'ai un résultat
+un peu contre-intuitif~: la VaR prédictive coïncide presque avec la VaR ponctuelle. Ce n'est
+pas l'intégration qui manquait, c'est la largeur de bande qui est le vrai sujet.}
+
+\lepiege{Ne pas présenter la prédictive comme \og la bonne réponse\fg{} qui remplacerait le
+point. Elle règle un problème (l'incertitude de paramètre) et pas l'autre (l'ambiguïté de modèle).
+C'est la robuste qui règle le second, et les deux ne se substituent pas. Et la posture la plus
+prudente est la moins précise : $\pm24$ à $\beta=99\,\%$, quand les deux extrémités de l'échelle
+n'ont aucun bruit.}
+
+% =====================================================================
+\part*{VIII. Les outils annexes}
+\addcontentsline{toc}{part}{VIII. Les outils annexes}
+
+\section{Le kappa de Cohen}
+
+\lequoi{Deux codeurs lisent les mêmes récits. Comment mesurer leur accord, sachant que même
+deux personnes répondant au hasard seraient parfois d'accord par chance ?}
+
+\laformule{
+\[
+  \kappa = \frac{p_o - p_e}{1 - p_e},
+\]
+où $p_o$ est l'accord observé et $p_e$ l'accord attendu par pur hasard. $\kappa=1$ est un
+accord parfait, $\kappa=0$ un accord au niveau du hasard.}
+
+\cheznous{Le dispositif de second codage en aveugle est prêt : dix récits réduits aux faits,
+anonymisés, et une grille de $100$ cellules dont $22$ sont directionnelles dans le codage de
+référence, ce qui fixe la base d'accord (matériel complémentaire). Sans second jeu, le script ne
+fabrique aucun coefficient. Par convention, un $\kappa$ au-delà de $0{,}6$ se lit comme un accord
+substantiel ; en dessous, cela voudrait dire que la séquence des défaillances ne se lit pas de
+façon reproductible dans les rapports d'enquête, ce qui serait un résultat en soi.}
+
+\laphrase{Le kappa corrige l'accord du hasard : deux personnes qui répondraient au hasard seraient
+parfois d'accord, et le kappa retranche cette part. Le second codage n'est pas encore reçu ; le
+dispositif est prêt, et il ne produit rien sans lui.}
+
+\section{La valeur d'information}
+
+\lidee{Une recommandation de reporting ne vaut rien tant qu'elle n'est pas chiffrée. On la
+chiffre en mesurant de combien la bande de capital rétrécit quand on acquiert
+l'information.}
+
+\laformule{Avec $L(\mathcal{V})=\sup_{\mathcal{V}}\mathrm{SCR}-\inf_{\mathcal{V}}\mathrm{SCR}$,
+\[
+  V(\mathcal{I}) = 1-\frac{L(\mathcal{W}_{\mathcal{I}})}{L(\mathcal{W})} \in[0,1].
+\]
+Cette quantité est \emph{monotone} (une information plus riche ne vaut pas moins) et
+\emph{sans dimension} (donc comparable d'une source de sévérité à l'autre).}
+
+\cheznous{Si l'on retenait le sens que les sept premiers rapports documentent sur six
+dépendances, la largeur de la plage tomberait de $32{,}7\,\%$ en moyenne sur quatre graines, de
+$22$ à $44\,\%$ selon la graine, sur une grille commune où chaque coefficient vaut $-S$, $0$ ou $S$.
+Ce n'est pas un acquis : le mémoire n'en revendique que deux paires, et ce chiffre est un
+indicateur de ce qu'apporterait une information de cette étendue. Le premier calcul annonçait
+$66\,\%$ : il fixait les amplitudes à leur maximum, alors qu'un sens connu les laisse libres entre
+zéro et ce maximum. La valeur se \textbf{hiérarchise} sans se départager : quatre dépendances, dont
+gouvernance-incidents ($13{,}3\,\%$), lèvent chacune de $11{,}2$ à $13{,}3\,\%$ en moyenne, leur
+ordre variant entre graines ; les cinq dernières n'en lèvent que de $0{,}7$ à $2{,}3\,\%$.}
+
+\laphrase{J'ai chiffré ce que vaut, en capital, une donnée qu'on n'a pas. Une information de sens
+sur six dépendances resserrerait la plage d'un tiers en moyenne. Et surtout, quatre dépendances
+valent chacune beaucoup plus que les cinq autres : on sait où la donnée manque, sans pouvoir dire
+laquelle d'entre elles vaut le plus.}
+
+\lepiege{Même les dix sens connus ($57{,}9\,\%$ de la plage levée), l'amplitude resterait inconnue. L'identification partielle n'est pas un état provisoire que la donnée
+finirait par lever, elle est structurelle.}
+
+\section{Le bayésien conjugué}
+
+\lidee{Plutôt que d'estimer un signe de direction par oui ou non, on lui attribue une
+probabilité, qu'on met à jour avec les observations documentaires.}
+
+\laformule{Modèle Beta-binomial~: si $\theta\sim\mathrm{Beta}(\alpha_0,\beta_0)$ est la
+probabilité que la direction aille dans un sens, et qu'on observe $n_{lo}$ transitions dans
+ce sens et $n_{hi}$ dans l'autre, alors
+\[
+  \theta \mid \text{données} \ \sim\ \mathrm{Beta}(\alpha_0+n_{lo},\ \beta_0+n_{hi}),
+\]
+et l'on pose $A = S\,(2\theta-1)$, de sorte que $\theta=1/2$ donne $A=0$.}
+
+\cheznous{Le crédible à $90\,\%$ du capital est $81\,\%$ plus resserré que les bornes de pire
+cas. Sous un prior sceptique, la médiane ne bouge presque pas : la conclusion vient des comptes
+documentés. Mais seulement $2$~paires documentées sur $6$ ont un intervalle qui exclut $0{,}50$, et
+les quatre paires que le corpus ne documente pas gardent un $\theta$ uniforme : le posterieur
+reproduit de lui-même l'identification partielle.}
+
+\laphrase{Le bayésien me permet de dire \og ce lien va probablement dans ce sens\fg{} au lieu de
+trancher par oui ou non. Deux résultats~: le prior n'a presque aucune influence, ce qui est
+rassurant, et seulement deux paires sur six sont réellement tranchées, ce qui est honnête. Je
+publie les deux objets : la plage aux sommets, conditionnelle à $S$ posée, et le crédible, qui ajoute un prior sur la direction.}
+
+\lepiege{Le bayésien ne crée pas d'information. Il exprime autrement la même incertitude, de
+façon plus lisible et plus fine, mais il ne remplace pas la donnée manquante.}
+
+% =====================================================================
+\part*{IX. Du capital à la décision}
+\addcontentsline{toc}{part}{IX. Du capital à la décision}
+
+\section{À quelle échelle se lit un SCR}
+
+\lequoi{Un capital de plusieurs milliards paraît absurde pour une compagnie d'assurance. C'est
+la première objection qu'on vous fera, et une clause de style n'y répond pas.}
+
+\lidee{La fréquence d'amorce et l'échelle des pertes changent avec la taille, puis le quantile annuel
+est recalculé. Le calcul d'entité utilise la cascade indépendante, sans choc commun P4 ; le chiffre
+de tête à quatre canaux utilise la marche auto-évitante avec ce choc. Les montants issus de ces
+deux protocoles ne se déduisent pas directement les uns des autres.}
+
+\cheznous{\;\\[-6pt]
+\begin{center}\small
+\begin{tabular}{@{}l r r r r@{}}
+\toprule
+\textbf{Lecture} & $\lambda$/an & \textbf{Sévérité} & \textbf{SCR} & \textbf{Moyenne} \\
+\midrule
+Secteur financier mondial & $21{,}56$ & $\times1$ & $8\,123$~M\euro & $983$~M\euro \\
+Seau \og{}au moins dix événements\fg{} & $0{,}210$ & $\times1$ & $488$~M\euro & $9{,}7$~M\euro \\
+Seau \og{}toutes firmes\fg{} & $0{,}100$ & $\times1$ & $229$~M\euro & $4{,}6$~M\euro \\
+$\lambda$ lu à la taille de l'entité & $0{,}092$ & $\times1$ & $198$~M\euro & $4{,}3$~M\euro \\
+\textbf{Les deux canaux composés} & $0{,}092$ & $\times0{,}854$ & $\mathbf{169}$~M\euro & $3{,}6$~M\euro \\
+\bottomrule
+\end{tabular}
+\end{center}
+La dernière ligne est la lecture cohérente : fréquence \emph{et} sévérité prises à la taille de
+l'entité. Sa bande sur les $1\,024$ sommets va de $131{,}5$ à $183{,}3$~M\euro.}
+
+\laphrase{Les montants sectoriels concernent le périmètre financier étudié. Le calcul d'entité
+donne $169$~M\euro{} dans la lecture du registre, sous un état supposé. C'est une extrapolation
+d'ordre de grandeur : la forme de la sévérité reste celle de grandes institutions. Rien ne
+garantit que ce montant majore le besoin réel. Le critère conventionnel de poids dans le SCR
+ne définit pas un domaine de validité statistique.}
+
+\lepiege{La non-linéarité est le vrai résultat. Diviser $\lambda$ par $235$ divise la moyenne par
+$270$, donc à proportion, mais ne divise le capital que par $48$ : c'est le \textbf{principe du
+grand saut unique}, le quantile d'une entité décrivant un sinistre isolé et non une accumulation.
+Diviser le capital du secteur par le nombre d'entités le sous-estimerait d'un facteur de l'ordre de
+cinq. Et le repère de $3\,\%$ des provisions n'est qu'un ordre de grandeur : il s'écarte de
+$-8\,\%$ et $+56\,\%$ des modules publiés dans les SFCR.}
+
+\lepiege{\textbf{La descente d'échelle ne distingue ni la taille fine ni le métier.} Les élasticités
+à la taille valent $0{,}074$ pour la fréquence et $0{,}087$ pour la sévérité : une petite entité
+subit presque la sévérité d'un grand groupe, donc sa charge rapportée au SCR est plus forte. Un
+essai exploratoire, hors rapport, l'illustre. À taille égale, l'assurance a environ $0{,}5$ fois la
+fréquence de la banque et environ $2{,}4$ fois sa sévérité ; un plafond par sinistre proportionnel à
+l'exposition ($\kappa\times$ actifs) ferait suivre la charge à la taille. Mais le plafond $\kappa$
+serait posé, la base ne couvre pas les petites entités, et le quantile à $99{,}5\,\%$ d'un petit
+assureur tombe à zéro. Piste d'amélioration, pas résultat.}
+
+\section{Détenir ou transférer}
+
+\lequoi{Le mémoire compare son SCR à la Formule Standard, aux pertes réelles et au marché
+cyber. Trois comparaisons de \emph{niveau}. Il en manque une de \emph{prix}.}
+
+\lidee{Un SCR n'est pas une perte, c'est du capital \textbf{immobilisé}, et le capital coûte.
+Solvabilité~II chiffre ce coût explicitement. En face, transférer coûte une prime. Les deux
+grandeurs sont homogènes, donc comparables, et c'est l'arbitrage que fait un directeur des
+risques.}
+
+\laformule{Le coût annuel de détention vaut $\mathrm{CoC}\times\mathrm{SCR}$, où
+$\mathrm{CoC}$ est le taux de coût du capital de la marge de risque : $6\,\%$ historiquement,
+ramené à $\mathbf{4{,}75\,\%}$ par la directive (UE)~2025/2. Pour un traité en excès de perte
+annuel de portée $L$, on minimise
+\[
+  \mathrm{co\hat ut}(L)=\underbrace{\E[\min(X,L)]/0{,}485}_{\text{prime}}
+  \;+\;\mathrm{CoC}\times\underbrace{\mathrm{VaR}_{99{,}5\%}\bigl(X-\min(X,L)\bigr)}_{\text{capital résiduel}} .
+\]}
+
+\cheznous{Multiple de capital $\mathrm{SCR}/\E[X]=\mathbf{47}$ à l'échelle entité contre $8{,}3$
+au secteur. Coût de détention $8{,}0$~M\euro/an au taux révisé ($10{,}1$ à $6\,\%$) contre
+$3{,}6$~M\euro{} de sinistralité attendue, soit $2{,}2$ à $2{,}8$ fois. Le capital résiduel vaut
+$\max(\mathrm{SCR}-L,0)$, donc l'optimum tombe exactement en $L^\star=\mathrm{SCR}=169$~M\euro, et
+le coût de financement passe à $\mathbf{2{,}9}$~M\euro, soit $\mathbf{-64\,\%}$ ; pertes
+conservées comprises, de $11{,}67$ à $5{,}12$~M\euro, soit $-56\,\%$. Une entité devenue conforme
+(fréquence de $0{,}092$ à $0{,}046$) voit en outre ce coût optimal baisser de $60\,\%$ : la
+conformité déplace le point d'équilibre entre rétention et transfert.}
+
+\laphrase{Immobiliser le capital coûte deux fois et demie ce que le risque coûte en moyenne.
+Près de l'optimum, un euro de portée coûte un peu plus d'un pour cent de prime et libère
+quatre virgule sept cinq pour cent de coût du capital. C'est pour ça que le transfert domine, et
+c'est un calcul, pas une opinion.}
+
+\lepiege{Le \og coût total\fg{} s'appelle désormais coût de \emph{financement} (prime et coût du
+capital), et ne comprend pas les pertes conservées. Ce gain est une \textbf{borne supérieure}, pour trois raisons : la capacité du marché
+plafonne près de $500$~M\euro{} sur un seul risque ; les polices excluent la guerre et les
+infrastructures essentielles ; et sous Solvabilité~II céder ne supprime pas l'exigence, cela
+\emph{substitue} au risque cyber un risque de \textbf{défaut de contrepartie}. En résumant les
+trois par la part de la portée achetée qui reste sans allègement de capital, le transfert reste
+préférable, face au meilleur traité, tant que cette part est inférieure à
+$\mathbf{64\,\%}$ ($81{,}5\,\%$ pertes conservées comprises) : il faudrait que près des deux tiers de
+la couverture soient inefficaces pour renverser la conclusion. La conclusion est robuste, le
+chiffre ne l'est pas.}
+
+% =====================================================================
+
+\input{cours_complements_institut_2026_10_28}
+
+\end{document}

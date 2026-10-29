@@ -1,0 +1,50 @@
+123 — MÉLANGE PRÉDICTIF ANNUEL, VERSION INSTITUT
+2000 calibrations lues dans 120.json (bootstrap conjoint, seuil fixé).
+Montants en M EUR du périmètre financier étudié. Mélange empirique, conditionnel aux
+hypothèses du moteur ; ni loi prédictive bayésienne ni intervalle de confiance.
+Contrôle : le quantile lu sur la répartition reproduit le moteur aux 8 cellules centrales.
+  250/2000 ; 15 s
+  500/2000 ; 31 s
+  750/2000 ; 46 s
+  1000/2000 ; 64 s
+  1250/2000 ; 80 s
+  1500/2000 ; 96 s
+  1750/2000 ; 112 s
+  2000/2000 ; 129 s
+Calibrations traitées : 2000/2000.
+
+QUANTILE À 99,5 % : central, médiane des quantiles conditionnels, moyenne des quantiles, mélange
+règle      état            central   médiane   moyenne   mélange  mélange/central
+additive   conforme           5940      5560      7221      7030  1.184
+additive   non_conforme      19872     18348     28939     28991  1.459
+additive   contraste du mélange : écart 21960, rapport 4.124 (central 13933, 3.346)
+moyenne    conforme           4463      4189      5376      5217  1.169
+moyenne    non_conforme       8712      8073     12373     12314  1.414
+moyenne    contraste du mélange : écart 7097, rapport 2.360 (central 4248, 1.952)
+unique     conforme           4770      4479      5654      5478  1.148
+unique     non_conforme      10710      9936     14245     14040  1.311
+unique     contraste du mélange : écart 8561, rapport 2.563 (central 5940, 2.245)
+amplifiee  conforme           6904      6518      8097      7832  1.134
+amplifiee  non_conforme      27725     25791     36184     35520  1.281
+amplifiee  contraste du mélange : écart 27688, rapport 4.535 (central 20821, 4.016)
+
+ÉCART RELATIF DU MÉLANGE AU CALAGE CENTRAL À 99,5 %, RÈGLE ADDITIVE (grandeurs citées)
+  conforme      18 % ; 18.4 %
+  non_conforme  46 % ; 45.9 %
+  calibrations avec xi >= 1 : 12 sur 2000
+
+SENSIBILITÉ AU NIVEAU, RÈGLE ADDITIVE : mélange / central
+  conforme      95 %: 2015 / 1981  99 %: 4671 / 4225  99.5 %: 7030 / 5940  99.9 %: 20647 / 14046
+  non_conforme  95 %: 9376 / 8595  99 %: 19411 / 14929  99.5 %: 28991 / 19872  99.9 %: 87360 / 43734
+
+VARIANTE SANS LES AJUSTEMENTS xi >= 1 (moyenne théorique infinie), mélange à 99,5 % :
+  additive   conforme 6887 ; non conforme 27894 ; rapport 4.050
+  moyenne    conforme 5124 ; non conforme 11879 ; rapport 2.318
+  unique     conforme 5394 ; non conforme 13648 ; rapport 2.530
+  amplifiee  conforme 7712 ; non conforme 34619 ; rapport 4.489
+  (1988 calibrations sur 2000.)
+Figure : melange_predictif_annuel.png
+
+Résolution de la grille de lecture du mélange : 0.26 % en relatif.
+Le mélange ignore les masses au-delà de la portée de chaque calibration (cdf bornée à son dernier point).
+Durée 129.4 s ; résultats agrégés : 123.json

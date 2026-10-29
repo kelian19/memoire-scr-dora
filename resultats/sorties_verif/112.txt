@@ -1,0 +1,20 @@
+==============================================================================
+112 : DOMAINES D'ATTRACTION DES MAXIMA ET QUEUE CALIBREE
+==============================================================================
+
+1. Densites des lois des valeurs extremes generalisees (position 0, echelle 1)
+   xi = -0.50  type Weibull   masse integree 1.000000  borne du support +2.000 (superieure)
+   xi = +0.00  type Gumbel    masse integree 1.000000  borne du support aucune
+   xi = +0.50  type Frechet   masse integree 0.999975  borne du support -2.000 (inferieure)
+
+2. Exces au-dela d'un seuil, loi de Pareto generalisee d'echelle 1
+   xi = -0.3000  domaine Weibull   exces bornes a 1/|xi| = 3.333
+   xi = +0.0000  domaine Gumbel    decroissance exponentielle
+   xi = +0.5954  domaine Frechet   decroissance en puissance d'exposant 1/xi = 1.6795 ; esperance finie, variance infinie
+
+3. L'indice calibre sur OpRisk (0.5954) est positif : domaine de Frechet.
+
+figure : figures/GEV_domaines_attraction.png
+
+Grandeurs citees (sans separateur) :
+  xi_weibull -0.5   xi_gumbel 0   xi_frechet 0.5   xi_gpd_borne -0.3   xi_calibre 0.5954

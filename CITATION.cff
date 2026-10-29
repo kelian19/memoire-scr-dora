@@ -8,8 +8,8 @@ authors:
     affiliation: "ENSAE Paris ; Nexialog Consulting"
 repository-code: "https://github.com/kelian19/memoire-scr-dora"
 license: MIT
-version: 1.1.0
-date-released: "2026-09-30"
+version: 1.2.0
+date-released: "2026-10-29"
 keywords:
   - risque cyber
   - DORA

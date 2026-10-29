@@ -1,0 +1,134 @@
+% =============================================================================
+%  VERSION INSTITUT DES ACTUAIRES A 150 PAGES (octobre 2026)
+%
+%  Troisieme fichier maitre, a cote de main_ensae.tex (version SFE, 101 pages) et de
+%  main_institut.tex (version deposee le 30 septembre, 195 pages, FIGEE). Il lit
+%  chapitres_inst/, copie de chapitres_inst/ sur laquelle sont ajoutes les contenus qui
+%  font passer le document de 100 a 150 pages sans perte de qualite. Il ne modifie
+%  aucun fichier lu par les deux autres versions.
+%
+%  Differences avec la version ENSAE : couverture officielle de l'Institut
+%  (page_de_garde), paragraphe d'usage de l'IA a la fin du resume (§ 5.1.c des
+%  Recommandations Jury), notes de synthese en tete, pas de chapitre du stage,
+%  annexes F (pistes) et G (inventaire de l'IA) exigees par l'Institut.
+%  Echeance cote Institut : janvier 2027 (soutenance en mars 2027).
+% =============================================================================
+\documentclass[12pt,a4paper]{report}
+
+% FORMAT IMPOSE PAR L'ECOLE : Times New Roman 12 et interligne 1,5. La commande ci-dessous
+% active, dans le preambule partage, la branche Times et 1,5 ; les autres versions ne la
+% definissent pas et gardent Palatino 11. L'ecole a leve la limite de trente pages le
+% 16 septembre 2026, pas la police ni l'interligne.
+\newcommand{\formatensae}{}
+
+% Meme preambule que la version 2, qui est la reference de style du projet.
+\input{preambule_v2}
+% Espaces de lecture propres à cette version : police 12 et interligne 1,5 conservés.
+% Les définitions restent près des équations ; les blancs autour des sous-titres sont resserrés.
+\titlespacing*{\section}{0pt}{14pt plus 2pt minus 2pt}{7pt plus 1pt}
+\titlespacing*{\subsection}{0pt}{11pt plus 2pt minus 1pt}{5pt plus 1pt}
+
+% Figures rejouees sur l'echantillon 2000-2026 (OPRISK_ANNEE_MIN=2000) : elles passent avant celles
+% des versions deposees, de memes noms. Les autres figures sont lues comme avant.
+\graphicspath{{../recherche/vasicek_lab/figures_inst/}{../recherche/vasicek_lab/figures/}{../recherche/cascade_qualitative/figures/}{../resultats/outputs/}}
+
+% VERSION ENSAE SEULE (reduction SFE, phase 3). Deux reglages qui ne touchent pas le preambule
+% partage avec la version Institut :
+%  - la bibliographie entre au sommaire, que les consignes MS exigent et ou natbib ne l'inscrit
+%    pas ;
+%  - un renvoi vers un contenu parti au supplement passe par une ETIQUETTE RELAIS, posee dans la
+%    notice des annexes : le \ref du texte reste intact et imprime la place du contenu dans le
+%    supplement (S1, S1.2...), le lien menant a la notice qui dit ou le trouver.
+\renewcommand{\bibsection}{\chapter*{\bibname}\phantomsection
+  \addcontentsline{toc}{chapter}{\bibname}\markboth{\bibname}{}}
+\makeatletter
+\newcommand{\etiquettesupplement}[2]{\phantomsection\def\@currentlabel{#2}\label{#1}}
+\makeatother
+
+\begin{document}
+
+% COUVERTURE : le gabarit officiel de l'Institut des actuaires (page_de_garde.tex),
+\newcommand*{\pgdatesoutenance}{mars 2027}
+% Titre : celui de la version ENSAE, valeurs par défaut du gabarit (décision de Kélian, 29 octobre 2026).
+\input{page_de_garde}
+
+% PIECES LIMINAIRES : remerciements, resume, abstract, sommaire, glossaire. Copies de
+% remerciements.tex, 01_resume.tex et 00_glossaire.tex, a reecrire en phase 4.
+\input{chapitres_inst/remerciements}
+\input{chapitres_inst/resume}      % Résumé, abstract, sommaire
+\input{chapitres_inst/glossaire}
+\input{chapitres_inst/notes_synthese}   % notes de synthese FR et EN, en tete
+
+% CORPS, SELON LE PLAN CIBLE DE LA MISSION. Plus de parties : leurs six etiquettes part:...
+% sont reposees sur le chapitre qui ouvre desormais leur contenu.
+\input{chapitres_inst/00_introduction}             % ex-1.5.3
+\input{chapitres_inst/01_contexte}                 % ex-chapitres 1 et 2
+\input{chapitres_inst/02_revue}                    % ex-3
+\input{chapitres_inst/03_donnees}                  % ex-4
+\input{chapitres_inst/04_frequence_severite}       % ex-5
+\input{chapitres_inst/05_cascade}                  % ex-6
+\input{chapitres_inst/06_multietats}               % ex-7
+\input{chapitres_inst/07_identifiabilite}          % ex-8
+\input{chapitres_inst/08_identification_partielle} % ex-9
+\input{chapitres_inst/09_resultats}                % ex-10
+\input{chapitres_inst/10_robustesse}               % ex-11 et 12
+\input{chapitres_inst/conclusion}                  % ex-13
+
+% BIBLIOGRAPHIE AVANT LES ANNEXES : ordre des consignes MS (sommaire, introduction,
+% developpements, conclusion, bibliographie, annexes).
+\bibliographystyle{plainnat-fr}
+% Interligne simple et entrees resserrees dans la bibliographie (1er octobre 2026, demande de
+% Kelian : faire la place des figures remontees du supplement). La police reste le Times 12 des
+% consignes MS ; l'interligne 1,5 vaut pour le texte courant, comme dans les tableaux.
+% Corps \footnotesize depuis le 28 octobre 2026 : rend la page prise par les notes de synthese a trois pages.
+{\NoAutoSpacing\singlespacing\footnotesize\setlength{\bibsep}{0pt plus 0.5pt}\bibliography{references_inst}}
+
+% =====================================================================
+\appendix
+% Plus de page de partie : une ligne « Annexes » au sommaire, en tete de la notice.
+\clearpage
+\phantomsection
+\addcontentsline{toc}{part}{Annexes}
+
+% -----------------------------------------------------------------------------
+% NOTICE D'ORGANISATION DES ANNEXES. Les annexes B (demonstrations du socle EVT),
+% D (pieces justificatives) et E (complements aux chapitres du corps) ont ete
+% deportees le 18 septembre 2026 vers materiel_complementaire/ et ne sont plus
+% appelees ; les renvois vers elles passent par la macro \matcomp. Depuis la phase 3
+% de la reduction, trois autres contenus sont partis dans supplement/ (S1 a S3) ; les
+% quatre etiquettes que le corps vise encore y sont relayees ci-dessous.
+% -----------------------------------------------------------------------------
+\chapter*{Organisation des annexes et matériel complémentaire}
+\addcontentsline{toc}{chapter}{Organisation des annexes et matériel complémentaire}
+\markboth{Annexes}{}
+
+Ce mémoire garde en annexe les démonstrations du modèle de cascade (A), celles de la théorie des
+valeurs extrêmes avec les détails de validation (B), les adaptations par pilier et le cas d'usage (C), le
+protocole d'élicitation et les relectures de praticiens (D), la table des paramètres et des notations
+(E), les pistes pour de futurs mémoires (F) et l'inventaire de l'usage de l'intelligence artificielle
+générative (G).
+
+Le \emph{matériel complémentaire}, qui réunit les pièces justificatives, les compléments de chapitres et
+les diagnostics secondaires, est déposé de façon pérenne sur Zenodo, sous l'identifiant
+\texttt{10.5281/zenodo.22874524} :
+\url{https://doi.org/10.5281/zenodo.22874524}
+
+Le renvoi numéroté S4.6, au chapitre des données, conduit au supplément de la version rédigée pour
+l'ENSAE, déposé au même identifiant dans le fichier \texttt{supplement\_rapport\_ENSAE.pdf}.
+% ETIQUETTES RELAIS : fichier ecrit par reduction/relais_supplement.py, a relancer apres tout
+% deplacement vers le supplement.
+\input{chapitres_inst/relais}
+
+% =====================================================================
+% Annexe A revenue du supplement le 1er octobre 2026 tard le soir (« enrichissons le memoire ») :
+% c'est l'annexe A du plan cible. Le supplement passe a S1-S4.
+\input{chapitres_inst/annexe_a_demonstrations}        % A, ex-A (le supplement l'appelait S5)
+\input{chapitres_inst/annexe_evt}                     % B, demonstrations et complements sur les valeurs extremes (ex-materiel complementaire)
+\input{chapitres_inst/annexe_adaptations}             % B, adaptations par pilier et cas d'usage (ex-S1)
+\input{chapitres_inst/annexe_elicitation}              % C, protocole d'elicitation et relectures de praticiens (ex-S4)
+\input{chapitres_inst/annexe_b_parametres_notations}  % D, ex-D et ex-E
+\input{chapitres_inst/annexe_pistes}                  % D, exigee par l'Institut
+\input{chapitres_inst/annexe_d_ia}                    % E, inventaire de l'IA (exigee)
+
+
+\end{document}

@@ -1,0 +1,378 @@
+
+==============================================================================
+0. PERIMETRES ET STATUT
+==============================================================================
+
+  Deux bases, deux roles, et elles ne se substituent pas :
+    PRC  (Privacy Rights Clearinghouse / Data Breach Chronology) : incidents de violation de
+         donnees notifies aux autorites americaines. Elle porte le NOMBRE d'enregistrements
+         touches, jamais un montant. Elle sert la structure et la frequence, jamais le niveau
+         de perte en euros.
+    SAS  (OpRisk Global Data) : pertes operationnelles AVEREES, en dollars, toutes categories
+         balaises. Elle porte le montant, donc la severite du memoire en sort.
+  Le seuil de severite significative employe dans les tests ci-dessous est le 75e percentile
+  de la base concernee. Il n'est PAS le seuil de calibration publie (u = 20,03 M EUR) : celui-ci
+  vit dans config.py et ne bouge pas. Le q75 sert uniquement a binariser une variable continue
+  pour les tests d'association, et il est declare comme tel.
+
+
+==============================================================================
+1. VOLUMETRIE ET COMPLETUDE
+==============================================================================
+
+  PRC : 74783 incidents dans l'export brut.
+
+  Taux de presence, naif contre honnete (%) :
+    variable                    notna hors UNKN
+    breach_date                100.00    54.82
+    reported_date              100.00    99.54
+    end_breach_date            100.00    28.18
+    incident_details           100.00   100.00
+    information_affected       100.00   100.00
+    organization_type          100.00    89.29
+    breach_type                100.00    47.31
+    total_affected             100.00    41.77
+    residents_affected         100.00    79.88
+    source                     100.00   100.00
+    org_name                   100.00   100.00
+
+  LECTURE. La colonne « notna » vaut 100,00 partout : c'est l'artefact annonce en tete de
+  script. La colonne de droite est celle qui compte. total_affected, seule variable d'impact
+  de cette base, n'est renseignee que dans 41.77 % des cas : c'est la
+  lacune structurante du chapitre, et c'est elle qui interdit d'utiliser la PRC pour un niveau
+  de perte. Le champ de DATE de survenance manque de son cote dans un cas sur deux
+  (54.82 % de presence), ce qui borne toute lecture temporelle fine.
+
+  total_affected strictement positif : 31217 incidents (41.74 % de l'export).
+  Perimetre retenu par le memoire (2019-2025, impact renseigne) : 15053 incidents.
+  CONTROLE : effectif identique aux sorties versionnees 21, 22 et 62 (15053) -> OK
+
+  SAS OpRisk : 41976 lignes brutes, 41975 pertes retenues (montant strictement positif, aberrations au-dela de 100 000 M$ retirees).
+
+  Taux de presence SAS (%) :
+    Loss Amount ($M)                   100.00
+    Event Risk Category                100.00
+    Sub Risk Category                  100.00
+    Basel Business Line - Level 1      100.00
+    Industry Sector Name               100.00
+    Country of Incident                100.00
+    Revenue ($M)                        87.82
+    Assets ($M)                         83.51
+    # of Employees                      86.11
+
+  Perimetre cyber/TIC : 1099 pertes ; secteur financier : 22139 ; intersection cyber x finance : 570.
+
+==============================================================================
+1bis. STATISTIQUES DESCRIPTIVES DES VARIABLES D'IMPACT
+==============================================================================
+
+  statistique    PRC 2019-2025, enregistrements PRC, severite derivee Jacobs (M EUR) SAS toutes categories (M EUR) SAS cyber x finance (M EUR)
+  n                               15053                 15053                 41975                   570
+  moyenne                        102646                6.0686               69.9824               24.1774
+  ecart-type                    1235098               41.5896              647.2555               98.4999
+  minimum                        1.0000                0.0020                0.0920                0.0920
+  q25                           69.0000                0.0497                1.0120                0.3427
+  mediane                          1104                0.4091                3.7628                1.3800
+  q75                              8330                1.9005               18.4000                8.2110
+  q85                             23467                4.1756               45.4020               20.0339
+  q90                             49000                7.3067               82.8975               45.4710
+  q95                            164673               18.3570              202.4000              102.1320
+  q99                           1719753              109.1737                  1012              377.8081
+  maximum                      60000000                  1624                 53360                  1380
+
+  Rapports de forme :
+    PRC 2019-2025, enregistrements         q99/mediane =    1557.7   max/q99 =     34.9   CV =   12.03
+    PRC, severite derivee Jacobs (M EUR)   q99/mediane =     266.9   max/q99 =     14.9   CV =    6.85
+    SAS toutes categories (M EUR)          q99/mediane =     268.9   max/q99 =     52.7   CV =    9.25
+    SAS cyber x finance (M EUR)            q99/mediane =     273.8   max/q99 =      3.7   CV =    4.07
+
+  LECTURE. La colonne qui compte est la derniere : c'est elle qui porte la calibration publiee.
+  Trois traits s'y lisent d'un coup, et ils commandent tout le reste du memoire.
+    - La MOYENNE depasse le q75 sur les quatre colonnes, et de loin. Une distribution dont la
+      moyenne tombe au-dessus du troisieme quartile n'est pas decrite par sa moyenne : le
+      niveau est porte par une minorite d'observations.
+    - Le rapport du q99 a la MEDIANE vaut pres de 270 sur les trois colonnes monetaires et
+      depasse 1 500 sur les enregistrements. Ce n'est pas une queue qui se prolonge, c'est une
+      queue qui change d'echelle, et c'est ce qui rend un ajustement global inadapte.
+    - Le coefficient de variation vaut 4,0 sur le perimetre calibre et jusqu'a 12,0 sur les
+      enregistrements. Une loi exponentielle le vaut exactement un : la dispersion est donc
+      bien au-dela du regime que les lois usuelles de duree savent porter.
+  ET UNE ASYMETRIE ENTRE LES DEUX DERNIERES COLONNES, a ne pas lire de travers. Le rapport du
+  maximum au q99 vaut 3,7 sur le perimetre cyber x finance contre 52,7 sur la base entiere : le
+  perimetre retenu est le MOINS extreme des deux en ce sens, non le plus. Le sinistre le plus
+  lourd de la base ne releve pas du cyber, et la queue calibree n'est donc pas celle de
+  l'evenement le plus spectaculaire du fichier.
+
+  Reperes : q85 de l'echantillon 2000-2026 = 20.03 M EUR ; seuil publie u = 20.03 M EUR : le seuil est le percentile 85 de cet echantillon.
+  CONTROLE : exces au-dessus du seuil publie = 86 contre n_excess = 86 -> OK
+  TAUX : p_u = 0,1509 de config.py correspond a 86.0 exces ; 86 / 570 = 0.1509.
+
+==============================================================================
+1ter. LES PLUS GROS INCIDENTS, NOMMES
+==============================================================================
+
+  Dedoublonnage sur (organisation, volume, date de survenance) : 15053 lignes -> 13410 incidents distincts, soit 1643 doublons de notification (10.9 % des lignes).
+
+  Quinze plus gros incidents distincts de la PRC sur 2019-2025 :
+    organisation                                type breche   survenance notification enregistrements
+    Progress Software, Ipswitch, Inc.            BSO  UNKN   2023-05-27            -       60000000
+    T-Mobile USA, Inc.                           BSO  UNKN   2021-08-13   2021-08-16       53700000
+    AT&T Inc.                                    BSO  UNKN   2024-03-26   2024-04-10       51226382
+    Logan Health Medical Center                  MED  HACK   2021-11-22   2022-01-05       40000000
+    T-Mobile                                     BSO  UNKN   2022-11-25   2023-01-19       37000000
+    Comcast Cable Communications LLC             BSO  HACK   2023-10-16   2023-12-18       35879455
+    Zoosk, Inc.                                  BSO  UNKN   2020-01-12   2020-06-03       24200000
+    CafePress, Inc.                              BSR  UNKN   2019-02-19   2019-09-19       23000000
+    CafePress Inc.                               BSR  UNKN   2019-02-19   2019-09-04       22000000
+    Texas Dow Employees Credit Union             BSF  HACK   2023-05-29   2024-08-23       20000000
+    Evite, Inc.                                  BSO  UNKN   2019-02-22   2019-06-10       18571486
+    loanDepot.com, LLC                           BSF  UNKN   2024-01-03   2024-02-23       16924071
+    ClearVoiceResearch.com, LLP                 UNKN  UNKN   2021-04-16   2021-04-30       15700000
+    ClearVoiceResearch.com, LLC                  BSO  DISC   2021-04-17   2021-04-29       15700000
+    ClearVoiceResearch.com, LLC                  BSO  DISC   2021-04-16   2021-05-03       15700000
+
+  Ces quinze incidents portent 37.8 % du volume total de la periode, et le premier a lui seul 5.0 %.
+  50 % du volume tient dans 31 incidents, soit 0.23 % de la base dedoublonnee.
+  80 % du volume tient dans 209 incidents, soit 1.56 % de la base dedoublonnee.
+  90 % du volume tient dans 491 incidents, soit 3.66 % de la base dedoublonnee.
+
+  LECTURE, ET C'EST L'ARGUMENT DE QUEUE RENDU CONCRET. La moitie du volume de sept annees tient
+  dans 31 incidents sur 13410, soit 0.23 % de la base. Un modele qui
+  decrirait cette distribution par son centre manquerait donc l'objet : le niveau n'est pas
+  produit par le regime courant, il est produit par une poignee d'evenements. C'est exactement
+  ce que l'ajustement par depassement de seuil formalise, et c'est aussi pourquoi le quantile a
+  99,5 % du memoire est porte par un sinistre unique plutot que par une accumulation.
+
+  LE DEDOUBLONNAGE EST CONSERVATEUR, ET LA TABLE LE MONTRE. Il exige une egalite EXACTE du
+  triplet, si bien qu'il ne rapproche ni « CafePress, Inc. » de « CafePress Inc. », ni deux
+  notifications du meme incident decalees d'un jour. Des doublons residuels subsistent donc, et
+  ils sont visibles dans les quinze lignes ci-dessus. Les rapprocher demanderait un appariement
+  approximatif sur les raisons sociales, dont le taux d'erreur serait lui-meme a estimer : le
+  cout depasse le benefice pour un usage ou chaque ligne est une observation de severite et non
+  un terme d'une somme. Le chiffre de doublons ci-dessus est donc une BORNE BASSE.
+
+  ET UN DEFAUT DE BASE A DECLARER. Les 1643 lignes retirees ci-dessus ne sont pas des
+  erreurs de saisie : ce sont des notifications multiples d'un meme incident a des autorites
+  differentes, que la PRC ne deduplique pas. Sommer total_affected sans dedoublonner surestime
+  donc le volume. Le memoire n'est PAS touche, parce qu'il ne somme jamais ces volumes pour
+  produire un montant : il les utilise comme echantillon de severite, ou chaque ligne est une
+  observation. La remarque vaut pour qui reprendrait la base a d'autres fins.
+
+
+==============================================================================
+2. VARIABLES QUALITATIVES : KHI-DEUX D'INDEPENDANCE ET V DE CRAMER
+==============================================================================
+
+  PRC, seuil de binarisation q75 = 8330 enregistrements touches.
+  breach_type x depassement du q75             khi2 =       43.1  ddl =   6  p  1.101e-07  V = 0.0679  n = 8049
+  organization_type x depassement du q75       khi2 =      296.4  ddl =   6  p  4.772e-61  V = 0.1480  n = 13267
+
+  SAS, seuil de binarisation q75 = 20.0000 M$.
+  Event Risk Category x depassement du q75     khi2 =     1301.9  ddl =   6  p 4.281e-278  V = 0.1757  n = 41975
+  Basel Business Line - Level 1 x depassement du q75 khi2 =     1238.5  ddl =   9  p 5.927e-261  V = 0.1711  n = 41975
+  Industry Sector Name x depassement du q75    khi2 =      711.9  ddl =  20  p 6.619e-138  V = 0.1284  n = 41975
+
+  LECTURE. Toutes les p-valeurs s'effondrent, ce qui n'apprend rien : a quinze mille et
+  quarante mille lignes, le khi-deux rejette l'independance pour un ecart sans portee. Le
+  renseignement est dans le V, qui est une taille d'effet bornee par un. Les associations
+  mesurees restent MODESTES : aucune n'atteint 0,3, seuil usuel d'une association moyenne.
+  Le type de brèche et la ligne metier informent donc le depassement du seuil, mais loin de
+  le determiner, ce qui est exactement l'argument que le memoire fait valoir contre une
+  segmentation de la severite par categorie.
+
+
+==============================================================================
+3. VARIABLES QUANTITATIVES : NORMALITE, CORRELATION DE RANG, HETEROGENEITE
+==============================================================================
+
+  PRC, enregistrements touches (n = 15053, echantillon de test = 5000)
+    Shapiro-Wilk, echelle brute      W = 0.0370   p = 5.811e-95
+    Shapiro-Wilk, echelle log        W = 0.9701   p = 4.463e-31
+    asymetrie = 29.40   aplatissement (non centre) = 1083.44
+
+  SAS, montant de perte (M$) (n = 41975, echantillon de test = 5000)
+    Shapiro-Wilk, echelle brute      W = 0.0712   p = 4.131e-94
+    Shapiro-Wilk, echelle log        W = 0.9855   p = 2.739e-22
+    asymetrie = 36.73   aplatissement (non centre) = 2016.26
+
+  SAS, perimetre cyber/TIC (M$) (n = 1099, echantillon de test = 1099)
+    Shapiro-Wilk, echelle brute      W = 0.0453   p = 8.551e-59
+    Shapiro-Wilk, echelle log        W = 0.9791   p = 1.750e-11
+    asymetrie = 30.19   aplatissement (non centre) = 963.90
+
+    LECTURE. La normalite est rejetee a l'echelle brute des deux cotes, et l'aplatissement
+    se compte en milliers la ou une gaussienne vaut trois. Le passage au logarithme AMELIORE
+    nettement la statistique sans la sauver : la queue reste plus lourde qu'une log-normale,
+    ce qui est precisement ce qui justifie une loi de Pareto generalisee au-dela d'un seuil
+    plutot qu'un ajustement global.
+
+
+  Correlations de Spearman (rang, donc insensibles a la queue) :
+    PRC (n = 14479 incidents a triplet complet et delai plausible) :
+      total_affected           x residents_affected       rho = +0.4647  p < 1e-300
+      total_affected           x delai de notification    rho = +0.1597  p 2.795e-83
+      residents_affected       x delai de notification    rho = +0.0797  p 8.043e-22
+
+    SAS (n = 33769 pertes a profil financier complet) :
+      perte                    x chiffre d'affaires       rho = +0.1593  p 1.182e-190
+      perte                    x actif total              rho = +0.0677  p 1.362e-35
+      perte                    x effectif                 rho = +0.1390  p 3.022e-145
+
+    LECTURE, ET C'EST LE RESULTAT LE PLUS UTILE DE LA SECTION. La perte est correlee a la
+    taille de l'entite, mais TRES FAIBLEMENT : les trois coefficients de rang tiennent entre
+    0,07 et 0,16, quand une proportionnalite en donnerait un proche de un. C'est la meme
+    conclusion que l'elasticite de 0,087 mesuree par ailleurs sur la severite, obtenue ici par
+    un chemin non parametrique. Une entite dix fois plus petite ne subit pas une perte dix fois
+    plus petite, et c'est ce qui fonde la borne inferieure de validite de la descente d'echelle.
+    L'actif total est le PLUS FAIBLE des trois predicteurs de taille, sous le chiffre
+    d'affaires et sous l'effectif : la mesure de bilan, qui est pourtant celle qui sert a
+    l'echelle prudentielle, est la moins liee a la perte observee.
+
+
+  Kruskal-Wallis, egalite des distributions de severite entre classes :
+    PRC, impact par type d'organisation      H =     138.6  k =  7  p  1.999e-27  eps2 = 0.0100  n = 13267
+    PRC, impact par type de breche           H =     102.5  k =  5  p  2.904e-21  eps2 = 0.0123  n = 8031
+    SAS, perte par categorie balaise         H =    3028.8  k =  7  p   < 1e-300  eps2 = 0.0720  n = 41975
+    SAS, perte par ligne metier balaise      H =    3302.3  k = 10  p   < 1e-300  eps2 = 0.0785  n = 41975
+
+    LECTURE. L'hypothese d'une severite homogene entre classes est rejetee partout, et la
+    taille d'effet epsilon-carre dit de combien : elle reste petite, de l'ordre de quelques
+    centiemes, donc la classe d'organisation explique une part FAIBLE de la dispersion des
+    severites. Ce resultat va dans le meme sens que le V de Cramer de la section 2 et il
+    porte la meme consequence de modelisation : segmenter la severite par categorie
+    d'organisation couterait des degres de liberte sans acheter de pouvoir explicatif, et
+    c'est pourquoi le memoire ajuste une queue commune puis declare ce choix comme une
+    limite au lieu de le presenter comme une mesure.
+
+
+==============================================================================
+4. LES TROIS FIGURES
+==============================================================================
+
+  D1, taux de presence croisee (%) — triangle inferieur :
+    breach_date              54.8                                                        
+    reported_date            54.6   99.5                                                 
+    end_breach_date          28.2   28.1   28.2                                          
+    incident_details         54.8   99.5   28.2  100.0                                   
+    information_affected     54.8   99.5   28.2  100.0  100.0                            
+    organization_type        49.4   88.9   26.7   89.3   89.3   89.3                     
+    breach_type              34.9   47.2   23.9   47.3   47.3   45.8   47.3              
+    total_affected           30.9   41.6   12.5   41.8   41.8   37.6   25.1   41.8       
+    residents_affected       44.2   79.7   22.4   79.9   79.9   70.0   30.2   31.0   79.9
+
+  Intersection des TROIS variables (volume, vecteur, fin d'exposition) : 10.9 %
+  a comparer au plus faible des croisements deux a deux, 12.5 %.
+
+  D1b, effectifs croises :
+    breach_date              40998                                                                
+    reported_date            40805   74440                                                        
+    end_breach_date          21063   21024   21077                                                
+    incident_details         40998   74440   21077   74781                                        
+    information_affected     40998   74440   21077   74781   74783                                
+    organization_type        36973   66496   19939   66769   66771   66771                        
+    breach_type              26126   35300   17908   35378   35378   34280   35378                
+    total_affected           23132   31113    9367   31238   31238   28130   18797   31238        
+    residents_affected       33032   59595   16786   59738   59738   52325   22609   23200   59738
+
+  D2, sources de notification (12 premieres par volume) :
+    source    incidents  volume (M enr.)
+    ME             4012            632.0
+    IN             5632            291.4
+    WI               27            202.1
+    OR              278            159.6
+    WA              766             70.3
+    MT              463             62.0
+    CA              128             37.3
+    VT              139             21.9
+    NH              877             20.9
+    MD             2268             20.5
+    IA              287             17.5
+    DE              157              9.2
+
+  D3, types de breche :
+    type      incidents  volume (M enr.)      mediane
+    HACK           7430            619.5          836
+    DISC            364             38.9           61
+    INSD            124              7.8           82
+    PORT             73              0.3          107
+    PHYS             40              0.2          135
+    CARD             14              0.1          860
+    STAT              4              0.0          118
+
+  D4, incidents par annee et par type d'organisation (extrait) :
+    annee        BSO      BSF      MED      BSR      EDU   autres     total
+     2007         31       11        3        8        5       11        69
+     2010         23       16       33        6        9        4        91
+     2013        186       84      127       66       46       42       551
+     2016        826      341      368      447      116      137      2235
+     2019        832      424      398      330      180      247      2411
+     2020       1441      629      533      322      492      588      4005
+     2021       2020      788      647      316      235      426      4432
+     2022       1572      580      487      162      270      343      3414
+     2023       2753     1040      870      213      422      568      5866
+     2024       1288      376      508      167      179      244      2762
+     2025         82       25       22       14       13       18       174
+
+  Pic en 2023 avec 5866 incidents ; 174 en 2025, soit 3.0 % du pic. Avant 2015 la base porte 2152 incidents au total, soit 6.5 % de la periode 2005-2025.
+
+  D5, par type d'organisation :
+    type      incidents  volume (M enr.)    rang volume
+    BSO            5635            661.5              1
+    BSF            2427            287.8              2
+    MED            1830            259.7              3
+    EDU            1076             39.4              5
+    NGO             980             20.0              7
+    BSR             840            133.4              4
+    GOV             479             25.7              6
+
+  4 types sur 7 n'ont pas le meme rang en nombre et en volume.
+
+  Cinq figures ecrites dans exploratory/vasicek_lab/figures/ :
+    D1a_presence_taux.png  D1b_presence_effectifs.png
+    D2_sources_notification.png  D3_bulles_breche.png
+    D4_composition_temporelle.png  D5_organisation_double_axe.png
+
+==============================================================================
+5. GRANDEURS CITEES (sans separateur de milliers, pour le harnais)
+==============================================================================
+  incidents PRC export brut                    74783
+  incidents PRC impact renseigne               31217
+  part impact renseigne pct                    41.74
+  incidents PRC perimetre 2019-2025            15053
+  lignes SAS brutes                            41976
+  pertes SAS retenues                          41975
+  pertes SAS cyber TIC                         1099
+  pertes SAS finance                           22139
+  pertes SAS cyber x finance                   570
+  seuil q75 PRC enregistrements                8330
+  intersection triple pct                      10.9
+  seuil q75 SAS MUSD                           20.0
+  presence PRC breach_date pct                 54.82
+  presence PRC end_breach_date pct             28.18
+  presence PRC total_affected pct              41.77
+  presence PRC residents_affected pct          79.88
+  presence PRC organization_type pct           89.29
+  presence PRC breach_type pct                 47.31
+  shapiro W brut PRC                           0.037
+  shapiro W log PRC                            0.9701
+  shapiro W brut SAS                           0.0712
+  shapiro W log SAS                            0.9855
+  asymetrie PRC                                29.4
+  aplatissement PRC                            1083.44
+  asymetrie SAS                                36.73
+  aplatissement SAS                            2016.26
+  spearman perte x Revenue ($M)                0.1593
+  spearman perte x Assets ($M)                 0.0677
+  spearman perte x # of Employees              0.139
+  n spearman SAS                               33769
+  n spearman PRC                               14479
+  KW PRC organisation eps2                     0.01
+  KW PRC organisation classes                  7
+  KW PRC breche eps2                           0.0123
+  KW PRC breche classes                        5
+  KW SAS categorie eps2                        0.072
+  KW SAS categorie classes                     7
+  KW SAS ligne metier eps2                     0.0785
+  KW SAS ligne metier classes                  10
+
+FIN 104

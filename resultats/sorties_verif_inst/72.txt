@@ -1,0 +1,97 @@
+
+========================================================================================
+1. Le passage de 90 a 95 %, sans toucher a la calibration
+========================================================================================
+  Facteur de passage sur les demi-largeurs : 1.96 / 1.645 = 1.1915
+
+  grandeur                              IC 90 % (publie)                 IC 95 %   x a 90   x a 95
+  indice de queue xi                   [0.3044 ; 0.8313]       [0.2487 ; 0.8765]     2.73     3.52
+  quantile de severite (M)              [411.5 ; 1037.1]        [363.4 ; 1108.8]     2.52     3.05
+
+  L'ASYMETRIE DE L'INTERVALLE PUBLIE EST CONSERVEE : la borne basse de xi est a 0.2910
+  du point quand la haute est a 0.2359. Les deux demi-largeurs sont mises
+  a l'echelle separement ; symetriser au passage aurait modifie l'objet publie en silence.
+
+  LE FACTEUR PUBLIE SUR LE QUANTILE UNITAIRE PASSE DE 2.52 A 3.05.
+  C'est le nombre le plus visible du changement, et il apparait a plusieurs endroits du
+  memoire : le remplacer partout est une decision de redaction distincte de ce calcul.
+
+========================================================================================
+2. La couverture REELLE des deux niveaux, et elle ne suit pas le nominal
+========================================================================================
+  2000 echantillons de 86 exces simules sous la calibration publiee.
+
+  niveau nominal           couverture reelle      manque
+  90 %                         86.7 % +- 0.8       -3.3
+  95 %                         91.0 % +- 0.6       -4.0
+
+  ACCORD AVEC LE SCRIPT 47, QUI PUBLIE 86 % POUR LE NIVEAU DE 90. Les deux mesures
+  sortent du meme estimateur sur deux flux de simulation independants, et leur ecart de
+  0.7 point vaut environ un ecart-type (0.8) : c'est le meme nombre, mesure deux fois.
+  Il ne faut donc pas lire une contradiction entre les deux scripts, et il ne faut pas
+  non plus citer trois chiffres significatifs sur une couverture estimee sur deux mille
+  tirages.
+
+  LE MANQUE EST CONSTANT EN POINTS, ET C'EST INSTRUCTIF : -3.3 au niveau de 90 comme -4.0
+  au niveau de 95. Ce n'est donc pas un defaut proportionnel qui s'atenuerait en montant
+  le nominal : c'est un deficit a peu pres fixe, signature d'un ecart-type asymptotique
+  trop petit plutot que d'une forme d'intervalle mal choisie.
+
+  PASSER LE NOMINAL A 95 % NE CORRIGE PAS LA SOUS-COUVERTURE, il la deplace. Les deux
+  niveaux couvrent moins que ce qu'ils annoncent, et pour la meme raison : l'ecart-type
+  asymptotique sous-estime la dispersion de l'estimateur a quatre-vingt-onze exces.
+  Annoncer 95 % sans le dire remplacerait donc un defaut DECLARE par un defaut CACHE,
+  ce qui serait un mauvais echange. Le niveau se change, la reserve se garde.
+
+  Pour atteindre reellement 95 %, il faudrait elargir la demi-largeur d'environ
+  un facteur 1.15 de plus, sous approximation normale. C'est le meme correctif que
+  celui deja publie pour le niveau de 90 %, et il va dans le meme sens.
+
+========================================================================================
+3. Ce que le nouveau niveau donne sur le capital agrege
+========================================================================================
+  Capital a la calibration publiee : 8159 M
+
+  niveau         borne basse   borne haute    largeur   facteur
+  90 %                  3042         27152      24111      8.93
+  95 %                  2727         34942      32215     12.81
+
+  Le passage a 95 % elargit la bande de capital de 8105 M, soit 34 %.
+  L'elargissement est TRES ASYMETRIQUE, et la raison est la convexite du capital en xi :
+  la borne basse ne descend que de 315 M quand la haute monte de 7790 M.
+  C'est une propriete a annoncer : sur une queue lourde, elargir un intervalle de
+  confiance sur l'indice de queue ne l'elargit pas symetriquement sur le capital.
+
+========================================================================================
+4. Ce que ce changement coute, et ce qu'il n'est pas
+========================================================================================
+  N'EST PAS UNE RECALIBRATION. Le point, sigma, u et p_u sont inchanges, donc tous les
+  capitaux publies aussi. Seul le niveau de l'intervalle reporte change, et il change par
+  la meme approximation normale que le moteur emploie deja.
+
+  COUTE une reecriture. Le facteur du quantile unitaire, cite a plusieurs endroits du
+  memoire, passe de 2.52 a 3.05, et l'intervalle sur xi de
+  [0.30 ; 0.83] a [0.25 ; 0.88]. Remplacer ces valeurs partout est une decision
+  de redaction, distincte de ce calcul : elle deplace des nombres publies, et la piste
+  d'audit demande de dire lesquels et pourquoi.
+
+  ET UNE REMARQUE QUI VA CONTRE L'INTUITION DU CHANGEMENT. Elargir l'intervalle rend le
+  resultat MOINS precis en apparence, alors que rien n'a ete perdu : c'est la meme
+  incertitude, annoncee a un niveau plus exigeant. La position de Caroline sur ce point
+  est explicite dans le compte rendu, un intervalle large n'est pas anormal en soi et ne
+  devient problematique que s'il est disproportionne.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. xi : [0.3044 ; 0.8313] a 90 % devient [0.2487 ; 0.8765] a 95 %.
+  2. Quantile de severite : facteur 2.52 -> 3.05. C'est le nombre le plus visible.
+  3. Capital agrege : facteur 8.93 -> 12.81, et
+     l'elargissement est asymetrique par convexite en xi.
+  4. COUVERTURE REELLE : 86.7 % pour un nominal de 90, 91.0 % pour un
+     nominal de 95. Changer le nominal NE CORRIGE PAS la sous-couverture : la reserve
+     deja publiee reste due, au nouveau niveau comme a l'ancien.
+  5. Aucune calibration n'est touchee. Le remplacement des valeurs dans le corps du
+     memoire est une decision de redaction, a prendre explicitement.
+
+figure ecrite : recherche\vasicek_lab\figures\S28_intervalle_95.png

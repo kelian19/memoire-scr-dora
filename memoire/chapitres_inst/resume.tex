@@ -1,0 +1,129 @@
+﻿% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : resume.
+% Copie a texte constant de 01_resume.tex.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+% Un \chapter* ne met pas le titre courant a jour : sans cette ligne, la seconde page du
+% resume portait << Remerciements >> en tete.
+\markboth{Résumé}{}
+
+% LONGUEUR CONTRAINTE PAR LE § 5.1.c DES RECOMMANDATIONS JURY : 150 A 250 MOTS, pour le
+% resume francais comme pour l'abstract anglais, ces deux textes servant a l'indexation sur
+% le site de l'Institut. Mesure du 23 septembre 2026 AVANT resserrage : 322 et 305 mots sur
+% le PDF, soit +29 % et +22 %. Ce qui a ete retire est du DETAIL, jamais un resultat ni une
+% reserve : le compte des sources qui echouent et le champ VERIS rempli une fois sur 10 591,
+% et le mecanisme de la decroissance de la charge avec la taille. Tous trois vivent dans la
+% note de synthese et dans l'executive summary, qui n'ont AUCUNE limite de longueur.
+% NE PAS REGROSSIR CES DEUX BLOCS : recompter sur le PDF apres toute retouche.
+% REECRITS LE 30 SEPTEMBRE 2026, 247 et 239 mots : la bande dite hors des deux etats, le
+% chiffre d'entite en majorant, la seule dependance gouvernance-incidents, le groupe de tete
+% des piliers, les deux canaux a bornes posees, et trois antitheses retirees. L'abstract
+% passe en romain, comme le resume francais.
+Le règlement européen DORA impose aux entités financières de maîtriser leurs risques informatiques.
+Nous comparons le besoin de capital entre états de conformité supposés, puis examinons sa sensibilité
+aux informations manquantes sur la contagion et les coûts.
+
+Le modèle combine le nombre annuel d'incidents, leurs pertes et leur propagation entre les cinq
+domaines de contrôle. Le besoin de capital est le quantile à $99{,}5\,\%$ de la perte annuelle,
+avec addition des coûts par pilier touché. Les pénalités et les polices cyber vendues sont exclues.
+
+Sur le périmètre financier étudié, le besoin passe de $6\,049$ à $20\,188$~M\euro{} entre les états
+conforme et non conforme, soit un facteur $3{,}34$. Ces montants dépendent des paramètres de scénario
+et de la règle de coût. Pour une entité de $20\,000$~M\$ d'actifs, la plage de $131{,}5$ à
+$183{,}3$~M\euro{} reste une extrapolation d'ordre de grandeur.
+
+Les sources ne permettent pas de calibrer la propagation. Nous conservons la force des liens
+posée à dire d'expert et faisons varier leur sens. Le capital va de $6\,858$ à $8\,697$~M\euro{}
+aux $1\,024$ sommets admissibles, la largeur variant de $189$~M\euro{} (écart-type) d'une graine
+à l'autre ; ces extrema ne sont pas des bornes globales démontrées.
+Documenter le sens de six dépendances réduirait cette plage de $32{,}7\,\%$ en moyenne
+($22$ à $44\,\%$ selon la graine). Ce scénario précise l'intérêt d'un registre d'incidents,
+sans garantir le gain d'une collecte réelle.
+
+\paragraph{Mots-clés.} Risque cyber ; DORA ; SCR ; Solvabilité II ; théorie des valeurs
+extrêmes ; cascade dirigée ; identification partielle ; bornes de capital ; inférence
+bayésienne ; valeur de l'information.
+
+% USAGE DE L'IA GENERATIVE, VERSION INSTITUT A 150 PAGES. Exige par le § 5.1.c des Recommandations
+% Jury de l'Institut des actuaires (« a la fin du resume et distinct de ce dernier »). Doit rester
+% coherent avec l'annexe ann:ia.
+\bigskip
+\noindent\textbf{Usage de l'intelligence artificielle générative.} Des outils d'IA générative
+ont servi à la rédaction et à la reformulation du manuscrit, à l'écriture des scripts d'analyse
+et à la relecture du texte, sous le contrôle de l'auteur. Les analyses, les choix
+méthodologiques et l'interprétation des résultats relèvent de l'auteur. Aucun résultat chiffré
+n'est produit par l'assistant : tout nombre publié provient de l'exécution d'un script du dépôt.
+L'annexe~\ref{ann:ia} détaille cet usage et les contrôles qui l'encadrent.
+
+% =====================================================================
+% USAGE DE L'IA GENERATIVE, VERSION INSTITUT A 150 PAGES. Exige par le § 5.1.c des
+% Recommandations Jury de l'Institut des actuaires (« a la fin du resume et distinct de ce
+% dernier »). Le texte decrit l'usage reel : redaction et reformulation du manuscrit, scripts,
+% relecture. Il doit rester coherent avec l'annexe ann:ia.
+% =====================================================================
+
+% << ABSTRACT >> EST UN TITRE, ET NON UNE AMORCE EN GRAS. La liste de controle
+% de l'ecole l'exige nommement : << le titre de votre resume francais est
+% Resume et le titre de votre resume en anglais est Abstract >>. Il portait
+% jusqu'au 28 septembre 2026 un simple  \textbf{Abstract.}  en tete de
+% paragraphe, qui n'est pas un titre et n'apparaissait pas au sommaire.
+%
+% ET LA PAGE NEUVE NE COUTE RIEN. La meme liste demande un resume d'UNE page au
+% plus dans chaque langue : le francais et l'anglais tenaient sur la meme page,
+% donc l'anglais aurait debordé sur la suivante des qu'on lui pose un titre. Les
+% deux blocs occupent desormais une page chacun, et le document n'en gagne
+% aucune, le paragraphe d'usage de l'IA occupant deja seul la seconde.
+% \chapter* ET NON \section* : le titre de l'abstract doit avoir le meme
+% rang que celui du resume francais, la liste de controle les citant cote a
+% cote. Un \chapter* ouvre sa page lui-meme, d'ou l'absence de \newpage.
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\markboth{Abstract}{}
+
+\begin{otherlanguage*}{english}
+The European DORA regulation requires financial entities to control their IT risks.
+We compare capital needs across assumed compliance states, then examine their sensitivity
+to missing information on contagion and costs.
+
+The model combines annual incident counts, losses and propagation across five control areas.
+Capital need is the $99.5\,\%$ quantile of annual loss, with costs added across affected pillars.
+Regulatory penalties and the cyber policies an insurer sells are excluded.
+
+For the financial sample, capital need rises from $6\,049$ to $20\,188$~M\euro{} between the
+compliant and non-compliant states, a factor of $3.34$. These amounts depend on scenario parameters
+and on the cost rule. For an entity with $20\,000$~M\$ of assets, the range from $131.5$ to
+$183.3$~M\euro{} remains an extrapolated order of magnitude.
+
+The sources cannot calibrate propagation. We hold expert-set link strength fixed and vary
+direction. Capital ranges from $6\,858$ to $8\,697$~M\euro{} at the $1\,024$ admissible vertices,
+the width varying by $189$~M\euro{} (standard deviation) across seeds; these extrema are not
+proven global bounds. Documenting six link directions would narrow
+this range by $32.7\,\%$ on average, from $22$ to $44\,\%$ depending on the simulation seed.
+This scenario indicates the potential value of an incident register without guaranteeing
+the benefit of collecting actual observations.
+\end{otherlanguage*}
+
+% =====================================================================
+% SOMMAIRE AU NIVEAU DES SECTIONS, et non des sous-sections. Mesure du
+% 22 septembre 2026 : en listant les sous-sections il occupait SIX pages, sur un
+% document que Kelian veut imperativement sous 200. Rien n'est retire du
+% memoire, seule la profondeur du sommaire change ; les sous-sections gardent
+% leur numero et leur titre dans le corps.
+\setcounter{tocdepth}{1}
+% Sommaire en interligne simple (26 octobre 2026, comme la bibliographie) : police inchangee.
+% Corps \small depuis le 28 octobre 2026 : les notes de synthese passent a trois pages chacune
+% (liste de l'ecole, « entre 3 et 7 pages ») ; le sommaire rend une des deux pages.
+\begingroup\singlespacing\small
+\makeatletter\patchcmd{\l@chapter}{\vskip 1.0em \@plus\p@}{\vskip 0.15em \@plus\p@}{}{}\makeatother
+\tableofcontents
+\endgroup
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 28 39 33 43 68 92 66 89 91 100 30 55 65 117 130 134

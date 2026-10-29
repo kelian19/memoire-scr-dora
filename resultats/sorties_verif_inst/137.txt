@@ -1,0 +1,200 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+============================================================================================
+1. La pente a duree d'observation comparable, et avec un controle de l'annee
+============================================================================================
+Fenetre d'observation par firme (annees), firmes de plus de 100 Md USD :
+  moyenne 4.31, mediane 1, part observee un an seulement 57.8 %
+Une fenetre d'un an n'est pas une observation longue : la restriction de taille ne garantit
+pas une observation exhaustive des grandes firmes.
+
+panel                              fenetre >=    beta  ET grappe  lignes  firmes  conv.  avert.
+tout le panel                               1   0.074      0.017   14544    4929   True       0
+tout le panel                               3   0.192      0.030   10619    1192   True       0
+tout le panel                               5   0.223      0.036    9669     915   True       0
+tout le panel                               8   0.270      0.042    8067     642   True       0
+tout le panel                              12   0.316      0.053    5567     374   True       0
+>= 100 Md USD                               1   0.494      0.066    6048    1402   True       0
+>= 100 Md USD                               3   0.524      0.074    5100     523   True       0
+>= 100 Md USD                               5   0.530      0.077    4763     423   True       0
+>= 100 Md USD                               8   0.550      0.081    4108     311   True       0
+>= 100 Md USD                              12   0.602      0.091    3090     202   True       0
+
+avec effets fixes d'annee :
+tout le panel                               1   0.078      0.017   14544    4929   True       0
+tout le panel                               5   0.217      0.036    9669     915   True       0
+>= 100 Md USD                               1   0.497      0.065    6048    1402   True       0
+>= 100 Md USD                               5   0.529      0.076    4763     423   True       0
+
+>= 100 Md USD, fenetre >= 1 : ET par hessienne naive (script 136) 0.043, ET par grappe de firmes 0.066
+Sur tout le panel, exiger une fenetre de 5 ans fait passer la pente de 0.074 a 0.223.
+Ces restrictions ne fournissent pas un denominateur d'exposition externe : une annee sans
+evenement enregistre n'est pas necessairement une annee sans incident.
+
+============================================================================================
+2. Le moteur a nombres communs, et ses controles
+============================================================================================
+pertes sous le seuil : 484, minimum 0.092 M EUR (toutes strictement positives)
+entite notionnelle : lambda registre 0.0917, nouvelle 0.0209 ; r pose 0.0112 (a lambda registre), r estime 0.594
+controle, configuration publiee : 171.4 +- 5.4 (publie 169,0)
+controle, configuration du script 136 : 24.6 +- 1.0 (script 136 : 24,1)
+
+============================================================================================
+3. Plan factoriel 2 x 2 x 2 a l'entite notionnelle (moyenne +- ET sur quatre graines)
+============================================================================================
+frequence dispersion       sous seuil        VaR 99,5            TVaR  perte moy.   P(L>0)
+registre  posee (phi 9,2)  nulles         171.4 +- 5.4     623.6 +-43.6       3.659    1.24%
+registre  posee (phi 9,2)  empiriques     191.6 +- 5.4     655.2 +-43.4       4.006    2.46%
+registre  estimee          nulles         165.6 +- 3.5     516.1 +-40.6       3.677    2.23%
+registre  estimee          empiriques     170.2 +- 3.6     520.3 +-40.5       4.026    8.18%
+nouvelle  posee (phi 9,2)  nulles           0.0 +- 0.0     171.4 +- 9.8       0.857    0.29%
+nouvelle  posee (phi 9,2)  empiriques       0.8 +- 0.2     187.2 +-10.2       0.936    0.56%
+nouvelle  estimee          nulles          20.6 +- 1.0     173.5 +- 9.3       0.874    0.53%
+nouvelle  estimee          empiriques      24.6 +- 1.0     177.1 +- 9.3       0.955    2.04%
+
+contraste additif de chaque facteur (moyenne des quatre differences nouvelle - ancienne,
+en M EUR ; configurations a VaR nulle incluses ; ces contrastes ne s'additionnent pas) :
+  frequence    VaR -163.200   TVaR -401.537   perte moyenne -2.936
+  dispersion   VaR +4.286   TVaR -62.604   perte moyenne +0.018
+  sous seuil   VaR +7.412   TVaR +13.761   perte moyenne +0.214
+
+les six chemins du publie au script 136, un facteur a la fois (VaR) :
+  171.4 -> frequence 0.0 -> dispersion 20.6 -> sous seuil 24.6
+  171.4 -> frequence 0.0 -> sous seuil 0.8 -> dispersion 24.6
+  171.4 -> dispersion 165.6 -> frequence 20.6 -> sous seuil 24.6
+  171.4 -> dispersion 165.6 -> sous seuil 170.2 -> frequence 24.6
+  171.4 -> sous seuil 191.6 -> frequence 0.8 -> dispersion 24.6
+  171.4 -> sous seuil 191.6 -> dispersion 170.2 -> frequence 24.6
+
+attribution additive (moyenne des contributions marginales sur les six ordres, en M EUR) :
+  frequence    VaR -161.641   TVaR -400.275   perte moyenne -2.936
+  dispersion   VaR +5.844   TVaR -61.341   perte moyenne +0.018
+  sous seuil   VaR +8.971   TVaR +15.023   perte moyenne +0.214
+controle : les contributions s'additionnent a l'ecart total pour chaque mesure.
+P(N >= 1) en forme fermee : registre et dispersion posee 2.45 %, nouvelle frequence et dispersion estimee 2.03 %
+incidents moyens par annee touchee : 3.74 contre 1.03
+Le bruit de simulation est l'ecart-type entre graines ; l'ecart entre lignes est la variation
+de modele, a nombres communs.
+
+============================================================================================
+4. Bootstrap par firme : intercept, pente et dispersion reestimes ensemble
+============================================================================================
+300 tirages de firmes ; repli sur Nelder-Mead 0 ; echecs de convergence 0 (ecartes et comptes)
+beta : mediane 0.494, intervalle 2,5-97,5 % [0.371 ; 0.632], ET 0.068
+r : mediane 0.598, intervalle [0.436 ; 0.940]
+
+entite                 lambda med.  VaR med.    VaR 2,5-97,5 %  P(VaR=0)  TVaR med.   TVaR 2,5-97,5 %
+Assureur non-vie A          0.0074       1.1       [0.0 ; 9.1]       18%       51.8        [23 ; 110]
+Assureur non-vie B          0.0111       5.2      [0.2 ; 19.3]        0%       97.8        [40 ; 154]
+Entite notionnelle          0.0211      26.1      [8.3 ; 53.0]        0%      190.4       [120 ; 257]
+Assureur vie C              0.0293      51.6     [22.9 ; 78.8]        0%      262.7       [182 ; 327]
+Assureur vie D              0.0823     202.4   [177.5 ; 228.1]        0%      647.7       [577 ; 698]
+
+Ces bandes portent l'incertitude d'estimation de la frequence seule, a severite et graine
+fixees. Elles ne corrigent pas la selection du registre.
+
+sources d'incertitude separees, entite notionnelle :
+  frequence (bootstrap par firme)  VaR [8.3 ; 53.0]  TVaR [120 ; 257]
+  severite (xi sur son IC 90 %)    VaR 25.7 a 26.0  TVaR 111 a 484
+  simulation (quatre graines)      VaR +- 1.0  TVaR +- 9.3
+
+============================================================================================
+5. Le metier : assureur ou non, a taille egale
+============================================================================================
+Variable : ligne de metier baloise la plus frequente parmi les evenements de la firme
+(Insurance ou non). C'est un indicateur imparfait du metier, pas une classification de l'entite.
+  tout le panel    firmes assureurs   715 /  4929 ; beta 0.073 ; effet assureur -0.800 (ET grappe 0.130), rapport des frequences 0.45 ; converge True
+  >= 100 Md USD    firmes assureurs   255 /  1402 ; beta 0.440 ; effet assureur -0.961 (ET grappe 0.207), rapport des frequences 0.38 ; converge True
+validation croisee par firme (5 plis, >= 100 Md USD) : gain de log-vraisemblance hors echantillon de l'effet assureur +13.07 nats au total, 4 plis sur 5 positifs
+
+SENSIBILITE, NON RETENUE : les entites lues comme assureurs (effet -0.961, r 0.616)
+entite                   lambda           VaR            TVaR   P(L>0)   sans effet metier
+Assureur non-vie A       0.0041     0.0 +- 0.0      29.1 +- 1.3    0.40%   VaR 1.0, TVaR 52.2
+Assureur non-vie B       0.0059     0.3 +- 0.1      44.6 +- 1.6    0.58%   VaR 4.8, TVaR 87.7
+Entite notionnelle       0.0104     4.5 +- 0.3      88.2 +- 4.0    1.02%   VaR 24.6, TVaR 177.1
+Assureur vie C           0.0140    10.9 +- 0.5     127.8 +- 8.1    1.38%   VaR 49.8, TVaR 243.3
+Assureur vie D           0.0353    77.9 +- 2.4     344.3 +-30.3    3.38%   VaR 196.8, TVaR 620.4
+L'indicateur de metier est celui des evenements enregistres : il peut traduire une moindre
+frequence reelle comme une moindre declaration. L'effet n'est pas integre a la variante du 136.
+
+============================================================================================
+6. Populations de frequence et de severite
+============================================================================================
+frequence : 1476 evenements TIC (5 sous-categories, secteur financier hors Non-FS, 2005-2022)
+severite  : 443 pertes cyber-finance sur 2005-2022 (570 sur 2000-2026)
+recouvrement : 443 evenements communs, soit 30.0 % de la frequence et 100.0 % de la severite
+pertes sous le seuil GPD : 484 sur 570 (84.9 %) ; part au-dessus du seuil 15.09 % contre p_u = 15.09 %
+plus petite perte de la population de severite : 0.092 M EUR. Le registre ne collecte
+que des pertes publiques : le corps empirique n'est pas l'ensemble des petites pertes reelles,
+et il est repris d'une population melangee puis mis a l'echelle par m(A), sans validation par entite.
+
+============================================================================================
+7. Taille de bascule : forme fermee contre simulation
+============================================================================================
+Toutes les pertes d'incident etant strictement positives, L > 0 si et seulement si N >= 1, et
+P(N = 0) = (r / (r + lambda))^r. Le besoin a 99,5 % devient positif quand P(N = 0) < 0,995,
+soit lambda > 0.00503 : taille de bascule 1,076 M EUR d'actifs.
+simulation, quatre graines : 1,053, 1,124, 1,145, 1,095 M EUR ; script 136 : 1 015
+forme fermee sous le bootstrap par firme : mediane 1,096, intervalle 2,5-97,5 % [100 ; 3,889] M EUR
+La bascule ne se donne donc qu'en ordre de grandeur.
+
+============================================================================================
+8. Grandeurs citees (sans separateur, pour le harnais)
+============================================================================================
+pente tout le panel fenetre 1 annee False : 0.074 ET 0.017
+pente tout le panel fenetre 3 annee False : 0.192 ET 0.030
+pente tout le panel fenetre 5 annee False : 0.223 ET 0.036
+pente tout le panel fenetre 8 annee False : 0.270 ET 0.042
+pente tout le panel fenetre 12 annee False : 0.316 ET 0.053
+pente >= 100 Md USD fenetre 1 annee False : 0.494 ET 0.066
+pente >= 100 Md USD fenetre 3 annee False : 0.524 ET 0.074
+pente >= 100 Md USD fenetre 5 annee False : 0.530 ET 0.077
+pente >= 100 Md USD fenetre 8 annee False : 0.550 ET 0.081
+pente >= 100 Md USD fenetre 12 annee False : 0.602 ET 0.091
+pente tout le panel fenetre 1 annee True : 0.078 ET 0.017
+pente tout le panel fenetre 5 annee True : 0.217 ET 0.036
+pente >= 100 Md USD fenetre 1 annee True : 0.497 ET 0.065
+pente >= 100 Md USD fenetre 5 annee True : 0.529 ET 0.076
+grandes firmes fenetre moyenne 4.31 mediane 1 un an 57.8
+ET grappe 0.066
+factoriel registre posee (phi 9,2) nulles : var 171.4 et 5.4 tvar 623.6 moy 3.659 pos 1.24
+factoriel registre posee (phi 9,2) empiriques : var 191.6 et 5.4 tvar 655.2 moy 4.006 pos 2.46
+factoriel registre estimee nulles : var 165.6 et 3.5 tvar 516.1 moy 3.677 pos 2.23
+factoriel registre estimee empiriques : var 170.2 et 3.6 tvar 520.3 moy 4.026 pos 8.18
+factoriel nouvelle posee (phi 9,2) nulles : var 0.0 et 0.0 tvar 171.4 moy 0.857 pos 0.29
+factoriel nouvelle posee (phi 9,2) empiriques : var 0.8 et 0.2 tvar 187.2 moy 0.936 pos 0.56
+factoriel nouvelle estimee nulles : var 20.6 et 1.0 tvar 173.5 moy 0.874 pos 0.53
+factoriel nouvelle estimee empiriques : var 24.6 et 1.0 tvar 177.1 moy 0.955 pos 2.04
+contraste additif frequence var -163.200
+contraste additif frequence tvar -401.537
+contraste additif frequence moy -2.936
+contraste additif dispersion var +4.286
+contraste additif dispersion tvar -62.604
+contraste additif dispersion moy +0.018
+contraste additif sous seuil var +7.412
+contraste additif sous seuil tvar +13.761
+contraste additif sous seuil moy +0.214
+attribution six ordres frequence var -161.641
+attribution six ordres frequence tvar -400.275
+attribution six ordres frequence moy -2.936
+attribution six ordres dispersion var +5.844
+attribution six ordres dispersion tvar -61.341
+attribution six ordres dispersion moy +0.018
+attribution six ordres sous seuil var +8.971
+attribution six ordres sous seuil tvar +15.023
+attribution six ordres sous seuil moy +0.214
+pn1 registre 2.45 nouvelle 2.03
+boot beta 0.494 0.371 0.632 echecs 0
+boot Assureur non-vie A var 0.0 1.1 9.1 tvar 23 52 110 zero 18
+boot Assureur non-vie B var 0.2 5.2 19.3 tvar 40 98 154 zero 0
+boot Entite notionnelle var 8.3 26.1 53.0 tvar 120 190 257 zero 0
+boot Assureur vie C var 22.9 51.6 78.8 tvar 182 263 327 zero 0
+boot Assureur vie D var 177.5 202.4 228.1 tvar 577 648 698 zero 0
+bascule fermee 1076 simulee 1053 1145 boot 1096 100 3889
+metier effet -0.961 ET 0.207 rapport 0.38 inverse 2.6 cv 13.07
+metier Assureur non-vie A lambda 0.0041 var 0.0 tvar 29.1 sans 1.0 52.2
+metier Assureur non-vie B lambda 0.0059 var 0.3 tvar 44.6 sans 4.8 87.7
+metier Entite notionnelle lambda 0.0104 var 4.5 tvar 88.2 sans 24.6 177.1
+metier Assureur vie C lambda 0.0140 var 10.9 tvar 127.8 sans 49.8 243.3
+metier Assureur vie D lambda 0.0353 var 77.9 tvar 344.3 sans 196.8 620.4
+recouvrement 443 30.0 100.0

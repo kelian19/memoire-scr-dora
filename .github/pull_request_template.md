@@ -4,8 +4,8 @@
 
 ## Contrôles
 
-- [ ] `python ci/harnais_strict.py` passe : aucun nombre non confirmé, aucun hors contrôle non déclaré
-- [ ] la version Institut est régénérée (`build_institut.py`), jamais éditée à la main
-- [ ] le mémoire compile, débordements au niveau de référence, moins de 200 pages
+- [ ] `python outils/ci/harnais_strict.py` passe : aucun nombre non confirmé, aucun hors contrôle non déclaré
+- [ ] le document modifié et son statut sont indiqués ; les anciennes versions conservées restent distinctes
+- [ ] le mémoire compile, les références et la pagination ont été contrôlées
 - [ ] aucune donnée brute, aucune image de signature dans les fichiers ajoutés
-- [ ] tout nombre nouveau est imprimé par un script dont la sortie est versionnée dans `sorties_verif/`
+- [ ] tout résultat numérique nouveau est rattaché à sa sortie dans `resultats/`, les hypothèses sont explicites

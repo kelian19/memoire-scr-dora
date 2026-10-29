@@ -6,24 +6,19 @@ data/raw/
 *.feather
 
 # Signatures manuscrites : la couverture les appelle par \IfFileExists et compile sans elles
-exploratory/memoire_cascade/logos/signature_*.png
-exploratory/memoire_cascade/page_de_garde_a_signer.pdf
+memoire/logos/signature_*.png
+memoire/page_de_garde_a_signer.pdf
 
 # Copies au nom impose, recopiees par refaire_tout.py a chaque compilation
-exploratory/memoire_cascade/KADDOURI_Kelian_*.pdf
-exploratory/memoire_cascade/note_synthese_separee.pdf
+memoire/KADDOURI_Kelian_*.pdf
+memoire/note_synthese_separee.pdf
 
 # Intermediaires LaTeX
-exploratory/memoire_cascade/*.aux
-exploratory/memoire_cascade/*.bbl
-exploratory/memoire_cascade/*.blg
-exploratory/memoire_cascade/*.out
-exploratory/memoire_cascade/*.toc
-exploratory/memoire_cascade/materiel_complementaire/*.aux
-exploratory/memoire_cascade/materiel_complementaire/*.bbl
-exploratory/memoire_cascade/materiel_complementaire/*.blg
-exploratory/memoire_cascade/materiel_complementaire/*.out
-exploratory/memoire_cascade/materiel_complementaire/*.toc
+*.aux
+*.bbl
+*.blg
+*.out
+*.toc
 *.log
 build/
 
@@ -42,3 +37,4 @@ dist/
 .DS_Store
 Thumbs.db
 .env
+docs/collaboration/local/

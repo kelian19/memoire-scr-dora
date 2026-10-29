@@ -1,0 +1,115 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : annexe D, usage de l'IA generative.
+% Copie a texte constant de chapitres/23_inventaire_ia.tex.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+% =====================================================================
+% INVENTAIRE DE L'UTILISATION DE L'INTELLIGENCE ARTIFICIELLE GENERATIVE
+%
+% ANNEXE EXIGEE PAR L'INSTITUT DES ACTUAIRES. Recommandations Jury du
+% 1er avril 2026, § 5.1.h : la seconde des deux annexes exigees est
+% << L'inventaire, le cas echeant, de l'utilisation de l'intelligence
+% artificielle generative >>, et << cet inventaire se doit d'etre exhaustif et
+% doit comprendre les mesures prises pour verifier la validite des resultats
+% par l'utilisation de l'intelligence artificielle generative >>.
+%
+% LE § 4.5 FIXE L'ENJEU : << La transparence quant a l'usage de l'intelligence
+% artificielle doit etre totale. Tout manquement a cette regle conduira
+% l'etudiant a etre ajourne par le jury, sans besoin d'une autre motivation. >>
+% C'est le seul manquement du referentiel dont la sanction soit automatique.
+% Le meme § 4.5 rappelle que l'usage lui-meme n'est PAS interdit, sous trois
+% conditions : fondements theoriques et references maitrises, explicabilite
+% identique a celle d'un travail sans assistance, transparence totale.
+%
+% CREE LE 21 SEPTEMBRE 2026, RESSERRE LE 22.
+%
+% RESSERRAGE DU 22 SEPTEMBRE, demande de Kelian : meme registre que la
+% declaration de F. Dountio, sobre et brave. Six pages ramenees a deux. CE QUI A
+% ETE RETIRE EST DE LA MISE EN SCENE, PAS DE LA DECLARATION : l'encadre qui
+% reexposait le referentiel, l'encadre d'avertissement, les titres de section
+% narratifs et trois tetes de paragraphe qui annoncaient ce que la phrase
+% suivante disait. L'INVENTAIRE RESTE EXHAUSTIF et les mesures de verification
+% restent decrites, parce que le § 5.1.h exige les deux et qu'une declaration
+% incomplete vaut absence de declaration.
+%
+% LA LIMITE DU DISPOSITIF EST CONSERVEE, et elle a meme GAGNE en visibilite :
+% elle vivait dans un encadre au milieu d'une section, elle a desormais sa
+% propre section. La note d'honnetete du projet interdit de rendre une reserve
+% moins visible ; resserrer le texte autour d'elle ne la rend pas moins visible,
+% la supprimer l'aurait fait.
+%
+% TROIS COMPTES ETAIENT PERIMES et sont releves le 22 septembre sur le harnais
+% lui-meme : 1 824 nombres (c'est 1 881), 22 chapitres (19 en publient), 112
+% sorties versionnees (111). Les recompter avant toute nouvelle compilation
+% finale : ils bougent a chaque chapitre touche.
+%
+% KELIAN : CETTE ANNEXE EST UN SOCLE A RELIRE, PAS UN TEXTE FINI.
+% Elle decrit l'usage tel que le depot en porte la trace : CLAUDE.md, le journal
+% de session REPRISE.md, les quatre agents de .claude/agents/, les commits
+% co-signes. Ce que seul toi peux trancher :
+%   - le perimetre reel de l'aide a la redaction, chapitre par chapitre si
+%     l'usage a varie ;
+%   - s'il y a eu recours a d'autres outils que celui dont le depot garde la
+%     trace ;
+%   - la formulation de la derniere section, qui engage ta responsabilite
+%     d'auteur.
+% Dans le doute, declarer plus.
+%
+% HARNAIS : cette annexe cite des comptes qui decrivent le DISPOSITIF DE
+% VERIFICATION lui-meme (nombres controles, chapitres, sorties) et non des
+% resultats du modele. Aucun script ne les produit, d'ou la declaration hors
+% script ci-dessous, posee AVANT la premiere \section pour couvrir tout le
+% fichier.
+% =====================================================================
+
+% =====================================================================
+% REDUITE LE 1er OCTOBRE 2026 AU SOIR, demande de Kelian (« reduire l'annexe B sur l'IA ») :
+% environ 840 mots ramenes a 520, trois pages a deux. La section de la reduction est fondue dans
+% l'usage declare ; les mesures de verification sont resserrees ; la LIMITE DU DISPOSITIF GARDE SA
+% PROPRE SECTION (motif du 22 septembre, plus haut) ; le paragraphe sur la redaction assistee, qui
+% plaidait, est remplace par les deux decisions de fond qu'il citait.
+% NOMBRES RETIRES VOLONTAIREMENT : la decomposition « cinq / une / une / une » des huit erreurs
+% semantiques, qui se lisait 5 + 3 = 8 quand le journal du projet range le renvoi, le superlatif et
+% le comptage PARMI les cinq erreurs de relation ; et le « 100 % » de la phrase de cloture.
+% COMPTE CORRIGE : 1 254 -> 1 261 nombres verifiables dans le rapport (la passe de style en a retire
+% six, repetitions de chiffres de tete ; les figures remontees le meme soir en ont ajoute treize).
+% 1 502 au supplement et 117 sorties : inchanges. A RECOMPTER apres toute retouche d'un chapitre
+% (somme des lignes chapitres_sfe/ de ci/harnais_strict.py).
+% Cette annexe est devenue l'annexe C le meme soir, les demonstrations redevenant l'annexe A.
+% RECOMPTE DU 1er OCTOBRE, plus tard : 1 261 -> 1 267 nombres dans le rapport (la figure des
+% domaines d'attraction du chapitre 4 en ajoute six) et 117 -> 118 sorties (112.txt).
+% PARAGRAPHE RETIRE LE MEME SOIR, demande de Kelian (« enleve cela ») : le recit de la reduction
+% du 1er octobre et de la reprise du registre. L'usage reste declare par le point 1 de la liste
+% (redaction et reformulation du manuscrit), garde tel quel : le retirer rendrait la declaration
+% inexacte. Nombres retires volontairement : 199 et 100 (pages), 2022.
+% =====================================================================
+
+\chapter{Usage de l'intelligence artificielle générative}
+\label{ann:ia}
+
+% HARNAIS-HORS-SCRIPT: inventaire de l'usage de l'IA generative : les nombres y decrivent le dispositif de verification du memoire (nombres sous controle, chapitres balayes, sorties versionnees, erreurs semantiques trouvees), pas des grandeurs du modele. Ils ne sortent d'aucun script d'analyse et se constatent sur le depot.
+
+Des outils d'intelligence artificielle générative ont servi dans ce travail, de deux façons. Ils
+ont aidé à rédiger et à reformuler le manuscrit, et à écrire les scripts d'analyse. Ils ont aussi
+servi à relire le texte et le code, pour signaler des incohérences que l'auteur a ensuite vérifiées
+et corrigées lui-même.
+
+\section{Ce qui relève de l'auteur}
+
+La problématique, les choix de modélisation, dont la cascade dirigée et le capital publié en
+bornes, la qualification des sources et de leurs biais, la hiérarchie des limites et
+l'interprétation des résultats sont de l'auteur, qui en répond. C'est notamment lui qui a réfuté
+l'hypothèse qui donnait au travail son titre initial.
+
+\section{Vérification des résultats}
+
+Chaque nombre publié est rattaché au script qui le produit, et un programme vérifie qu'il se
+retrouve dans les sorties versionnées de ce script. Ce contrôle établit l'origine d'un nombre, non
+la justesse de la phrase qui l'entoure : la relecture des énoncés qui comparent, comptent ou
+renvoient reste manuelle.
+
+% =====================================================================

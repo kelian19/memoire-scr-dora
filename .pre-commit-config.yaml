@@ -20,6 +20,13 @@ repos:
 
   - repo: local
     hooks:
+      - id: structure-depot
+        name: chemins, navigation et fichiers suivis
+        entry: python projet.py structure
+        language: system
+        pass_filenames: false
+        always_run: true
+
       - id: donnee-brute-interdite
         name: data/raw est sous licence et ne se committe jamais
         entry: "data/raw est sous licence : ce fichier ne doit pas etre committe"
@@ -31,10 +38,3 @@ repos:
         entry: "les griffes de la couverture restent gitignorees"
         language: fail
         files: logos/signature_
-
-      - id: version-institut-generee
-        name: main_institut.tex se regenere depuis main_ensae.tex
-        entry: python exploratory/memoire_cascade/build_institut.py
-        language: system
-        files: ^exploratory/memoire_cascade/main_(ensae|institut)\.tex$
-        pass_filenames: false

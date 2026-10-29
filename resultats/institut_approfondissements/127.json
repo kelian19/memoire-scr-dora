@@ -1,0 +1,87 @@
+{
+ "experience": "127 extrema hors des sommets",
+ "graine_evaluateur": 20260721,
+ "graine_recherche": 20261022,
+ "sommets_admissibles": 1024,
+ "capital_sommets": [
+  6858.2938381331405,
+  8697.22743701283
+ ],
+ "moyenne_sommets": [
+  848.6961932111768,
+  1100.6008915607013
+ ],
+ "residu_degre_deux": 2.784274067036914e-15,
+ "part_courbure_positive": 0.363,
+ "courbure_par_coordonnee": [
+  0.33513513513513515,
+  0.2604166666666667,
+  0.3719806763285024,
+  0.33678756476683935,
+  0.3446601941747573,
+  0.36097560975609755,
+  0.40404040404040403,
+  0.44339622641509435,
+  0.33495145631067963,
+  0.42857142857142855
+ ],
+ "resultats": {
+  "moyenne": {
+   "maximum": {
+    "sommet_extreme": 1100.6008915607013,
+    "meilleur_trouve": 1100.6008915607013,
+    "depart": 172,
+    "finit_sur_sommet": 172,
+    "ameliorent_le_sommet": 0,
+    "meilleur_est_sommet": true,
+    "coordonnees_interieures": 0
+   },
+   "minimum": {
+    "sommet_extreme": 848.6961932111768,
+    "meilleur_trouve": 848.6961932111768,
+    "depart": 172,
+    "finit_sur_sommet": 172,
+    "ameliorent_le_sommet": 0,
+    "meilleur_est_sommet": true,
+    "coordonnees_interieures": 0
+   }
+  },
+  "capital": {
+   "bruit_discretisation_moyen": 1.1588048147025212,
+   "bruit_maximum": 43.25592705291547,
+   "maximum": {
+    "sommet_extreme": 8697.22743701283,
+    "meilleur_trouve": 8697.22743701283,
+    "evaluations": 3280,
+    "meilleur_est_sommet": true,
+    "admissible": true,
+    "depasse_le_bruit": false
+   },
+   "minimum": {
+    "sommet_extreme": 6858.2938381331405,
+    "meilleur_trouve": 6858.2938381331405,
+    "evaluations": 3280,
+    "meilleur_est_sommet": true,
+    "admissible": true,
+    "depasse_le_bruit": false
+   }
+  }
+ },
+ "premier_ordre": {
+  "maximum": {
+   "coordonnees_ok": 10,
+   "sur": 10
+  },
+  "minimum": {
+   "coordonnees_ok": 10,
+   "sur": 10
+  }
+ },
+ "grandeurs_citees": {
+  "part_courbure_positive_pct": 36.3,
+  "amelioration_max_moyenne": 0.0,
+  "amelioration_min_moyenne": 0.0
+ },
+ "evaluations": 54172,
+ "duree_secondes": 269.61686499999996
+}

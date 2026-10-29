@@ -1,0 +1,132 @@
+% Approfondissements Institut du 21 octobre 2026 ; aucune modification du calage historique.
+\section{Unité de perte et incertitude jointe}
+\label{sec:institut-unite-incertitude}
+
+Les pertes historiques décrivent des incidents complets ; la construction additive en
+tire une par pilier touché. Nous comparons quatre constructions, sans coûts observés
+par pilier pour les départager, à fréquence, dispersion et canaux communs.
+
+\subsection{Constructions de la perte d'un incident}
+\label{sec:institut-unite-perte}
+% SOURCES-SCRIPTS: 119 126
+
+Notons $K$ le nombre de piliers touchés et $Y$ une perte nulle avec probabilité
+$1-p_u$, égale à $u+\mathrm{GPD}(\xi,\sigma)$ sinon. La perte additive est
+$\sum_{j=1}^K Y_j$, avec des $Y_j$ indépendantes. La perte moyenne divise cette somme
+par $K$. L'incident unique ne tire qu'un $Y$ ; l'incident amplifié vaut $K^\eta Y$,
+avec $\eta=1$ posé. La loi exacte de $K$ inclut le choc P4 actif. L'inversion de Fourier
+donne les capitaux des seize configurations, leurs attributions de Shapley et l'interaction.
+
+\input{chapitres_inst/approfondissements_table_unite}
+
+La moyenne garde plusieurs Bernoulli et peut être inférieure à $u$. La propagation
+et l'accumulation y contribuent négativement, en diluant une perte extrême.
+Avec une perte unique, ces contributions sont nulles par construction : elles
+modifient $K$, sans modifier $Y$. Cela ne réfute pas ces canaux ; leur effet
+financier exige de mesurer le coût selon les piliers touchés.
+
+L'interaction additive calculée sans simulation garde le signe de son estimation
+Monte-Carlo. Ces comparaisons isolent l'unité de perte, sans remplacer les résultats historiques.
+
+Les constructions additive et amplifiée diffèrent par la dépendance entre les $K$ composantes d'un
+incident, à marges égales. Un mélange les relie : avec probabilité $\rho$, un choc commun les rend comonotones, c'est-à-dire déterminées par le même rang aléatoire dans leur loi marginale ; sinon elles sont indépendantes. De $\rho=0$ à $\rho=1$, le capital croît de $16\,\%$ à l'état conforme et
+de $39\,\%$ à l'état non conforme. Le rapport entre états passe de $3{,}35$ à $4{,}02$ ($+20\,\%$), avec $3{,}74$
+à $\rho=0{,}5$. La croissance est monotone sur $21$ valeurs de $\rho$ (constat numérique), et la perte
+annuelle moyenne ne change pas.
+
+Entre l'incident unique et la comonotonie, la dépendance porte $45\,\%$ de
+l'écart de capital à l'état conforme et $46\,\%$ à l'état non conforme, le reste venant du nombre de
+composantes. La marge de l'incident complet, réutilisée pour chaque composante, n'est pas testée.
+
+\subsection{Bootstrap conjoint de calibration}
+\label{sec:institut-bootstrap-joint}
+% SOURCES-SCRIPTS: 120
+
+À seuil fixé, nous rééchantillonnons les pertes entières de 2000--2026.
+Chaque réplication recompte $p_u$, ajuste conjointement $\xi$ et $\sigma$, puis
+applique ce triplet aux deux états et aux quatre constructions. Les percentiles
+portent sur leurs écarts et rapports appariés, jamais sur une soustraction de bornes marginales.
+
+\input{chapitres_inst/approfondissements_table_bootstrap}
+
+Ces bandes supposent les pertes échangeables, dont la loi jointe ne dépend pas de leur ordre, et le seuil fixé ; elles excluent sélection et
+non-stationnarité, et laissent fixes la fréquence historique, la dispersion, les multiplicateurs et la
+cascade d'expert. La dispersion des rapports montre que la forme de queue ne s'annule pas entre états.
+
+\subsection{Mélange prédictif annuel}
+\label{sec:institut-melange-predictif}
+% SOURCES-SCRIPTS: 123
+
+Pour chaque calibration du bootstrap, nous recalculons la loi annuelle complète aux deux
+états, puis nous moyennons ces $2\,000$ lois. Le quantile du mélange est une construction
+prédictive empirique, et non une loi prédictive bayésienne.
+
+\input{chapitres_inst/approfondissements_table_melange}
+
+\begin{figure}[htbp]
+  \centering
+  \figover{melange_predictif_annuel.png}
+  \caption{Quantile annuel à $99{,}5\,\%$ sous la règle additive : fonction de répartition
+  des quantiles conditionnels des $2\,000$ calibrations, calage central (pointillé) et
+  quantile du mélange (trait plein).}
+  \label{fig:melange-predictif}
+\end{figure}
+
+Sous la règle additive, le quantile du mélange dépasse le calage central de $18\,\%$ à
+l'état conforme et de $46\,\%$ à l'état non conforme. L'écart grandit avec le niveau : à $99{,}9\,\%$,
+l'état non conforme passe de $43\,734$ à $87\,360$. Les $12$ ajustements avec $\xi\geq1$ n'en
+sont pas la cause : sans eux, le rapport du mélange vaut $4{,}05$. Le rapport $3{,}35$ est celui
+de deux points de calage ; celui des quantiles du mélange vaut $4{,}12$. Aucun des deux ne
+mesure un facteur vrai. Le mélange garde les hypothèses du bootstrap conjoint, et n'est pas un
+backtest du quantile à $99{,}5\,\%$.
+
+\subsection{Validation chronologique}
+\label{sec:institut-validation-temporelle}
+% SOURCES-SCRIPTS: 124
+
+Sur les années complètes 2000--2025, soit $565$ pertes dont $84$ excès au-dessus du seuil fixé,
+nous évaluons en origine glissante, de 2014 à 2025, trois lois de sévérité des excès : stationnaire,
+à échelle variable et à deux régimes. Aucune loi variable n'améliore le score moyen de la stationnaire. L'écart de score logarithmique
+moyen par excès vaut $-0{,}008$ pour l'échelle variable, d'intervalle bootstrap à $90\,\%$
+$[-0{,}057\,;0{,}043]$, et $-0{,}025$ pour les deux régimes, $[-0{,}073\,;0{,}025]$.
+
+Pour le taux de
+dépassement du seuil, le gain moyen de la tendance logistique sur le taux constant est de $0{,}039$
+par perte évaluée, $[0{,}001\,;0{,}076]$, avec une pente de $0{,}107$ par an.
+Cet intervalle exploratoire rééchantillonne les pertes individuellement. Le contrôle par blocs
+annuels du \S\ref{soc:sec:benchmark-apprentissage} donne un intervalle contenant zéro : l'incertitude sur le gain dépend du rééchantillonnage.
+
+\input{chapitres_inst/approfondissements_table_temporelle}
+
+Le niveau du capital varie de $-10\,\%$ à $+92\,\%$ selon la loi retenue, le rapport entre états de
+$-4{,}0\,\%$ à $+2{,}6\,\%$. Le taux de dépassement prévu pour 2026 atteint $0{,}349$ contre $0{,}149$ :
+extrapolation d'une tendance, sans validation. Les excès d'une même année sont traités comme indépendants, avec un à onze excès par
+an : la puissance est faible, et ce n'est pas un backtest du quantile à $99{,}5\,\%$.
+
+\subsection{Rééchantillonnage par années}
+\label{sec:institut-reechantillonnage-annuel}
+% SOURCES-SCRIPTS: 125
+
+Nous tirons des années complètes de 2000 à 2025, avec leurs pertes, ou des blocs de trois années
+consécutives, puis nous réestimons à chaque tirage le taux de dépassement et la queue. Le nombre
+annuel de pertes enregistrées, de $4$ à $39$, module aussi la fréquence par
+$\lambda_b=\lambda_{\mathrm{ref}}\,n_b/n_{\mathrm{ref}}$, ce qui conserve la référence historique.
+
+\input{chapitres_inst/approfondissements_table_annuel}
+
+Propager la fréquence change peu. Le facteur $n_b/n_{\mathrm{ref}}$ reste entre $0{,}855$ et
+$1{,}145$ à $5$ et $95\,\%$. La bande du rapport entre états est inchangée avec des années
+échangeables ($+0\,\%$) et varie de $-1\,\%$ avec des blocs. Celle du capital non conforme
+s'élargit de $2\,\%$, puis de $8\,\%$. Il s'agit de pertes enregistrées, non d'une fréquence par
+entité ; la hausse du nombre annuel de pertes n'est pas modélisée.
+
+\subsection{Précision numérique}
+\label{sec:institut-fourier-controles}
+% SOURCES-SCRIPTS: 119 120
+
+L'inversion de Fourier calcule la loi de la somme annuelle à partir des transformées des pertes et du comptage. La grille rend les convolutions calculables par produits. L'inclinaison exponentielle atténue les masses lointaines, puis est retirée ; elle réduit leur repliement artificiel en début de grille. La masse hors portée
+est omise, sans report dans la dernière case ni renormalisation. Le pas et la portée
+s'adaptent aux ajustements extrêmes ; les contrôles les font varier avec l'inclinaison.
+Pour $K=1$, les quatre règles coïncident. Une sévérité déterministe redonne la
+binomiale négative amincie ; les moments tronqués restent compatibles avec les
+moyennes analytiques finies.

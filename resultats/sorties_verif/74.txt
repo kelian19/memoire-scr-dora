@@ -1,0 +1,143 @@
+﻿
+========================================================================================
+1. La loi EXACTE du nombre de piliers touches par sinistre
+========================================================================================
+  Un sinistre touche un ENSEMBLE de piliers, tire dans la loi de progeniture de la
+  cascade. Voici cette loi, exacte, aux deux valeurs du gain de propagation.
+
+  piliers touches       etat conforme (g=0.45)      non conforme (g=0.9)
+  1                                     68.85 %                    37.69 %
+  2                                     25.10 %                    38.10 %
+  3                                      5.31 %                    18.29 %
+  4                                      0.70 %                     5.22 %
+  5                                      0.04 %                     0.69 %
+  moyenne                                1.380                     1.931
+
+  Part des sinistres touchant PLUS D'UN pilier : 31.15 % a l'etat conforme et
+  62.31 % a l'etat non conforme. La simultaneite n'est donc pas un cas laisse de
+  cote, c'est la sortie du modele, et la non-conformite en augmente la frequence.
+
+  ET CE N'EST PAS UN CAS MARGINAL : a l'etat non conforme la defaillance multiple est
+  MAJORITAIRE, 62.3 % contre 37.7 % de sinistres mono-pilier, pour une
+  moyenne de 1.93 piliers par sinistre contre 1.38 a l'etat conforme, soit un
+  facteur 1.40. La consequence est importante pour la suite : tout ce qui touche au
+  cout des sinistres MULTI-piliers frappe plus fort l'etat non conforme que l'etat
+  conforme, donc deplace l'ECART et pas seulement le niveau. La section 3 le mesure.
+
+========================================================================================
+2. Les TROIS enonces d'additivite, a ne pas confondre
+========================================================================================
+  (a) AU SEIN D'UN SINISTRE : les couts des piliers touches s'ADDITIONNENT.
+      Statut : HYPOTHESE de construction, non testee. C'est l'objet de la question.
+      La perte d'un sinistre vaut la somme des severites sur les piliers de l'ensemble.
+
+  (b) EN FONCTION DES PILIERS non conformes : le capital est PRESQUE additif.
+      Statut : MESURE. R2 = 0,9945 sur les 32 configurations (script 69), contributions
+      3 524 (P1), 2 863 (P4), 2 022 (P2), 1 577 (P3), 897 M (P5).
+
+  (c) EN FONCTION DES QUATRE CANAUX : le capital est franchement SUPER-additif.
+      Statut : MESURE. +5 001 M d'interaction sur un ecart de 14 139, soit +35 %
+      (script 68), et l'interaction vit aux paires.
+
+  POURQUOI CES TROIS ENONCES NE SE CONTREDISENT PAS. Ils portent sur des variables
+  differentes : (a) sur les couts d'un evenement, (b) sur les indicateurs de pilier, (c)
+  sur les parametres de la loi de perte. Un capital peut etre additif en (b) et
+  super-additif en (c) sans contradiction, et c'est le cas ici. Repondre a la question par
+  « le modele est super-additif » serait donc faux : il l'est sur les canaux, pas sur les
+  piliers, et l'hypothese sur les couts est encore autre chose.
+
+========================================================================================
+3. Ce que couterait une non-additivite des couts, borne par un exposant
+========================================================================================
+  CONTROLE a theta = 1, contre le moteur partage :
+    conforme      6049 contre 6049  -> ecart 0.0000 M
+    non conforme  20188 contre 20188  -> ecart 0.0000 M
+  L'ecart est nul : le balayage part donc bien du modele publie.
+  Bruit de simulation de l'ecart, 4 graines appariees : +/- 734 M.
+  Ce +/- est l'ecart-type entre 4 graines, ni un intervalle de confiance ni l'erreur type de la moyenne. Erreur type estimee de la moyenne de l'ecart : 367 M (4 graines : estimation fragile).
+
+    theta   SCR conforme  SCR non conf.   ecart DORA   / publie
+     0.70           5435          15141         9706      0.687
+     0.85           5732          17536        11804      0.835
+     1.00           6049          20188        14139      1.000
+     1.15           6449          23447        16998      1.202
+     1.30           6972          27459        20487      1.449
+
+  De theta = 0.70 a 1.30, l'ecart de capital DORA va de 9706 a 20487 M,
+  contre 14139 au modele publie : une plage de 10781 M, soit 76 % de l'ecart publie et 15 fois son bruit de simulation.
+  Elasticites, par regression log-log sur les 5 exposants :
+    etat conforme      0.39
+    etat non conforme  0.95    -> facteur 2.42 entre les deux
+    ecart DORA         1.20
+
+  C'EST UNE VRAIE SENSIBILITE, ET ELLE N'ETAIT PAS ATTENDUE A CE NIVEAU. La plage vaut
+  15 fois le bruit de simulation, donc l'effet est reel et non un
+  artefact de Monte-Carlo. L'hypothese d'additivite des couts est donc la plus lourde des
+  hypotheses non testees du modele, et il faut le dire ainsi.
+
+  LE MECANISME EST CELUI DE LA SECTION 1, ET IL EXPLIQUE L'ASYMETRIE. L'exposant ne
+  touche QUE les sinistres multi-piliers, puisque 1^(theta-1) = 1 : il laisse les
+  mono-piliers exactement ou ils sont. Or la defaillance multiple est majoritaire a l'etat
+  non conforme (62.3 %) et minoritaire a l'etat conforme (31.2 %), d'ou des
+  elasticites de 0.95 contre 0.39. L'hypothese n'est donc PAS neutre entre les deux
+  etats : elle interagit avec le canal de propagation, et deplace la grandeur centrale du
+  memoire et non un simple niveau.
+
+  CE QUI TIENT MALGRE TOUT, ET C'EST LE POINT A RETENIR. Sur toute la plage le signe et
+  l'ordre de grandeur de l'ecart survivent : de 9706 a 20487 M, jamais proche de zero,
+  toujours de l'ordre de la dizaine de milliards. La these ne depend donc pas de
+  l'hypothese d'additivite ; seule son AMPLITUDE en depend. C'est la meme structure
+  d'argument que l'invariance aux valeurs de g du script 66 : l'ordre resiste, le niveau
+  est un scenario.
+
+  ET LA PLAGE D'EXPOSANTS EST POSEE, PAS ESTIMEE. Aucune donnee ne permet de la
+  restreindre, voir la section 4. La grandeur transferable est donc l'ELASTICITE, qui
+  laisse un lecteur choisir sa propre plage, et non la plage elle-meme.
+
+========================================================================================
+4. Ce qui n'est PAS testable, et il faut le dire
+========================================================================================
+  LE SENS de la non-additivite n'est pas determinable sur la donnee disponible, et deux
+  mecanismes plausibles vont en sens CONTRAIRE :
+    SOUS-additivite : une cellule de crise, une investigation forensique et une
+      communication servent a plusieurs piliers a la fois. Le total serait alors
+      INFERIEUR a la somme, et le modele publie SUR-estimerait.
+    SUPER-additivite : plusieurs defaillances simultanees saturent la capacite de
+      remediation, donc le cout unitaire monte. Le total serait SUPERIEUR a la somme,
+      et le modele publie SOUS-estimerait.
+
+  AUCUN DES DEUX N'EST OBSERVABLE ICI, et la raison est dans la donnee elle-meme : le
+  cout d'un sinistre a PLUSIEURS piliers n'est observe par aucune source retenue. Les pertes
+  OpRisk portent un montant et une annee, pas une ventilation par pilier ; ce cout demanderait
+  une ventilation par domaine de controle qu'aucune source publique ne fournit.
+
+  C'EST DONC UNE LIMITE DECLAREE, PAS UN OUBLI, et elle est desormais CHIFFREE plutot que
+  bornee : la plage de la section 3 dit ce que l'hypothese coute sur une amplitude POSEE
+  d'exposants, pas sur une amplitude estimee, et le sens reste ouvert. C'est pourquoi
+  l'elasticite est la grandeur a publier : elle resume la sensibilite sur la plage etudiee,
+  et une autre amplitude demanderait un nouveau calcul.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LA PREMISSE EST A CORRIGER : les defaillances simultanees ne sont pas un cas laisse
+     de cote, elles sont la SORTIE du modele, et a l'etat non conforme elles sont
+     MAJORITAIRES : 62.31 % des sinistres touchent plus d'un pilier, contre
+     31.15 % a l'etat conforme, pour 1.93 piliers par sinistre contre 1.38.
+  2. TROIS enonces d'additivite, a trois etages : hypothese sur les couts d'un sinistre,
+     quasi-additivite MESUREE sur les piliers, super-additivite MESUREE sur les canaux.
+     Repondre « le modele est super-additif » serait faux : cela depend de l'etage.
+  3. L'hypothese d'additivite des couts est BORNEE, et c'est la plus lourde des hypotheses
+     non testees : un exposant de 0.70 a 1.30 deplace l'ecart DORA de 9706 a 20487 M
+     contre 14139 publie, soit 76 % de l'ecart et 15 fois son bruit.
+  4. ELLE N'EST PAS NEUTRE ENTRE LES DEUX ETATS, et c'est le resultat inattendu :
+     elasticites 0.95 (non conforme) contre 0.39 (conforme), facteur 2.42, parce que
+     l'exposant ne touche que les multi-piliers, majoritaires au seul etat non conforme.
+     L'hypothese interagit donc avec le canal de propagation.
+  5. CE QUI TIENT : sur toute la plage l'ecart reste du meme signe et du meme ordre,
+     9706 a 20487 M. La these resiste, l'amplitude est un scenario, comme pour g.
+  6. Le SENS de la non-additivite reste NON TESTABLE : le cout d'un sinistre
+     multi-piliers n'est observe par aucune source. Limite declaree, desormais bornee,
+     et l'elasticite resume la sensibilite sur la plage etudiee.
+
+figure ecrite : recherche\vasicek_lab\figures\S30_defaillances_simultanees.png

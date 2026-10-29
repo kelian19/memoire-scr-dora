@@ -1,0 +1,243 @@
+{
+ "experience": "131 benchmark covariables",
+ "seuil": 20.03,
+ "graine": 20261027,
+ "sklearn": "1.9.0",
+ "hyperparametres": {
+  "logit_C": 1.0,
+  "boosting": {
+   "max_depth": 2,
+   "max_iter": 100,
+   "learning_rate": 0.05,
+   "min_samples_leaf": 20,
+   "l2_regularization": 1.0,
+   "random_state": 20261027
+  }
+ },
+ "disponibilite_actifs": {
+  "renseignes": 518,
+  "posterieurs": 209,
+  "total": 565
+ },
+ "partie1": {
+  "info": {
+   "n_notes": 280,
+   "n_depassements": 60,
+   "pertes_firme_deja_vue": 35
+  },
+  "actifs_declares": {
+   "M0": {
+    "log_score": -0.5604904496539002,
+    "brier": 0.17819347450598966,
+    "pr_auc": 0.330339332006897,
+    "p_moyen": 0.1060365353556564,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 2.724174046837244,
+    "contre_M1": {
+     "difference": -0.03907040419175322,
+     "p5": -0.09367863007544273,
+     "p95": 0.011787891750262403,
+     "annees_gagnees": 5,
+     "annees": 12
+    }
+   },
+   "M1": {
+    "log_score": -0.521420045462147,
+    "brier": 0.1689411780405858,
+    "pr_auc": 0.22936687049390692,
+    "p_moyen": 0.22949519289481668,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.3583850739243546
+   },
+   "M2": {
+    "log_score": -0.5436073738384849,
+    "brier": 0.1761726489731376,
+    "pr_auc": 0.3196773833960299,
+    "p_moyen": 0.24678604299123624,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.38630330778173644,
+    "contre_M1": {
+     "difference": -0.022187328376337908,
+     "p5": -0.0912092124098668,
+     "p95": 0.03641478989143295,
+     "annees_gagnees": 5,
+     "annees": 12
+    }
+   },
+   "M3": {
+    "log_score": -0.5020887115007285,
+    "brier": 0.16047396651637025,
+    "pr_auc": 0.36501968439374705,
+    "p_moyen": 0.18697485307750292,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.6163154873579108,
+    "contre_M1": {
+     "difference": 0.01933133396141836,
+     "p5": -0.03709985323666443,
+     "p95": 0.05705156438985659,
+     "annees_gagnees": 9,
+     "annees": 12
+    }
+   }
+  },
+  "sans_actifs": {
+   "M0": {
+    "log_score": -0.5604904496539002,
+    "brier": 0.17819347450598966,
+    "pr_auc": 0.330339332006897,
+    "p_moyen": 0.1060365353556564,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 2.724174046837244,
+    "contre_M1": {
+     "difference": -0.03907040419175322,
+     "p5": -0.09349343715079098,
+     "p95": 0.011917726514983242,
+     "annees_gagnees": 5,
+     "annees": 12
+    }
+   },
+   "M1": {
+    "log_score": -0.521420045462147,
+    "brier": 0.1689411780405858,
+    "pr_auc": 0.22936687049390692,
+    "p_moyen": 0.22949519289481668,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.3583850739243546
+   },
+   "M2": {
+    "log_score": -0.5088783870879416,
+    "brier": 0.16475913197074352,
+    "pr_auc": 0.3637808441886571,
+    "p_moyen": 0.24459826944713642,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.5619657511267364,
+    "contre_M1": {
+     "difference": 0.012541658374205372,
+     "p5": -0.04713329508671188,
+     "p95": 0.06384076450345591,
+     "annees_gagnees": 7,
+     "annees": 12
+    }
+   },
+   "M3": {
+    "log_score": -0.497318310036308,
+    "brier": 0.15742337323201896,
+    "pr_auc": 0.4097409289571869,
+    "p_moyen": 0.18779149461218328,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.6257156812320019,
+    "contre_M1": {
+     "difference": 0.02410173542583895,
+     "p5": -0.023951657923405718,
+     "p95": 0.06460799817745824,
+     "annees_gagnees": 7,
+     "annees": 12
+    }
+   }
+  },
+  "actifs_ex_ante": {
+   "M0": {
+    "log_score": -0.5604904496539002,
+    "brier": 0.17819347450598966,
+    "pr_auc": 0.330339332006897,
+    "p_moyen": 0.1060365353556564,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 2.724174046837244,
+    "contre_M1": {
+     "difference": -0.03907040419175322,
+     "p5": -0.09443787517079565,
+     "p95": 0.010236620240957159,
+     "annees_gagnees": 5,
+     "annees": 12
+    }
+   },
+   "M1": {
+    "log_score": -0.521420045462147,
+    "brier": 0.1689411780405858,
+    "pr_auc": 0.22936687049390692,
+    "p_moyen": 0.22949519289481668,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.3583850739243546
+   },
+   "M2": {
+    "log_score": -0.5132745287929298,
+    "brier": 0.16628649280483546,
+    "pr_auc": 0.3630922599202181,
+    "p_moyen": 0.2463928867362837,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.5415336775282543,
+    "contre_M1": {
+     "difference": 0.0081455166692171,
+     "p5": -0.049057147496182285,
+     "p95": 0.05742014736076071,
+     "annees_gagnees": 6,
+     "annees": 12
+    }
+   },
+   "M3": {
+    "log_score": -0.49873238407414616,
+    "brier": 0.1588251803501674,
+    "pr_auc": 0.38459578616461354,
+    "p_moyen": 0.18093892708063003,
+    "taux_observe": 0.21428571428571427,
+    "pente_calibration": 0.6458544021243666,
+    "contre_M1": {
+     "difference": 0.022687661388000782,
+     "p5": -0.02324414074402797,
+     "p95": 0.05924693378476744,
+     "annees_gagnees": 8,
+     "annees": 12
+    }
+   }
+  },
+  "coefficients_M2": {
+   "annee": 0.7817717737422373,
+   "bdsf": 0.5675030342192257,
+   "log_actifs": -0.02674387027319529,
+   "actifs_manquants": -0.04116658425861084,
+   "metier_Retail Banking": -0.16107488806135298,
+   "metier_Payment and Settlement": 0.615815676491774,
+   "metier_Insurance": 0.16622024307732844,
+   "region_North America": -0.0767677153222165,
+   "region_Europe": 0.025197197977802552,
+   "region_Asia": 0.22916097529650653
+  }
+ },
+ "partie2": {
+  "n_notes": 60,
+  "densite_nulle": {
+   "D": 0,
+   "DX": 1
+  },
+  "n_communs": 59,
+  "score_D": -5.712197547438271,
+  "score_DX": -5.7766555461005895,
+  "difference": -0.06445799866231836,
+  "p5": -0.17384861705796767,
+  "p95": 0.06910175894898393,
+  "complet": {
+   "n_exces": 84,
+   "xi": 0.4780252125980323,
+   "pente_annee": 0.0516179272835828,
+   "effet_log_actifs": 0.04246592579664645,
+   "effet_bdsf": 0.6228460498781456
+  }
+ },
+ "signal_depassement": false,
+ "signal_depassement_par_variante": {
+  "actifs_declares": {
+   "M2": false,
+   "M3": false
+  },
+  "sans_actifs": {
+   "M2": false,
+   "M3": false
+  },
+  "actifs_ex_ante": {
+   "M2": false,
+   "M3": false
+  }
+ },
+ "signal_severite": false,
+ "duree_secondes": 32.60401649999949
+}

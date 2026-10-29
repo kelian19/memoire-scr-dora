@@ -1,0 +1,32 @@
+==============================================================================
+135 : GRAPHIQUE DE HILL, ECHANTILLON 2000-2026
+==============================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+  570 pertes cyber x finance, periode 2000-2026 ; reference EMV xi = 0.5954
+
+      k   xi_Hill   borne basse   borne haute   reference dans la bande
+      1     0.219        -0.141         0.580                       non
+      2     0.435        -0.071         0.941                       oui
+      3     0.521         0.026         1.015                       oui
+      5     0.664         0.176         1.153                       oui
+     10     0.624         0.299         0.948                       oui
+     15     0.664         0.382         0.946                       oui
+     20     0.681         0.431         0.932                       oui
+     25     0.885         0.594         1.176                       oui
+     30     0.974         0.681         1.267                       non
+     40     0.920         0.681         1.159                       non
+     50     1.022         0.784         1.260                       non
+     86     1.421         1.169         1.673                       non
+    120     1.483         1.260         1.706                       non
+    150     1.678         1.453         1.904                       non
+    200     1.786         1.579         1.994                       non
+
+  la reference est dans la bande pour 24 valeurs de k sur 200, de k = 2 a k = 25
+  hors de la bande pour tout k >= 26
+  minimum de xi_Hill sur k <= 10 : 0.219 ; maximum sur k <= 200 : 1.795 (k = 199)
+
+figure : figures_inst/hill_plot_ic90_oprisk.png
+
+Grandeurs citees (sans separateur) :
+  n 570   k_dedans_min 2   k_dedans_max 25   k_sortie 26   hill_k86 1.421   hill_k200 1.786

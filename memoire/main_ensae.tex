@@ -1,0 +1,151 @@
+% =============================================================================
+%  VERSION ENSAE  --  rapport de stage de fin d'etudes, Mastere specialise (MS)
+%  Actuariat, annee scolaire 2025-2026.
+%
+%  DEPUIS LE 1er OCTOBRE 2026, CETTE VERSION ET LA VERSION INSTITUT SONT DEUX
+%  DOCUMENTS. main_institut.tex est la version complete et figee : il n'est plus
+%  genere depuis ce fichier, et refaire_tout.py verifie qu'il garde le contenu de
+%  son PDF committe. Seule la version ENSAE se reduit, sous 100 pages, pour suivre
+%  les consignes MS du service des stages (demande de Caroline Hillairet).
+%
+%  LA REDUCTION SUIT LA MISSION ECRITE EN TETE DU CLAUDE.md A LA RACINE (branche
+%  reduction-sfe). Elle ne modifie que la version ENSAE : les fichiers qu'elle cree ou
+%  change ne doivent jamais etre lus par main_institut.tex, qui reste tel quel.
+%
+%  ETAT : PHASE 3 DE LA REDUCTION, restructuration a texte constant. Cette version lit
+%  ses chapitres dans chapitres_sfe/, copies de chapitres/ reorganisees selon le plan
+%  cible de la mission : introduction, dix chapitres, conclusion, enseignements du
+%  stage, bibliographie, annexes A a D, puis les deux notes de synthese en fin de
+%  fichier (ordre impose par les consignes MS). Correspondance des sections :
+%  reduction/phase3_correspondance.md. Le contenu retire (anciennes annexes B et F,
+%  questionnaire d'elicitation) est dans supplement/, et les renvois du corps vers lui
+%  passent par les etiquettes relais de la notice des annexes. Couverture :
+%  garde_ensae.tex (phase 2). Etat de depart : etiquette avant-reduction.
+%
+%  FICHIER A DEPOSER : KADDOURI_Kelian_MS25.pdf (NOM_Prenom_MS25.pdf, consignes
+%  MS 2025-2026), ou le meme suffixe _CONF si le rapport devenait confidentiel.
+%  Depot sur la plateforme des stages AVANT LE 14 OCTOBRE 2026 A 17 H, date
+%  previsionnelle, delai de rigueur.
+% =============================================================================
+
+\documentclass[12pt,a4paper]{report}
+
+% FORMAT IMPOSE PAR L'ECOLE : Times New Roman 12 et interligne 1,5. La commande ci-dessous
+% active, dans le preambule partage, la branche Times et 1,5 ; les autres versions ne la
+% definissent pas et gardent Palatino 11. L'ecole a leve la limite de trente pages le
+% 16 septembre 2026, pas la police ni l'interligne.
+\newcommand{\formatensae}{}
+
+% Meme preambule que la version 2, qui est la reference de style du projet.
+\input{preambule_v2}
+
+% Police newtx d'origine conservée à la demande de l'auteur (15 octobre 2026).
+
+% Puces rondes dans la version ENSAE : babel-french compose sinon les puces en tiret cadratin,
+% dont la consigne de l'auteur veut qu'aucun livrable n'en porte (11 octobre 2026).
+\frenchbsetup{StandardItemLabels=true}
+
+% VERSION ENSAE SEULE (reduction SFE, phase 3). Deux reglages qui ne touchent pas le preambule
+% partage avec la version Institut :
+%  - la bibliographie entre au sommaire, que les consignes MS exigent et ou natbib ne l'inscrit
+%    pas ;
+%  - un renvoi vers un contenu parti au supplement passe par une ETIQUETTE RELAIS, posee dans la
+%    notice des annexes : le \ref du texte reste intact et imprime la place du contenu dans le
+%    supplement (S1, S1.2...), le lien menant a la notice qui dit ou le trouver.
+\renewcommand{\bibsection}{\chapter*{\bibname}\phantomsection
+  \addcontentsline{toc}{chapter}{\bibname}\markboth{\bibname}{}}
+\makeatletter
+\newcommand{\etiquettesupplement}[2]{\phantomsection\def\@currentlabel{#2}\label{#1}}
+\makeatother
+
+\begin{document}
+\hypersetup{pageanchor=false}
+
+% COUVERTURE : le modele du service des stages (annexe 1 des consignes MS 2025-2026),
+% phase 2 de la reduction. La version Institut garde page_de_garde.tex.
+\input{garde_ensae}
+\hypersetup{pageanchor=true}
+
+% PIECES LIMINAIRES : remerciements, resume, abstract, sommaire, glossaire. Copies de
+% remerciements.tex, 01_resume.tex et 00_glossaire.tex, a reecrire en phase 4.
+\input{chapitres_sfe/remerciements}
+\input{chapitres_sfe/resume}      % Résumé, abstract, sommaire
+\input{chapitres_sfe/glossaire}
+
+% CORPS, SELON LE PLAN CIBLE DE LA MISSION. Plus de parties : leurs six etiquettes part:...
+% sont reposees sur le chapitre qui ouvre desormais leur contenu.
+\input{chapitres_sfe/00_introduction}             % ex-1.5.3
+\input{chapitres_sfe/01_contexte}                 % ex-chapitres 1 et 2
+\input{chapitres_sfe/02_revue}                    % ex-3
+\input{chapitres_sfe/03_donnees}                  % ex-4
+\input{chapitres_sfe/04_frequence_severite}       % ex-5
+\input{chapitres_sfe/05_cascade}                  % ex-6
+\input{chapitres_sfe/06_multietats}               % ex-7
+\input{chapitres_sfe/07_identifiabilite}          % ex-8
+\input{chapitres_sfe/08_identification_partielle} % ex-9
+\input{chapitres_sfe/09_resultats}                % ex-10
+\input{chapitres_sfe/10_robustesse}               % ex-11 et 12
+\input{chapitres_sfe/conclusion}                  % ex-13
+% Enseignements du stage (ex-14), hors du plan cible de la mission mais EXIGES par les consignes
+% MS : enseignements de l'ENSAE appliques, part du maitre de stage et des tiers, prise de recul.
+\input{chapitres_sfe/stage}
+
+% BIBLIOGRAPHIE AVANT LES ANNEXES : ordre des consignes MS (sommaire, introduction,
+% developpements, conclusion, bibliographie, annexes).
+\bibliographystyle{plainnat-fr}
+% Interligne simple et entrees resserrees dans la bibliographie (1er octobre 2026, demande de
+% Kelian : faire la place des figures remontees du supplement). La police reste le Times 12 des
+% consignes MS ; l'interligne 1,5 vaut pour le texte courant, comme dans les tableaux.
+{\NoAutoSpacing\singlespacing\small\setlength{\bibsep}{0pt plus 0.5pt}\bibliography{references_ensae}}
+
+% =====================================================================
+\appendix
+% Plus de page de partie : une ligne « Annexes » au sommaire, en tete de la notice.
+\clearpage
+\phantomsection
+\addcontentsline{toc}{part}{Annexes}
+
+% -----------------------------------------------------------------------------
+% NOTICE D'ORGANISATION DES ANNEXES. Les annexes B (demonstrations du socle EVT),
+% D (pieces justificatives) et E (complements aux chapitres du corps) ont ete
+% deportees le 18 septembre 2026 vers materiel_complementaire/ et ne sont plus
+% appelees ; les renvois vers elles passent par la macro \matcomp. Depuis la phase 3
+% de la reduction, trois autres contenus sont partis dans supplement/ (S1 a S3) ; les
+% quatre etiquettes que le corps vise encore y sont relayees ci-dessous.
+% -----------------------------------------------------------------------------
+\chapter*{Organisation des annexes et matériel complémentaire}
+\addcontentsline{toc}{chapter}{Organisation des annexes et matériel complémentaire}
+\markboth{Annexes}{}
+
+Ce rapport garde en annexe les démonstrations du modèle de cascade, la table des paramètres et des
+notations, et l'inventaire de l'usage de l'intelligence artificielle générative.
+
+Le \emph{matériel complémentaire} de la version complète du mémoire, destinée à l'Institut des
+actuaires (démonstrations des théorèmes standards des valeurs extrêmes, pièces justificatives,
+compléments de chapitres), est déposé de façon pérenne sur Zenodo, sous l'identifiant
+\texttt{10.5281/zenodo.22874524} :
+\url{https://doi.org/10.5281/zenodo.22874524}
+
+Le supplément de ce rapport, auquel conduisent les renvois numérotés S1 à S4, réunit les
+adaptations par pilier (S1), les pistes pour de futurs mémoires (S2), le questionnaire
+d'élicitation (S3), et les compléments retirés du corps du rapport, dont le protocole d'élicitation
+et les retours de praticiens (S4). Il est déposé
+au même identifiant Zenodo, dans le fichier \texttt{supplement\_rapport\_ENSAE.pdf}.% ETIQUETTES RELAIS : fichier ecrit par reduction/relais_supplement.py, a relancer apres tout
+% deplacement vers le supplement.
+\input{supplement/relais}
+
+% =====================================================================
+% Annexe A revenue du supplement le 1er octobre 2026 tard le soir (« enrichissons le memoire ») :
+% c'est l'annexe A du plan cible. Le supplement passe a S1-S4.
+\input{chapitres_sfe/annexe_a_demonstrations}        % A, ex-A (le supplement l'appelait S5)
+\input{chapitres_sfe/annexe_b_parametres_notations}  % B, ex-D et ex-E
+\input{chapitres_sfe/annexe_d_ia}                    % C, ex-G
+
+% NOTES DE SYNTHESE EN FIN DE FICHIER, ordre impose par les consignes MS : le rapport, les
+% annexes, la note en francais, la note en anglais.
+\clearpage
+\phantomsection
+\addcontentsline{toc}{part}{Notes de synthèse}
+\input{chapitres_sfe/notes_synthese}
+
+\end{document}

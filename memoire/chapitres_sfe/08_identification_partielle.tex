@@ -1,0 +1,170 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE : chapitre 8, identification partielle et bornes de capital.
+% Phase 3 : copie a texte constant de chapitres/10_identification_partielle.tex.
+% Phase 4 (1er octobre 2026) : reecrit et condense ; formules, tableaux, figures, renvois,
+% citation et nombres conserves. Le texte d'origine reste dans chapitres/ (version Institut)
+% et dans l'historique Git.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% Scripts : 30 (bornes), 31 (comparaison des regimes), 33 (relatif/absolu), 34, 61, 67.
+% =====================================================================
+\chapter{Identification partielle et bornes de capital}
+\label{chap:partielle}
+
+La direction de la contagion n'étant pas identifiable (chapitre~\ref{ch:identifiabilite}), on peut
+poser $W$ à dire d'expert et publier un besoin de capital ponctuel, ou caractériser l'ensemble des $W$
+compatibles avec les contraintes posées et publier des extrema numériques. Nous suivons la seconde voie et la comparons à la
+première. Les montants de ce chapitre valent pour le périmètre financier étudié, avec la
+sévérité OpRisk, à titre illustratif.
+
+\section{Modèle en couches}
+
+Le socle, indépendant de $W$, regroupe la fréquence d'entrée surdispersée, l'accumulation par cause
+commune et la sévérité GPD. Sans contagion ($W = 0$), le besoin de capital est de $5\,275$~M\euro{} dans le calage
+de référence (sévérité OpRisk, fréquence de l'état conforme, gain de propagation $g=0{,}90$). Le préprint de cascade climatique \citep{ccrn2026} retire aussi la propagation dans une ablation, comme à $W=0$,
+pour mesurer l'apport de la structure.
+
+Toute matrice se décompose de façon unique en
+\[
+  W \;=\; S + A, \qquad S = \tfrac{1}{2}(W + W^{\top}), \qquad A = \tfrac{1}{2}(W - W^{\top}) .
+\]
+Ici $A_{jk}>0$ signifie que la contagion va plutôt de $j$ vers $k$, et $A_{jk}<0$ de $k$ vers $j$. Des
+données de co-occurrence identifieraient $S$ au premier ordre sous amorce uniforme et faible intensité, mais pas $A$, la direction
+(proposition~\ref{prop:nonid}). Faute d'un tel panel, nous posons $S$ à partir du barème d'expert
+(chapitre~\ref{chap:cascade}) et ne faisons varier que $A$ : les bornes qui suivent sont donc
+conditionnelles à cette partie symétrique posée. Nous définissons l'ensemble admissible par
+\[
+  \mathcal{W}(t) \;=\; \bigl\{\, S + A \;:\; A^{\top} = -A, \;\; |A_{jk}| \leq t\,S_{jk},
+  \;\; \rho(S+A) < 1 \,\bigr\},
+\]
+où la contrainte $|A_{jk}| \leq S_{jk}$ découle des conditions de positivité $W_{jk}\geq 0$ et
+$W_{kj}\geq 0$. Le paramètre $t\in[0,1]$ mesure ce que la donnée ignore de la direction, l'ignorance
+totale $t=1$ correspondant aux sources publiques actuelles. Pour chacune des $10$ paires de piliers,
+$A_{jk}/S_{jk}$ varie donc entre $-t$ et $t$ : les contraintes de signe définissent un pavé, intersecté avec la contrainte spectrale. Ses $2^{10} = 1\,024$ sommets fixent chaque paire à un extrême ; leur admissibilité est contrôlée avant évaluation.
+
+% SOURCES-SCRIPTS: 31 30
+
+\section{Capital sur l'ensemble admissible}
+
+Nous appelons ici « bornes numériques » le minimum et le maximum calculés aux sommets admissibles, notés $V(1)$. Il ne s'agit pas de bornes globales démontrées sur $\mathcal W(1)$. À $t=1$, on obtient
+\[
+  \left[\min_{W\in V(1)}\widehat{\mathrm{SCR}}(W),\max_{W\in V(1)}\widehat{\mathrm{SCR}}(W)\right] \;=\; [\,6\,858 \;;\; 8\,697\,]~\text{M\euro{}} ,
+\]
+avec un facteur $1{,}27$ entre les deux bouts. La contagion ajoute entre $+30\,\%$ et
+$+65\,\%$ au socle. Le point d'expert, $8\,110$~M\euro{}, n'est qu'un point de cet ensemble
+(figure~\ref{fig:pave-sommets}).
+
+\begin{figure}[H]
+  \centering
+  \figover{Z_pave_sommets.png}
+  \caption{Le pavé admissible et le capital qu'il donne. (a)~Coupe sur deux des dix paires :
+$A_{jk}/S_{jk}$ va de $-1$, tout de $k$ vers $j$, à $+1$, tout de $j$ vers $k$. (b)~Capital aux
+$1\,024$ sommets et aux $3\,000$ points intérieurs, à $t = 1$ : aucun point intérieur ne sort des bornes.}
+  \label{fig:pave-sommets}
+\end{figure}
+
+Les sommets ne bornent le capital que si les extrêmes y sont atteints, ce que rien ne garantit
+\emph{a priori}. Augmenter $A_{jk}$ élève $W_{jk}$ mais abaisse $W_{kj}$, si bien que la
+réponse n'est pas monotone en $A_{jk}$. Les $3\,000$ points intérieurs tirés uniformément restent tous
+dans les bornes, en VaR comme en perte moyenne. Cette propriété reste vérifiée
+numériquement, mais non démontrée. Ces extrema numériques sont des quantiles de $40\,000$ années
+simulées, au bruit non mesuré. À indice de queue élevé, la VaR est peu sensible à la structure de
+cascade, la queue annuelle étant dominée par une perte unique. La perte moyenne, bornée
+dans $[849\,;1\,100]$~M\euro{} et moins bruitée, et l'ordre de remédiation en rendent mieux compte.
+
+Ramener l'ignorance de $t=1$ à $t=0{,}5$, c'est-à-dire borner l'asymétrie à la moitié de la
+co-occurrence, réduirait la largeur des bornes de $1\,839$ à $695$~M\euro{}, soit $-62\,\%$. Ce scénario donne l'ordre de grandeur de ce que le reporting de la section~\ref{ch:livrable} permettrait de gagner, sans le garantir.
+
+% SOURCES-SCRIPTS: 30 61
+
+\section{Comparaison d'une matrice posée et de l'identification partielle}
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{4.1cm} p{4.5cm} p{5.6cm}@{}}
+\toprule
+ & \textbf{Régime A : on pose $W$} & \textbf{Régime B : modèle en couches} \\
+\midrule
+Sortie sur le capital & un point, $8\,110$~M\euro{} & socle $5\,275$ + bande $[6\,858\,;8\,697]$ \\
+Part indépendante de la direction & aucune, tout repose sur le classeur & $79\,\%$ (socle $61\,\%$, plancher commun aux sommets $18\,\%$), à $S$ posé \\
+Panel biaisé & déplace le besoin de capital de $777$~M\euro{} & la bande ne bouge pas si $S$ reste fixé \\
+Priorité de remédiation & P1, sans marge d'erreur & tête P1/P4, ordre interne ouvert \\
+Si aucun expert ne répond & plus de matrice complète & exploration conditionnelle au $S$ d'expert maintenu \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+\noindent Faire varier la direction posée à dire d'expert, depuis un panel qui confirmerait le classeur
+jusqu'à un panel qui dirait l'inverse au bord du pavé admissible, déplace le besoin de capital du
+régime~A de $777$~M\euro{}, soit $10\,\%$. La priorité bascule alors entre trois piliers, sans signal
+pour l'utilisateur. La
+bande du régime~B ne bouge pas. Sur l'ensemble admissible, P5 n'arrive jamais en tête, P3 dans moins
+de $10\,\%$ des cas, et P1 ($45\,\%$) et P4 ($36\,\%$) concentrent $81\,\%$ des matrices testées. Un panel d'experts servirait donc à départager
+P1 et P4 et à resserrer la bande ; le questionnaire diffusé est resté sans réponse.
+
+% SOURCES-SCRIPTS: 31
+
+\section{Niveaux et rapports de capital}
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{4.3cm} r r r r@{}}
+\toprule
+\textbf{Calibration} & \textbf{socle} & \textbf{bornes} &
+\textbf{haute/socle} & \textbf{\% indépendant de la direction} \\
+\midrule
+Référence (OpRisk)   & $5\,275$  & $[6\,858\,;8\,697]$   & $1{,}65$ & $78{,}9\,\%$ \\
+Sévérité PRC         & $239$     & $[336\,;424]$         & $1{,}77$ & $79{,}2\,\%$ \\
+Fréquence $\times 3$ & $11\,709$ & $[14\,353\,;17\,405]$ & $1{,}49$ & $82{,}5\,\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{2pt}
+\noindent La borne haute explorée varie d'un facteur $41$ entre les calibrations PRC et fréquence triplée ; il ne s'agit pas d'un rapport uniforme de tous les niveaux de capital. Les
+rapports varient d'au plus $33\,\%$ de leur valeur moyenne, et l'ordre de remédiation place les mêmes
+deux piliers, P1 et P4, en tête dans les trois calibrations.
+
+Le rapport le moins stable est la largeur de bande rapportée au socle, qui varie de $32{,}9\,\%$ de sa valeur moyenne et
+diminue lorsque la fréquence augmente, la queue annuelle étant alors moins dominée par une perte
+unique. Ces rapports et le classement des piliers résistent au changement de source (figure~\ref{fig:partielle}).
+% SOURCES-SCRIPTS: 33
+
+\section{Échelle de repli sur la direction}
+\label{sec:echelle-u}
+
+On peut écrire la direction par l'excès de propagation propre à la source,
+$\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ ($p_j$ mesure l'attractivité de la cible
+$j$), puis limiter $u$ par paliers (crans), de $u$ libre au cran nul où $u=0$. Une direction de rang $1$ (une seule valeur singulière de $u$, figure~\ref{fig:echelle-repli}b) capte $74\,\%$ de la
+variance de la direction posée et resserre les bornes de $25\,\%$, au prix d'une
+hypothèse de structure. Au cran
+nul, P1 et P4 deviennent indiscernables (gains de remédiation $1\,051$ contre $1\,052$~M\euro{}),
+alors que $353$~M\euro{} les séparent avec la direction du classeur. C'est donc la direction qui
+départage les deux piliers prioritaires.
+
+\begin{figure}[H]\centering
+\figover{Z5_echelle_repli.png}
+\caption{Échelle de repli sur la direction. (a)~Les bornes du capital se resserrent quand la
+direction descend d'un cran : $u$ libre, rang~$1$, classeur, puis cran nul ($u=0$). (b)~Valeurs
+singulières de la direction posée : le rang~$1$ en capte l'essentiel. (c)~Gains de remédiation par
+pilier avec la direction du classeur et au cran nul.}
+% SOURCES-SCRIPTS: 34
+\label{fig:echelle-repli}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \figover{Z_identification_partielle.png}
+  \caption{Identification partielle de la contagion dirigée. (a)~Les bornes se resserrent quand
+l'ignorance directionnelle $t$ diminue. (b)~Le prior d'expert dans des bornes indépendantes du
+choix de direction, conditionnelles à la partie symétrique posée. (c)~Priorité de remédiation (regret maximal). (d)~Dominance des
+piliers sur l'ensemble admissible : P5 n'arrive jamais en tête, et P1 et P4 concentrent $81\,\%$ des
+matrices testées.}
+  \label{fig:partielle}
+\end{figure}
+% SOURCES-SCRIPTS: 30 67
+
+% SOURCES-SCRIPTS: 34
+
+Les capitaux des chapitres~\ref{chap:multietats} et~\ref{chap:resultats} reposent sur la marche auto-évitante ; les extrema ci-dessus, sur la cascade indépendante. Les deux ne se comparent pas directement.

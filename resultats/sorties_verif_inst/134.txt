@@ -1,0 +1,25 @@
+134 : 1024 sommets admissibles ; 40000 années par graine
+  graine 20260721, 256/1024
+  graine 20260721, 512/1024
+  graine 20260721, 768/1024
+  graine 20260721, 1024/1024
+  extrema [6858.3 ; 8697.2], largeur 1838.9 M EUR
+  graine 20260722, 256/1024
+  graine 20260722, 512/1024
+  graine 20260722, 768/1024
+  graine 20260722, 1024/1024
+  extrema [7205.6 ; 9076.5], largeur 1870.9 M EUR
+  graine 20260723, 256/1024
+  graine 20260723, 512/1024
+  graine 20260723, 768/1024
+  graine 20260723, 1024/1024
+  extrema [7213.0 ; 8673.6], largeur 1460.6 M EUR
+  graine 20260724, 256/1024
+  graine 20260724, 512/1024
+  graine 20260724, 768/1024
+  graine 20260724, 1024/1024
+  extrema [7072.7 ; 8859.6], largeur 1786.9 M EUR
+Moyennes minimum / maximum / largeur : 7087.4 / 8826.7 / 1739.3
+Ecarts-types entre graines : 165.8 / 185.9 / 189.0
+Ces écarts-types mesurent le bruit de simulation, à paramètres fixés.
+Ils ne sont ni des IC de calibration ni une garantie sur le pavé continu.

@@ -9,6 +9,8 @@ avec les vrais résultats du pipeline (grille bootstrap Δ_DORA + LDA 4 briques
 + allocation d'Euler). Les anciennes valeurs placeholder ont été retirées.
 """
 
+import os
+
 # ---------------------------------------------------------------------------
 # PARAMÈTRES CALIBRÉS — PRC 2025
 # ---------------------------------------------------------------------------
@@ -79,6 +81,19 @@ OPRISK = {
     ),
 }
 
+# ECHANTILLON DE CALIBRATION, 15 OCTOBRE 2026. La calibration gelee (u, p_u, xi, sigma ci-dessus)
+# est celle de l'echantillon 2000-2026 : 570 pertes, 86 exces, p_u = 86/570 = 0,1509, xi = 0,5952,
+# sigma = 57,98, quantile 662,8. Les comptes 582 et 91 ci-dessus sont ceux de la base courante, qui
+# porte douze pertes d'avant 2000. Les versions deposees (ENSAE, Institut de 195 pages) gardent ces
+# comptes. La version Institut a 150 pages rejoue ses tests de severite sur l'echantillon 2000-2026 :
+# elle lance les scripts avec OPRISK_ANNEE_MIN=2000, ce qui restreint la periode (filter_finance) et
+# aligne ici les comptes attendus. Sans la variable, rien ne change.
+if os.environ.get("OPRISK_ANNEE_MIN") == "2000":
+    # n_incidents reste a 582 : c'est le numerateur de la frequence gelee (lambda = 582/27 = 21,56),
+    # lue par le moteur. Le compte de l'echantillon de severite est porte a part.
+    OPRISK["n_pertes_echantillon"] = 570
+    OPRISK["n_excess"] = 86
+
 # ---------------------------------------------------------------------------
 # CONTRÔLE DE COHÉRENCE DU TAUX DE DÉPASSEMENT OpRisk
 # ---------------------------------------------------------------------------
@@ -120,7 +135,7 @@ def _var_pot(u, xi, sigma, p_u, q=0.995):
 def _coherence_oprisk():
     o = OPRISK
     p_pub = o["p_u"]
-    p_coh = o["n_excess"] / o["n_incidents"]
+    p_coh = o["n_excess"] / o.get("n_pertes_echantillon", o["n_incidents"])
     args = (o["seuil_u_eur"], o["xi"], o["sigma_eur"])
     # On raisonne en RAPPORT, pas en niveau : la VaR recalculée à partir des ξ et σ arrondis
     # du dictionnaire vaut 662,99 et non les 662,78 publiés. Le rapport, lui, est insensible
@@ -141,12 +156,12 @@ def _coherence_oprisk():
         "var_995_publiee": o["var_995"],
         "var_995_coherente": o["var_995"] * ratio,
         "ecart_relatif_var": ratio - 1.0,
-        "sens": "sous-estimation du capital",
+        "sens": ("aucun ecart de taux" if abs(ratio - 1.0) < 1e-3 else "sous-estimation du capital"),
         "ecart_absolu": ecart_abs,
         "part_largeur_ic90": part_ic,
         "materialite": (f"{ecart_abs:.1f} M EUR, soit {100*part_ic:.1f} % de la largeur de "
                         f"l'IC90 de cette meme VaR ([{ic[0]:.1f} ; {ic[1]:.1f}] M EUR)"),
-        "decision": "valeur gelée, écart publié au chapitre 13 (inventaire des hypothèses)",
+        "decision": ("taux compte egal au taux publie" if abs(ratio - 1.0) < 1e-3 else "valeur gelée, écart publié au chapitre 13 (inventaire des hypothèses)"),
     }
 
 

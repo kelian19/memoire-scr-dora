@@ -1,20 +1,24 @@
 # Journal des versions
 
-Chaque version est une étiquette git sur `main`, exportée du dépôt de travail.
+## 1.2.0 — 29 octobre 2026
 
-## [1.1.0] - 2026-09-30
+- Mise à jour de la version Institut : `memoire/main_institut_150.pdf`, 152 pages,
+  SHA-256 `2A5C7E38…`.
+- Rapport ENSAE courant : `memoire/main_ensae.pdf`, 100 pages, SHA-256 `9841CB71…`.
+- Ancienne version Institut conservée : 195 pages, SHA-256 `F2D1005C…`.
+- Scripts 136–138 : calibration de fréquence sur les grandes institutions, diagnostics et
+  bootstrap, décomposition additive des effets et sensibilité à l'enregistrement des incidents.
+- Méthode de downscaling et comparaison des entités avec limites explicites et VaR/ES.
+- Support Beamer ENSAE actuel et fichiers Overleaf : chemins des figures, fond Nexialog externe,
+  en-tête adapté pour éviter le chevauchement avec le logo.
+- Migration vers l'arborescence `memoire/`, `recherche/`, `resultats/`, `outils/` et ajout des
+  sorties Institut nécessaires aux contrôles.
+- Harnais de l'export : 7 363 nombres confirmés, aucun hors contrôle non déclaré.
+  Ce contrôle de concordance n'est pas une validation des modèles.
+- Données brutes et images de signatures exclues ; masques des entités et valeurs d'élicitation conservés.
 
-Première version publique : le mémoire déposé à l'ENSAE le 30 septembre 2026, le code qui en
-produit les nombres, les sorties de ce code et la vérification continue.
+## 1.1.0 — 30 septembre 2026
 
-- `main_ensae.pdf`, 199 pages, fichier déposé sous le nom `KADDOURI_Kelian_MS25.pdf`
-  (SHA-256 `84F479F6…`).
-- `main_institut.pdf`, 195 pages, version Institut des actuaires sans le chapitre du stage
-  (SHA-256 `F2D1005C…`).
-- Harnais : 1 931 nombres vérifiables, tous confirmés par la sortie versionnée de leur
-  script, aucun hors contrôle non déclaré.
-- Matériel complémentaire sur Zenodo, version 1.2
-  ([10.5281/zenodo.22874524](https://doi.org/10.5281/zenodo.22874524)).
-- Par rapport au dépôt de travail : raisons sociales des quatre assureurs remplacées, valeurs des
-  graines d'élicitation masquées, noms des praticiens et chemins des postes de travail retirés des
-  sorties, journaux et notes internes absents. Aucun nombre du mémoire n'en dépend.
+Première publication. Les fichiers de cette version sont conservés dans l'historique et à
+l'étiquette `v1.1.0` ; les numéros de pages et empreintes de la version courante ne décrivent
+pas rétroactivement cette ancienne publication.

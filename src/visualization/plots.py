@@ -34,7 +34,7 @@ plt.rcParams['axes.edgecolor'] = '#e2e8f0'
 plt.rcParams['grid.color'] = '#e2e8f0'
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-FIGURES_DIR = os.path.join(PROJECT_ROOT, "outputs", "figures")
+FIGURES_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../resultats/outputs/figures'))
 os.makedirs(FIGURES_DIR, exist_ok=True)
 
 

@@ -1,0 +1,34 @@
+﻿\documentclass[tikz,border=6pt]{standalone}
+\input{preambule_schemas}
+% Illustration qualitative de l'inversion de deux probabilites de transmission.
+% Aucun nombre de calibration ; les resultats de capital portent sur les cinq piliers.
+\begin{document}
+\begin{tikzpicture}[
+  pilier/.style={circle,fill=ardoise,draw=ardoise,text=white,minimum size=1.6cm,
+    inner sep=0pt,font=\fontsize{23}{26}\selectfont\bfseries},
+  titre/.style={font=\fontsize{22}{25}\selectfont\bfseries,text=ardoise,align=center},
+  legende/.style={font=\fontsize{19}{22}\selectfont,align=center},
+  fort/.style={-{Stealth[length=12pt,width=11pt]},draw=accent,line width=4pt},
+  faible/.style={-{Stealth[length=9pt,width=8pt]},draw=acier,line width=1.3pt}]
+  \useasboundingbox (0,0) rectangle (28.8,6.4);
+  \node[font=\fontsize{13}{16}\selectfont,text=gris] at (14.4,6.1)
+    {Illustration sur deux piliers ; épaisseur des flèches : probabilité de transmission d'un choc};
+  \node[titre] at (7.1,5.2) {Avant inversion};
+  \node[titre] at (21.7,5.2) {Après inversion};
+  \draw[filet,line width=.7pt] (14.4,1.6)--(14.4,5.5);
+  \node[pilier] (a1) at (2.9,3.3) {P1};
+  \node[pilier] (a2) at (11.3,3.3) {P2};
+  \draw[fort] (4.0,3.6)--(10.2,3.6);
+  \draw[faible] (10.2,3.0)--(4.0,3.0);
+  \node[legende,text=accent] at (7.1,4.2) {Plus probable};
+  \node[legende,text=acier] at (7.1,2.3) {Moins probable};
+  \node[pilier] (b1) at (17.5,3.3) {P1};
+  \node[pilier] (b2) at (25.9,3.3) {P2};
+  \draw[faible] (18.6,3.6)--(24.8,3.6);
+  \draw[fort] (24.8,3.0)--(18.6,3.0);
+  \node[legende,text=acier] at (21.7,4.2) {Moins probable};
+  \node[legende,text=accent] at (21.7,2.3) {Plus probable};
+  \node[font=\fontsize{21}{24}\selectfont,text=ardoise,align=center] at (14.4,.6)
+    {Même probabilité moyenne ; le sens le plus probable est inversé.};
+\end{tikzpicture}
+\end{document}

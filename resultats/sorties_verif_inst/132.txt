@@ -1,0 +1,30 @@
+132 — PILOTE : CODER LES DESCRIPTIONS SAS EN PILIERS DORA
+50 descriptions (30 fraudes externes, 20 interruptions d’activité), codeur unique : assistant IA, non validé.
+
+NIVEAU STRICT
+  fraude externe           : 30 incidents ; au moins un pilier 11 (37 %) ; au moins deux piliers  1 (3 %)
+  interruption d’activité  : 20 incidents ; au moins un pilier 20 (100 %) ; au moins deux piliers  6 (30 %)
+  ensemble                 : 50 incidents ; au moins un pilier 31 (62 %) ; au moins deux piliers  7 (14 %)
+  incidents touchant chaque pilier : P1 23 ; P2 6 ; P3 4 ; P4 6 ; P5 1
+  co-occurrences par paire : P1-P2 3 ; P1-P3 4 ; P1-P4 1 ; P1-P5 1 ; P2-P3 1 ; P2-P4 0 ; P2-P5 0 ; P3-P4 0 ; P3-P5 1 ; P4-P5 0
+  piliers par incident identifiable : moyenne 1.29
+
+NIVEAU LARGE
+  fraude externe           : 30 incidents ; au moins un pilier 21 (70 %) ; au moins deux piliers  9 (30 %)
+  interruption d’activité  : 20 incidents ; au moins un pilier 20 (100 %) ; au moins deux piliers 11 (55 %)
+  ensemble                 : 50 incidents ; au moins un pilier 41 (82 %) ; au moins deux piliers 20 (40 %)
+  incidents touchant chaque pilier : P1 39 ; P2 12 ; P3 8 ; P4 6 ; P5 1
+  co-occurrences par paire : P1-P2 11 ; P1-P3 8 ; P1-P4 5 ; P1-P5 1 ; P2-P3 3 ; P2-P4 1 ; P2-P5 0 ; P3-P4 0 ; P3-P5 1 ; P4-P5 0
+  piliers par incident identifiable : moyenne 1.61
+
+COMPARAISON À LA MATRICE D’EXPERT S (niveau large, ordre des dix paires)
+  S posée : P1-P2 0.173 ; P1-P3 0.173 ; P1-P4 0.156 ; P1-P5 0.087 ; P2-P3 0.156 ; P2-P4 0.190 ; P2-P5 0.138 ; P3-P4 0.104 ; P3-P5 0.087 ; P4-P5 0.104
+  corrélation de rang entre S posée et co-occurrences codées : +0.57 sur dix paires, dont 3 paires jamais observées
+
+LECTURE DÉRIVÉE DES COMPTES
+  incidents multi-piliers, seuls informatifs pour S : 7 au niveau strict, 20 au niveau large, sur 50.
+  extrapolé aux 570 pertes en pondérant les strates (471 fraudes, 99 interruptions) : environ 45 incidents multi-piliers au niveau strict, 196 au niveau large.
+  les co-occurrences brutes mêlent fréquence marginale et dépendance : P1 figure dans la plupart des incidents, ce qui suffit à ordonner les paires qui le contiennent.
+
+Limites : un seul codeur, non humain ; descriptions de presse et de procédures, biais de narration ;
+échantillon stratifié qui surreprésente les interruptions d’activité ; aucune direction n’est codée.

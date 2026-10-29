@@ -1,0 +1,183 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : enseignements du stage.
+% Copie a texte constant de chapitres/19_enseignements_stage.tex.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+% =====================================================================
+% ENSEIGNEMENTS DU STAGE
+%
+% CHAPITRE PROPRE À LA VERSION ENSAE. Seul main_ensae.tex l'appelle : le barème
+% de l'école note sur 6 l'analyse et la réflexion sur le contexte et les outils,
+% demande de préciser la part d'influence du maître de stage et des tiers, et
+% attend un recul sur l'expérience. Un mémoire d'actuariat n'a rien à porter de
+% tout cela, et l'Institut ne le demande pas.
+%
+% RÉÉCRIT EN ENTIER LE 18 SEPTEMBRE 2026, sur consigne de Kélian. Trois règles
+% commandent cette version et il ne faut pas les défaire :
+%   - registre strictement factuel et concis. Aucune anecdote, aucune mise en
+%     scène, aucun récit d'erreur : la version antérieure portait un paragraphe
+%     « sept fois j'ai rédigé... et sept fois la sortie l'a démentie » et une
+%     série d'anecdotes de vérification de chiffres, tous retirés ;
+%   - PAS DE MENTION D'OUTILS D'IA GÉNÉRATIVE DANS CE CHAPITRE. Le paragraphe
+%     d'usage qui y existait depuis le 16 septembre en a été retiré le 18, et il
+%     n'a pas à y revenir : ce chapitre porte le recul sur la mission, pas la
+%     déclaration d'outillage.
+%     ATTENTION, CETTE RÈGLE A CHANGÉ DE SENS LE 21 SEPTEMBRE. Elle ne vaut plus
+%     que pour CE fichier. Le mémoire, lui, DÉCLARE cet usage, parce que le § 4.5
+%     des Recommandations Jury de l'Institut exige une transparence totale et
+%     prévoit l'ajournement << sans besoin d'une autre motivation >> en cas de
+%     manquement. La déclaration vit donc à deux endroits, et il ne faut les
+%     supprimer ni l'un ni l'autre :
+%       - le paragraphe d'usage en fin de résumé (chapitres/01_resume.tex),
+%         exigé au § 5.1.c ;
+%       - l'annexe d'inventaire (chapitres/23_inventaire_ia.tex), exigée au
+%         § 5.1.h.
+%   - encadrement nommé et traité sobrement : Hugo Rapior en entreprise,
+%     Caroline Hillairet à l'ENSAE. Les répondants au formulaire de relecture,
+%     eux, ne sont PAS nommés, décision de Kélian du 9 septembre.
+%
+% La première personne est admise ici, et ici seulement : le barème de l'école
+% exige le recul personnel. Le reste du mémoire reste à la voix impersonnelle.
+%
+% AUCUN RENVOI VERS LES ANNEXES DÉPORTÉES. Les trois \ref vers sec:ann-harnais
+% et celui vers sec:ann-intervalle95 ont disparu avec cette réécriture : leurs
+% étiquettes n'existent plus depuis le déport des annexes B, D et E.
+% =====================================================================
+
+\chapter*{Enseignements du stage}
+\phantomsection
+\addcontentsline{toc}{chapter}{Enseignements du stage}
+\markboth{Enseignements du stage}{}
+\label{ens:ch}
+\label{part:stage}
+
+% HARNAIS-HORS-SECTION: chapitre de recul sur la mission. Il ne publie aucun
+% resultat chiffre : les seules valeurs qu'il evoque sont etablies et sourcees
+% dans le corps du memoire, et il n'en reprend aucune en chiffres.
+
+
+% Reprise le 1er octobre 2026 tard le soir (« une ecriture plus humaine ») : registre cale sur des
+% memoires d'actuariat publies avant 2022 (style/registre_humain.md), « je » du recul personnel
+% employe plus franchement. Faits inchanges, aucun nombre ajoute.
+
+\section*{Cadre de la mission}
+\label{ens:cadre}
+
+J'ai effectué mon stage chez Nexialog Consulting, cabinet de conseil en risques pour le secteur
+financier. La mission portait sur la quantification du besoin de capital associé à la
+non-conformité au règlement DORA, qui est le sujet de ce mémoire. Quatre contraintes propres à ce
+cadre ont orienté le travail.
+
+\subsection*{Livrables}
+Outre le mémoire, le stage a donné lieu à un livrable pour le cabinet : l'analyse actuarielle de
+l'édition $2026$ d'une étude de marché sur la cyberassurance en France. Je l'ai co-écrite avec mon
+maître de stage, et le cabinet l'a publiée \citep{RapiorKaddouri2026}. Cette étude décrit un
+marché observé, alors que je construis un modèle sur des états hypothétiques. Elle constate
+également, du point de vue de praticiens qui suivent ce marché, que l'exposition cyber ne se traduit
+pas en besoin de capital réglementaire, ce qui est la prémisse du mémoire.
+
+\subsection*{Donnée sous licence}
+La base de pertes opérationnelles utilisée pour calibrer la sévérité est sous licence et ne peut pas
+être redistribuée. Elle n'est donc pas versionnée avec le code, et un lecteur ne peut pas rejouer la
+chaîne de calcul depuis la donnée brute. Ce sont les \emph{sorties} des scripts qui sont versionnées,
+et le contrôle porte sur la correspondance entre ces sorties et le document. La traçabilité remplace
+ainsi la reproductibilité complète, ce que le rapport indique.
+
+\subsection*{Anonymisation des entités}
+L'application à quatre assureurs réels est anonymisée. Les sources sont des rapports publics, mais
+le modèle n'utilise que le bilan et l'état de conformité y est supposé : nommer une entité
+reviendrait à lui attribuer une non-conformité que rien n'observe. La table de correspondance existe
+cependant, dans un script, de sorte que le travail reste vérifiable.
+
+\subsection*{Gel de la calibration}
+J'ai gelé la calibration à mi-parcours. Il s'agit d'une décision de conduite de projet : un modèle
+qui bouge encore, une fois de nombreux résultats écrits, invalide en silence ce qui a déjà été
+rédigé. Le gel sépare la correction d'erreur, toujours autorisée, de la recalibration, qui ne l'est
+plus. Son prix figure au chapitre~\ref{ch:robustesse}, où des écarts connus sont publiés chiffrés
+sans être corrigés.
+
+\section*{Enseignements de l'ENSAE}
+\label{ens:ensae}
+
+Le sujet a mobilisé plusieurs enseignements à la fois. La statistique des valeurs extrêmes sert à
+modéliser la sévérité, et les modèles à variable latente gaussienne la dépendance entre états de
+conformité. Les processus stochastiques décrivent la dynamique de ces états ainsi que le processus
+de branchement. La statistique inférentielle fournit les tests d'adéquation et de couverture, les
+méthodes de Monte-Carlo les lois de perte simulées, la théorie des jeux coopératifs l'attribution
+par canal, et l'assurance non-vie la charge de capital elle-même.
+
+Deux apports ont pesé davantage que les autres. Le premier est l'économétrie de l'identification :
+un paramètre mal estimé appelle davantage de données, un paramètre \emph{non identifié} une autre
+approche. Reconnaître qu'un paramètre relevait du second cas a changé la méthode
+retenue (chapitre~\ref{ch:identifiabilite}). Le second est la lecture de l'indice de queue comme
+condition d'existence des moments, qui m'a permis d'écarter deux variantes de modèle au motif qu'un
+moment y cesse d'exister. La programmation scientifique a compté autant que ces deux apports,
+car maintenir une chaîne de scripts reproductible pendant plusieurs mois relève de l'ingénierie
+logicielle.
+
+\section*{Encadrement et tiers}
+\label{ens:encadrement}
+
+L'encadrement a été double. En entreprise, Hugo Rapior, mon maître de stage, a tenu avec moi un
+point hebdomadaire, préparé sous la forme d'un jeu de diapositives. À l'ENSAE, Caroline Hillairet,
+ma tutrice, a suivi le travail lors d'échanges plus espacés.
+
+Leurs demandes n'ont pas porté sur des calculs. Celles de mon maître de stage m'ont conduit à
+retirer des lectures que la mesure ne soutenait pas, et à préciser un vocabulaire dont l'imprécision
+masquait une borne prise à l'envers. Celles de ma tutrice ont porté sur le traitement de
+l'incertitude et ont donné lieu à deux sections du mémoire, le quantile prédictif et la sensibilité
+aux probabilités de propagation. J'en retiens qu'une relecture extérieure est surtout utile parce
+qu'elle interroge un énoncé hors du contexte qui l'avait justifié.
+
+Le traitement des processus auto-excités appelle une mention particulière, puisque c'est le domaine
+de recherche de ma tutrice. L'écartement de cet outil a été testé contre ses propres variantes de
+noyau, puis reformulé en cours de travail en équivalence observationnelle suivie d'un choix de
+parcimonie (chapitre~\ref{ch:robustesse}).
+
+\subsection*{Sollicitations extérieures}
+J'ai lancé deux sollicitations extérieures. J'ai d'abord demandé à un collègue du cabinet un second
+codage en aveugle du corpus de rapports post-incident. Ce codage n'était pas reçu à la date de
+rédaction, et le dispositif d'accueil, prêt et testé, ne produit aucune donnée en son absence.
+
+J'ai ensuite sollicité trois praticiens du secteur pour une relecture critique des affirmations
+qualitatives du modèle, et les trois ont répondu. Le premier n'en a contredit aucune, mais son
+exemple admet deux lectures opposées : il illustre la frontière d'identifiabilité sans la lever. Le
+deuxième en a contredit deux et a avancé la cause commune comme explication concurrente de la
+contagion, tandis que le troisième conteste les deux mêmes affirmations, ce qui répète le désaccord
+sans l'élargir. Ces retours sont déclarés sans être intégrés au modèle, ce qui supposerait de
+recalibrer, et ils ne déplacent pas les bornes publiées, calculées sans fixer la direction de
+propagation. Les répondants ne sont pas nommés, et le détail figure au
+\S\ref{sec:relecture-praticien}.
+
+\section*{Bilan personnel}
+\label{ens:retiens}
+
+\subsection*{Méthodes quantitatives et objet réglementaire}
+La mission a consisté à traduire un texte réglementaire, qui énonce des exigences d'organisation, en
+paramètres d'une loi de perte. Cela suppose de décider ce que le texte permet d'affirmer et ce que
+la donnée permet d'estimer, puis de maintenir la distinction entre les deux dans chaque énoncé
+publié.
+
+\subsection*{Paramètres estimés, posés et non identifiés}
+La modélisation de la conformité DORA mêle trois statuts de paramètre. Certains sont estimés sur
+données, d'autres sont posés faute de source, et la direction de propagation entre domaines de
+contrôle n'est identifiée par aucune des sources disponibles. Afficher chaque paramètre sous son
+statut permet à un tiers de discuter le résultat.
+
+\subsection*{Vérifiabilité des résultats}
+En conseil, un résultat doit pouvoir être contrôlé par quelqu'un qui n'a pas fait le calcul.
+Rattacher chaque nombre publié au calcul qui le produit répond à cette exigence, et ce travail a
+occupé une part importante de mon stage. C'est la différence la plus nette que j'aie observée entre
+un exercice académique et une mission.
+
+\section*{Recul sur la démarche}
+\label{ens:autrement}
+
+Avec le recul, j'aurais mis en place le dispositif de vérification dès le début du stage : construit
+à mi-parcours, il m'a obligé à rattacher après coup chaque section du document à ses scripts.
+J'aurais aussi gelé la calibration plus tôt, car plusieurs semaines de recalibrations partielles ont
+fait bouger des nombres déjà écrits avant que la décision soit prise.

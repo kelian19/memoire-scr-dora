@@ -1,0 +1,116 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+120 — BOOTSTRAP CONJOINT CONDITIONNEL, VERSION INSTITUT
+Échantillon 2000–2026 : 570 pertes, 86 excès ; seuil 20.03 M EUR.
+Ajustement local : xi 0.595233, sigma 57.979552, pu 0.150877.
+2000 réplications prévues ; graine 20261021 ; percentile 95 % et 90 %.
+Rééchantillonnage des pertes entières, puis ajustement conjoint xi, sigma et pu.
+Chaque ajustement est partagé entre états et règles ; différences et rapports calculés par réplication.
+Fréquence 582/27, dispersion 9,2, multiplicateurs et tables d’expert maintenus fixes.
+Aucun écrêtage de xi, aucune moyenne des intervalles marginaux.
+Ces bandes sont conditionnelles au seuil, à la stationnarité et aux choix de modèle.
+La fréquence, sa discordance temporelle et l’incertitude d’expert ne sont pas propagées.
+Réplications 25/2000 ; succès 25 ; échecs 0 ; 20.8 s
+Réplications 50/2000 ; succès 50 ; échecs 0 ; 23.9 s
+Réplications 75/2000 ; succès 75 ; échecs 0 ; 26.8 s
+Réplications 100/2000 ; succès 100 ; échecs 0 ; 29.7 s
+Réplications 125/2000 ; succès 125 ; échecs 0 ; 32.7 s
+Réplications 150/2000 ; succès 150 ; échecs 0 ; 35.4 s
+Réplications 175/2000 ; succès 175 ; échecs 0 ; 38.3 s
+Réplications 200/2000 ; succès 200 ; échecs 0 ; 41.4 s
+Réplications 225/2000 ; succès 225 ; échecs 0 ; 44.2 s
+Réplications 250/2000 ; succès 250 ; échecs 0 ; 47.2 s
+Réplications 275/2000 ; succès 275 ; échecs 0 ; 49.9 s
+Réplications 300/2000 ; succès 300 ; échecs 0 ; 52.7 s
+Réplications 325/2000 ; succès 325 ; échecs 0 ; 55.4 s
+Réplications 350/2000 ; succès 350 ; échecs 0 ; 57.9 s
+Réplications 375/2000 ; succès 375 ; échecs 0 ; 60.7 s
+Réplications 400/2000 ; succès 400 ; échecs 0 ; 63.4 s
+Réplications 425/2000 ; succès 425 ; échecs 0 ; 66.2 s
+Réplications 450/2000 ; succès 450 ; échecs 0 ; 69.1 s
+Réplications 475/2000 ; succès 475 ; échecs 0 ; 71.8 s
+Réplications 500/2000 ; succès 500 ; échecs 0 ; 74.7 s
+Réplications 525/2000 ; succès 525 ; échecs 0 ; 77.8 s
+Réplications 550/2000 ; succès 550 ; échecs 0 ; 80.5 s
+Réplications 575/2000 ; succès 575 ; échecs 0 ; 83.1 s
+Réplications 600/2000 ; succès 600 ; échecs 0 ; 86.1 s
+Réplications 625/2000 ; succès 625 ; échecs 0 ; 88.8 s
+Réplications 650/2000 ; succès 650 ; échecs 0 ; 91.8 s
+Réplications 675/2000 ; succès 675 ; échecs 0 ; 94.7 s
+Réplications 700/2000 ; succès 700 ; échecs 0 ; 97.3 s
+Réplications 725/2000 ; succès 725 ; échecs 0 ; 100.1 s
+Réplications 750/2000 ; succès 750 ; échecs 0 ; 102.6 s
+Réplications 775/2000 ; succès 775 ; échecs 0 ; 105.5 s
+Réplications 800/2000 ; succès 800 ; échecs 0 ; 108.5 s
+Réplications 825/2000 ; succès 825 ; échecs 0 ; 111.4 s
+Réplications 850/2000 ; succès 850 ; échecs 0 ; 114.3 s
+Réplications 875/2000 ; succès 875 ; échecs 0 ; 117.3 s
+Réplications 900/2000 ; succès 900 ; échecs 0 ; 120.3 s
+Réplications 925/2000 ; succès 925 ; échecs 0 ; 123.1 s
+Réplications 950/2000 ; succès 950 ; échecs 0 ; 125.7 s
+Réplications 975/2000 ; succès 975 ; échecs 0 ; 128.6 s
+Réplications 1000/2000 ; succès 1000 ; échecs 0 ; 131.5 s
+Réplications 1025/2000 ; succès 1025 ; échecs 0 ; 134.3 s
+Réplications 1050/2000 ; succès 1050 ; échecs 0 ; 137.0 s
+Réplications 1075/2000 ; succès 1075 ; échecs 0 ; 139.4 s
+Réplications 1100/2000 ; succès 1100 ; échecs 0 ; 142.3 s
+Réplications 1125/2000 ; succès 1125 ; échecs 0 ; 145.0 s
+Réplications 1150/2000 ; succès 1150 ; échecs 0 ; 147.7 s
+Réplications 1175/2000 ; succès 1175 ; échecs 0 ; 150.5 s
+Réplications 1200/2000 ; succès 1200 ; échecs 0 ; 153.1 s
+Réplications 1225/2000 ; succès 1225 ; échecs 0 ; 155.8 s
+Réplications 1250/2000 ; succès 1250 ; échecs 0 ; 158.6 s
+Réplications 1275/2000 ; succès 1275 ; échecs 0 ; 161.6 s
+Réplications 1300/2000 ; succès 1300 ; échecs 0 ; 164.2 s
+Réplications 1325/2000 ; succès 1325 ; échecs 0 ; 167.2 s
+Réplications 1350/2000 ; succès 1350 ; échecs 0 ; 170.0 s
+Réplications 1375/2000 ; succès 1375 ; échecs 0 ; 172.9 s
+Réplications 1400/2000 ; succès 1400 ; échecs 0 ; 175.6 s
+Réplications 1425/2000 ; succès 1425 ; échecs 0 ; 178.3 s
+Réplications 1450/2000 ; succès 1450 ; échecs 0 ; 181.0 s
+Réplications 1475/2000 ; succès 1475 ; échecs 0 ; 183.7 s
+Réplications 1500/2000 ; succès 1500 ; échecs 0 ; 186.6 s
+Réplications 1525/2000 ; succès 1525 ; échecs 0 ; 189.5 s
+Réplications 1550/2000 ; succès 1550 ; échecs 0 ; 192.6 s
+Réplications 1575/2000 ; succès 1575 ; échecs 0 ; 195.4 s
+Réplications 1600/2000 ; succès 1600 ; échecs 0 ; 198.1 s
+Réplications 1625/2000 ; succès 1625 ; échecs 0 ; 201.1 s
+Réplications 1650/2000 ; succès 1650 ; échecs 0 ; 204.0 s
+Réplications 1675/2000 ; succès 1675 ; échecs 0 ; 206.9 s
+Réplications 1700/2000 ; succès 1700 ; échecs 0 ; 210.0 s
+Réplications 1725/2000 ; succès 1725 ; échecs 0 ; 212.5 s
+Réplications 1750/2000 ; succès 1750 ; échecs 0 ; 215.2 s
+Réplications 1775/2000 ; succès 1775 ; échecs 0 ; 218.2 s
+Réplications 1800/2000 ; succès 1800 ; échecs 0 ; 221.0 s
+Réplications 1825/2000 ; succès 1825 ; échecs 0 ; 223.8 s
+Réplications 1850/2000 ; succès 1850 ; échecs 0 ; 226.7 s
+Réplications 1875/2000 ; succès 1875 ; échecs 0 ; 229.4 s
+Réplications 1900/2000 ; succès 1900 ; échecs 0 ; 231.9 s
+Réplications 1925/2000 ; succès 1925 ; échecs 0 ; 234.7 s
+Réplications 1950/2000 ; succès 1950 ; échecs 0 ; 237.8 s
+Réplications 1975/2000 ; succès 1975 ; échecs 0 ; 240.2 s
+Réplications 2000/2000 ; succès 2000 ; échecs 0 ; 242.9 s
+
+INTERVALLES PERCENTILES CONDITIONNELS, M EUR POUR LE PÉRIMÈTRE FINANCIER ÉTUDIÉ
+additive     conforme     central=5939.9690 médiane=5559.6319 95%=[2207.8000;21909.9648] 90%=[2479.9500;16829.4334]
+additive     non_conforme central=19872.4930 médiane=18348.3233 95%=[7064.4500;111903.6161] 90%=[7838.8500;79948.7476]
+additive     ecart        central=13932.5240 médiane=12712.6627 95%=[4871.9000;90361.0690] 90%=[5354.8000;63813.2271]
+additive     rapport      central=3.3456 médiane=3.3133 95%=[3.0425;5.2189] 90%=[3.0579;4.7809]
+moyenne      conforme     central=4463.1811 médiane=4188.8421 95%=[1688.5750;15987.1549] 90%=[1887.9500;12380.1779]
+moyenne      non_conforme central=8711.5567 médiane=8073.1214 95%=[3064.9500;46428.4691] 90%=[3414.9500;33628.4024]
+moyenne      ecart        central=4248.3756 médiane=3833.3005 95%=[1401.0000;30606.2653] 90%=[1537.0000;21422.5879]
+moyenne      rapport      central=1.9519 médiane=1.9255 95%=[1.7652;2.9736] 90%=[1.7756;2.7343]
+unique       conforme     central=4770.4723 médiane=4478.7715 95%=[1788.9250;16190.6953] 90%=[2015.7500;12804.6870]
+unique       non_conforme central=10710.4413 médiane=9936.3916 95%=[3558.8250;49973.7983] 90%=[4021.9500;36887.2322]
+unique       ecart        central=5939.9690 médiane=5410.5010 95%=[1781.9750;33718.9321] 90%=[2004.8500;24399.2374]
+unique       rapport      central=2.2452 médiane=2.2123 95%=[1.9725;3.1119] 90%=[1.9829;2.9264]
+amplifiee    conforme     central=6903.6104 médiane=6517.5511 95%=[2689.5000;22715.1904] 90%=[3026.7000;18027.3129]
+amplifiee    non_conforme central=27724.8277 médiane=25790.9372 95%=[9432.9250;123300.2209] 90%=[10638.5500;91378.9466]
+amplifiee    ecart        central=20821.2173 médiane=19277.7436 95%=[6717.8500;100660.2536] 90%=[7574.8500;74085.2105]
+amplifiee    rapport      central=4.0160 médiane=3.9601 95%=[3.4767;5.5127] 90%=[3.4974;5.1948]
+Corrélation bootstrap xi/sigma : -0.6031.
+Ajustements xi >= 1 conservés : 12.
+Échecs journalisés : 0. Aucun tirage rejeté sur la taille du capital.
+Contrôle numérique réplication 1125, xi=-0.3039 : déplacement maximal 0.0335 %.
+Contrôle numérique réplication 1290, xi=1.1767 : déplacement maximal 0.0753 %.
+Contrôle numérique réplication 1943, xi=0.5784 : déplacement maximal 0.0317 %.
+Durée 243.4 s ; données individuelles non exportées.

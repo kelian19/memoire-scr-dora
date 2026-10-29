@@ -1,0 +1,342 @@
+% Préambule V2 : STYLE CLASSIQUE DE MONOGRAPHIE. Appelé par main_v2.tex.
+%
+% CE FICHIER NE CHANGE QUE L'APPARENCE. Les chapitres sont EXACTEMENT les mêmes
+% fichiers que ceux de main.tex : aucun mot, aucun nombre, aucune structure ne
+% diffère entre les deux versions. C'est la condition pour que la comparaison
+% porte sur le style seul, et c'est aussi ce qui évite de maintenir deux textes.
+%
+% CE QUI CHANGE, ET POURQUOI
+%   1. POLICE. Palatino (mathpazo) au lieu de Latin Modern. C'est une romaine de
+%      la Renaissance revisitée : c'est elle qui donne l'aspect << texte ancien >>.
+%      Sa hauteur d'x est grande, donc l'interligne est ouvert à 1,05, sans quoi
+%      le gris de la page devient trop dense.
+%   2. AUCUNE COULEUR. Tous les noms de couleurs du projet sont redéfinis en NOIR,
+%      ce qui neutralise les \textcolor{navy} des chapitres sans les éditer. Les
+%      liens restent cliquables mais s'impriment en noir.
+%   3. LES ENCADRÉS DEVIENNENT DES FILETS. Les 66 blocs << clé >> et les 48 blocs
+%      << attention >> perdent leur fond bleu et leur cadre arrondi. Ils gardent
+%      leur distinction, mais par la TYPOGRAPHIE et non par la couleur : filets
+%      haut et bas pour la synthèse, filet vertical épais pour l'avertissement.
+%      C'est le dispositif des monographies imprimées, et il survit à la
+%      photocopie comme à l'impression en noir et blanc.
+%   4. TITRES. Petites capitales et filets, jamais de gras coloré. Les têtes de
+%      paragraphe passent en italique : elles sont ici des phrases entières, et
+%      une phrase entière en gras alourdit la page.
+%   5. TITRES COURANTS. Chapitre en petites capitales en tête de page. Signal
+%      classique, et utile sur un document de cette longueur.
+%
+% CE QUI NE CHANGE PAS, ET C'EST DÉLIBÉRÉ
+%   LA GÉOMÉTRIE. Les marges restent à 2,4 cm. Une monographie classique aurait
+%   une justification plus étroite, mais la lisibilité des cinquante figures est
+%   calibrée sur CETTE largeur : \figover déborde à 1,14 fois la justification et
+%   \figcle remplit la page. Rétrécir le bloc de texte rendrait les étiquettes
+%   illisibles, ce qui est le défaut que la note de \figover documente. Le style
+%   ne se paie pas en lisibilité des résultats.
+%
+%   LES CHIFFRES RESTENT ALIGNÉS (pas de chiffres elzéviriens). Palatino en
+%   propose, et ils sont plus élégants dans un texte courant. Ils sont refusés
+%   ici : ce document se lit pour ses nombres, et des chiffres de hauteur
+%   inégale se comparent mal dans une colonne de tableau.
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% FORMAT ENSAE. La version deposee a l'ecole impose Times New Roman 12 et un interligne de
+% 1,5, consigne maintenue par l'ecole le 16 septembre 2026 (qui a en revanche leve la limite de
+% trente pages). main_ensae.tex definit \formatensae AVANT d'appeler ce preambule ; les trois
+% autres versions ne la definissent pas et gardent Palatino, a l'identique.
+% newtx plutot que la Times New Roman du systeme : celle-ci n'a pas de vraies petites capitales,
+% et les soixante \textsc{} du memoire (scr, dora, tic...) s'imprimeraient en minuscules.
+\ifdefined\formatensae
+  \usepackage{amsmath}             % newtxmath exige amsmath AVANT lui
+  \usepackage{amsthm}              % et amsthm aussi : sinon \openbox est defini deux fois
+  \usepackage{newtxtext,newtxmath} % Times : petites capitales et mathematiques assorties
+  \usepackage{setspace}
+  \onehalfspacing                  % l'interligne 1,5 au sens du traitement de texte
+  \usepackage{etoolbox}
+  % Les tableaux restent en interligne simple : etires de moitie, ils debordent leur page
+  % sans rien gagner en lisibilite. L'interligne vaut pour le texte courant.
+  \AtBeginEnvironment{tabular}{\setstretch{1}}
+  \AtBeginEnvironment{tabularx}{\setstretch{1}}
+  \AtBeginEnvironment{longtable}{\setstretch{1}}
+\else
+  \usepackage[sc]{mathpazo}        % Palatino, avec vraies petites capitales
+  \linespread{1.05}                % obligatoire avec Palatino : grande hauteur d'x
+\fi
+\usepackage[english,french]{babel}
+% MARGES A 2,2 cm DEPUIS LE 22 SEPTEMBRE 2026, et c'est une contrainte de Kelian :
+% le memoire depose a l'ENSAE doit IMPERATIVEMENT tenir sous 200 pages. Le levier
+% est choisi parce qu'il ne retire RIEN du document, ni resultat, ni limite
+% declaree, ni reserve, ce que la note d'honnetete du projet interdit de defaire.
+% Mesure : 2,4 cm donnait 205 pages, 2,3 cm en donne exactement 200 et 2,2 cm en
+% donne 196. On retient 2,2 : a 200 pile, la moindre retouche ferait repasser le
+% document au-dessus de la limite. L'ecart de justification entre les deux
+% reglages vaut 2 mm, soit environ un caractere par ligne.
+% L'ecole impose la police et l'interligne (Times 12, 1,5), jamais les marges.
+% EFFET DE BORD FAVORABLE ET VERIFIE : les debordements de paragraphe passent de
+% 5 a 2, la justification elargie en absorbant trois. La ligne de base est donc 2.
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{microtype}
+
+% Palatino est PLUS LARGE que Latin Modern a taille nominale egale, si bien que
+% des paragraphes qui tenaient debordent. On autorise donc TeX a etirer les
+% blancs entre mots en dernier recours, ce qui resorbe les debordements de
+% PARAGRAPHE sans toucher une ligne des chapitres. Les debordements de TABLEAU,
+% eux, ne s'y reduisent pas : une colonne trop large reste trop large, et cela
+% se corrige dans le tableau ou pas du tout.
+\setlength{\emergencystretch}{2.5em}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{amsmath}
+% amssymb n'est pas charge avec newtxmath, qui en fournit deja tous les symboles : le charger
+% apres redefinirait \Bbbk et arreterait la compilation.
+\ifdefined\formatensae\else\usepackage{amssymb}\fi
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{graphicx}
+% float : fournit le placement [H], reserve aux figures dont la position [htbp] a ete
+% constatee derivante (elle finit apres des paragraphes ulterieurs, coupant leur texte).
+% Ne pas l'employer par defaut : les floats mobiles restent la regle du projet.
+\usepackage{float}
+\usepackage{eurosym}
+\usepackage{caption}
+% subcaption : panneaux (a)/(b) d'une MEME figure. Charge apres caption, dont il depend.
+% Sert aux variantes d'un meme objet (un taux et son effectif), jamais a entasser deux
+% figures sans rapport pour gagner une page.
+\usepackage{subcaption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage[round,authoryear]{natbib}
+\usepackage{hyperref}
+
+% ---------------------------------------------------------------------------
+% FIGURES : dispositif IDENTIQUE à la version 1, et il ne doit pas bouger.
+% Voir la note du préambule de la version 1 pour le motif complet.
+% ---------------------------------------------------------------------------
+\newcommand{\figover}[1]{%
+  \makebox[\textwidth][c]{\includegraphics[width=1.14\textwidth]{#1}}}
+
+% ---------------------------------------------------------------------------
+% PLACEMENT DES FLOTTANTS. Regle le 22 septembre 2026, sur DEUX defauts que
+% Kelian a vus sur le PDF et que la source ne montrait pas : les quarante
+% figures sont declarees en [htbp] entre deux paragraphes, ce qui est correct,
+% mais les valeurs par defaut de la classe les faisaient atterrir mal.
+%
+%   - une figure du § 5.4 avait franchi le titre du § 5.5 et s'etait posee au
+%     milieu de sa premiere phrase, coupant << au-dessus du maximum >> de
+%     << de vraisemblance >> ;
+%   - la figure 9.1 occupait une PAGE DE FLOTTANT a elle seule, entouree de
+%     blanc, en coupant une phrase du chapitre 9 en deux.
+%
+% Les deux viennent des memes trois reglages. textfraction a 0,2 exige que
+% toute page porte un cinquieme de texte, donc chasse les grandes figures ;
+% floatpagefraction a 0,5 accorde une page entiere a toute figure qui remplit
+% la moitie d'une page, ce qui est le cas des figures \figover avec leur
+% legende. On relache les deux, et l'on remonte topfraction pour qu'une grande
+% figure tienne en haut d'une page de texte plutot que seule sur la sienne.
+%
+% CONTRAINTE A RESPECTER SI L'ON Y RETOUCHE : floatpagefraction doit rester
+% STRICTEMENT INFERIEUR a topfraction, faute de quoi LaTeX ne sait plus ou
+% poser un flottant et emet << Float(s) lost >>.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.85}
+
+\newcommand{\figcle}[3]{%
+  \begin{figure}[p]
+    \centering
+    \makebox[\textwidth][c]{%
+      \includegraphics[width=1.10\textwidth,height=0.88\textheight,keepaspectratio]{#1}}
+    \caption{#2}
+    \label{#3}
+  \end{figure}}
+
+\graphicspath{{../recherche/vasicek_lab/figures/}{../recherche/cascade_qualitative/figures/}{../resultats/outputs/}}
+
+% ---------------------------------------------------------------------------
+% ÉNONCÉS. Style classique : corps en italique pour les théorèmes, en romain
+% pour les définitions, ce qui les distingue sans numérotation séparée.
+% ---------------------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Théorème}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemme}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Définition}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\mathrm{Var}}
+% VaR et TVaR sont RESERVEES a la charge annuelle agregee L, c'est-a-dire a la mesure de
+% capital. Le quantile de la severite d'un SINISTRE UNIQUE est un autre objet : il porte le
+% symbole q, et sa moyenne de queue le symbole q barre. Ne pas les confondre : un niveau de
+% 99,5 % n'a de sens reglementaire que sur un horizon ANNUEL, et une perte unique n'en porte
+% aucun. Voir la table des notations et le chapitre socle.
+\newcommand{\VaR}{\mathrm{VaR}}
+\newcommand{\TVaR}{\mathrm{TVaR}}
+\newcommand{\qsev}{\mathrm{q}}
+\newcommand{\qbarsev}{\overline{\mathrm{q}}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\indic}{\mathbf{1}}
+\providecommand{\up}[1]{\textsuperscript{#1}}
+
+% ---------------------------------------------------------------------------
+% PALETTE : tous les noms de la version 1 existent encore, et ils valent NOIR.
+% C'est ce qui rend les chapitres réutilisables sans une seule édition : les
+% cinq \textcolor{navy} de la table des notations s'impriment en noir, et les
+% cellules colorées des tables de synthèse deviennent blanches.
+% ---------------------------------------------------------------------------
+\definecolor{navy}{gray}{0}
+\definecolor{bluemid}{gray}{0}
+\definecolor{lightblue}{gray}{1}
+\definecolor{accent}{gray}{0}
+\definecolor{green}{gray}{0}
+\definecolor{lightgreen}{gray}{1}
+\definecolor{softgreen}{gray}{1}
+\definecolor{softamber}{gray}{1}
+
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black,
+  pdftitle={Quantification du SCR lié à la non-conformité au règlement DORA},
+  pdfauthor={Kélian Kaddouri}}
+
+% ---------------------------------------------------------------------------
+% LES DEUX ENCADRÉS, EN TYPOGRAPHIE PLUTÔT QU'EN COULEUR.
+% Ils restent des environnements tcolorbox pour une raison pratique : ils
+% doivent pouvoir se COUPER entre deux pages, ce qu'un simple \hrule autour
+% d'un bloc ne sait pas faire proprement sur des blocs de dix lignes.
+%   cle       : pleine justification, sans filet horizontal. C'est le << résumé
+%               encadré >> des monographies : l'espacement et l'amorce en gras
+%               l'arrêtent, sans trait ni couleur.
+%   attention : filet vertical épais et retrait. Distinction lisible en noir et
+%               blanc, et hiérarchie claire, l'avertissement étant en retrait
+%               du fil du texte quand la synthèse l'interrompt.
+% ---------------------------------------------------------------------------
+% NOTE DE MISE EN OEUVRE, ET ELLE A COUTE UN ESSAI. Mettre boxrule a 0pt puis
+% ne relever que toprule et bottomrule NE SUFFIT PAS : le squelette << enhanced >>
+% trace quand meme un filet de cheveu sur les quatre cotes, et les deux encadres
+% se retrouvent tous deux cadres, donc indistinguables. L'idiome correct est
+% << frame hidden >> pour supprimer le cadre, puis des << borderline >> pour ne
+% dessiner que les filets voulus. Verifie sur le PDF rendu, pas sur la source.
+\newtcolorbox{cle}[1][]{%
+  enhanced, breakable, sharp corners,
+  colback=white, frame hidden,
+  left=0pt, right=0pt, top=4pt, bottom=4pt,
+  before skip=12pt, after skip=12pt, #1}
+
+\newtcolorbox{attention}[1][]{%
+  enhanced, breakable, sharp corners,
+  colback=white, frame hidden,
+  borderline west={1.8pt}{0pt}{black},
+  left=12pt, right=0pt, top=4pt, bottom=4pt,
+  before skip=12pt, after skip=12pt, #1}
+
+\newtcolorbox{migration}[1][]{%
+  enhanced, breakable, sharp corners, colback=white, colframe=black,
+  boxrule=0.4pt, left=8pt, right=8pt, top=5pt, bottom=5pt,
+  before skip=8pt, after skip=8pt, #1}
+\newcommand{\areprendre}[1]{\begin{migration}\footnotesize\textit{[À migrer]}~#1\end{migration}}
+
+% ---------------------------------------------------------------------------
+% VERDICTS DES TABLES DE SYNTHÈSE. La version 1 les distingue par la couleur du
+% fond de cellule. Ici c'est le mot qui porte, en petites capitales : les trois
+% verdicts se lisent aussi bien, et la table survit à une impression en noir.
+% \cascell devient neutre : la ligne qu'elle marquait porte déjà son gras.
+% ---------------------------------------------------------------------------
+\newcommand{\rob}{\textsc{robuste}}
+\newcommand{\feat}{\textsc{voulu}}
+\newcommand{\ass}{\textsc{assumé}}
+\newcommand{\oui}{$\checkmark$}
+\newcommand{\non}{$\times$}
+\newcommand{\cascell}{}
+
+% ---------------------------------------------------------------------------
+% RENVOIS VERS LE MATERIEL COMPLEMENTAIRE, depuis le 18 septembre 2026.
+% Les annexes B (demonstrations du socle), D (pieces justificatives) et
+% E (complements aux chapitres du corps) sont deportees dans un depot numerique
+% et ne sont plus compilees : leurs etiquettes n'existent plus. Tout renvoi qui
+% pointait vers elles porte desormais \matcomp, mention statique et sans \ref,
+% donc insensible a la disparition des etiquettes. Ne pas la remplacer par un
+% \ref, et ne pas reintroduire les fichiers deportes dans un fichier maitre.
+% ---------------------------------------------------------------------------
+\newcommand{\matcomp}{\emph{(voir le Matériel Complémentaire en ligne)}}
+
+% ---------------------------------------------------------------------------
+% TITRES. Petites capitales et filets. Aucun gras coloré.
+% L'espacement resserré de la version 1 est CONSERVÉ : il économise environ un
+% quart de page par chapitre, et le style n'a pas de raison de le rendre.
+% ---------------------------------------------------------------------------
+\titleformat{\part}[display]
+  {\normalfont\filcenter}
+  {\large\scshape\partname~\thepart}
+  {16pt}
+  {\Huge\scshape}
+% STYLE << CLASSIQUE ENSAE >>, choisi par Kelian le 19 septembre 2026 parmi trois maquettes :
+% chiffre de chapitre en tres grande taille, seul, centre au-dessus du titre ; sections en
+% petites capitales numerotees ; sous-sections en italique, inchangees.
+\titleformat{\chapter}[display]
+  {\normalfont\centering}
+  {\fontsize{54}{54}\selectfont\thechapter}
+  {10pt}
+  {\normalfont\Large\bfseries}
+\titlespacing*{\chapter}{0pt}{-6pt}{26pt}
+\titleformat{\section}
+  {\normalfont\Large\scshape\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}
+  {\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalfont\normalsize\itshape}{\thesubsection}{0.5em}{}
+\titleformat{\paragraph}[runin]{\normalfont\normalsize\itshape}{}{0pt}{}
+\titlespacing*{\paragraph}{0pt}{9pt}{0.55em}
+
+% L'etiquette imprimee est << Tableau >> et non le << Table >> de babel-french : le corps du
+% memoire appelle ces objets << le tableau ~\ref{} >> partout, et les deux mots doivent
+% coincider. \addto\captionsfrench est l'idiome babel, la valeur etant posee a \begin{document}.
+\addto\captionsfrench{\renewcommand{\tablename}{Tableau}}
+
+\captionsetup{font=small,labelfont=sc,labelsep=period,skip=6pt}
+% Les lettres de panneau restent en minuscules romaines, (a) et (b) : les petites
+% capitales du style general y donneraient (A) et (B), qui se lisent comme des renvois.
+\captionsetup[sub]{font=small,labelfont=rm,labelformat=parens,labelsep=space,skip=3pt}
+
+% Titres courants EN TETE ET EN PIED DE PAGE : chapitre en petites capitales a gauche, folio a
+% droite, filet noir des deux cotes (au-dessus du pied comme en dessous de la tete). Demande de
+% Kelian le 19 septembre 2026 : le pied reprend exactement ce que porte la tete, pas de contenu
+% different entre les deux.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\scshape\nouppercase{\leftmark}}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[L]{\small\scshape\nouppercase{\leftmark}}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+% Page de PREMIERE PAGE DE CHAPITRE (style << plain >> impose par la classe << report >>) : la
+% tete reste vide, le grand titre du chapitre juste en dessous suffit a l'identifier ; le pied,
+% lui, porte le meme folio et le meme filet que partout ailleurs, pour qu'aucune page ne soit
+% sans numero ni filet.
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[L]{\small\scshape\nouppercase{\leftmark}}%
+  \fancyfoot[R]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0.4pt}}
+
+% ---------------------------------------------------------------------------
+% PAGE DE TITRE classique : filets, petites capitales, pas de couleur.
+% ---------------------------------------------------------------------------
+\title{%
+  \vspace{-0.8cm}
+  \rule{\textwidth}{1pt}\\[10pt]
+  {\Large\scshape Quantification du SCR lié à la non-conformité\\[4pt]
+   au règlement DORA}\\[10pt]
+  \rule{\textwidth}{0.4pt}\\[12pt]
+  {\large\itshape Une cascade dirigée entre les cinq piliers,\\
+   dont l'état de conformité pilote le capital}}
+\author{\normalsize\scshape Kélian Kaddouri \\[6pt]
+  \normalfont\small ENSAE / Nexialog Consulting \\
+  \small Tuteurs : Hugo Rapior, Caroline Hillairet}
+\date{\small\today}

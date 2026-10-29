@@ -1,0 +1,15 @@
+\begin{table}[htbp]\centering\small
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{@{}p{.25\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Mécanisme} & \textbf{Ce qu'il décrit} & \textbf{Rôle dans le mémoire} \\
+\midrule
+Système latent, matrice $W$ & Stress transmis entre piliers ; forme réduite $(I-W^\top)^{-1}$ & Cadre structurel et propriétés de stabilité \\
+Branchement auxiliaire, matrice $M$ & Nombre de descendants engendrés par un incident & Diagnostic de descendance ; $M$ et $W$ sont distinctes \\
+Cascade indépendante & Plusieurs arêtes peuvent transmettre ; un pilier est compté une fois & Exploration des matrices (chapitre~\ref{chap:partielle}), contrôle en $g$ (\S\ref{sec:invariance-g}) et besoins d'entité (\S\ref{sec:ancrage}), sans choc commun P4 \\
+Marche auto-évitante & Un successeur à chaque pas ; arrêt ou retour sur un pilier atteint & Capitaux par état et quatre canaux, avec choc commun P4 ; configurations par pilier, sans ce choc (\S\ref{sec:dependance-etats}) \\
+\bottomrule
+\end{tabularx}
+\caption{Les mécanismes de propagation et leur usage. Les calculs de marches de l'inverse de Leontief ne sont pas le décompte des piliers distincts d'un incident.}
+\label{tab:lecture-mecanismes}
+\end{table}

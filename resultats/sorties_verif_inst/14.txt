@@ -1,0 +1,34 @@
+
+==========================================================================
+Exces reels OpRisk (lecture locale de data/raw) et controle du fit
+==========================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  n exces = 86   (config : 91)
+  fit ponctuel : xi = 0.595 (config 0,595)   sigma = 58.0 M€ (config 58,0)
+  seuil u = 20.03 M€
+
+==========================================================================
+Delta_DORA OpRisk, bootstrap sur exces REELS (canal frequence, g=0,90)
+==========================================================================
+  mediane           =     5389 M€
+  IQR  (Q25-Q75)    = [3522 ; 10326]  -> ecart TYPIQUE, facteur 2.9
+  IC90 (Q05-Q95)    = [2300 ; 31804]  -> queue, facteur 13.8
+  memoire (07)      = 3879  IC90 [1497 ; 22249]  (facteur 14.9)
+  Lecture : le facteur IC90 rejoint celui du memoire (~15) une fois xi bootstrappe
+  sur les exces reels ; l'IQR montre que l'ecart TYPIQUE est bien plus resserre.
+  Verdict : 100 % des tirages donnent Delta_DORA > 0.
+
+==========================================================================
+Robustesse du verdict au gain de propagation g_nc (mediane sur exces reels)
+==========================================================================
+  Pour chaque g, mini-bootstrap sur les exces reels. Le verdict doit tenir.
+    g_nc   Delta median                     IQR
+    0.30           4439   [3049 ; 8199]
+    0.50           4928   [2797 ; 9603]
+    0.70           8429   [3618 ; 12912]
+    0.90           5003   [3127 ; 7062]
+    1.00           6388   [3908 ; 14142]
+  Le Delta_DORA median reste pluri-milliard et > 0 sur toute la plage de g :
+  le NIVEAU depend de g (propagation), mais le VERDICT est robuste.
+
+figure ecrite : recherche\vasicek_lab\figures\S8_robustesse_delta.png

@@ -1,0 +1,45 @@
+119 — UNITÉ DE PERTE ET CAPITAL ANNUEL, VERSION INSTITUT
+Montants en M EUR du périmètre financier étudié. Paramètres historiques inchangés.
+Comparaison de scénarios de modèle ; aucune règle de perte n’est validée par la donnée.
+Calcul par Fourier incliné ; pas 2 M EUR ; 65536 cases ; inclinaison 16.
+Aucune renormalisation, aucun dépôt de queue dans la dernière case.
+règle           conforme     non conforme       écart        rapport      interaction
+additive           5944.0        19890.0      13946.0       3.3462         4410.0
+  Shapley : frequence 6635.2, detection 2840.2, propagation 2030.2, accumulation 2440.5
+moyenne            4468.0         8718.0       4250.0       1.9512          292.0
+  Shapley : frequence 3665.8, detection 1525.8, propagation -521.8, accumulation -419.8
+unique             4774.0        10720.0       5946.0       2.2455          976.0
+  Shapley : frequence 4212.0, detection 1734.0, propagation 0.0, accumulation 0.0
+amplifiee          6908.0        27746.0      20838.0       4.0165         7148.0
+  Shapley : frequence 8762.0, detection 3640.0, propagation 3545.3, accumulation 4890.7
+
+DÉFINITION : Y vaut zéro ou u+GPD, K est le nombre de piliers touchés.
+additive : somme de K Y indépendants ; moyenne : somme/K ; unique : un seul Y ;
+amplifiee : K*Y unique (exposant 1 posé). Ces deux dernières partagent une seule Bernoulli.
+La moyenne conserve K Bernoulli et peut être sous u ; elle ne rétablit pas l’unité observée.
+L’incident unique neutralise financièrement propagation et accumulation par construction.
+Il ne réfute pas ces canaux : leur effet exige un lien documenté entre coût et piliers touchés.
+
+PROBABILITÉ DE PERTE POSITIVE, MOYENNES ANALYTIQUES
+additive       C  P(perte>0)=0.169657 incidents positifs/an=3.6571 moyenne annuelle=623.0334
+additive       NC P(perte>0)=0.367862 incidents positifs/an=19.7242 moyenne annuelle=3861.9581
+moyenne        C  P(perte>0)=0.169657 incidents positifs/an=3.6571 moyenne annuelle=451.5159
+moyenne        NC P(perte>0)=0.367862 incidents positifs/an=19.7242 moyenne annuelle=1585.5856
+unique         C  P(perte>0)=0.128265 incidents positifs/an=2.7648 moyenne annuelle=451.5159
+unique         NC P(perte>0)=0.181080 incidents positifs/an=9.7092 moyenne annuelle=1585.5856
+amplifiee      C  P(perte>0)=0.128265 incidents positifs/an=2.7648 moyenne annuelle=623.0334
+amplifiee      NC P(perte>0)=0.181080 incidents positifs/an=9.7092 moyenne annuelle=3861.9581
+Une perte positive n’implique pas une perte supérieure à u pour la moyenne.
+
+CONTRÔLES NUMÉRIQUES
+pas divisé par deux : déplacement maximal 1.000 M EUR
+portée doublée : déplacement maximal 0.000 M EUR
+inclinaison 12 : déplacement maximal 0.000 M EUR
+inclinaison 18 : déplacement maximal 0.000 M EUR
+K=1 : les quatre constructions donnent 4774.0 M EUR.
+Limite de sévérité déterministe : Fourier 240.0, NB amincie exacte 240.0.
+Moments tronqués compatibles avec les moyennes analytiques finies.
+Le contrôle de moyenne doit laisser subsister la contribution de la queue hors portée.
+Référence additive conforme : Fourier 5944.0, MC 6049.0, écart-type entre graines 278.8, écart -0.753 erreurs types.
+Référence additive non conforme : Fourier 19890.0, MC 20187.7, écart-type entre graines 1000.7, écart -0.595 erreurs types.
+Durée 3.4 s ; résultats agrégés : 119.json

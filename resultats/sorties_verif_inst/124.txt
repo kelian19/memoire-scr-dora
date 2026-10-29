@@ -1,0 +1,84 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+124 — VALIDATION CHRONOLOGIQUE DE LA SÉVÉRITÉ DES EXCÈS, VERSION INSTITUT
+570 pertes 2000-2026 ; 565 sur les années complètes 2000-2025 ; 84 excès au-dessus de 20.03 M EUR sur ces années.
+Années notées : 2014 à 2025. Ajustements sur les années antérieures seulement.
+Les excès d’une même année sont traités comme indépendants : approximation.
+  2014 : apprentissage  24 excès, test  4 ; sigma S   57.3 D   86.9 R   83.8 ; xi S 0.31 D 0.24 R 0.20
+  2015 : apprentissage  28 excès, test  1 ; sigma S   63.3 D   97.7 R   87.7 ; xi S 0.26 D 0.20 R 0.16
+  2016 : apprentissage  29 excès, test  3 ; sigma S   64.0 D  100.1 R   86.1 ; xi S 0.24 D 0.19 R 0.16
+  2017 : apprentissage  32 excès, test  1 ; sigma S   69.1 D  102.3 R   88.3 ; xi S 0.17 D 0.16 R 0.11
+  2018 : apprentissage  33 excès, test  5 ; sigma S   67.8 D   98.7 R   85.0 ; xi S 0.17 D 0.17 R 0.11
+  2019 : apprentissage  38 excès, test  5 ; sigma S   60.5 D   83.3 R   74.5 ; xi S 0.31 D 0.28 R 0.25
+  2020 : apprentissage  43 excès, test  1 ; sigma S   59.1 D   71.4 R   70.3 ; xi S 0.30 D 0.29 R 0.25
+  2021 : apprentissage  44 excès, test  5 ; sigma S   61.1 D   76.5 R   72.3 ; xi S 0.27 D 0.27 R 0.23
+  2022 : apprentissage  49 excès, test 11 ; sigma S   54.8 D   65.5 R   64.2 ; xi S 0.41 D 0.39 R 0.37
+  2023 : apprentissage  60 excès, test  7 ; sigma S   55.2 D   63.9 R   63.3 ; xi S 0.42 D 0.41 R 0.38
+  2024 : apprentissage  67 excès, test  6 ; sigma S   58.2 D   77.8 R   66.6 ; xi S 0.48 D 0.44 R 0.43
+  2025 : apprentissage  73 excès, test 11 ; sigma S   57.3 D   82.4 R  116.3 ; xi S 0.56 D 0.49 R 0.47
+
+SCORE LOGARITHMIQUE MOYEN PAR EXCÈS NOTÉ (60 excès notés ; plus grand = mieux)
+  S : score -5.7300 ; PIT moyen 0.516 ; Kolmogorov-Smirnov 0.097, p 0.587
+  D : score -5.7381 ; PIT moyen 0.462 ; Kolmogorov-Smirnov 0.111, p 0.424
+  R : score -5.7553 ; PIT moyen 0.464 ; Kolmogorov-Smirnov 0.114, p 0.382
+
+DIFFÉRENCES DE SCORE MOYEN PAR EXCÈS (bootstrap des excès notés, exploratoire)
+  D moins S : -0.0081 ; intervalle bootstrap à 90 % [-0.0570 ; +0.0430] ; années où D fait mieux : 5, moins bien : 7
+  R moins S : -0.0253 ; intervalle bootstrap à 90 % [-0.0733 ; +0.0249] ; années où R fait mieux : 6, moins bien : 6
+
+PROBABILITÉ DE DÉPASSEMENT DU SEUIL : constante contre tendance logistique
+  2014 :  14 pertes notées,  4 excès ; p constante 0.084, tendance 0.231
+  2015 :  12 pertes notées,  1 excès ; p constante 0.094, tendance 0.293
+  2016 :  22 pertes notées,  3 excès ; p constante 0.093, tendance 0.268
+  2017 :  16 pertes notées,  1 excès ; p constante 0.096, tendance 0.239
+  2018 :  36 pertes notées,  5 excès ; p constante 0.095, tendance 0.208
+  2019 :  22 pertes notées,  5 excès ; p constante 0.099, tendance 0.191
+  2020 :  29 pertes notées,  1 excès ; p constante 0.106, tendance 0.217
+  2021 :  26 pertes notées,  5 excès ; p constante 0.101, tendance 0.172
+  2022 :  32 pertes notées, 11 excès ; p constante 0.106, tendance 0.188
+  2023 :  21 pertes notées,  7 excès ; p constante 0.121, tendance 0.247
+  2024 :  29 pertes notées,  6 excès ; p constante 0.130, tendance 0.283
+  2025 :  21 pertes notées, 11 excès ; p constante 0.134, tendance 0.283
+  score moyen par perte notée (280 pertes) : constante -0.5605, tendance -0.5214 ; différence +0.0391, intervalle bootstrap à 90 % [+0.0014 ; +0.0759] ; années où la tendance fait mieux : 7, moins bien : 5
+
+AJUSTEMENT SUR 2000-2025 (84 excès, taux de dépassement 0.1487) ; échelle prévue pour 2026
+  tendance logistique sur 2000-2025 : pente +0.1071 par an ; probabilité prévue pour 2026 : 0.3494 contre 0.1487 constante
+  S : xi 0.611, sigma 54.7
+  D : xi 0.576, sigma 69.0 ; pente +0.0246 par an, soit +2.5 % par an
+  R : xi 0.571, sigma 61.1 ; rupture après 2008, échelles 27.4 puis 61.1
+  P : xi 0.611, sigma 54.7
+  DP : xi 0.576, sigma 69.0
+  (P : sévérité stationnaire et taux de dépassement en tendance ; DP : échelle variable et tendance)
+
+CAPITAL ANNUEL À 99,5 % (M EUR, périmètre financier étudié) SELON LA LOI DE SÉVÉRITÉ
+règle      modèle   conforme  non conforme  rapport
+additive   S            5958         20268    3.402
+additive   D            6417         21037    3.278
+additive   R            5585         18241    3.266
+additive   P           10782         37647    3.492
+additive   DP          11446         38887    3.397
+moyenne    S            4470          8861    1.983
+moyenne    D            4833          9251    1.914
+moyenne    R            4206          8027    1.909
+moyenne    P            8068         16335    2.025
+moyenne    DP           8589         16923    1.970
+unique     S            4771         10863    2.277
+unique     D            5173         11423    2.208
+unique     R            4505          9907    2.199
+unique     P            8577         19679    2.294
+unique     DP           9142         20416    2.233
+amplifiee  S            6888         28042    4.071
+amplifiee  D            7506         29666    3.952
+amplifiee  R            6542         25748    3.936
+amplifiee  P           12362         50639    4.096
+amplifiee  DP          13243         52786    3.986
+
+GRANDEURS CITÉES, RÈGLE ADDITIVE : variation relative au modèle stationnaire
+  D : conforme +8 %, non conforme +4 %, rapport -3.6 %
+  R : conforme -6 %, non conforme -10 %, rapport -4.0 %
+  P : conforme +81 %, non conforme +86 %, rapport +2.6 %
+  DP : conforme +92 %, non conforme +92 %, rapport -0.1 %
+
+Limites : peu d’excès par année (un à onze), apprentissage de 24 excès à la première année notée ;
+forme commune aux régimes ; rupture choisie sur l’apprentissage ; excès supposés indépendants ;
+ni fréquence, ni dispersion, ni cascade d’expert ne sont réestimées.
+Durée 21.3 s ; résultats agrégés : 124.json

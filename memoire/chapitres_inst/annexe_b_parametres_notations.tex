@@ -1,0 +1,206 @@
+﻿% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : annexe B, parametres et notations.
+% Copie a texte constant de chapitres/17b_table_parametres.tex puis chapitres/16_notations.tex, les deux anciennes annexes devenant les sections B.1 et B.2.
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+% =====================================================================
+% TABLE DES PARAMÈTRES  --  annexe.
+%
+% REMISE DANS LE MÉMOIRE LE 18 SEPTEMBRE 2026, quelques heures après le déport
+% des annexes B, D et E. Elle vivait au \S sec:ann-parametres de l'annexe D
+% (17_pieces_justificatives.tex) et elle est partie avec elle ; Kélian a demandé
+% de la remettre le jour même. Elle a été RETIRÉE du fichier déporté, pas
+% recopiée : le même tableau à deux endroits divergerait.
+%
+% POURQUOI ELLE SEULE REVIENT, quand les vingt et une autres sections de
+% l'annexe D restent dehors. C'est la table qu'un jury lit en premier pour
+% savoir ce qui est calibré, ce qui est posé et ce qui n'est pas identifié, et
+% le chapitre 11 annonce qu'elle existe « pour qu'aucun chiffre du mémoire ne
+% soit sans origine déclarée » : la laisser dehors rendait cette phrase fausse.
+%
+% ELLE EST EN longtable ET NON EN tabular, depuis le 17 août 2026. Un tabular ne
+% peut pas se couper entre deux pages : il débordait de 102 pt et hyperref
+% émettait l'annotation hors page qui accompagne toujours ce débordement.
+%
+% SES NEUF SCRIPTS SOURCES SONT NÉCESSAIRES. La ligne
+% « % SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43 » couvre les soixante et
+% quelques nombres de la table ; en retirer un sort des valeurs du contrôle.
+% =====================================================================
+
+\chapter{Paramètres et notations}
+\label{sec:ann-parametres}
+
+\section{Nature et sensibilité des paramètres}
+
+Trois natures sont distinguées : calibré sur données (avec son incertitude),
+\emph{posé} par jugement d'expert ou choix normatif (non identifiable, cf.\
+chapitre~\ref{ch:identifiabilite}), et semi-ancré sur un proxy externe non
+spécifique au périmètre.
+
+\vspace{0.25cm}
+% PASSEE DE tabular A longtable LE 17 AOUT 2026. Cette table tenait sur une page tant que rien
+% ne la precedait dans le chapitre ; l'ajout de la section sur le dispositif de verification l'a
+% decalee et elle a debordé de 102 pt, avec l'annotation hyperref hors page qui accompagne
+% toujours ce debordement. Un tabular NE PEUT PAS se couper entre deux pages : le piege est
+% documente et il vient de mordre. longtable le peut, et l'en-tete se repete.
+{\footnotesize
+\renewcommand{\arraystretch}{1.28}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.7cm}
+                    >{\raggedright\arraybackslash}p{2.6cm}
+                    >{\raggedright\arraybackslash}p{1.7cm}
+                    >{\raggedright\arraybackslash}p{4.0cm}
+                    >{\raggedright\arraybackslash}p{3.6cm}@{}}
+\toprule
+\textbf{Paramètre} & \textbf{Valeur} & \textbf{Nature} & \textbf{Justification} & \textbf{Sensibilité du besoin} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Paramètre} & \textbf{Valeur} & \textbf{Nature} & \textbf{Justification} & \textbf{Sensibilité du besoin} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Queue de sévérité $\xi$ & $0{,}5954$ (OpRisk, résultat principal) ; PRC $1{,}03$ ; $0{,}90$ posé en pire cas de modèle & calibré, incertain & GPD sur pertes réelles ; hétérogène par catégorie ($0{,}87$--$1{,}37$) & \textbf{forte} : de $0{,}60$ à $0{,}38$ quand le seuil monte au-dessus de celui retenu, dans l'IC90 $[0{,}30\,;0{,}83]$ ; pilote la queue \\
+Échelle GPD $\sigma$, seuil $u$, $p_u$ & $57{,}97$ M\euro{} ; $20{,}03$ M\euro{} ; $0{,}15$ & calibré & POT au percentile $85$ de l'échantillon 2000--2026, $86$ excès sur $570$ pertes ; $p_u=86/570$ (\S\ref{sec:pu-coherence}) & modérée (via la queue) \\
+Fréquence $\lambda$ & ${\sim}21{,}6$/an (OpRisk) & convention de calage & $582$ événements collectés / 27 ans, dont douze d'avant 2000 : $+2{,}1\,\%$ sur l'échantillon (\S\ref{sec:pu-coherence}) & sous-linéaire sur le niveau \\
+Multiplicateur de fréquence par état & $\times 1{,}525$ partiel ; $\times 2{,}487$ non conforme ($\lambda$ de $21{,}56$ à $53{,}62$) & semi-ancré & parts Hackmageddon et fourchettes posées sur des effets publiés (chapitre~\ref{chap:multietats}) ; aux bornes, $\lambda$ de $41{,}7$ à $65{,}6$ & \textbf{forte} : canal dominant du résultat principal \\
+Sur-dispersion $\phi$ & $9{,}20$ & \textbf{posé} (prudent) & $2{,}24$ mesuré sur la série annuelle détendancée, maintenu entre scénarios & élasticité $-0{,}44$ sur l'écart entre états \\
+Choc commun fréquence $a$ & $0{,}60$ & \textbf{posé} (prudent) & dépasse l'IC empirique haut ($0{,}22$) : conservateur & enveloppe le modèle à paquets ($\times 2{,}5$) \\
+Structure $W = g\,T/s_{\max}$ & classeur qualitatif & \textbf{posé} / normatif & jugement d'expert consigné ; direction non identifiable & l'asymétrie départage les deux piliers de tête ; l'essentiel du surcoût de contagion vient de la partie symétrique \\
+Gain de propagation $g$ & $0{,}90$ base ; par état $0{,}45/0{,}68/0{,}90$ & \textbf{posé} & amplitude de $W$, bornée par Leontief $\rho(W)\le g<1$ & \textbf{levier} : $\times 1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
+Score de conformité $q$ / états & continu $[0,1]$ (ou NC/PC/C) & \textbf{posé} & décrit le profil, subsume 3 ou 5 niveaux & \textbf{levier} : $-53\,\%$ de NC à C sur le seul score ; facteur $3{,}34$ sur les quatre canaux \\
+Multiplicateur de matérialité par état & $0{,}85/1{,}00/1{,}20$ & \textbf{posé} & module $p_u$ selon la conformité & modérée (canal détection) \\
+Charge systémique $\gamma$ & $0{,}68$ & semi-ancré & proxy concentration cloud (AWS+Azure+GCP, Synergy 2025) & modérée \\
+Seuil de crise $\theta_{\text{crise}}$ & $-2{,}5$ & \textbf{posé} & déclenche le régime de co-mouvement extrême & agit sur la seule queue crise \\
+Probabilités d'état $P(\text{NC/PC/C})$ & $0{,}35/0{,}35/0{,}30$ & semi-ancré & enquêtes conformité DORA ${\sim}50\,\%$ non conformes (Deloitte, ESA) & déplace le mélange, pas les états \\
+Copule de dépendance $\theta$ & Gumbel $1{,}8$ & \textbf{posé} & queue supérieure entre briques & \textbf{négligeable} : $\Delta_{\text{DORA}}$ $<1{,}4\,\%$ sur $[1,4]$ \\
+Excès de source $u_{ij}$ & $\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ & \textbf{non identifié} & la direction elle-même ; normalisation $\sum_i u_{ij}=0$ (repérage, non information) & mesurée par l'échelle de repli (ch.~\ref{chap:partielle}) : rang~$1$ capte $74\,\%$ et resserre les bornes de $25\,\%$ ; à $u=0$ P1 et P4 deviennent indiscernables \\
+Élasticité sévérité/taille $b$ & $0{,}087$ $[0{,}026\,;0{,}148]$ & calibré, tronqué & EMV lognormale tronquée au seuil de collecte (ch.~\ref{chap:donnees}) & faible : $\times 0{,}86$ sur la sévérité transposée \\
+Plafond de sévérité & $40$ M\euro{} & \textbf{posé} & capacité de réassurance ($\xi\ge 1$) ; appliqué par pilier touché & borne la queue extrême \\
+\end{longtable}
+}
+
+\vspace{4pt}
+% SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43 76
+
+Les paramètres à forte sensibilité sont soit calibrés sur données (la queue $\xi$, dont
+l'incertitude est chiffrée), soit des \emph{leviers voulus} ($g$, $q$, le multiplicateur de
+fréquence), qui portent l'effet de la conformité et de la contagion sur le capital. Les paramètres purement posés qui
+ne sont pas des leviers ($\theta$ de copule, $\gamma$, $\theta_{\text{crise}}$, probabilités d'état,
+matérialité) ont une influence faible à modérée dans ces tests. Les correspondances entre conformité
+et canaux restent posées. Leur effet sur l'écart est déterminant ; l'unité de perte et le bootstrap
+conjoint en précisent la portée (\S\ref{sec:institut-unite-incertitude}).
+
+\section{Table des notations}
+
+% MIGRÉ depuis memoire/main.tex (plages 3230-3259).
+% RELECTURE FAITE (août 2026) : la table héritée ne portait AUCUN symbole du
+% modèle de cascade (W, S, A, TRANS, ROOT, g, s_j, e_j, R_0, t, kappa), alors
+% que c'est le modèle central. Elle est réécrite et organisée en cinq blocs.
+\label{not:ann:notations}
+
+\noindent Les symboles sont regroupés par brique du modèle. Les probabilités, scores et gains sont
+sans unité ; les pertes sont en M\euro{} et les fréquences en incidents par an. Les indices
+$i$, $j,k$, $n$ et $y$ désignent respectivement l'entité, les piliers, l'incident et l'année.
+Certains symboles ont un sens local : $A$ désigne une matrice antisymétrique ou des actifs,
+$S$ une matrice symétrique ou une coalition, et $\rho$ une corrélation ou un rayon spectral.
+
+% LONGTABLE ET NON TABULAR. Un tabular ne peut pas se couper : la table dépassait le
+% bas de page, et hyperref plaçait alors les liens \ref des sept dernières lignes à des
+% coordonnées NÉGATIVES (sept avertissements « Annotation out of page boundary » à la
+% compilation). Les renvois fonctionnaient mais pointaient sur la mauvaise page du PDF.
+% longtable répartit la table sur plusieurs pages et rejoue l'en-tête à chaque page.
+\renewcommand{\arraystretch}{1.12}
+{\small
+\begin{longtable}{>{\raggedright}p{3.3cm} >{\raggedright\arraybackslash}p{10.2cm} c}
+\toprule
+\rowcolor{lightblue}
+\textbf{Symbole} & \textbf{Signification} & \textbf{Ch.} \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{lightblue}
+\textbf{Symbole} & \textbf{Signification} & \textbf{Ch.} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{r@{}}{\footnotesize\itshape suite page suivante} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Piliers et cascade dirigée}}} \\
+$P_1,\dots,P_5$ & Les cinq piliers DORA : gouvernance, gestion des incidents, tests de résilience, prestataires tiers, partage d'informations & \ref{chap:cascade} \\
+$T=(t_{jk})$ & Matrice d'influence brute du classeur qualitatif, asymétrique, non normalisée & \ref{chap:cascade} \\
+$\mathrm{ROOT}$ & Propension de chaque pilier à \emph{amorcer} une chaîne ; répartit les amorces du moteur & \ref{chap:cascade} \\
+$\mathrm{GBASE}$ & Gravité intrinsèque de chaque pilier s'il cède seul, barème ordinal du modèle qualitatif, absent du moteur de capital & \ref{chap:cascade} \\
+$s_j$ & Somme de la ligne $j$ de $T$ ; $s_{\max}=\max_j s_j$ & \ref{chap:cascade} \\
+$g$ & Gain de propagation, somme maximale des probabilités émises par un pilier dans la matrice normalisée de référence ; sans unité & \ref{chap:cascade} \\
+$W$ & Matrice de contagion normalisée à la Leontief, $W=g\,T/s_{\max}$. \textbf{Convention : $W_{jk}$ va de la source $j$ vers la cible $k$ ; la ligne émet, la colonne reçoit} & \ref{chap:cascade} \\
+$e_j$ & Propension à propager depuis $j$, $e_j=g\,s_j/s_{\max}$ & \ref{chap:cascade} \\
+$\rho(W)$ & Rayon spectral de $W$ ; $\rho(W)\le g<1$ garantit la stabilité & \ref{chap:cascade} \\
+$(I-W)^{-1}$ & Inverse de Leontief, somme des marches pondérées avec multiplicité ; $I$ est l'identité, $W^\top$ la transposée & \ref{chap:cascade} \\
+$M,\ R_0$ & Matrice de génération suivante et son rayon spectral (extinction si $R_0<1$) & \ref{chap:cascade} \\
+$S_a$ & Ensemble des piliers atteints depuis l'amorce $a$ & \ref{chap:cascade} \\
+$K_j,\ u_j$ & Seuil latent d'incident ; seuil monétaire POT. Ils diffèrent des critères réglementaires DORA (art.~18) & \ref{chap:cascade} \\
+$X_i,\ X_{ij}$ & Stress latent de l'entité $i$, puis de son pilier $j$ ; sans unité, distinct de la perte monétaire $X_n$ & \ref{chap:cascade} \\
+$\Phi,\ \Phi^{-1}$ & Répartition et fonction quantile de la normale standard ; $\mathbf 1\{E\}$ vaut un si $E$ se réalise & \ref{chap:cascade} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Identifiabilité et identification partielle}}} \\
+$S,\ A$ & Parties symétrique et antisymétrique de $W$ ; $S$ est posé à dire d'expert, $A$ est exploré sous contraintes & \ref{ch:identifiabilite} \\
+$J_{jk}$ & Courant de probabilité $\pi_jP_{jk}-\pi_kP_{kj}$ ; nul ssi réversibilité & \ref{ch:identifiabilite} \\
+$\pi,\ \tilde P$ & Loi stationnaire ; noyau adjoint (chaîne renversée dans le temps) & \ref{ch:identifiabilite} \\
+$\mathcal{E}(f,f)$ & Forme de Dirichlet de la chaîne auxiliaire stationnaire ; ne dépend que de la symétrisée pondérée $S_\pi$ & \ref{ch:identifiabilite} \\
+$\sigma$ & Production d'entropie ; nulle ssi la chaîne est réversible & \ref{ch:identifiabilite} \\
+$\Delta(N),\ z$ & Statistique d'asymétrie de la matrice $N$ des transitions observées et son écart réduit au placebo par permutation & \ref{ch:identifiabilite} \\
+$t$ & Degré d'ignorance directionnelle, $|A_{jk}|\le t\,S_{jk}$ ; $t=1$ = ignorance totale & \ref{chap:partielle} \\
+$\mathcal{W}(t)$ & Ensemble admissible conditionnel au $S$ d'expert et aux contraintes posées ; les extrema aux sommets ne sont pas des bornes globales démontrées & \ref{chap:partielle} \\
+$u_{ij}$ & Excès de propagation propre à la source, $\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ & \ref{chap:partielle} \\
+$L(\mathcal{V}),\ V(\mathcal{I})$ & Largeur de bande de capital ; valeur d'une information & \ref{ch:livrable} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Socle : fréquence et sévérité}}} \\
+$\xi,\ \sigma_{\text{GPD}},\ u$ & Indice de queue, échelle et seuil POT de la GPD de sévérité & \ref{chap:socle} \\
+$\zeta_u=p_u$ & Probabilité de dépassement du seuil par une sévérité élémentaire, $\Prob(X>u)$ & \ref{chap:socle} \\
+$N_u$ & Nombre d'excès au-delà de $u$ & \ref{chap:socle} \\
+$\lambda_{ref}$ & Fréquence de référence PRC ($341$/an) : \emph{clé de répartition} par vecteur, n'alimente pas le moteur & \ref{chap:donnees} \\
+$\lambda$ & Fréquence d'entrée, événements TIC enregistrés ($21{,}6$/an au secteur), avant le tirage de la perte par pilier & \ref{chap:donnees} \\
+$\phi\ (\varphi),\ a$ & Rapport variance/moyenne du comptage ; charge commune du mélange lognormal & \ref{chap:socle} \\
+$r,\ p$ & Forme et probabilité de la binomiale négative ($p$ distinct de $p_u$) & \ref{chap:socle} \\
+$N_y,\ Y_{n,k},\ X_n,\ L_y$ & Incidents de l'année ; perte du pilier $k$ dans l'incident $n$ ; perte de l'incident ; somme annuelle & \ref{chap:socle} \\
+$b$ & Élasticité de la sévérité à la taille de la firme & \ref{chap:donnees} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Conformité multi-états}}} \\
+$C^\star_j,\ \Theta,\ \varepsilon_j$ & Capacité latente du pilier $j$ ; facteur commun ; choc propre (normales réduites indépendantes) & \ref{chap:multietats} \\
+$U_j$ & Score de conformité $\Phi(C^\star_j)\in[0,1]$, de coupures $0{,}35$ et $0{,}70$ & \ref{chap:multietats} \\
+$\gamma$ & Charge systémique de la latente de conformité ($0{,}68$) & \ref{chap:multietats} \\
+$\omega$ & Probabilité du choc commun d'accumulation ($0$ en C, $0{,}68$ en NC) & \ref{chap:multietats} \\
+$K_{\text{bas}},K_{\text{haut}}$ & Seuils ordonnés découpant les états NC / PC / C & \ref{chap:multietats} \\
+$Q$ & Générateur de la chaîne de mise en conformité (séjours de type phase) & \ref{chap:multietats} \\
+$v_0,\ \overline B(t)$ & Probabilités initiales des phases ; capital moyen conditionnel en $t$, distinct du quantile du mélange & \ref{chap:multietats} \\
+$S_0,S_1,S_2$ & Scénarios C / PC / NC (multiplicateurs de fréquence) & \ref{chap:socle} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Capital, allocation et décision}}} \\
+$\VaR_\alpha(L)$, $\TVaR_\alpha(L)$ & Value-at-Risk et Tail-VaR de la charge \textbf{annuelle agrégée} $L$, au niveau $\alpha=99{,}5\,\%$ : quantile de capital et diagnostic de moyenne de queue & \ref{chap:socle} \\
+$B,\ B_e,\ B(W),\ B(A)$ & Besoin ORSA du modèle, $\VaR_{99{,}5\%}(L)$, sous un état $e$, une matrice $W$ ou à des actifs $A$ ; pas un SCR réglementaire & \ref{chap:multietats} \\
+$\qsev_\alpha(X),\ \qbarsev_\alpha(X)$ & Quantile d'un sinistre unique et moyenne des pertes au-delà ; grandeurs descriptives distinctes du capital annuel & \ref{chap:socle} \\
+$\Delta_{DORA}$ & Écart de capital entre états NC et C supposés, sans lecture causale & \ref{chap:resultats} \\
+$C_j,\ AC_j,\ \varphi_j$ & Contributions à la TVaR en queue ; Shapley du pilier $j$ (distinct de $\phi$) & \ref{chap:resultats} \\
+$A,\ A_m,\ \Lambda$ & Actifs de l'entité ; actifs médians des pertes ; incidents annuels moyens du panel & \ref{chap:resultats} \\
+$b_\lambda,\ m(A)$ & Exposant de fréquence aux actifs ; facteur de sévérité à la taille de l'entité & \ref{chap:resultats} \\
+$D,\ d,\ \tau,\ \mathrm{Adj}$ & Écart ajouté ; $D/\mathrm{BSCR}$ ; part retenue en agrégation corrélée ; absorption des pertes & \ref{chap:resultats} \\
+$\mathrm{LR}$ & Ratio de sinistralité, pertes attendues sur primes (sans unité) & \ref{chap:resultats} \\
+$\mathrm{CoC}$ & Coût du capital de la marge de risque ($6\,\%$, puis $4{,}75\,\%$) & \ref{chap:resultats} \\
+$\ell,\ \ell^\star$ & Portée d'un traité en excès de perte annuel ; portée optimale & \ref{chap:resultats} \\
+$\kappa$ & Coefficient d'inefficacité du transfert (capacité, base, contrepartie) & \ref{chap:resultats} \\
+$\theta$ & Paramètre de la copule de Gumbel (comparaison, non modèle) & \ref{ch:robustesse} \\
+\end{longtable}
+}
+
+\clearpage
+
+% =====================================================================
+
+% SOURCES-SCRIPTS: 63 67 22 50

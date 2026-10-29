@@ -1,0 +1,168 @@
+﻿
+========================================================================================
+1. Pourquoi un plafond par sinistre borne le quantile ANNUEL
+========================================================================================
+  A queue lourde, le quantile annuel obeit au principe de la PERTE UNIQUE DOMINANTE :
+  P(S > x) ~ E[N] x P(X > x). Le quantile de la charge annuelle est donc porte par UN
+  sinistre, non par un cumul. Si chaque severite elementaire est plafonnee a kappa x E, alors la
+  charge annuelle ne peut plus depasser ce niveau que par cumul, ce qui est justement
+  ce que la queue lourde rend improbable.
+
+  PREDICTION A VERIFIER :  VaR_plafonnee  ~  min( VaR_non_plafonnee , kappa x E ).
+  Elle n'est pas exacte : le cumul de plusieurs sinistres plafonnes peut depasser le
+  plafond, et un incident multi-piliers somme plusieurs severites plafonnees. On mesure donc de
+  combien elle se trompe plutot que de la supposer.
+
+========================================================================================
+2. Verification par simulation, sur l'entite notionnelle
+========================================================================================
+  Entite notionnelle, exposition 19 231 M€.
+  VaR sans plafond, ce moteur : 177.1 M€  (le script 65 publie 169.0 par
+  l'evaluateur d'identification partielle : deux machineries, meme ordre).
+
+     kappa    plafond   VaR simulee   prediction   ecart / plafond
+     0.001       19.2          38.5         19.2              100 %
+     0.002       38.5          66.9         38.5               74 %
+     0.005       96.2         105.3         96.2               10 %
+     0.010      192.3         177.1        177.1                0 %
+     0.020      384.6         177.1        177.1                0 %
+     0.050      961.5         177.1        177.1                0 %
+
+  LA PREDICTION NE TIENT QUE QUAND LE PLAFOND EST LACHE, et c'est un resultat en soi.
+  A kappa = 0,1 % le plafond vaut 19 M€ et la VaR simulee 38 : le DOUBLE. A partir de
+  1 % l'ecart est nul. Le mecanisme est clair et il fallait le voir : le principe de la
+  perte unique dominante suppose une queue lourde, or PLAFONNER LA DETRUIT. Des que le
+  plafond mord, la charge annuelle cesse d'etre portee par un sinistre et redevient un
+  CUMUL, regime dans lequel la somme depasse largement le plus gros terme.
+
+  DEUX CONSEQUENCES, et la seconde corrige une lecture trop rapide.
+  (i) L'erreur va dans le sens conservateur : la VaR plafonnee est AU-DESSUS du plafond,
+      jamais en dessous. Un plafond ne fait donc pas tomber le capital a kappa x E.
+  (ii) Le rapport besoin / exposition ne se lit PAS directement comme le plafond qu'il
+      faudrait poser : il le SURESTIME, puisque le cumul apporte une part du chemin. Le
+      kappa reellement implicite se mesure, et c'est ce que fait la section suivante.
+
+========================================================================================
+3. Le rapport besoin sur exposition EST le plafond minimal implicite
+========================================================================================
+  UNE PRECAUTION D'ABORD. Ce script simule au niveau du sinistre, alors que la chaine
+  publiee du script 65 passe par un evaluateur d'identification partielle. Les deux
+  machineries ne coincident donc pas exactement, et la colonne « VaR libre ici » permet
+  de mesurer l'ecart : il reste sous 7 % sur les cinq entites, ce qui est rassurant mais
+  ne dispense pas de la regle suivante. TOUT CE QUI SUIT EST MESURE A L'INTERIEUR DE CE
+  SEUL MOTEUR, chaque entite etant comparee a SA PROPRE VaR non plafonnee, sans quoi
+  l'effet du plafond se melangerait a l'ecart de machinerie.
+
+  Le rapport besoin publie sur exposition reste donne comme un fait descriptif, parce
+  qu'il ne demande aucune simulation et qu'il n'avait jamais ete lu.
+
+  entite                  exposition  B publie    B / E  VaR libre ici  kappa a -50 %  soit en M€
+  assureur non-vie A           2 319     112.1   4.834 %          111.7        2.284 %          53
+  assureur non-vie B           5 305     135.5   2.554 %          131.1        1.056 %          56
+  assureur vie C              37 845     195.8   0.517 %          204.1        0.195 %          74
+  assureur vie D             309 800     294.4   0.095 %          289.7    hors grille           -
+  entite notionnelle          19 231     169.0   0.879 %          172.6        0.301 %          58
+
+  LE RESULTAT EST DANS LA DERNIERE COLONNE, ET IL N'ETAIT PAS ATTENDU LA.
+  Le plafond qui retire la moitie du capital vaut de 0.195 % a 2.284 % du bilan,
+  un facteur 12 entre entites. Mais EN EUROS il va de 53 a 74 M€ seulement,
+  soit un facteur 1.4, sur un panel dont les tailles varient d'un facteur
+  134. Le plafond critique est donc quasiment INVARIANT en montant absolu.
+
+  C'EST LA LIMITE DECLAREE DU MEMOIRE, ENFIN MESUREE. Elle dit que le modele fait subir a
+  une petite entite a peu pres la severite d'une institution mondiale, l'elasticite valant
+  0,087. La consequence se lit ici : le montant qui plafonne utilement ne depend presque
+  pas de la taille, donc rapporte au bilan il devient enorme pour les petites entites et
+  negligeable pour les grandes. Ce n'est pas un artefact du plafond, c'est la faiblesse de
+  l'elasticite rendue visible en euros.
+
+  ET LA COMPARAISON QUI TRANCHE. Pour la plus petite entite, le besoin publie demande
+  4.83 % du bilan quand le plafond qui halverait son capital est a 2.28 % :
+  le chiffre publie exige donc un plafond DEUX FOIS PLUS LACHE que celui qui suffirait
+  deja a l'amputer de moitie. Pour la plus grande, le besoin ne demande que 0.095 %,
+  largement sous tout plafond plausible. C'est cet ecart, et non la mecanique du plafond,
+  qui met la petite entite hors domaine.
+
+========================================================================================
+4. La borne inferieure de validite, DERIVEE et non plus affirmee
+========================================================================================
+  On raisonne maintenant a l'envers, et c'est la lecture utile pour un praticien : je FIXE
+  un plafond de politique, le meme pour toutes les entites, et je regarde pour lesquelles
+  le besoin publie reste atteignable. Celles pour qui il ne l'est pas sortent du domaine.
+
+   plafond de politique              A           B           C           D notionnelle
+  VaR libre (ce moteur)          111.7       131.1       204.1       289.7       172.6
+  ---------------------   ------------------------------------------------------------
+                   0.1 %             4 %          8 %         35 %        100 %         22 %
+                   0.2 %             8 %         16 %         51 %        100 %         39 %
+                   0.5 %            21 %         34 %         93 %        100 %         63 %
+                   1.0 %            34 %         47 %        100 %        100 %        100 %
+                   2.0 %            42 %         81 %        100 %        100 %        100 %
+
+  Lecture : chaque case donne la PART DU CAPITAL QUI SURVIT au plafond indique, en
+  pourcentage de la VaR non plafonnee de la MEME entite dans le MEME moteur. Aucune
+  comparaison entre machineries, donc aucune contamination par leur ecart.
+
+  LE PLAFOND RELATIF FRAPPE LES PETITES ENTITES BEAUCOUP PLUS FORT, et c'est la lecture
+  qui manquait. A un plafond de politique de 0,5 % du bilan, la plus petite entite ne
+  garde qu'une fraction de son capital quand la plus grande n'est pas touchee du tout.
+  La raison est celle de la section precedente : le montant qui plafonne utilement est
+  quasi invariant en euros, donc un plafond exprime en pourcentage du bilan est serre
+  pour une petite entite et lache pour une grande.
+
+  D'OU LA CONCLUSION, ET ELLE DEPLACE L'ARGUMENT DU MEMOIRE. La borne inferieure de
+  validite ne vient pas d'un defaut d'echantillon ni d'une propriete de la descente
+  d'echelle : elle vient de ce que la loi de severite est presque insensible a la taille.
+  Un praticien peut en discuter en une phrase, ce qui n'etait pas le cas de l'argument
+  statistique qu'elle remplace.
+
+  CE QUE CELA APPORTE PAR RAPPORT A L'EXISTANT. Le script 65 declare deja la plus petite
+  entite hors domaine, mais il le fait par comparaison a la borne inferieure de la
+  descente d'echelle, qui est une propriete de la METHODE. Ici la meme conclusion se
+  derive d'une hypothese ECONOMIQUE explicite et discutable en seance : quelle fraction
+  de son bilan un assureur peut-il perdre sur un seul sinistre informatique. C'est un
+  argument different, et il se defend devant un praticien plutot que devant un
+  statisticien.
+
+========================================================================================
+5. Le terme de saturation, et pourquoi il rejoint l'exposant d'additivite
+========================================================================================
+  La forme retenue par le prepublie de cascade climatique ne comporte pas seulement un
+  plafond : elle y ajoute un effet de SATURATION, le cout unitaire montant lorsque
+  plusieurs atteintes surviennent ensemble. Or c'est exactement l'objet de l'exposant
+  theta du script 74, qui multiplie la perte d'un sinistre par (nombre de piliers)^(theta-1).
+
+  LES DEUX LIMITES DECLAREES DU MEMOIRE SE REJOIGNENT DONC SUR UN SEUL OBJET :
+    - « la severite n'est pas plafonnee a l'echelle d'entite »   -> le plafond kappa x E ;
+    - « l'additivite des couts d'un sinistre est non testee »    -> l'exposant theta.
+  Ce sont les deux moities d'une meme forme fonctionnelle : un cout par sinistre borne par
+  l'exposition, et non lineaire dans le nombre de piliers touches.
+
+  ET ELLES AGISSENT EN SENS CONTRAIRE, ce qui n'etait pas visible tant qu'on les traitait
+  separement. Le plafond RETIRE de la queue, la saturation en AJOUTE. Les traiter comme
+  deux reserves independantes qui s'additionnent surestimerait l'incertitude totale.
+
+========================================================================================
+VERDICT
+========================================================================================
+  1. LA PREDICTION SIMPLE NE TIENT QU'A PLAFOND LACHE, et c'est le resultat inattendu :
+     plafonner DETRUIT la queue lourde, donc invalide le principe de la perte unique
+     dominante sur lequel la prediction reposait. A plafond serre la charge redevient un
+     CUMUL, et la VaR depasse le plafond, jusqu'au double a kappa = 0,1 %.
+  2. LE PLAFOND CRITIQUE EST QUASI INVARIANT EN EUROS, et c'est le resultat central. Celui
+     qui retire la moitie du capital va de 53 a 74 M€ sur un panel dont les tailles
+     varient d'un facteur 134. Rapporte au bilan il va donc de 0.195 a 2.284 %,
+     enorme pour une petite entite et negligeable pour une grande. C'est la limite
+     declaree du memoire, l'elasticite severite/taille de 0,087, rendue visible en euros.
+  3. LA BORNE INFERIEURE DE VALIDITE SE DERIVE DONC D'UNE HYPOTHESE ECONOMIQUE explicite
+     et discutable en seance, au lieu d'etre posee par comparaison a la descente
+     d'echelle : quelle fraction de son bilan un assureur peut-il perdre sur un seul
+     sinistre informatique. C'est un argument de praticien, non de statisticien.
+  4. LE PLAFOND ET L'EXPOSANT D'ADDITIVITE SONT DEUX MOITIES D'UNE MEME FORME, et ils
+     agissent EN SENS CONTRAIRE : les additionner comme deux reserves independantes
+     surestimerait l'incertitude.
+  5. RIEN N'EST IMPLEMENTE DANS LA CHAINE PUBLIEE. Le gel l'interdit, et aucun nombre
+     publie ne bouge. Ce qui change est le statut de la limite : elle etait declaree,
+     elle est maintenant BORNEE et lisible en une seule grandeur, le kappa implicite.
+
+figure ecrite : recherche\vasicek_lab\figures\S34_plafond_exposition.png

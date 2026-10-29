@@ -2,24 +2,25 @@
 # Python indiquee sous chaque cible (voir CONTRIBUTING.md).
 
 PY ?= python
-MEMOIRE := exploratory/memoire_cascade
-
-.PHONY: aide verifier institut memoire depot audit
+.PHONY: aide etat structure verifier memoire depot audit
 
 aide: ## liste les cibles
-	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
+	$(PY) projet.py --help
 
-verifier: ## rejoue le harnais : chaque nombre publie confirme par la sortie de son script
-	$(PY) ci/harnais_strict.py
+etat: ## branche, changements locaux et PDF presents
+	$(PY) projet.py etat
 
-institut: ## regenere main_institut.tex depuis main_ensae.tex
-	$(PY) $(MEMOIRE)/build_institut.py
+structure: ## chemins, liens des guides et fichiers suivis
+	$(PY) projet.py structure
+
+verifier: ## controle la structure puis rejoue le harnais strict
+	$(PY) projet.py verifier
 
 memoire: ## compile les deux versions et passe tous les controles, sans le harnais
-	$(PY) $(MEMOIRE)/refaire_tout.py --sans-harnais
+	$(PY) projet.py compiler
 
-depot: ## chaine complete : generer, compiler, controler, recopier les fichiers deposes
-	$(PY) $(MEMOIRE)/refaire_tout.py
+depot: ## controles stricts, compilation et copies des fichiers de depot
+	$(PY) projet.py depot
 
 audit: ## cherche les correspondances fortuites du harnais (sources a relire a la main)
-	$(PY) $(MEMOIRE)/audit_sources.py sorties_verif
+	$(PY) projet.py audit

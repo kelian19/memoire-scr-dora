@@ -10,8 +10,7 @@
 *.mp4   binary
 
 # Fichiers generes : replies dans les diffs de GitHub et exclus des statistiques de langage.
-exploratory/memoire_cascade/main_institut.tex  linguist-generated=true
-sorties_verif/*.txt                            linguist-generated=true
+resultats/sorties_verif/*.txt                   linguist-generated=true
 
 # Premiere version du memoire, abandonnee et conservee pour l'histoire du projet.
-memoire/**                                     linguist-vendored=true
+archives/premier_memoire/**                     linguist-vendored=true

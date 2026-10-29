@@ -1,0 +1,33 @@
+127 — EXTREMA DU CAPITAL HORS DES SOMMETS DU PAVÉ ADMISSIBLE, VERSION INSTITUT
+Montants en M EUR ; mêmes tirages communs que les scripts 30 et 111 (40000 années, graine 20260721).
+Recherche de contre-exemples, pas une certification : aucune preuve d’extremum global n’est revendiquée.
+
+SOMMETS : 1024 admissibles sur 1024.
+  capital aux sommets : minimum 6858, maximum 8697 (contrôle : 6858 et 8697 aux scripts 30 et 111).
+  moyenne lissée aux sommets : minimum 848.7, maximum 1100.6.
+
+STRUCTURE : la moyenne lissée est un polynôme de degré deux en chaque coordonnée ; résidu relatif maximal sur 100 contrôles 2.8e-15.
+  courbure positive en 36 % des 2000 points tirés dans le pavé ; par coordonnée de 26 % à 44 %.
+  Une courbure négative permet un maximum intérieur le long d’un axe : la structure seule ne démontre rien.
+
+ASCENSION PAR COORDONNÉES, moyenne lissée, maximum : 172 départs (20 sommets, 150 points intérieurs, point nul, point d’expert).
+  extremum aux sommets 1100.601 ; meilleur trouvé 1100.601 ; 172 départs finissent sur un sommet ; 0 dépassent l’extremum des sommets ; le meilleur trouvé a 0 coordonnée(s) intérieure(s).
+
+ASCENSION PAR COORDONNÉES, moyenne lissée, minimum : 172 départs (20 sommets, 150 points intérieurs, point nul, point d’expert).
+  extremum aux sommets 848.696 ; meilleur trouvé 848.696 ; 172 départs finissent sur un sommet ; 0 dépassent l’extremum des sommets ; le meilleur trouvé a 0 coordonnée(s) intérieure(s).
+
+CONDITION DU PREMIER ORDRE au sommet maximum de la moyenne : 10 coordonnées sur 10 où la dérivée pointe vers le bord (l’extremum ne peut pas être amélioré en entrant par cette coordonnée).
+
+CONDITION DU PREMIER ORDRE au sommet minimum de la moyenne : 10 coordonnées sur 10 où la dérivée pointe vers le bord (l’extremum ne peut pas être amélioré en entrant par cette coordonnée).
+
+CAPITAL (quantile à 99,5 %) : bruit de discrétisation, écart moyen après une perturbation de 0.1 % de la demi-largeur : 1.16, maximum 43.26.
+  maximum : sommets 8697.2 ; évolution différentielle semée de 10 sommets et de 70 points intérieurs (3280 évaluations) 8697.2 ; écart signé +0.0 ; au-delà de trois bruits : non.
+  minimum : sommets 6858.3 ; évolution différentielle semée de 10 sommets et de 70 points intérieurs (3280 évaluations) 6858.3 ; écart signé -0.0 ; au-delà de trois bruits : non.
+
+GRANDEURS CITÉES
+courbure positive en 36 pour cent des points ; amélioration maximale de la moyenne au-delà des sommets 0.000, minimale 0.000.
+
+Limites : recherches locales et évolution différentielle ne certifient pas l’absence d’extremum intérieur ;
+le capital est constant par morceaux et la moyenne lissée n’est pas le capital ; un seul jeu de tirages communs ;
+aucun encadrement par subdivision ni calcul d’intervalles n’a été tenté.
+Durée 270 s ; 54172 évaluations ; résultats agrégés : 127.json

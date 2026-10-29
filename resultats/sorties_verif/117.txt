@@ -1,0 +1,62 @@
+
+====================================================================================
+117 : valeur de l'information sur la grille commune {-S, 0, +S}
+====================================================================================
+3^10 = 59 049 configurations par graine, evaluees une fois ; chaque information est un
+filtre de la grille, donc les ensembles compares sont emboites et le resserrement >= 0.
+
+  controle : les 1024 sommets redonnent [6858 ; 8697] et les 16 sommets filtres [7801 ; 8431], comme le 55.
+
+====================================================================================
+1. Bandes sur la grille, par graine
+====================================================================================
+  graine     admissibles         reference  largeur          six sens  largeur  resserrement  dix sens
+  20260721         59049     [6858 ; 8697]     1839     [7605 ; 8632]     1027         44.1 %     64.3 %
+  20260722         59049     [7183 ; 9077]     1894     [7859 ; 9077]     1218         35.7 %     62.1 %
+  20260723         59049     [7153 ; 8725]     1572     [7535 ; 8654]     1120         28.8 %     53.3 %
+  20260724         59049     [7009 ; 8860]     1851     [7378 ; 8818]     1440         22.2 %     51.9 %
+
+  six sens : resserrement moyen 32.7 %, ecart-type 9.4 point, etendue [22.2 ; 44.1]
+  dix sens : resserrement moyen 57.9 %, etendue [51.9 ; 64.3]
+  largeur de reference sur la grille : de 1572 a 1894 M selon la graine
+
+====================================================================================
+2. Chaque paire documentee seule (meme grille, quatre graines)
+====================================================================================
+  paire     moyenne           etendue   source du signe
+  P1-P2       13.3 %     [10.6 ; 18.5]   classeur
+  P4-P5       11.8 %      [8.1 ; 16.9]   classeur
+  P1-P5       11.8 %      [7.7 ; 16.7]   post-mortem
+  P1-P3       11.2 %      [6.6 ; 17.5]   post-mortem
+  P2-P4        9.1 %      [0.6 ; 15.5]   post-mortem
+  P3-P4        2.3 %       [0.0 ; 7.1]   classeur
+  P1-P4        1.9 %       [0.0 ; 5.3]   post-mortem
+  P2-P5        1.6 %       [0.0 ; 3.7]   classeur
+  P2-P3        1.6 %       [0.2 ; 4.2]   post-mortem
+  P3-P5        0.7 %       [0.0 ; 1.3]   post-mortem
+
+  plus petit resserrement observe : 0.0 % (positif ou nul par construction).
+
+====================================================================================
+LECTURE
+====================================================================================
+  Sur la grille commune, six sens connus resserrent la plage de 32.7 % en moyenne
+  (22.2 a 44.1 % selon la graine). C'est un indicateur numerique,
+  conditionnel au S d'expert et a la grille, pas la reduction garantie par un registre.
+
+====================================================================================
+GRANDEURS CITEES (sans separateur de milliers, pour le harnais)
+====================================================================================
+  six sens moyenne 32.7 ecart-type 9.4 minimum 22.2 maximum 44.1
+  dix sens moyenne 57.9 minimum 51.9 maximum 64.3
+  largeur reference grille minimum 1572 maximum 1894
+  paire P1-P2 moyenne 13.3 minimum 10.6 maximum 18.5
+  paire P4-P5 moyenne 11.8 minimum 8.1 maximum 16.9
+  paire P1-P5 moyenne 11.8 minimum 7.7 maximum 16.7
+  paire P1-P3 moyenne 11.2 minimum 6.6 maximum 17.5
+  paire P2-P4 moyenne 9.1 minimum 0.6 maximum 15.5
+  paire P3-P4 moyenne 2.3 minimum 0.0 maximum 7.1
+  paire P1-P4 moyenne 1.9 minimum 0.0 maximum 5.3
+  paire P2-P5 moyenne 1.6 minimum 0.0 maximum 3.7
+  paire P2-P3 moyenne 1.6 minimum 0.2 maximum 4.2
+  paire P3-P5 moyenne 0.7 minimum 0.0 maximum 1.3

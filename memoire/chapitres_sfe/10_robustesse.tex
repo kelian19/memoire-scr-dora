@@ -1,0 +1,366 @@
+% =====================================================================
+% VERSION ENSAE, REDUCTION SFE (phase 3, 1er octobre 2026) : chapitre 10, robustesse, limites et recommandations.
+% Copie a texte constant de chapitres/13_inventaire_hypotheses.tex puis chapitres/13b_donnee_manquante_livrable.tex (devenu la derniere section).
+% Ne changent que les titres et les renvois repares, listes dans
+% reduction/phase3.md.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+
+% ---------------------------------------------------------------------
+% STATUT : RÉDIGÉ (transplanté de exploratory/cascade_qualitative/
+%          chapitre_robustesse.tex, préambule retiré).
+% FAIT (août 2026) : la ligne u_ij est au tableau des paramètres, avec sa
+%          sensibilité mesurée par l'échelle de repli du ch. 10, ainsi qu'une
+%          ligne pour l'élasticité sévérité/taille calibrée au ch. 5.
+% ---------------------------------------------------------------------
+\chapter{Robustesse, limites et recommandations}
+\label{ch:robustesse}
+\label{part:limites}
+
+Sur les plages étudiées, le signe du surcoût de non-conformité et la présence de P1 et P4
+parmi les piliers prioritaires résistent aux variantes testées. Le niveau du capital et l'amplitude
+de l'écart dépendent de la loi de sévérité, de la fréquence et des paramètres posés, et nous les
+lisons donc en écarts, en rapports et en classements. Les tests figurent au
+chapitre~\ref{chap:resultats}, l'inventaire des paramètres à l'annexe~\ref{sec:ann-parametres}.
+
+\section{Synthèse de robustesse}
+
+Un verdict \rob{} indique que la conclusion tient aux variantes testées, \ass{} un choix déclaré dont l'effet est
+mesuré, \feat{} une propriété recherchée par la construction.
+
+% LONGTABLE ET NON tabular DANS UN center, depuis le 1er octobre 2026 au soir (demande de Kelian). Un
+% tabular ne se coupe pas : le tableau partait en bloc sur la page suivante, avec le titre de la
+% section, et laissait la page d'ouverture du chapitre presque vide. longtable le pose sous
+% l'introduction et le coupe entre deux pages, en-tete repete. Lignes et cellules inchangees.
+{\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{@{}p{4.5cm} p{4.6cm} p{4.4cm} c@{}}
+\toprule
+\textbf{Conclusion} & \textbf{Ce qu'on fait varier} & \textbf{Effet mesuré} & \textbf{Verdict} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Conclusion} & \textbf{Ce qu'on fait varier} & \textbf{Effet mesuré} & \textbf{Verdict} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+L'écart $\Delta_{\text{DORA}}$ entre état non conforme et état conforme est positif, de plusieurs milliers de M\euro{} pour le périmètre financier étudié &
+source de sévérité (OpRisk / PRC), famille de copule ($\theta\in[1,4]$) &
+facteur ${\sim}1{,}9$ entre sources ; $\Delta_{\text{DORA}}$ varie $<1{,}4\,\%$ sur $\theta$ &
+\rob \\
+Priorité de remédiation P1 puis P4 (les \emph{sources}) &
+cadre de dépendance (cascade vs copule), branchement vs marche &
+P1 et P4 en tête dans tous les cadres ; SCR $\pm 4\,\%$ (branchement) &
+\rob \\
+L'\emph{asymétrie} de $W$ décide de l'ordre entre P1 et P4 &
+suppression de la partie antisymétrique de $W$ (3\,000 tirages), placebo par permutation (chapitre~\ref{ch:identifiabilite}) &
+sans la direction, P1 et P4 ne se distinguent plus ; l'essentiel du surcoût de contagion reste porté par la partie symétrique &
+\ass \\
+La cascade est retenue sans couche de Hawkes &
+noyau exponentiel puis à retard, logique en deux phases &
+non distinguable de la cascade à la résolution disponible (\S\ref{sec:trois-etages}) ; excitation intra-journalière (pic $3{,}3$ h) ; endogénéité de $0{,}551$ à ${\sim}0$ si les
+co-occurrences du jour passent en exogène &
+\ass \\
+Les deux lois du socle prédisent une période qu'elles n'ont pas vue &
+origine glissante, douze années notées hors échantillon &
+fréquence : couverture $91{,}7\,\%$ pour la binomiale négative contre $75{,}0\,\%$ pour le Poisson, log-score en
+sa faveur ; forme de queue non rejetée ($p=0{,}4087$) ; douze années offrent trop peu de puissance, et ce résultat va dans le sens du choix sans le démontrer &
+\ass \\
+Le besoin de capital \emph{réagit} à la conformité et à la contagion &
+score de conformité $q\in[0,1]$, gain $g\in[0{,}05\,;0{,}90]$ &
+facteur $3{,}34$ de C à NC sur les quatre canaux ($-53\,\%$ sur le seul score) ; $\times 1{,}6$ sur la plage de $g$ &
+\feat \\
+Le besoin de capital est une distribution large, pas un point &
+incertitude de paramètre (bootstrap deux niveaux) &
+facteur ${\sim}2{,}5$ sur le quantile d'un sinistre par la seule incertitude de calibration &
+\ass \\
+Le \emph{niveau} de sévérité ne tient pas hors échantillon &
+notation d'une seule année à la fois, seuil ré-estimé sur l'apprentissage &
+quantiles dépassés trois fois trop souvent ; l'échelle de queue dérive de $4{,}00\,\%$ par an,
+soit au moins $+24{,}7\,\%$ sur le quantile de sévérité &
+\ass \\
+Le \emph{signe} de $\Delta_{\text{DORA}}$ ne dépend pas de l'additivité des coûts d'un sinistre &
+exposant $\theta\in[0{,}70\,;1{,}30]$ sur le nombre de piliers touchés &
+écart de $9\,706$ à $20\,487$~M\euro{} : signe et ordre conservés, \emph{amplitude} non
+($76\,\%$ de l'écart publié) &
+\ass \\
+\end{longtable}
+}
+
+\vspace{4pt}
+\noindent Les deux premières lignes concernent le signe et l'ordre de grandeur de l'effet DORA et la
+hiérarchie des piliers, et tiennent sous les variations testées. La troisième, sur le rôle de la
+direction, est assumée : P1 et P4 sont presque à égalité sur l'ensemble admissible, et leur ordre
+dépend de la direction posée (chapitre~\ref{chap:resultats}). La quatrième et la cinquième, sur
+l'auto-excitation et le comportement prédictif des lois du socle, le sont aussi. La sixième décrit un
+capital qui bouge avec la conformité, ce que la Formule Standard ne fait pas
+(chapitre~\ref{chap:resultats}). Les trois dernières sont des limites. La queue de sévérité domine
+l'incertitude sur le niveau. La dérive de l'échelle de sévérité, unique limite relevée hors
+échantillon, déplace ce niveau d'au moins $+24{,}7\,\%$ sur le quantile de sévérité
+(\S\ref{soc:sec:backtest}), et l'additivité des coûts d'un sinistre multi-piliers pèse sur l'écart
+sans en renverser le signe (\S\ref{sec:additivite-couts}).
+
+% SOURCES-SCRIPTS: 25 29 47 63 61 66 67 74 08h 89
+
+\section{Limites du domaine et limites du travail}
+\label{sec:deux-natures-limites}
+
+% SOURCES-SCRIPTS: 110
+
+Deux natures de limites se mêlent dans le tableau et dans le registre de la section~\ref{ch:livrable}.
+Les unes tiennent à ce qu'aucune source disponible ne permet à quiconque de calibrer, les autres à ce
+que nous avons choisi de ne pas faire.
+
+La direction de la contagion entre domaines de contrôle n'est enregistrée par aucune source. Le
+schéma VERIS prévoit le champ du domaine de contrôle défaillant, renseigné dans $0{,}12\,\%$ des
+$10\,591$ incidents de sa base publique, et une chronologie datée sur au moins deux étapes, dans
+$1{,}19\,\%$. Leur intersection
+compte un incident, hors du secteur financier (section~\ref{ch:livrable}). Ces constats établissent une limite des sources examinées ; ils ne prouvent pas l'impossibilité d'identifier la propagation dans tout autre dispositif d'observation.
+
+Le coût d'un sinistre touchant plusieurs piliers n'est observé par aucune source. La sévérité cyber
+en euros n'existe à cette profondeur que dans des bases de risque opérationnel bancaire, ce qui
+fixe le périmètre de calibration du chapitre~\ref{chap:socle} et motive les réserves d'extrapolation du \S\ref{sec:entites-reelles}. Aucun seuil de validité statistique n'est démontré. Devant ces grandeurs, nous montrons la
+non-identifiabilité, calculons des extrema numériques aux sommets de l'ensemble admissible et vérifions que la
+conclusion tient sur les points intérieurs testés. L'amplitude du surcoût est un scénario, mais son signe et son ordre sont
+des résultats.
+
+Les autres limites relèvent de nos choix. L'élicitation structurée, préparée et diffusée, est restée
+sans réponse (supplément, \S\ref{ch:elicitation}). La calibration n'est plus modifiée, sauf pour
+corriger des erreurs. Nous citons Hackmageddon, source de structure non recalculable, et publions trois écarts
+d'estimation involontaires avec leur sens au lieu de les corriger. Les premières limites se
+lèveraient avec le registre d'incidents de la section~\ref{ch:livrable}, les secondes en reprenant
+ces choix.
+
+\section{Incertitude du besoin de capital en trois étages}
+\label{sec:trois-etages}
+\label{sec:etage-modele-hors-bande}
+
+L'incertitude sur le besoin de capital se répartit sur trois étages. Au premier, celui du paramètre, l'intervalle
+de confiance de $\xi$ dilate le quantile d'un sinistre d'un facteur $2{,}5$. Le deuxième est
+l'identification, la direction de $W$ se lisant en bande (chapitre~\ref{chap:partielle}), et le
+troisième le modèle, c'est-à-dire le choix de la famille. Lus sur la même grandeur, la charge annuelle
+agrégée du périmètre financier étudié, au calage de référence (sévérité OpRisk), les trois étages donnent, en M\euro{} :
+% SOURCES-SCRIPTS: 63 46 48 71 60
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l l r@{}}
+\toprule
+\textbf{Étage, lu sur la charge annuelle} & \textbf{Bande} & \textbf{Facteur} \\
+\midrule
+Paramètre ($\xi$ sur son IC$_{90}$) & $[3\,042\,;\,27\,152]$ & $8{,}93$ \\
+Identification (direction de $W$) & $[6\,858\,;\,8\,697]$ & $1{,}27$ \\
+Modèle, axe dépendance & $[5\,322\,;\,9\,806]$ & $1{,}84$ \\
+Modèle, axe famille de queue & $[4\,330\,;\,39\,901]$ & $9{,}21$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent Le quantile annuel amplifie l'incertitude de paramètre, si bien que le facteur
+$2{,}5$ ne mesure pas l'effet du paramètre sur le capital. L'étage de modèle est du même ordre que
+l'étage de paramètre, et les deux dominent l'identification. Sur l'axe de dépendance, la cascade
+($8\,318$~M\euro{} dans cette simulation, $8\,123$ au \S\ref{sec:ancrage} : même calage, deux tirages) se place entre une copule gaussienne et une copule de Gumbel. Ces plages font varier $\xi$ seul, $\sigma$ restant fixé : sans leur covariance, elles ne forment ni des majorants ni un intervalle de confiance conjoint, et nous ne les cumulons pas. La plage des familles est un scénario de modèle, qu'on ne pourrait moyenner qu'avec des poids que rien ne justifie ici. L'ordre d'amorce $P1>P4>P2>P3>P5$, posé par ROOT, ne dépend pas de la famille.
+
+Le diagnostic disponible ne permet pas d'attribuer fiablement le regroupement temporel à une auto-excitation : une
+cascade sans auto-excitation, ajustée comme une chronologie réelle, donne un ratio de branchement (nombre moyen d'incidents déclenchés par un incident) de
+$0{,}480$ au jour contre $0{,}551$ mesuré. Nous retenons la cascade par parcimonie, puisqu'elle
+décrit aussi la structure entre piliers.
+% SOURCES-SCRIPTS: 85
+
+\section{Contrôle du moteur d'agrégation}
+\label{sec:triangulation-agregation}
+
+La charge annuelle du modèle étant une somme composée, on peut aussi calculer son quantile sans
+simuler. L'inversion de Fourier de sa fonction génératrice, méthode numérique distincte de la récursion de \citet{panjer1981}, donne $5\,945$ et $19\,890$~M\euro{} contre $6\,049$ et $20\,188$ par Monte-Carlo.
+L'écart, de $0{,}75$ et $0{,}59$ erreur type de la référence simulée, n'est donc pas résolu. L'approximation par perte unique \citep{bockerkluppelberg2005} reste à moins de dix pour cent
+au second ordre. Ce contrôle, qui ne teste pas la vérité du modèle, vérifie l'agrégation : le quantile publié ne
+diffère pas du quantile calculé sans simulation au-delà du bruit de simulation.
+
+% SOURCES-SCRIPTS: 96
+
+\section{Quantile de sévérité prédictif et robuste}
+\label{sec:predictive-robuste}
+\label{sec:posture-retenue}
+
+Prendre le quantile à $99{,}5\,\%$ d'une loi estimée en un point, le \emph{plug-in}, est fragile,
+car le quantile d'un objet incertain, cité seul, ne rend pas compte de son incertitude. Le quantile
+de sévérité prédictif intègre
+l'incertitude de paramètre avant le quantile, par mélange des lois sur la distribution bootstrap de
+$(\xi,\sigma)$, et donne $645$~M\euro{} contre $657$ pour le \emph{plug-in}, avec un bruit de
+simulation de $7$~M\euro{}. Le risque d'estimation n'est donc pas un biais de point à ce niveau, mais
+il le devient en profondeur ($+4\,\%$ à $99{,}9\,\%$).
+
+Le quantile robuste, qui prend la borne haute du quantile de sévérité sur l'ensemble d'ambiguïté, atteint
+$1\,037$~M\euro{} à $95\,\%$ ($1{,}6$ fois le \emph{plug-in}) et $1\,331$~M\euro{} pour le pire cas
+de famille lourde. La robuste à $95\,\%$ est aussi la borne haute de l'intervalle publié, les deux
+étant le quantile $95\,\%$ de la même loi bootstrap.
+
+Nous publions donc le \emph{plug-in} avec sa bande, la robuste restant un axe prudentiel déclaré,
+pour trois raisons. Le capital de solvabilité est défini comme un quantile de la loi de perte, et une
+borne haute sur une famille de lois répond à une autre question. La prédictive, préférable en théorie,
+se distingue peu du \emph{plug-in}, son écart n'excédant pas deux fois le bruit de simulation, et l'écart de
+sa moyenne au point (5~M\euro) étant du même ordre que ce bruit. Enfin, les postures
+robustes sont les moins reproductibles, avec des écarts-types de simulation de $13$, $9$ et
+$24$~M\euro{}, celui du point étant nul.
+
+La VaR robuste pourrait servir à dimensionner une couverture ; elle n'est pas utilisée au \S\ref{sec:detenir-transferer}.
+Un écart durable entre VaR prédictive et \emph{plug-in} conduirait à revoir ce choix.
+
+% SOURCES-SCRIPTS: 46 51 63
+
+\section{Taux de dépassement et sens des écarts connus}
+\label{sec:pu-coherence}
+
+Le modèle POT combine le seuil $u$, le taux empirique de dépassement $p_u$ et les paramètres $(\xi,\sigma)$ des excès. À seuil et échantillon fixés, $p_u$ se calcule par comptage ; il ne constitue pas un paramètre libre supplémentaire. La
+calibration publie $u=20{,}03$~M\euro{} et $p_u=0{,}1509$, mais ce seuil laisse $91$ excès sur
+$582$ pertes ($0{,}1564$). Le $0{,}1509$ correspond à $88/583$, taux d'un filtrage antérieur. Au
+taux cohérent, le quantile de sévérité à $99{,}5\,\%$ passerait de $662{,}78$ à $678{,}60$~M\euro{}
+($+2{,}4\,\%$, ou $15{,}8$~M\euro).
+
+À autres paramètres fixés, relever $p_u$ augmente stochastiquement la sévérité du moteur et donc son quantile ; une recalibration complète, incluant $(\xi,\sigma)$ et la fréquence, peut modifier cette conclusion. Nous
+le déclarons sans le corriger, car une recalibration déplacerait des
+centaines de nombres publiés sans qu'aucun déplacement soit attribuable à la correction. Le tableau
+donne le sens des écarts connus.
+
+% LONGTABLE ET NON tabular DANS UN center, depuis le 1er octobre 2026 au soir, meme motif que le tableau de
+% synthese du \S 10.1 : passe en bloc a la page suivante, il laissait un tiers de page vide. Le
+% « \\* » apres chaque intitule de groupe interdit d'en separer la premiere ligne. Lignes et
+% cellules inchangees.
+{\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{@{}p{5.6cm} p{2.9cm} p{5.6cm}@{}}
+\toprule
+\textbf{Écart} & \textbf{Sens} & \textbf{Taille} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Écart} & \textbf{Sens} & \textbf{Taille} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\multicolumn{3}{@{}l}{\emph{Écarts de calibration et d'incertitude}} \\*
+Taux de dépassement gelé ($p_u$) & sous-estime & $+2{,}4\,\%$ sur le quantile de sévérité \\
+Couverture réelle de l'IC$_{90}$ de $\xi$ & incertitude sous-estimée & $86\,\%$ au lieu de $90\,\%$ ; demi-largeur à élargir d'environ $10\,\%$ \\
+Taux $p_u$, calibré par incident, appliqué à chaque pilier touché & majore & $3{,}66$ incidents matériels par an à l'état conforme, $5{,}67$ aux paramètres de base, contre $3{,}37$ dans la donnée \\
+Échelle de sévérité non stationnaire & sous-estime & dérive de $4{,}00\,\%$ par an dans la queue ($p=0{,}0386$), dont la moitié d'inflation monétaire ; au moins $+24{,}7\,\%$ sur le quantile, borne basse (\S\ref{soc:sec:backtest}) \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Choix posés, tous deux prudents}} \\*
+Charge systémique $a$ & majore & $0{,}60$ posé, au-delà de la borne haute empirique $0{,}22$ \\
+Sur-dispersion du moteur $\varphi$ & majore & $9{,}20$ posé contre $2{,}24$ mesuré \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Limites de périmètre et de transposition, de sens opposés}} \\*
+Attritionnel absent de la donnée & sous-estime & non chiffrable : la base est tronquée à son seuil de collecte, les petits sinistres n'y figurent pas \\
+Sévérité non plafonnée à l'échelle d'entité & majore & élasticité sévérité/taille $0{,}087$ $[0{,}026\,;0{,}148]$, presque nulle ; affecte le \emph{niveau} d'entité, et peut modifier les écarts entre états \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Hypothèse dont le sens n'est pas déterminable}} \\*
+Additivité des coûts au sein d'un sinistre multi-piliers & \textbf{indéterminé} & élasticité de l'écart $1{,}20$ ; $[9\,706\,;20\,487]$~M\euro{} pour $\theta\in[0{,}70\,;1{,}30]$, soit $76\,\%$ de l'écart publié (\S\ref{sec:additivite-couts}) \\
+\end{longtable}
+}
+
+\vspace{4pt}
+\noindent À autres paramètres fixés, le taux de dépassement gelé et la dérive d'échelle font sous-estimer le capital ; la sous-couverture de l'intervalle porte sur l'incertitude, non sur le niveau. Les choix posés vont du côté prudent, sans garantir que le capital majore le risque réel. La dérive de l'échelle
+pèse un quart, contre quelques pour cent pour les deux premiers écarts. Son effet sur l'écart
+entre états est de $-1{,}9\,\%$, non résolu.
+
+% SOURCES-SCRIPTS: 08b 47 57 60 63 65 74 78 89 90 91 118
+
+\section{Défaillances simultanées et additivité des coûts}
+\label{sec:additivite-couts}
+
+À l'état non conforme, $62{,}31\,\%$ des sinistres touchent plusieurs piliers
+par la cascade seule, hors choc commun P4 ($73{,}25\,\%$ avec lui), contre $31{,}15\,\%$ à l'état conforme.
+L'additivité désigne trois objets différents.
+
+L'addition des coûts entre piliers est une hypothèse non testée : chaque pilier tire une perte calibrée sur des incidents complets.
+Sans choc commun P4, les moyennes par incident sont $1{,}38$ pilier (état conforme) et $1{,}93$ (non conforme).
+À taux de dépassement élémentaire de base fixé, son quantile à $99{,}5\,\%$ représente $1{,}27$ ou $1{,}58$ fois celui d'un incident.
+Le choc P4 du moteur à quatre canaux porte ces valeurs à $2{,}44$ piliers et $1{,}85$ dans l'état non conforme.
+Ces rapports chiffrent le double comptage, sans le corriger ni mesurer son effet sur le capital annuel.
+
+Selon les piliers non conformes, le capital est presque
+additif, comme le mesure un $R^2=0{,}9945$ sur les $32$ configurations. En fonction des quatre canaux,
+il est super-additif en euros, $+5\,001$~M\euro{} d'interaction sur $14\,139$ ($+35\,\%$,
+chapitre~\ref{chap:resultats}), car les canaux se composent presque multiplicativement
+(\S\ref{sec:inverse}).
+
+Nous faisons varier l'additivité des coûts par un exposant. La perte d'un sinistre touchant $k$ piliers
+devient $\bigl(\sum_j X_j\bigr)k^{\,\theta-1}$, et $\theta=1$ redonne le modèle publié. Pour $\theta$ dans $[0{,}70\,;1{,}30]$, l'écart entre états parcourt
+$[9\,706\,;20\,487]$~M\euro, soit $76\,\%$ de l'écart publié et $15$~fois l'écart-type de $734$~M\euro{}
+entre quatre graines. La plage de $\theta$ est posée ; les élasticités la résument, et un autre intervalle demande un nouveau calcul.
+
+Les élasticités sont de $0{,}95$ à l'état non conforme contre $0{,}39$ à l'état
+conforme (facteur $2{,}42$). L'exposant agit seulement sur les sinistres multi-piliers,
+ce qui explique cette différence et l'interaction avec la propagation.
+
+Sur toute la plage, l'écart garde son signe et son ordre de grandeur, et seule son amplitude dépend
+de l'hypothèse. Son sens n'est pas déterminable, car la mutualisation de la remédiation et la
+saturation de la capacité de réponse tirent en sens contraire, et aucune source ne les sépare.
+Un plafond adossé à l'exposition, appliqué à chaque sévérité élémentaire, atténue l'effet de l'additivité sans l'annuler.
+Il réduit l'écart entre états sans le compenser.
+
+% SOURCES-SCRIPTS: 74 68 69 86 109 118
+
+\section{Recommandations sur la donnée manquante}
+\label{ch:livrable}
+
+Les trois sources agrégées échouent pour des raisons distinctes. La chronologie américaine manque de
+taxonomie et de volume informatif, SAS OpRisk de résolution temporelle, et VERIS possède les bons
+champs sans les renseigner. La proposition~\ref{prop:nonid} précise la donnée qui identifierait $W$.
+
+Un registre d'incidents TIC devrait horodater la survenance au mois ou à la semaine et classer par
+domaine de contrôle au lieu du vecteur d'attaque. Il devrait de plus consolider une cause commune en
+un événement à $N$ victimes, et consigner pour chaque incident les piliers qui ont cédé. Même sans
+horodatage, cette loi jointe distingue une matrice de sa transposée. Sur la matrice publiée, la part
+des sinistres multi-piliers passe de $62{,}31\,\%$ sous $W$ à $50{,}77\,\%$ sous $W^\top$.
+
+Le registre d'information du règlement d'exécution \citep{eu2024_2956} identifie les prestataires et
+leur sous-traitance, ce qui sert la consolidation des causes communes.
+
+Les deux premiers champs existent dans VERIS, mais sont presque toujours vides (\S\ref{sec:deux-natures-limites}).
+Nous recommandons de les rendre obligatoires dans la notification des incidents majeurs,
+ce que DORA permet d'imposer au-delà d'une collecte volontaire.
+% SOURCES-SCRIPTS: 28 52 08b 98 110
+% SOURCES-SCRIPTS: 52 08b
+
+On chiffre cette information en restreignant l'ensemble admissible du chapitre~\ref{chap:partielle}
+aux configurations compatibles avec elle, puis en mesurant le rétrécissement de la bande de capital.
+
+\begin{definition}[Valeur d'information d'une contrainte]\label{def:voi}
+Soit $\mathcal{W}$ l'ensemble admissible et $\mathrm{SCR}:\mathcal{W}\to\R_+$ la fonctionnelle de
+capital. La largeur de bande associée à un sous-ensemble $\mathcal{V}\subseteq\mathcal{W}$ est
+\begin{equation}
+  L(\mathcal{V}) \;=\; \sup_{W\in\mathcal{V}}\mathrm{SCR}(W)\;-\;\inf_{W\in\mathcal{V}}\mathrm{SCR}(W).
+  \label{eq:largeur-bande}
+\end{equation}
+Une information $\mathcal{I}$ qui restreint l'ensemble à $\mathcal{W}_{\mathcal{I}}\subseteq
+\mathcal{W}$ a pour valeur le rétrécissement relatif qu'elle produit :
+\begin{equation}
+  V(\mathcal{I}) \;=\; 1-\frac{L(\mathcal{W}_{\mathcal{I}})}{L(\mathcal{W})} \;\in\;[0,1].
+  \label{eq:voi}
+\end{equation}
+\end{definition}
+
+Six directions sont documentées au chapitre~\ref{ch:identifiabilite}, dont deux concluantes au \S\ref{sec:bayes}.
+Chaque coefficient reste libre entre zéro et son maximum. Filtrer une grille commune ($-S$, $0$ ou $S$ par coefficient)
+selon ces directions réduit la plage de $32{,}7\,\%$ en moyenne sur quatre graines ($22$ à $44\,\%$).
+
+La largeur initiale varie de $1\,572$ à $1\,894$~M\euro{} selon la graine. La grille ne garantit pas les extrema continus.
+Fixer les dix directions réduit la plage de $57{,}9\,\%$, sans identifier l'amplitude.
+
+Fixer une direction à la fois classe les données manquantes (figure~\ref{fig:voi}).
+Quatre dépendances réduisent la largeur de $11{,}2$ à $13{,}3\,\%$ en moyenne ; les deux premières sont absentes du corpus.
+Leur ordre varie entre graines. Les cinq dernières réduisent la largeur de $0{,}7$ à $2{,}3\,\%$.
+% SOURCES-SCRIPTS: 66 55 33 117
+
+\begin{figure}[H]
+  \centering
+  \figover{valeur_information_grille.png}
+  \caption{Valeur de l'information sur quatre graines. (a)~grille commune, chaque coefficient à $-S$, $0$ ou $S$ : six directions connues réduisent la plage de $32{,}7\,\%$ en moyenne ; barres de la graine de référence. (b)~quelle dépendance documenter en
+priorité, moyenne et étendue ; en bleu, celles que le corpus couvre déjà.}
+  \label{fig:voi}
+\end{figure}
+% SOURCES-SCRIPTS: 55 116 117

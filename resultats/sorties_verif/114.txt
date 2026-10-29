@@ -1,0 +1,42 @@
+
+========================================================================================
+1. Controle des parts du moteur
+========================================================================================
+  parts publiees (S1 2026, citation) : multiplicateur S2 = 2.4874, lambda NC = 53.62 -> identique au moteur
+
+========================================================================================
+2. Base relue et controle d'identite
+========================================================================================
+  incidents uniques 2025-2026 : 2463
+  S1 2026 : 1137 incidents, 897 a vecteur identifie (attendus 1137 et 897)
+  publie dans le memoire : 1 041 incidents et 840 identifies, autre grille et autre date de
+  consultation ; les decomptes publies restent des citations datees.
+
+========================================================================================
+3. Parts par vecteur et multiplicateur, periode par periode
+========================================================================================
+  periode                    n  ident.  phishing  exploit_  supply_c  identifi    autres  mult S1  mult S2  lam NC
+  publie (moteur)                          0.388     0.338     0.158     0.063     0.053   1.5252   2.4874   53.62
+  T1 2025                  612     434     0.399     0.316     0.090     0.037     0.159   1.4649   2.3182   49.97
+  S1 2026                 1137     897     0.388     0.318     0.164     0.056     0.075   1.5129   2.4455   52.71
+  juillet-octobre 2026     697     324     0.361     0.432     0.139     0.049     0.019   1.5309   2.4715   53.27
+  2026 entier             1834    1221     0.381     0.348     0.157     0.054     0.060   1.5176   2.4524   52.86
+
+========================================================================================
+4. Lecture
+========================================================================================
+  multiplicateur S2 selon la periode : 2.3182 a 2.4715 (publie 2.4874)
+  ecart relatif maximal au publie : 6.8 %
+  lambda NC correspondant : 49.97 a 53.27 (publie 53.62)
+  a comparer aux bornes posees des fourchettes : 1.9325 a 3.0424
+  largeur due a la periode / largeur due aux bornes : 0.138
+  part de vecteurs identifies, juillet-octobre 2026 : 46.5 % (passage de la source aux codes MITRE ATT&CK)
+
+========================================================================================
+5. Grandeurs citees, sans separateur
+========================================================================================
+  multiplicateur S2 min 2.318 max 2.471 ; lambda NC min 50.0 max 53.3
+  ecart relatif maximal 6.8 % ; bornes posees 1.933 a 3.042
+  rapport des largeurs 0.138
+  S1 2026 relu : 1137 incidents, 897 identifies ; T1 2025 : 612 incidents
+  part identifiee juillet-octobre 2026 46.5 %

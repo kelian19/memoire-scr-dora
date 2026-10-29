@@ -1,0 +1,48 @@
+
+============================================================================================
+115 : l'ecart entre etats de conformite, en points de ratio de solvabilite
+============================================================================================
+Lecture ORSA, jamais reglementaire. Tout est lu dans sorties_verif/65.txt (SFCR 2024).
+Agregation additive (script 95) : un euro de besoin compte pour un euro de SCR.
+  controle du 65 : 12 valeurs publiees retrouvees ; besoin non conforme = besoin publie ;
+  ecart = non conforme - conforme ; FP / SCR redonne la couverture publiee a 1 point pres.
+
+============================================================================================
+1. Ratio publie, puis ratio ORSA par etat de conformite
+============================================================================================
+entite                     FP     SCR   publie  conforme  non conf.    ecart  besoin/SCR  domaine
+                        M EUR   M EUR        %         %          %   points           %
+Assureur non-vie A        515     425    121.2     102.5       95.9      6.7        26.4  hors (niveau = borne sup.)
+Assureur non-vie B       3234     812    398.3     358.1      341.3     16.8        16.7  hors (niveau = borne sup.)
+Assureur vie C           4361    1587    274.8     253.5      244.6      8.9        12.3  hors (niveau = borne sup.)
+Assureur vie D          34800   14800    235.1     231.9      230.5      1.3         2.0  dans
+
+============================================================================================
+2. Lecture
+============================================================================================
+  L'ecart entre etats coute de 1.3 a 16.8 points de ratio selon l'entite.
+  entite               ecart M EUR  en % du SCR   points
+  Assureur non-vie A          34.9         8.21      6.7
+  Assureur non-vie B          44.4         5.47     16.8
+  Assureur vie C              62.7         3.95      8.9
+  Assureur vie D              86.0         0.58      1.3
+  Dans le domaine de validite (besoin <= 10 % du SCR) : Assureur vie D.
+  Hors du domaine, niveau = borne superieure : Assureur non-vie A, Assureur non-vie B, Assureur vie C.
+  Pour ces dernieres, les ratios ORSA ne se lisent pas comme une prevision ;
+  seul l'ecart entre etats est interprete, et c'est un plancher (canal de propagation seul).
+
+============================================================================================
+RESERVES
+============================================================================================
+  1. L'etat de conformite de ces entites n'est pas publie : il est suppose.
+  2. A l'echelle de l'entite seul le canal de propagation varie (65, section 6) :
+     l'ecart en points est un plancher de l'ecart a quatre canaux.
+  3. Le niveau du besoin est une borne superieure hors du domaine de validite.
+
+============================================================================================
+GRANDEURS CITEES (sans separateur de milliers, pour le harnais)
+============================================================================================
+  Assureur non-vie A   publie 121.2  conforme 102.5  non conforme 95.9  ecart 6.7  FP 515
+  Assureur non-vie B   publie 398.3  conforme 358.1  non conforme 341.3  ecart 16.8  FP 3234
+  Assureur vie C       publie 274.8  conforme 253.5  non conforme 244.6  ecart 8.9  FP 4361
+  Assureur vie D       publie 235.1  conforme 231.9  non conforme 230.5  ecart 1.3  FP 34800

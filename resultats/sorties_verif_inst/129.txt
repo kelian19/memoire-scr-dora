@@ -1,0 +1,42 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+
+129 — SEUIL POT ET ESTIMATEURS, POPULATION DE CALIBRATION 2000–2026
+
+570 pertes ; 86 excès ; u=20.03 M EUR. Base étendue de 119 : 582 pertes et 91 excès.
+
+KS bilatéral et AD : bootstrap paramétrique avec réestimation à seuil fixé.
+
+Les tests écartent des seuils ; ils ne prouvent pas un optimum ni la validité du quantile annuel.
+
+Seuil   n_exc  xi     sigma    IC95_profil_xi     D_KS   p_KS   p_AD
+
+8.21 143 1.030439 20.815544 [0.702809;1.454493] 0.068384 0.055944 0.031968
+
+9.93 129 0.942999 25.895486 [0.614548;1.377240] 0.068590 0.080919 0.057942
+
+12.54 114 0.850546 32.801532 [0.520893;1.301227] 0.067095 0.192807 0.045954
+
+15.53 100 0.710118 44.141404 [0.401958;1.142082] 0.055035 0.594406 0.503497
+
+20.03 86 0.595233 57.979552 [0.301818;1.019409] 0.045939 0.907093 0.983017
+
+31.05 72 0.594161 64.453828 [0.273725;1.075004] 0.055511 0.797203 0.797203
+
+45.47 57 0.521408 82.045351 [0.192776;1.037258] 0.082143 0.399600 0.883117
+
+73.76 43 0.628323 81.704199 [0.195413;1.368223] 0.113804 0.154845 0.271728
+
+102.13 29 0.343908 151.904648 [-0.039672;1.043570] 0.080006 0.914086 0.917083
+
+EMV xi=0.595233 IC95=[0.252016;0.897212] sigma=57.979551551500776 q=662.8515424536085 sigmaIC=[39.490657756001134, 85.21811288844899] qIC=[377.1043453264028, 1151.9924808606706] xi>=1=8
+
+PWM xi=0.505215 IC95=[0.253878;0.621584] sigma=61.49727927265782 q=579.0055611195983 sigmaIC=[44.644159561533726, 88.5396961544296] qIC=[370.3857326777055, 804.3474442239722] xi>=1=0
+
+Hill xi=1.401798 IC95=[1.207525;1.605286] sigma=None q=None sigmaIC=None qIC=None xi>=1=2000
+
+Moments xi=0.863195 IC95=[0.497608;1.092356] sigma=None q=None sigmaIC=None qIC=None xi>=1=256
+
+Statut termine ; échecs 0 ; durée 242.4 s
+
+Restitution des métadonnées du calcul, sans nouvelle simulation :
+Protocole sauvegardé dans 129.json : B_gof=1000 ; B_estimateurs=2000 ; graine=20261022.

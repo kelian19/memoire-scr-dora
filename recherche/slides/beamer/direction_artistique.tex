@@ -1,0 +1,120 @@
+% Direction artistique : édition scientifique, octobre 2026.
+% Georgia pour les titres et les chiffres ; Calibri pour la lecture et les annotations.
+\setsansfont{Calibri}[Path=../../../docs/collaboration/local/da_fonts/,UprightFont=calibri.ttf,
+  BoldFont=calibrib.ttf,ItalicFont=calibrii.ttf,BoldItalicFont=calibriz.ttf]
+\newfontfamily\editorial{Georgia}[Path=../../../docs/collaboration/local/da_fonts/,UprightFont=georgia.ttf,
+  BoldFont=georgiab.ttf,ItalicFont=georgiai.ttf,BoldItalicFont=georgiaz.ttf]
+\definecolor{ardoise}{HTML}{252C32}
+\definecolor{acier}{HTML}{68747C}
+\definecolor{encre}{HTML}{252C32}
+\definecolor{gris}{HTML}{626A70}
+\definecolor{accent}{HTML}{A52D39}
+\definecolor{clair}{HTML}{FAFAF9}
+\definecolor{filet}{HTML}{DADBD9}
+\definecolor{bleuclair}{HTML}{F1F2F1}
+\definecolor{nexialog}{HTML}{223E55}
+\setbeamercolor{normal text}{fg=encre,bg=white}
+% Navigation Beamer : sections et une pastille par frame (pas par overlay).
+\setbeamercolor{section in head/foot}{fg=white,bg=nexialog}
+\setbeamercolor{mini frame}{fg=white,bg=nexialog}
+\setbeamerfont{section in head/foot}{size=\fontsize{5.8}{7}\selectfont,series=\mdseries}
+\setbeamertemplate{section in head/foot shaded}[default][45]
+\setbeamertemplate{mini frames}[default]
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[wd=\paperwidth]{section in head/foot}%
+    \vspace{.7mm}%
+    \insertnavigation{\paperwidth}%
+    \vspace{.7mm}%
+  \end{beamercolorbox}%
+  \vspace{.5mm}%
+  \hspace*{7mm}{\color{filet}\rule{\dimexpr\paperwidth-14mm}{.35pt}}\par
+}
+\setbeamerfont{framesubtitle}{size=\small,series=\mdseries}
+\setbeamercolor{framesubtitle}{fg=gris}
+\setbeamertemplate{blocks}[default]
+\setbeamerfont{block title}{family=\editorial,size=\normalsize,series=\mdseries}
+\setbeamerfont{block title alerted}{family=\editorial,size=\normalsize,series=\mdseries}
+\setbeamerfont{block title example}{family=\editorial,size=\normalsize,series=\mdseries}
+\setbeamercolor{block title}{fg=encre,bg=white}
+\setbeamercolor{block body}{fg=encre,bg=white}
+\setbeamercolor{block title alerted}{fg=accent,bg=white}
+\setbeamercolor{block body alerted}{fg=encre,bg=white}
+\setbeamercolor{block title example}{fg=encre,bg=white}
+\setbeamercolor{block body example}{fg=encre,bg=white}
+\setbeamertemplate{itemize item}{\raisebox{.25ex}{\color{accent}\rule{3pt}{.5pt}}}
+\setbeamertemplate{itemize subitem}{\raisebox{.25ex}{\color{gris}\rule{2pt}{.4pt}}}
+% Miniature native du schéma directeur ; numéros identiques aux étapes du schéma complet.
+\def\methodeactive{}
+\def\methodetitre{}
+\newcommand{\suivimethode}[2]{\gdef\methodeactive{#1}\gdef\methodetitre{#2}}
+\newcommand{\minimethode}{%
+  \begin{tikzpicture}[x=1mm,y=1mm,baseline=(current bounding box.north),
+    rep/.style={draw=nexialog!35,fill=white,text=gris,inner sep=0pt,align=center,
+      font=\fontsize{4.6}{5.2}\selectfont},
+    actif/.style={draw=nexialog,fill=nexialog,text=white,font=\fontsize{4.6}{5.2}\selectfont\bfseries},
+    lien/.style={-{Stealth[length=.7mm,width=.6mm]},draw=nexialog!45,line width=.3pt}]
+    % disposition du schéma directeur : 1 | 2 | 3-4-5 | 6-7 | 8
+    \foreach \n/\x/\y/\w/\h/\lab in {%
+        1/3/-5/6/10/{\textbf{1}\\État},
+        2/11/-5/8/10/{\textbf{2}\\Canaux},
+        3/22.5/-1.6/11/2.8/{\textbf{3} Fréquence},
+        4/22.5/-5/11/2.8/{\textbf{4} Sévérité},
+        5/22.5/-8.4/11/2.8/{\textbf{5} Cascade},
+        6/34/-2.1/9/4/{\textbf{6} Perte},
+        7/34/-7.1/9/4/{\textbf{7} Capital},
+        8/34/-11.8/9/3/{\textbf{8} Entité}}{%
+      \def\estactif{0}%
+      \foreach \a in \methodeactive {\ifnum\n=\a\relax\xdef\estactif{1}\fi}%
+      \ifnum\estactif=1
+        \node[rep,actif,minimum width=\w mm,minimum height=\h mm] (m\n) at (\x,\y) {\lab};
+      \else
+        \node[rep,minimum width=\w mm,minimum height=\h mm] (m\n) at (\x,\y) {\lab};
+      \fi}
+    \draw[lien] (m1)--(m2);
+    \foreach \n in {3,4,5}{\draw[lien] (m2.east|-m\n)--(m\n.west);}
+    \draw[lien] (m3.east)--([yshift=.6mm]m6.west);
+    \draw[lien] (m4.east)--([yshift=.9mm]m7.west);
+    \draw[lien] (m5.east)--([yshift=-.9mm]m7.west);
+    \draw[lien] (m6)--(m7);
+    \draw[lien] (m7)--(m8);
+    \node[anchor=south east,text=nexialog,font=\fontsize{5.2}{6}\selectfont\itshape,inner sep=0pt]
+      at (38.5,.9) {Démarche · \methodetitre};
+  \end{tikzpicture}%
+}
+\makeatletter
+\setbeamertemplate{frametitle}{%
+  \vspace*{1mm}%
+  \ifx\methodeactive\@empty\def\margeright{7mm}\else\def\margeright{49mm}\fi
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=7mm,rightskip=\margeright]{frametitle}%
+    \ifx\methodeactive\@empty\else
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north east,inner sep=0pt] at ([xshift=-7mm,yshift=-6.2mm]current page.north east) {\minimethode};
+      \end{tikzpicture}%
+    \fi
+    \ifx\methodeactive\@empty\else\vbox to 15mm\bgroup
+      \hsize=\dimexpr\paperwidth-56mm\relax\leftskip=0pt\rightskip=0pt\fi
+    {\editorial\mdseries\fontsize{14}{16}\selectfont\color{encre}\insertframetitle\par}%
+    \ifx\insertframesubtitle\@empty\else
+    \vspace{1mm}{\small\mdseries\color{gris}\insertframesubtitle\par}\fi
+    \ifx\methodeactive\@empty\else\vfil\egroup\fi
+  \end{beamercolorbox}%
+  \vspace{1mm}%
+}
+\makeatother
+\setbeamertemplate{footline}{%
+  \hspace*{7mm}{\color{filet}\rule{\dimexpr\paperwidth-14mm}{.35pt}}\par
+  \vspace{.6mm}\hspace*{7mm}%
+  \makebox[\dimexpr\paperwidth-14mm][l]{%
+    {\fontsize{5.5}{7}\selectfont\color{gris}KÉLIAN KADDOURI\quad /\quad ENSAE · NEXIALOG}%
+    \hfill{\editorial\fontsize{8}{9}\selectfont\color{accent}\insertframenumber}}%
+  \par\vspace{1.4mm}}
+% Statut d'une diapositive : ce que le travail ajoute (rouge) ou reprend (gris).
+\newcommand{\badge}[2]{\tikz[baseline=(b.base)]\node[fill=#1,text=white,rounded corners=.6mm,inner sep=.9mm,
+  font=\fontsize{5.6}{6.5}\selectfont\bfseries] (b) {#2};}
+\newcommand{\ajout}{\badge{accent}{AJOUT}\enspace}
+\newcommand{\etabli}{\badge{acier}{ÉTABLI}\enspace}
+% Question de transition vers la diapositive suivante.
+\newcommand{\question}[1]{\par\vspace{2mm}{\small\color{accent}\itshape$\rightarrow$\enspace #1\par}}
+\renewcommand{\chiffre}[2]{{\editorial\fontsize{17}{19}\selectfont\color{accent}#1}\par\vspace{1mm}{\scriptsize #2\par}}
+\newcommand{\repere}[2]{{\color{accent}\bfseries #1}\enspace\textbf{#2}}
+\tikzset{etape/.append style={rounded corners=0pt,fill=white},pilier/.append style={fill=white}}

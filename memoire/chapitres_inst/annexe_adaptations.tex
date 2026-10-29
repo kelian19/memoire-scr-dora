@@ -1,0 +1,501 @@
+% =====================================================================
+% VERSION INSTITUT A 150 PAGES : annexe des adaptations par pilier et du cas d'usage.
+% Reprise de supplement/S1_adaptations_pilier.tex (ancienne annexe C de la version Institut de
+% 195 pages), reecrite en phrases courtes. Les nombres, formules, etiquettes et references sont
+% ceux de l'original. Lue par main_institut_150.tex seul.
+% =====================================================================
+
+\chapter{Adaptations par pilier et cas d'usage}
+\label{chap:adaptations}
+
+La queue de sévérité, l'accumulation par les tiers et la détection appellent des adaptations
+distinctes. Les diagnostics suivants en comparent les effets sous des hypothèses déclarées ; ils
+ne calibrent pas les mécanismes par pilier. Le classement peut changer selon l'assignation des queues.
+
+\section{Queue de sévérité par pilier}
+\label{sec:xi-pilier}
+
+Une seule queue $\xi$ est appliquée aux cinq piliers. La queue est pourtant hétérogène selon la
+catégorie Bâle. Sur la table recalculée pour ce travail, $\xi$ varie de $0{,}87$
+(\emph{Employment}) à $1{,}37$ (\emph{Execution, Delivery \& Process Management}), soit une
+dispersion de $0{,}50$.
+% SOURCES-SCRIPTS: 67
+L'hétérogénéité est un fait, son assignation aux piliers n'en est pas un. Les catégories Bâle
+décrivent la nature de la perte, pas les domaines de contrôle de DORA, et la plus proche des TIC
+(\emph{Business Disruption \& System Failures}) ne compte que $111$ observations, sous le seuil
+d'estimation de $150$. Nous ne posons donc pas $\xi_j = f(\text{pilier})$. Nous suivons la logique du
+chapitre~\ref{chap:partielle} : chaque pilier reçoit l'une des cinq queues observées, nous énumérons
+les $120$ assignations, et le besoin de capital est borné. Pour isoler l'effet de
+l'hétérogénéité, les cinq queues sont centrées sur la valeur de référence.
+
+Même à moyenne des queues fixe, donner à chaque pilier sa propre queue relève le besoin de capital de $+55\,\%$ à
+$+96\,\%$. Cet effet tient à la convexité. La VaR croît plus vite que linéairement en $\xi$, de sorte qu'une
+queue lourde sur un pilier n'est pas compensée par une queue légère ailleurs. Une queue commune
+sous-estime ainsi le capital, ce qui justifie de lire le niveau en bande. Le classement
+résiste : le pilier de tête reste dominant dans $83\,\%$ des $30$ assignations tirées parmi les $120$, sans être invariant
+(figure~\ref{fig:xi-pilier}).
+
+\begin{figure}[H]\centering
+\figover{Z8_xi_par_pilier.png}
+\caption{Queue de sévérité par pilier. (a)~Besoin de capital borné sur les $120$ assignations des queues
+observées aux piliers ; une queue commune (trait) est en bas de la bande. (b)~Le pilier de tête peut changer selon l'assignation ; les positions affichées sont celles du diagnostic.}
+% SOURCES-SCRIPTS: 37
+\label{fig:xi-pilier}
+\end{figure}
+
+\section{Pilier des tiers et accumulation}
+\label{sec:p4-accumulation}
+
+P4 n'est pas un n\oe{}ud de cascade comme les autres. La défaillance d'un prestataire partagé dégrade
+plusieurs piliers à la fois, par dépendance commune, au lieu de se propager de proche en proche.
+C'est le mécanisme de MOVEit, où $191$ victimes tombent d'un seul choc \matcomp.
+% SOURCES-SCRIPTS: 08g
+Nous lui substituons un \emph{choc commun} : lorsque l'incident commence en P4, chaque autre pilier
+est inclus indépendamment avec une probabilité $\omega$, au lieu d'une propagation dirigée.
+
+Le choc commun produit des co-occurrences sans direction. Les incidents chez un prestataire partagé
+motivent ce mécanisme, mais ne calibrent ni son intensité au sein d'une entité ni la partie symétrique
+$S$ de la décomposition $W=S+A$. Celle-ci reste posée à dire d'expert
+(chapitre~\ref{chap:partielle}). La concentration du nuage sert d'ancrage au scénario ; elle ne mesure
+pas une probabilité de transmission entre piliers.
+
+L'intensité $\omega$ n'est pas identifiée au sein d'une entité isolée, car le \emph{batch}
+observé est un phénomène de portefeuille. Nous la bornons sur $[0,\gamma]$, où $\gamma=0{,}68$ est la
+concentration du nuage déjà retenue. Le besoin de capital se lit alors en bande. À $\omega=\gamma$, une
+dépendance partagée emporte en moyenne $3{,}7$ piliers d'un coup, soit $+19\,\%$ de besoin de capital par rapport
+au traitement en n\oe{}ud de cascade.
+
+Dans ce scénario, le choc commun augmente la fréquence des
+incidents multi-piliers : la probabilité qu'un incident P4 touche au moins trois piliers passe de
+$0{,}22$ avec la cascade à $0{,}90$ avec le choc commun (figure~\ref{fig:p4}). Ce calcul compare les
+ensembles atteints au cours d'un incident, sans estimer les délais entre défaillances.
+
+\begin{figure}[H]\centering
+\figover{Z9_p4_accumulation.png}
+\caption{Le pilier des tiers en accumulation. (a)~Besoin de capital borné sur l'intensité du choc partagé
+$\omega\in[0,\gamma]$, comparé au traitement de P4 en n\oe{}ud de cascade (trait).
+(b)~Probabilité de toucher plusieurs piliers au cours d'un incident amorcé en P4, selon le
+mécanisme retenu. Le caractère commun du choc ne suffit pas à identifier son intensité.}
+% SOURCES-SCRIPTS: 38
+\label{fig:p4}
+\end{figure}
+
+\subsection{Seuil de déclenchement et dépendance de queue}
+\label{sec:p4-seuil}
+
+Deux questions se séparent ici : celle de la marge, et celle de la dépendance. Le déclenchement d'un
+pilier est un franchissement de seuil,
+\begin{equation}
+  \{\text{pilier } j \text{ déclenché}\} \;=\; \{X_j \ge K_j\},
+  \qquad K_j = F^{-1}(1-p_j),
+  \label{eq:seuil-Kj}
+\end{equation}
+et pour $P_4$, $p_4=0{,}151$ donne $K_4=1{,}03$. La loi $F$ de la latente n'y sert que de
+normalisation. Par construction, $\Prob(X_j\ge K_j)=p_j$ quelle que soit $F$ continue et strictement
+croissante, donc le choix de $F$ ne porte aucune information sur la fréquence de déclenchement. La
+queue lourde du capital se trouve dans la sévérité (GPD, chapitre~\ref{chap:socle}), pas dans ce
+seuil. Une marge normale est une normalisation à copule et probabilités fixées, pas une validation du modèle.
+
+L'accumulation est gouvernée par la dépendance de queue supérieure de la copule $C$ qui lie les
+latentes,
+\begin{equation}
+  \lambda_U \;=\; \lim_{u\to 1^-}\Prob\bigl(U_2>u \,\big|\, U_1>u\bigr)
+             \;=\; \lim_{u\to 1^-}\frac{1-2u+C(u,u)}{1-u} .
+  \label{eq:lambda-U}
+\end{equation}
+Une copule gaussienne non dégénérée vérifie $\lambda_U=0$ pour une corrélation strictement inférieure à un. La copule de Gumbel de
+paramètre $\theta>1$ donne
+\begin{equation}
+  \lambda_U^{\text{Gumbel}} \;=\; 2-2^{1/\theta},
+  \label{eq:lambda-gumbel}
+\end{equation}
+soit $0{,}53$ pour le $\theta=1{,}8$ retenu ailleurs dans ce travail. Retenir une copule gaussienne
+ici sous-estimerait donc le co-extrême, en contradiction avec ce choix.
+
+Nous ne tranchons pas la copule. Nous lisons le co-déclenchement en bande, à $\tau$ de Kendall égal,
+entre le plancher gaussien et le haut de Gumbel. La fréquence marginale d'un pilier reste
+$p_4=0{,}15$ dans les deux cas, car la copule ne change pas combien un pilier bascule seul, mais s'ils basculent
+\emph{ensemble}. Seul le co-extrême diverge : la probabilité que les cinq piliers tombent avec P4 passe
+de $0{,}17$ pour la gaussienne à $0{,}39$ pour Gumbel, soit un facteur $2{,}3$. C'est le scénario
+MOVEit que la queue gaussienne manque (figure~\ref{fig:p4-seuil}). Le co-déclenchement d'un autre
+pilier tient dans $[0{,}48\,;\,0{,}58]$, sous la borne $\gamma=0{,}68$ du choc commun, qui reçoit
+ainsi une origine structurelle. Tout est exprimé par pilier, c'est-à-dire en nombre de piliers de l'entité plutôt qu'en fraction de
+portefeuille. La vue inter-clients, avec les centaines d'entités victimes de MOVEit, relèverait d'une
+loi de Vasicek en dimension entité et sort du besoin de capital par entité.
+
+\begin{figure}[H]\centering
+\figover{Z12_seuil_declenchement_p4.png}
+\caption{Le seuil de P4 et l'accumulation bornée. (a)~La marge : franchissement de $K_4$, où la
+normale n'est qu'une normalisation. (b)~À dépendance moyenne égale, le co-dépassement s'effondre vers
+$0$ pour la gaussienne mais plafonne à $0{,}53$ pour Gumbel. (c)~L'accumulation par pilier, Gumbel
+concentrant la masse sur les cinq piliers groupés.}
+% SOURCES-SCRIPTS: 42
+\label{fig:p4-seuil}
+\end{figure}
+
+\subsection{Déclenchement comme temps d'arrêt}
+\label{sec:p4-dynamique}
+
+Le seuil $z^*$ est jusqu'ici un niveau statique. Si le facteur tiers est un processus continu $(Z_t)_{t\ge0}$ adapté à une filtration $(\mathcal{F}_t)$, le déclenchement devient un temps de premier passage,
+\begin{equation}
+  \tau \;=\; \inf\{\,t\ge 0 \;:\; Z_t \ge z^*\,\},
+  \label{eq:temps-arret}
+\end{equation}
+qui est un temps d'arrêt, puisque $\{\tau\le t\}=\{\sup_{s\le t}Z_s\ge z^*\}\in\mathcal{F}_t$.
+
+\begin{proposition}[Loi du délai de déclenchement]\label{prop:premier-passage}
+Si $(Z_t)$ est un mouvement brownien standard issu de $0$ et $z^*>0$, alors pour tout horizon $T>0$
+\begin{equation}
+  \Prob(\tau\le T) \;=\; 2\,\Phi\!\left(-\frac{z^*}{\sqrt{T}}\right)
+  \;=\; 2\,\Prob(Z_T\ge z^*).
+  \label{eq:reflexion}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+C'est le principe de réflexion. Par symétrie du mouvement brownien après $\tau$, on a
+$\Prob(\tau\le T,\;Z_T< z^*)=\Prob(\tau\le T,\;Z_T> z^*)=\Prob(Z_T>z^*)$, la dernière égalité tenant
+car $\{Z_T>z^*\}\subset\{\tau\le T\}$. En sommant les deux événements disjoints,
+$\Prob(\tau\le T)=2\,\Prob(Z_T>z^*)=2\,\Phi(-z^*/\sqrt{T})$.
+\end{proof}
+
+La lecture dynamique est le double de la lecture statique $\Prob(Z_T\ge z^*)$, puisqu'elle compte tous
+les franchissements survenus avant l'horizon, et pas seulement la position finale. À $\rho=0{,}50$, la
+probabilité de déclenchement de P4 en moins d'un an est de $0{,}14$, pour un délai médian de l'ordre
+de cinq ans. À $\rho=0{,}75$, elle monte à $0{,}23$, pour un médian d'environ trois ans
+(figure~\ref{fig:p4-dynamique}).
+
+\begin{figure}[H]\centering
+\figover{Z16_p4_temps_arret.png}
+\caption{Le déclenchement de P4 comme temps d'arrêt. (a)~Le facteur tiers (martingale) et le premier
+passage de $z^*$. (b)~La loi du délai de déclenchement. (c)~La lecture dynamique
+$\Prob(\tau\le 1\text{ an})$ vaut environ le double de la statique.}
+% SOURCES-SCRIPTS: 52 128
+\label{fig:p4-dynamique}
+\end{figure}
+
+Le principe de réflexion utilise la propriété de Markov forte et la symétrie des accroissements
+du brownien ; la propriété de martingale seule ne suffit pas. La forme de Dirichlet du
+chapitre~\ref{ch:identifiabilite} est un objet distinct. Aucun changement de mesure n'intervient.
+Le cadre complet est déporté \matcomp.
+En revanche, le comptage journalier des brèches du secteur financier (2016--2023) se diagnostique par son
+résidu compensé, qui est une différence de martingale si l'intensité prévisible est bien spécifiée.
+
+Une
+tendance seule laisse une autocorrélation de $+0{,}26$ au premier retard ; une excitation des jours
+antérieurs la ramène à $-0{,}02$, avec un branchement de $0{,}29$, puis de $0{,}09$ sans la semaine MOVEit.
+Les seuils sont recalibrés par bootstrap avec réestimation et la spécification reste rejetée. Les
+vulnérabilités du catalogue CISA KEV n'améliorent pas l'ajustement sur 2022--2023 ($p=0{,}90$), et la
+faille MOVEit y est ajoutée quatre jours après son pic. Ce diagnostic ne prouve ni causalité ni contagion.
+Le brownien pur atteint le niveau presque sûrement, mais son délai est d'espérance infinie. Un facteur
+à retour à la moyenne (Ornstein-Uhlenbeck) donnerait un taux de déclenchement récurrent et fini, plus
+réaliste pour un facteur systémique. Nous gardons le brownien parce qu'il permet un calcul explicite.
+
+\subsection{Sous-processus tiers sur donnée ouverte}
+\label{sec:p4-sousprocess}
+
+Descendre P4 au niveau du sous-processus (quel sous-traitant, quelle fonction critique, quelle
+substituabilité) suppose le registre d'externalisation de DORA. Sa structure est fixée par la norme
+technique d'exécution \citep{eu2024_2956}, mais seules les données de l'entité le renseignent. La
+donnée ouverte tranche déjà deux points opposés (figure~\ref{fig:p4-open}).
+
+La taxonomie fine du tiers y est trop rare. La sous-catégorie \og Vendors \& Suppliers \fg{} d'OpRisk
+ne compte que $20$ incidents en finance, soit $1\,\%$ des incidents TIC, et \texttt{actor.Partner} du
+VCDB en compte $56$. Ces effectifs tombent à zéro deux niveaux plus bas, ce qui renvoie au registre.
+La concentration et l'origine tierces sont en revanche ancrées sur des données européennes
+officielles, qui permettent de situer deux paramètres jusque-là posés.
+\begin{itemize}\itemsep2pt
+\item Le premier rapport d'incidents DORA des autorités européennes \citep{esas2026_incidents}
+      établit que $29\,\%$ des $3\,383$ incidents TIC majeurs de $2025$ proviennent d'une défaillance
+      de tiers. P4 est donc une amorce majeure, ce que le classeur posait par jugement
+      ($\text{\texttt{ROOT}}[4]=0{,}90$).
+\item L'analyse des registres d'externalisation par la BCE \citep{ecb2024_outsourcing} montre que plus
+      de $30\,\%$ du budget des grandes banques va à $10$ fournisseurs, et $50\,\%$ du budget critique
+      à $30$. Les autorités européennes ont désigné $19$ fournisseurs TIC critiques. Ces chiffres motivent le scénario d'accumulation, sans identifier $\omega$ ni mesurer la
+charge de facteur $\gamma=0{,}68$. Concentration du marché et probabilité de choc sont distinctes.
+\end{itemize}
+
+\begin{figure}[H]\centering
+\figover{Z14_p4_sousprocess_open.png}
+\caption{Le sous-processus tiers sur donnée ouverte. (a)~La taxonomie fine du tiers est sous le
+seuil d'estimation (registre DORA requis). (b)~La concentration est nette, côté exposition (BCE)
+comme côté sinistralité (Gini $0{,}69$). (c)~Origine et concentration tierces ancrées sur donnée
+européenne officielle.}
+% SOURCES-SCRIPTS: 44 08g
+\label{fig:p4-open}
+\end{figure}
+
+\section{Détection de P2 et P3 comme courbe de survie}
+\label{sec:detection}
+
+P2 (gestion des incidents) et P3 (tests) ne sont pas des n\oe{}uds de sévérité. Ils gouvernent le
+temps de détection, car un incident non détecté à temps escalade et devient matériel. Le modèle
+résume cet effet par un multiplicateur du taux de matérialité par pilier touché, de $0{,}85$ à l'état conforme et
+$1{,}20$ à l'état non conforme. Nous le remplaçons par une lecture de survie ancrée sur donnée.
+
+Le VCDB donne la distribution du délai de découverte en finance ($n=278$). Elle est bimodale :
+$47\,\%$ des incidents sont découverts le jour même, $8\,\%$ en semaines et $45\,\%$ en mois ou plus.
+La matérialité vient des incidents à découverte lente, d'où un taux de matérialité par pilier touché proportionnel à
+la part de découverte lente, ancrée à $\pi_{\text{slow}}=0{,}45$.
+
+Ce point est mesuré, mais l'élasticité de la détection à la maturité de P2 et P3 (de combien un
+pilier conforme détecte-t-il plus vite) ne l'est pas, et nous la bornons. Le surcoût du seul canal
+détection est alors une bande, de $1\,775$ à $8\,052$~M\euro{} selon l'élasticité. Le multiplicateur
+grossier $0{,}85/1{,}20$ est retrouvé pour une élasticité $\eta\approx 0{,}36$. Il est donc compatible avec un point de la
+courbe de scénario ancrée sur le VCDB, sans que son élasticité soit estimée (figure~\ref{fig:detection}).
+
+\begin{figure}[H]\centering
+\figover{Z10_detection_survie.png}
+\caption{P2 et P3, la détection comme courbe de survie. (a)~Distribution bimodale observée au VCDB.
+(b)~Le multiplicateur de matérialité comme point de la courbe de survie ; le multiplicateur grossier
+actuel correspond à $\eta\approx0{,}36$. (c)~Surcoût du canal détection, borné sur l'élasticité.}
+% SOURCES-SCRIPTS: 39 67
+\label{fig:detection}
+\end{figure}
+
+\section{Cas d'usage, des adaptations aux indicateurs pilotables}
+\label{sec:kpi}
+% SOURCES-SCRIPTS: 43 68 82 88 74
+
+Les adaptations se lisent comme un tableau de bord opposable à un souscripteur ou à un superviseur.
+Chaque indicateur observable est rattaché à un canal du moteur : fréquence d'entrée, délai de
+notification (P2), délai de confinement (P3), concentration des tiers (P4). Le capital en jeu derrière
+chacun se mesure par l'écart entre l'état conforme et l'état non conforme, soit $14\,139$~M\euro{}
+($6\,049 \to 20\,188$) pour le périmètre financier étudié, avec un écart-type de $734$ entre quatre graines.
+
+\subsection{Trois lectures d'un canal}
+% SOURCES-SCRIPTS: 43 68 82
+
+On peut partir de l'état conforme et ne dégrader que ce canal (lecture \emph{isolée}), partir de
+l'état non conforme et ne remédier qu'à ce canal (marginal de \emph{fermeture}), ou moyenner sur les
+vingt-quatre ordres d'entrée (valeur de \emph{Shapley}). La figure~\ref{fig:interaction-canaux}(b)
+compare les trois lectures, dont une seule somme à l'écart total. La lecture isolée manque
+$5\,001$~M\euro{} et celle de fermeture dépasse l'écart d'autant, le rapport des deux allant de $1{,}5$
+à $3{,}1$ selon le canal. Remédier à un canal rapporte donc davantage à une entité défaillante partout
+qu'à une entité déjà conforme, puisque ce canal ferme aussi les effets croisés qu'il portait. La lecture de fermeture répond au scénario d'une entité défaillante sur tous les canaux.
+
+Deux des trois sommes ne mesurent rien, et il ne faut pas les resommer. La question a été posée en
+séance sous la forme d'un soupçon de double comptage. Il n'y a pas de double comptage, et c'est une
+identité. En notant $m(S)$ les coefficients de Möbius,
+\[
+  \sum_i \text{isolé}(i) = \!\!\sum_{|S|=1}\!\! m(S), \qquad
+  \sum_i \text{fermeture}(i) = \sum_S |S|\,m(S), \qquad
+  \sum_i \varphi_i = \sum_S m(S) = \Delta .
+\]
+Quand on ferme un canal, il emporte tous les croisés auxquels il participe, et un croisé d'ordre $k$
+est donc compté $k$ fois :
+$1\times 9\,138 + 2\times 5\,345 + 3\times(-691) + 4\times 346 = 19\,141$, à la précision machine, aux arrondis d'affichage près.
+L'encadrement $9\,138 \leq 14\,139 \leq 19\,141$ est en revanche constaté ici, non garanti : la
+sur-modularité de la fonction de capital l'assurerait, mais la paire propagation\,$\times$\,accumulation ($-330$) y échappe.
+
+Shapley est la seule lecture qui
+répartisse l'interaction sans la perdre ni la dupliquer. Elle reste une convention d'attribution, pas
+une prévision, car deux des quatre canaux sont bornés et leur part n'est pas un budget actionnable. Le défaut
+de la colonne isolée est celui que rencontre l'analyse de sensibilité lorsque les entrées cessent
+d'être indépendantes : les indices de Sobol ne somment plus au total, alors que la valeur de Shapley y
+somme par construction \citep{Owen2014, IoossPrieur2019}. Ces travaux décomposent toutefois une
+variance, alors que la fonction caractéristique employée ici est un écart de capital. L'argument se
+transpose, pas le résultat.
+
+\subsection{L'état non conforme comme coin supérieur}
+\label{sec:coin-superieur}
+% SOURCES-SCRIPTS: 88
+
+Sur les soixante-cinq paires emboîtées des seize configurations, relâcher un canal de plus ne fait
+jamais baisser le capital estimé, et cela vaut graine par graine, pas seulement en moyenne. Parmi ces
+seize configurations, le quantile estimé le plus élevé est donc celui du coin haut, sur chacune des
+graines utilisées, ce qui suffit à un test de résistance limité aux deux valeurs de chaque canal. Les valeurs intermédiaires des canaux ne sont pas testées, et
+aucune démonstration n'étend ce constat au pavé continu. C'est la forme que prend ici le résultat de statique comparative monotone du préprint cité au
+chapitre~\ref{ch:positionnement} \citep{ccrn2026}.
+
+Deux réserves s'y attachent. D'abord, l'ordre observé porte sur les quantiles estimés, pas trajectoire par
+trajectoire. À uniformes communs, la perte d'une année donnée baisse dans $16{,}2\,\%$ des cas lorsque l'on relâche la
+propagation et dans $30{,}7\,\%$ lorsque l'on relâche la détection. Les motifs diffèrent : la table
+des sous-ensembles dans le premier cas, la transformation de sévérité dans le second. La version
+trajectorielle demanderait un couplage monotone, donc d'autres tirages, ce que le gel de la calibration
+interdit pour renforcer un énoncé sans déplacer une conclusion. Ensuite, un coin peut être infaisable.
+Deux des quatre canaux sont des bornes posées, et rien ne garantit qu'une entité présente les quatre
+canaux à leur maximum en même temps. Le coin haut est le maximum observé parmi les seize
+configurations évaluées, non la description d'une entité.
+
+\subsection{Test de résistance inversé}
+\label{sec:inverse}
+% SOURCES-SCRIPTS: 68 84 88 92
+
+L'ordre observé sur les configurations évaluées autorise la question réciproque, que pose aussi un dispositif ORSA. Au lieu de fixer un
+état et de lire un capital, nous fixons le capital et cherchons les états qui le produisent.
+Parmi ces configurations, celles qui atteignent une cible forment un ensemble croissant, décrit par
+ses éléments minimaux ; pour les cibles étudiées, ils ne sont jamais plus de quatre sur seize.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}r l l@{}}
+\toprule
+\textbf{Cible} & \textbf{configurations minimales classées qui l'atteignent} & \textbf{minimum de canaux} \\
+\midrule
+$8\,000$ & fréq. ; dét.$+$prop. ; dét.$+$accum. ; prop.$+$accum. & $1$ \\
+$10\,000$ & fréq. ; dét.$+$prop.$+$accum. & $1$ \\
+$12\,000$ & fréq.$+$dét. ; fréq.$+$prop. ; fréq.$+$accum. & $2$ \\
+$15\,000$ & les trois triplets contenant la fréquence & $3$ \\
+$18\,000$ & les quatre canaux & $4$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}
+\noindent Deux nombres résument le tableau. Le canal de fréquence seul atteint $10\,377$~M\euro, soit
+$1{,}72$ fois l'état conforme, alors que les trois autres canaux réunis n'atteignent que $11\,413$,
+soit $1{,}89$ fois. L'ordre de ces deux bornes tient sur les quatre graines. Toute cible sous le
+premier seuil se produit donc par un canal unique, et toute cible au-dessus du second exige la
+fréquence. Les trois autres canaux, pris seuls, restent sous la cible la plus basse : la détection plafonne à
+$7\,497$~M\euro, la propagation à $7\,682$ et l'accumulation à $7\,777$. Dans ce modèle, être exposé à un
+seul canal revient à être exposé à la fréquence.
+
+Le canal d'accumulation n'admet pas d'inversion continue, et son effet isolé est un solde net. À
+l'état conforme, le pilier des tiers est un n\oe{}ud de cascade ordinaire ; à l'état non conforme, il devient
+un choc commun. Ce sont deux structures de table différentes, pas les extrémités d'un continuum. Un test inverse ne
+peut donc pas demander à ce canal jusqu'où il doit se dégrader. La bascule à paramètre nul
+fait baisser le capital de $239$~M\euro, résolu sur les quatre graines, parce qu'elle retire la
+propagation propre du pilier avant d'ajouter le choc commun. L'effet isolé publié, $1\,728$~M\euro{},
+est le solde d'un retrait de $239$ et d'un ajout de $1\,967$. On ne peut donc pas sommer les quatre
+canaux.
+
+Deux réserves restent à faire. Une cible déclarée inatteignable l'est parmi les seize configurations
+évaluées, jamais pour une entité, puisque deux canaux sur quatre sont des bornes posées. Et une configuration proche d'une cible n'est pas
+classée, parce que son appartenance dépend de la graine. Une frontière non résolue est d'ailleurs un
+résultat : elle indique que la cible tombe dans le bruit de simulation.
+
+\subsection{Décomposition de l'interaction}
+% SOURCES-SCRIPTS: 68 84 88 100
+
+L'interaction n'est plus un résidu, elle se décompose et vit aux paires. La décomposition de Möbius
+sur le treillis des seize configurations rend compte des $+5\,001$~M\euro{} terme par terme. Elle compte quatre
+effets principaux ($9\,138$~M\euro), six croisés de paires ($5\,345$), quatre croisés de triplets
+($-691$) et un croisé des quatre canaux ($+346$). Leur somme vaut $14\,139$ à la précision machine, aux arrondis d'affichage près.
+Cette identité atteste que la table est complète ; elle ne vérifie rien statistiquement.
+Les trois paires porteuses passent toutes par la fréquence et font $86\,\%$ de l'ordre~2 :
+fréquence\,$\times$\,détection $1\,739\pm708$, fréquence\,$\times$\,accumulation $1\,666\pm354$ et
+fréquence\,$\times$\,propagation $1\,182\pm444$~M\euro. Ces $\pm$ sont des étendues de simulation à
+paramètres fixés. Une loi d'échelle le montre : l'écart-type tombe de $1\,785$ à $339$~M\euro{}
+lorsque le nombre d'années simulées passe de $10\,000$ à $160\,000$, soit une pente de $-0{,}60$ contre
+$-0{,}50$ attendu pour du Monte-Carlo. Cette largeur se réduit en simulant davantage. L'incertitude
+de paramètre est dix fois plus grande : le même croisé va de $429$ à $7\,998$~M\euro{} aux deux bornes
+de l'IC90 de $\hat\xi$. Les deux premières paires ne sont séparées que de $73$~M\euro{}, et leur ordre s'inverse en perte
+moyenne. On ne peut donc pas les classer.
+
+Sur les seize configurations, quatorze mélangent des canaux conformes et non conformes. Ce sont
+des contrefactuels de calcul pour attribuer l'écart. Une entité peut avoir des contrôles de maturités
+différentes ; la donnée ne montre pas qu'elle puisse atteindre exactement les valeurs posées de
+chaque configuration. Un état mixte doit donc rester présenté comme un scénario conditionnel.
+
+Une seule paire est négative : propagation\,$\times$\,accumulation, à $-330\pm242$~M\euro, sur les
+seize graines et les deux métriques. Les deux canaux se substituent l'un à l'autre au lieu de se
+compléter. La cascade et le choc commun sont deux manières de faire tomber plusieurs piliers sur un même
+sinistre, et quand l'une joue, il reste moins à gagner à l'autre. Le capital est donc super-additif en
+euros, mais sous-additif entre ses deux canaux de co-occurrence. Cela borne l'amplitude que l'on peut
+imputer à la contagion en général.
+
+Les canaux se composent de façon quasi multiplicative. Une décomposition additive d'effets qui se
+multiplient produit une interaction positive par simple arithmétique, $(1+a)(1+b)-1$ dépassant $a+b$.
+La décomposition refaite sur le logarithme du capital le montre. Le produit des quatre facteurs isolés
+vaut $3{,}47$ quand le facteur publié vaut $3{,}34$, soit $0{,}961$ fois ce produit. Un modèle
+purement multiplicatif produirait $5\,813$~M\euro{} d'interaction, dont les $5\,001$~M\euro{} publiés
+font $86\,\%$. Aucune des seize configurations ne s'écarte de plus de $8{,}1\,\%$ du produit de ses
+facteurs isolés. L'interaction en euros s'explique donc par la multiplicativité, et le résidu propre est
+une légère sous-multiplicativité, portée par la paire propagation\,$\times$\,accumulation.
+
+Deux canaux suivent même une forme fermée. Par l'approximation de la perte unique \citep{bockerkluppelberg2005}, le
+quantile croît comme $(\lambda\,p_u)^{\xi}$, ce qui prédit un facteur
+$(53{,}62/21{,}56)^{0{,}5954}=1{,}720$ pour la fréquence contre $1{,}715$ simulé, et $1{,}228$ pour la
+détection contre $1{,}239$.
+
+Les conclusions de gestion restent les mêmes : remédier à un canal rapporte toujours davantage à
+une entité défaillante partout. Leur statut change en revanche, car elles reposent sur une forme
+fermée contrôlée par la simulation et non sur la seule simulation. L'interaction ne se lit donc pas
+comme un effet propre de la contagion (figure~\ref{fig:interaction-canaux}).
+% SOURCES-SCRIPTS: 100
+
+\begin{figure}[H]\centering
+\figover{S24_interaction_canaux.png}
+\caption{La table complète des quatre canaux. (a)~Réconciliation par ordre : les quinze termes de
+Möbius somment à l'écart, exactement. (b)~Les trois lectures d'un même canal, isolée, Shapley et
+fermeture. (c)~Les six croisés de paires avec leur écart-type de simulation ; une seule est négative.}
+\label{fig:interaction-canaux}
+\end{figure}
+
+\subsection{Classement des indicateurs par capital et par statut}
+% SOURCES-SCRIPTS: 43 68
+
+La fréquence et la détection pèsent lourd en capital et sont calibrables : ce sont les leviers de
+remédiation à activer en premier. La propagation et l'accumulation pèsent aussi, mais elles sont
+bornées. Elles mesurent surtout une incertitude, que la donnée résorbera, c'est-à-dire le registre DORA,
+plus sûrement qu'une action directe (figure~\ref{fig:kpi}).
+
+\begin{figure}[H]\centering
+\figover{Z13_kpi_pilotables.png}
+\caption{Des indicateurs descriptifs aux indicateurs pilotables. (a)~Écart de capital DORA attribué
+par indicateur, chaque canal étant isolé (bleu : calibrable ; gris : borné), avec l'interaction qui
+referme la cascade. (b)~Tableau de bord de remédiation, indicateurs classés par capital libéré.}
+\label{fig:kpi}
+\end{figure}
+
+\subsection{Retour sur investissement de la conformité}
+\label{sec:roi}
+% SOURCES-SCRIPTS: 50 58 83
+
+Le tableau de bord se lit en euros, et deux mots demandent une définition. Le portage est le coût de
+détention du capital : sous Solvabilité~II, il se lit dans la marge de risque, un pourcentage annuel du
+capital immobilisé. Au taux de $6\,\%$ du règlement délégué, les $14\,139$~M\euro{} que libère, pour le périmètre financier étudié, la
+conformité totale valent $848$~M\euro{} par an, et non une fois. La fréquence en porte à elle seule
+près de la moitié.
+
+Le bénéfice a deux composantes, et ce calcul n'en monétise qu'une. Le portage économisé représente
+$848$~M\euro/an, la sinistralité évitée $3\,247$, la charge annuelle moyenne passant de $3\,869$ à
+$622$~M\euro. La composante laissée de côté vaut $3{,}8$ fois celle qui est retenue, de sorte que le
+portage seul minore le bénéfice. Le retour de $6$ à $35$ ans est donc un majorant, pour un coût de
+remédiation de $25$ à $150$~M\euro{} par grande entité, soit $5$ à $30$~Md\euro{} pour deux cents
+entités.
+
+Ajouter les pertes évitées raccourcit cette durée sous les mêmes hypothèses, sans borner le retour réel. Les deux composantes réunies donnent
+$4\,095$~M\euro/an et un retour de $1$ à $7$ ans. Cette addition mêle un flux de compte de résultat à
+un coût du capital. Cette convention de retour sur investissement n'est pas une sortie du modèle. Le chiffre de
+référence reste le portage seul, avec le sens de sa borne.
+
+Ce taux de convention n'est ni le coût moyen pondéré du capital de l'entité ni son taux
+d'exigence sur un projet ; la durée calculée ne valide pas une décision d'investissement.
+
+Le taux de $6\,\%$ est celui du règlement délégué~2015/35. La directive~(UE)~2025/2 le ramène à
+$4{,}75\,\%$, taux qu'emploient les calculs d'échelle d'entité. Le portage monétisé tombe alors à
+$672$~M\euro/an, soit une baisse de $21\,\%$, et le majorant du retour passe de $35$ à $45$ ans. Aucune
+conclusion ne bascule : la durée reste un majorant, et la composante dominante du bénéfice n'est pas
+monétisée. La chaîne publiée reste au taux historique, la calibration étant gelée
+(figure~\ref{fig:roi}). La conformité n'est donc pas un simple coût. Elle libère du capital, que le modèle chiffre, face à un
+coût externe et incertain, affiché comme tel. On priorise les leviers calibrables.
+
+\begin{figure}[H]\centering
+\figover{J6_roi_conformite.png}
+\caption{Retour sur investissement de la conformité. (a)~Capital libéré par levier, classé, avec sa
+valeur annuelle à $6\,\%$ (bleu : calibrable ; gris : borné). (b)~Coût de remédiation ponctuel contre
+économie récurrente de portage du capital. Le retour sur le portage seul est de $6$ à $35$ ans, et
+c'est un majorant, la perte évitée n'étant pas monétisée ici.}
+\label{fig:roi}
+\end{figure}
+
+\section{Piliers laissés en perspective}
+\label{sec:perspectives-pilier}
+
+Deux piliers appelleraient un traitement propre, mais aucune donnée ne le soutient. Les modéliser par
+des paramètres non identifiables contredirait la démarche, et nous les laissons en perspective.
+\begin{itemize}\itemsep2pt
+\item P1 (gouvernance) ressemble moins à un n\oe{}ud qu'à un modificateur systémique : une gouvernance
+      défaillante charge la sensibilité $\rho$ de tous les piliers à la fois. Aucune donnée ne relie la
+      qualité de gouvernance à une hausse du hasard, et cette relation est à borner plutôt qu'à
+      estimer.
+\item P5 (partage d'informations) agit plutôt comme un réducteur de fréquence, l'alerte précoce
+      diminuant les entrées. Rien ne le mesure non plus.
+\end{itemize}
+Les diagnostics motivent des adaptations distinctes : hétérogénéité des pertes, choc commun et
+détection. Ils n'identifient pas tous les paramètres correspondants. Les scénarios examinés
+relèvent le niveau du capital sans renverser le classement des piliers. Leur usage reste
+conditionnel aux hypothèses de chaque calcul ; un registre au niveau de l'entité serait nécessaire
+pour estimer les mécanismes encore posés.

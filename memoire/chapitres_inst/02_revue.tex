@@ -1,0 +1,127 @@
+﻿% =====================================================================
+% VERSION ENSAE, REDUCTION SFE : chapitre 2, revue de littérature et positionnement.
+% Phase 3 : copie a texte constant de chapitres/03_etat_art_positionnement.tex.
+% Phase 4 (1er octobre 2026) : reecrit et condense ; toutes les citations, le tableau
+% comparatif et les nombres sont conserves. Le texte d'origine reste dans chapitres/
+% (version Institut) et dans l'historique Git.
+% Lu par main_ensae.tex seul : ne jamais le faire lire par main_institut.tex,
+% qui garde chapitres/.
+% =====================================================================
+\chapter{Revue de littérature et positionnement}
+\label{ch:positionnement}
+
+% SOURCES-SCRIPTS: 08g 32 01 23
+
+Les travaux mobilisés étudient l'assurabilité et la rareté des données
+\citep{BienerElingWirfs2015}, les pertes extrêmes, la contagion entre entités et les arrivées dans
+le temps. Nous reprenons leurs lois et leurs états successifs pour étudier la propagation entre
+les domaines de contrôle d'une même entité.
+
+\section{Comparaison aux approches existantes}
+% SOURCES-SCRIPTS: 32 23 01
+
+Le tableau~\ref{tab:positionnement-references} distingue ces objets. Notre articulation entre
+contrôles d'une même entité et incertitude sur la direction n'est pas traitée conjointement dans
+les références comparées. Les chapitres suivants la construisent à partir de ces briques.
+
+\input{chapitres_inst/lecture_positionnement_visuel}
+
+Les matrices de risque et l'analyse des modes de défaillance, de leurs effets et de leur criticité
+(AMDEC) classent les risques. L'indice RPN (\emph{Risk Priority Number}) multiplie gravité, occurrence et détection. Une copule relie les lois individuelles, appelées marges, pour former une loi jointe de pertes. Ni ce classement ni cette loi des seules pertes
+ne décrivent l'ordre d'atteinte des piliers.
+
+Les modèles de réseau représentent des transmissions entre entités, sous une structure et des
+taux d'infection qui ne sont pas observés ici. Nous en reprenons l'idée d'états successifs,
+appliquée aux contrôles d'une même entité. Les processus de Hawkes répondent à une autre question :
+un incident augmente-t-il le taux d'arrivée d'autres incidents ? Les réseaux bayésiens décrivent
+des liens dirigés sur un graphe acyclique avec des probabilités conditionnelles.
+La section~\ref{sec:travaux-par-theme} détaille ces références ; le chapitre~\ref{chap:resultats} compare les effets de
+modèles de dépendance sur le capital et le chapitre~\ref{ch:robustesse} examine l'information temporelle disponible.
+
+\section{Dépendance dirigée et dépendance à l'ordre}
+% SOURCES-SCRIPTS: 08g 32 01 23
+
+L'objet propre à la cascade peut maintenant être précisé. La matrice $W$ de contagion entre
+piliers, posée à dire d'expert puis bornée au chapitre~\ref{chap:partielle}, donne par $W_{jk}$
+la propension d'une défaillance de $j$ à entraîner celle de $k$. La ligne désigne l'émetteur,
+la colonne le récepteur. Elle est dirigée, au sens où $W_{jk}\neq W_{kj}$, et autorise des cycles
+comme P1$\to$P2$\to\cdots\to$P1. La normalisation de Leontief les stabilise
+($\rho(W)\le g<1$, forme réduite $(I-W)^{-1}$).
+
+Avec le score de criticité du modèle, de $1$ à $10$ et construit à partir des barèmes d'expert
+(chapitre~\ref{chap:cascade}), $22$ des $26$ sous-ensembles d'au moins deux piliers changent de
+score selon l'ordre. L'écart atteint $6$ points : $8$ pour P1$\to$P2, contre $2$ pour
+P2$\to$P1. Un score statique invariant par permutation ne peut pas reproduire cette propriété.
+La non-transitivité de la dominance, testée sous trois formulations, ne se vérifie pas et n'est
+pas revendiquée (chapitre~\ref{chap:cascade}).
+
+\section{Travaux par thème}
+\label{sec:travaux-par-theme}
+
+\subsection*{Dépendance et contagion}
+% SOURCES-SCRIPTS: 08g
+La corrélation entre risques cyber a d'abord été traitée par
+copules \citep{BohmeKataria2006, HerathHerath2011}. Sur la chronologie PRC, l'indice de Gini de la charge journalière vaut $0{,}69$ ($2\,922$ jours, $4\,614$ événements) : les sinistres se concentrent sur peu de jours, ce qui est compatible avec une accumulation par cause commune.
+\citet{HillairetLopez2021} couplent des processus de comptage à un modèle épidémiologique
+compartimental de type SIR (susceptibles, infectés, rétablis), et \citet{HillairetLopezDOultremontSpoorenberg2022} y ajoutent une
+structure de réseau. \citet{XuHua2017} et \citet{Baldwin2017} modélisent la contagion entre cibles.
+
+\subsection*{Dynamique temporelle}
+\citet{BessyRolandBoumezouedHillairet2021} ajustent des processus de
+Hawkes aux données PRC, l'une de nos sources, puis \citet{BoumezouedCherkaouiHillairet2023}
+ajoutent un terme exogène. \citet{HillairetReveillacRosenbaum2021} en développent la théorie pour le
+pricing de dérivés, et \citet{Peng2016} les appliquent à des taux d'attaque horodatés.
+
+\subsection*{Fréquence, sévérité et queue}
+\citet{Edwards2016} ajustent une binomiale négative au
+nombre journalier de brèches, et \citet{LuZhangZhu2024} séparent fréquence et nombre de brèches par
+événement, une structure compatible avec la loi de fréquence retenue ici (binomiale négative, chapitre~\ref{chap:socle}). \citet{FarkasLopezThomas2021}
+tarifent par arbres de régression GPD. La queue lourde des pertes cyber est documentée
+\citep{MaillartSornette2010, wheatley2016}, et \citet{elingloperfido2017} comparent plusieurs
+familles de lois sur les brèches de données. \citet{elingwirfs2019} étudient les pertes cyber de la
+base SAS OpRisk Global par les valeurs extrêmes, et leur étude est le précédent le plus proche pour la sévérité.
+
+\subsection*{Travaux sur les mêmes sources}
+\citet{Ranguin2024} modélise le risque cyber des
+entreprises françaises pour la Caisse Centrale de Réassurance, à partir de PRC, VCDB, Hackmageddon et
+de l'étude LUCY. La sévérité y est construite par arbres de régression GPD sur le volume de données
+compromises. La sinistralité d'un portefeuille fictif est simulée, sinistres courants compris. Les lois
+sont ensuite reparamétrées dans un cadre bayésien sur le marché français. Cette étude ne produit pas de
+mesure de capital à un quantile réglementaire. L'objet étudié ici est le besoin de capital d'une
+entité financière selon son état de conformité, avec une sévérité calibrée sur des pertes en montants
+et une dépendance modélisée entre piliers.
+
+Sur PRC, \citet{KherLopezRapior2023} estiment la gravité d'un incident à partir de sa description
+textuelle par réseaux de neurones, et \citet{Dountio2026} prolonge cette démarche. Ces travaux
+classent la sévérité d'un incident en volume de dossiers compromis.
+
+\subsection*{Cadre structurel et identification partielle}
+Le facteur latent commun vient du modèle à facteur de \citet{Vasicek2002}, et la normalisation qui stabilise une contagion avec
+cycles provient de l'analyse entrées-sorties de \citet{Leontief1936}.
+
+L'identification partielle caractérise des valeurs admissibles puis leurs conséquences sur une
+quantité d'intérêt \citep{Manski1990,Manski1995,Tamer2010}. Ce principe est repris pour
+explorer le capital à direction inconnue, conditionnellement à la force des liens posée.
+Le chapitre~\ref{chap:partielle} précise l'ensemble admissible et l'échelle de contraintes de structure.
+
+\subsection*{Cascade de risques climatiques}
+Le réseau de cascade climatique de \citet{ccrn2026} sépare le temps calendaire des pas de
+propagation. Cette architecture, le protocole de comparaison et l'expérience d'ablation en sont
+repris. Ses valeurs synthétiques n'entrent dans aucune calibration de ce travail.
+
+\section{Positionnement}
+
+Le tableau~\ref{tab:apports-institut} relie chaque question à une méthode et au résultat qui
+permet d'en juger. Il sert de guide aux chapitres suivants : construire le calcul, l'éprouver
+quand l'information manque, puis comparer les choix de remédiation.
+
+\input{chapitres_inst/lecture_constats_reponses}
+
+La première étape consiste donc à déterminer les entrées réellement observées. Le chapitre
+suivant distingue les pertes disponibles des états et des transmissions qui resteront posés.
+
+\nocite{BohmeKataria2006, HerathHerath2011, HillairetLopez2021,
+  HillairetLopezDOultremontSpoorenberg2022, XuHua2017, Baldwin2017,
+  BessyRolandBoumezouedHillairet2021, BoumezouedCherkaouiHillairet2023,
+  HillairetReveillacRosenbaum2021, Peng2016, Edwards2016, LuZhangZhu2024,
+  FarkasLopezThomas2021, Vasicek2002, Leontief1936}

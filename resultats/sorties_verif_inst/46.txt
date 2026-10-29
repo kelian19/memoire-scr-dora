@@ -1,0 +1,61 @@
+
+==================================================================================
+Calibration OpRisk (cyber x finance), au seuil PUBLIE par le memoire
+==================================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  n = 570 pertes ; seuil u = 20.03 M€ (configuration figee) ; zeta_u = 0.151 ; 86 exces.
+  GPD MLE au seuil publie : xi = 0.595, sigma = 57.98 M€.
+  pour memoire, la configuration figee porte xi = 0.5954, sigma = 57.97, VaR 99,5 % = 662.78 M€.
+  le q85 des donnees courantes vaut 20.03 M€ (86 exces) : le seuil publie est au percentile 84.9, pas 85.
+
+==================================================================================
+Bootstrap : la distribution de la VaR (le quantile est lui-meme incertain)
+==================================================================================
+  2000 ajustements valides. xi : IC90 = [0.30 ; 0.85] (point 0.60).
+
+==================================================================================
+VaR par branchement vs VaR predictive vs intervalle
+==================================================================================
+    niveau    plug-in        IC90 bootstrap    E[VaR]  prédictive   écart
+     0.990      413 M[   287 ;   581] M     417 M       407 M     -1%
+     0.995      663 M[   410 ;  1033] M     677 M       655 M     -1%
+     0.999     1852 M[   817 ;  3987] M    2009 M      1925 M      4%
+
+  Au niveau reglementaire 99,5 % :
+    - VaR plug-in           = 663 M€  (le point aujourd'hui)
+    - IC90 bootstrap        = [410 ; 1033] M€  (facteur 2.52, dû a la seule incertitude de xi)
+      a comparer a la configuration figee : [411.5 ; 1037.1] M€, facteur 2.52
+      ecart sur la borne haute : 0.4 % ; sur la borne basse : 0.4 %
+      C'est du bruit de bootstrap, pas un desaccord de methode. Le facteur PUBLIE est 2.5.
+    - VaR PREDICTIVE        = 655 M€  (-1 % vs plug-in)
+      NB : grandeur SIMULEE, ecart-type de simulation 7 M EUR (mesure par le script 51).
+      A B = 3000 le meme estimateur donne 645 : c'est le meme nombre, pas un desaccord.
+      Ne pas citer son troisieme chiffre significatif.
+  Enseignement, plus subtil que prevu : a 99,5 % la VaR predictive est QUASI EGALE a la
+  plug-in. Le risque d'estimation ne cree pas un biais de POINT ici ; il gonfle la
+  LARGEUR de la bande (facteur 2.5, valeur publiee). Le chargement predictif n'apparait
+  que PLUS LOIN dans la queue : +4 % a 99,9 %. Autrement dit,
+  plus la mesure s'enfonce dans la queue, plus la donnee incertaine la rend fragile.
+
+==================================================================================
+Profil TVaR (moyenne de queue, moins ponctuelle que la VaR ; définie si xi<1)
+==================================================================================
+  0.990 : TVaR plug-in = 1133 M€, IC90 = [520 ; 3511] (100 % des bootstrap ont xi<1)
+  0.995 : TVaR plug-in = 1751 M€, IC90 = [698 ; 6236] (100 % des bootstrap ont xi<1)
+  0.999 : TVaR plug-in = 4689 M€, IC90 = [1282 ; 23759] (100 % des bootstrap ont xi<1)
+
+==================================================================================
+VERDICT
+==================================================================================
+  1. Caroline a raison : le SCR = VaR 99,5 % lit un point de queue sur donnee rare ;
+     son IC90 est un facteur 2.5 (et la TVaR, plus profonde, un facteur
+     bien plus grand). La fragilite est dans la LARGEUR de la bande.
+  2. La VaR predictive (quantile du melange sur l'incertitude) est le point PROPRE, mais
+     son ecart a la plug-in est faible a 99,5 % (-1 %) et ne
+     grandit qu'en profondeur (+4 % a 99,9 %) : le risque
+     d'estimation n'est pas un biais de point, c'est un elargissement.
+  3. Consequence : rapporter le capital en INTERVALLE, jamais en point ; lire un PROFIL
+     par niveau. C'est la justification meme de la these 'bande, pas point' du memoire.
+     On ne cite pas la VaR ; on cite [borne basse ; borne haute] et on l'assume.
+
+figure ecrite : recherche\vasicek_lab\figures\J2_var_predictive.png

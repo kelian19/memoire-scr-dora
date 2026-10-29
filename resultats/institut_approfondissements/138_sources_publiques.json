@@ -1,0 +1,77 @@
+{
+  "consultation": "2026-10-29",
+  "status": "exemples_documentaires_non_representatifs_non_utilises_pour_estimer_une_frequence",
+  "existing_oprisk_covariates_audit": {
+    "population": "570 pertes cyber-finance, 2000-2026",
+    "revenue_positive": 564,
+    "revenue_financial_year_before_event": 231,
+    "employees_positive": 563,
+    "employees_financial_year_before_event": 233,
+    "assets_positive": 521,
+    "assets_financial_year_before_event": 207,
+    "limitation": "L'annee financiere anterieure ne garantit pas une date de publication anterieure. Echantillon de pertes, pas panel d'exposition."
+  },
+  "companies": [
+    {
+      "entity": "Lemonade Inc. et filiales",
+      "scope": "groupe consolide, US GAAP, USD",
+      "assets_2024_musd": 1849.1,
+      "customers_2024_year_end": 2430056,
+      "in_force_premium_2024_musd": 943.7,
+      "gross_earned_premium_2024_musd": 827.3,
+      "source": "https://www.sec.gov/Archives/edgar/data/1691421/000169142125000031/lmnd-20241231.htm",
+      "locator": "Item 7, Key Operating and Financial Metrics ; Item 8, Consolidated Balance Sheets ; Item 1C",
+      "own_incident_count": null,
+      "own_incident_cost_musd": null,
+      "limitations": "Clients de fin d'annee, pas exposition annuelle moyenne. IFP annualise incluant une petite part placee chez des tiers. Absence de menace materielle identifiee ne vaut pas compte exhaustif nul."
+    },
+    {
+      "entity": "Aflac Incorporated et filiales",
+      "scope": "groupe consolide US/Japon ; incident documente aux Etats-Unis",
+      "assets_2024_musd": 117566,
+      "us_segment_assets_2024_musd": 21930,
+      "own_incident_documented_date": "2025-06-12",
+      "own_incident_count": null,
+      "own_incident_cost_musd": null,
+      "source": "https://www.sec.gov/Archives/edgar/data/4977/000162828026011402/afl-20251231.htm",
+      "locator": "Item 7, Cyber Incident ; Note 2, Business Segment Information, Total Assets",
+      "incident_source": "https://newsroom.aflac.com/2025-06-20-Aflac-Incorporated-Discloses-Cybersecurity-Incident",
+      "limitations": "Un evenement documente n'est pas un compte annuel exhaustif. Cout non isole numeriquement. Ne pas rapporter automatiquement l'incident US aux actifs consolides mondiaux."
+    },
+    {
+      "entity": "Erie Indemnity Company",
+      "scope": "societe de gestion du reseau Erie ; distincte d'Erie Insurance Exchange",
+      "assets_2024_musd": 2888.614,
+      "own_incident_documented_year": 2025,
+      "own_incident_count": null,
+      "own_incident_cost_musd": null,
+      "source": "https://www.sec.gov/Archives/edgar/data/922621/000162828026010666/erie-20251231.htm",
+      "locator": "Item 7, Information security incident ; Item 8, Consolidated Statements of Financial Position",
+      "limitations": "Actifs convertis depuis des milliers USD. Perimetre gestion/commissions, pas bilan de l'assureur porteur de risque. Pas de perte totale chiffree isolee."
+    }
+  ],
+  "supervisory_sources": [
+    {
+      "id": "ESAs_2025_JC202616",
+      "publication": "2026-06-03",
+      "source": "https://www.esma.europa.eu/sites/default/files/2026-06/JC_2026_16_ESAs_2025_report_on_major_ICT-related_incidents.pdf",
+      "locator": "pages imprimees 9-11 et 17-18, sections 3.1 et 3.5",
+      "reported_major_incidents": 3383,
+      "mean_per_entity_all_sectors": 0.18,
+      "mean_per_entity_credit": 0.57,
+      "mean_per_entity_payments": 0.23,
+      "mean_per_entity_insurance": null,
+      "limitations": "Incidents majeurs DORA ; pas pertes cyber-finance OpRisk. Secteur insurance incluant intermediaires. Frequence assurance exacte non extraite du graphique. Denominateur par taille/metier non fourni dans les passages examines. Cout nul/manquant non assimilable a absence reelle de cout."
+    },
+    {
+      "id": "ACPR_AS168",
+      "source": "https://acpr.banque-france.fr/system/files/2025-02/20250212_Synthese_enquete_gestion_systeme_securite_organismes_assurance.pdf",
+      "locator": "pages imprimees 2 et 5-6, typologie des repondants",
+      "respondents": 224,
+      "turnover_market_coverage_pct": 84,
+      "size_proxy": "primes ou cotisations 2023 en MEUR",
+      "size_bins_as_printed": ["0 a 82", "82 a 427", "427 a 1250", "superieures a 1251"],
+      "limitations": "Autoevaluation de maturite ; pas de panel complet de comptes d'incidents avec pertes. Bornes transcrites comme imprimees ; pas de conversion de ces classes en coefficients de risque."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+128 — RÉSIDUS COMPENSÉS D’UN PROCESSUS DE COMPTAGE, VERSION INSTITUT
+Chronologie PRC, secteur financier (BSF), dates au jour, 2016-2023 : 4614 événements, 1611 jours distincts.
+Résidu compensé : N_t moins l’intensité prévisible ; différence de martingale si l’intensité est bien spécifiée.
+Seuils recalibrés par bootstrap paramétrique avec réestimation (200 tirages, comptes binomiaux négatifs).
+
+CONTRÔLES SUR DONNÉES SIMULÉES
+  tendance seule simulée : branchement estimé par M1 médian 0.001, maximum 0.187 sur 20 simulations (biais de l’estimateur sous la loi nulle).
+  excitation interne simulée de branchement 0.367 : estimé 0.368.
+
+VARIANTE : toutes les dates ; 4614 événements sur 2922 jours, maximum journalier 191.
+  modèle dispersion    Q(14)  seuil 95 %  p bootstrap  rho(1)  rho(2)  branchement
+  M0           9.42    624.5        24.6        0.005  +0.260  +0.371          nan
+  M1           5.31    115.6        22.1        0.005  -0.018  +0.186        0.294
+  rapport de vraisemblance M0 contre M1 : 939.0, seuil bootstrap à 95 % 37.8, p = 0.005 ; branchement estimé sous la loi nulle : médiane 0.00, 95 % 0.15.
+
+VARIANTE : sans la semaine MOVEit ; 4205 événements sur 2922 jours, maximum journalier 26.
+  modèle dispersion    Q(14)  seuil 95 %  p bootstrap  rho(1)  rho(2)  branchement
+  M0           3.08     75.1        24.7        0.005  +0.088  +0.020          nan
+  M1           3.06     44.8        21.8        0.005  +0.000  +0.007        0.090
+  rapport de vraisemblance M0 contre M1 : 60.7, seuil bootstrap à 95 % 10.4, p = 0.005 ; branchement estimé sous la loi nulle : médiane 0.01, 95 % 0.10.
+
+EXCITATION EXTERNE : catalogue CISA KEV, fenêtre 2022-2023
+  catalogue lu : 1754 entrées, premier lot du 2021-11-03 : 287 entrées d’un seul jour (reprise de stock, écartée) ; fenêtre retenue à partir du 2022-01-01.
+  audit de date : CVE-2023-34362 (MOVEit) ajoutée le 2023-06-02, soit 4 jours après le pic du 29 mai 2023 : la date d’ajout suit l’événement, elle ne le précède pas.
+  VARIANTE toutes les dates : 1620 événements sur 730 jours.
+    modèle dispersion    Q(14)  seuil 95 %  p bootstrap   gamma   écart de log-vraisemblance
+    M0          28.19    253.9        24.5        0.005     nan                         0.00
+    M2          28.11    255.5        26.1        0.005   0.019                         0.27
+    rapport de vraisemblance M0 contre M2 : 0.53, seuil bootstrap à 95 % 87.98, p = 0.896.
+  VARIANTE sans la semaine MOVEit : 1211 événements sur 730 jours.
+    modèle dispersion    Q(14)  seuil 95 %  p bootstrap   gamma   écart de log-vraisemblance
+    M0           3.50     37.0        25.5        0.005     nan                         0.00
+    M2           3.51     36.8        22.9        0.005  -0.011                         0.07
+    rapport de vraisemblance M0 contre M2 : 0.13, seuil bootstrap à 95 % 11.79, p = 0.811.
+
+GRANDEURS CITÉES
+toutes les dates : branchement 0.29 ; autocorrélation du premier retard +0.26 sans excitation, -0.02 avec ; p bootstrap 0.005 puis 0.005.
+sans la semaine MOVEit : branchement 0.09 ; autocorrélation du premier retard +0.09 sans excitation, +0.00 avec ; p bootstrap 0.005 puis 0.005.
+
+Limites : comptes de brèches déclarées au PRC, non une fréquence d’entités ; couverture déclarative croissante
+absorbée par une tendance log-linéaire ; comptes binomiaux négatifs de dispersion constante comme loi nulle ;
+puissance faible sur 730 jours pour l’excitation externe ; la date d’ajout au KEV n’est pas la date de première
+exploitation ; un diagnostic compatible avec une martingale ne prouve ni causalité ni contagion.
+Durée 238 s ; résultats agrégés : 128.json

@@ -1,0 +1,49 @@
+\documentclass[tikz,border=6pt]{standalone}
+\usepackage{amsmath}
+\input{preambule_schemas}
+% -----------------------------------------------------------------------------
+%  Schema « du Vasicek a la forme finale avec W, et le seuil K_j » (support de
+%  soutenance ENSAE, diapositive de la cascade). Bandeau en trois blocs, environ
+%  11,6 x 2,1 pouces. Aucun nombre de resultat. Formules recopiees du rapport :
+%   - Vasicek a un facteur et seuil classique : equation (5.1), § 5.1 ;
+%   - forme finale : equation (5.3) et sa forme reduite, § 5.3 ;
+%   - normalisation de Leontief : equation (5.4), proposition 5.3, § 5.4 et 5.8 ;
+%   - seuil de declenchement : equation (5.7), § 5.6.
+%  Chaque ligne est posee seule (pas de largeur de texte imposee) : contraintes a
+%  une largeur, les formules se coupaient en plein milieu (premier rendu).
+% -----------------------------------------------------------------------------
+\begin{document}
+\begin{tikzpicture}[
+  boite/.style={draw=filet, line width=0.9pt, fill=clair, inner sep=7pt,
+                align=center, text=encre, font=\corps, minimum height=4.6cm},
+  finale/.style={draw=accent, line width=1.6pt, fill=white, inner sep=8pt,
+                 align=center, text=encre, font=\corps, minimum height=4.6cm},
+]
+\node[boite] (vas) {%
+  {\color{ardoise}\bfseries Vasicek à un facteur}\\[2pt]
+  {\petit\color{gris} le modèle de crédit de départ}\\[8pt]
+  $X_i=\sqrt{\rho}\,Y+\sqrt{1-\rho}\,\varepsilon_i$\\[8pt]
+  défaut si $X_i\ge K_i$\\[4pt]
+  $K_i=\Phi^{-1}(1-\mathrm{PD}_i)$};
+
+\node[finale, right=0.75cm of vas] (fin) {%
+  {\color{accent}\bfseries Notre forme finale}\\[2pt]
+  {\petit\color{gris} facteur par pilier et contagion dirigée}\\[6pt]
+  {\grand $X_{ij}=\underbrace{\sum_{k\neq j}W_{kj}\,X_{ik}}_{\text{contagion, }k\,\to\,j}
+    +\sqrt{\rho_{ij}}\,Y_j+\sqrt{1-\rho_{ij}}\,\varepsilon_{ij}$}\\[6pt]
+  $\mathbf{X}_i=(I-W^{\top})^{-1}(\text{systémique}+\text{idio}),\quad \rho(W)<1$\\[6pt]
+  $W=\dfrac{g}{s_{\max}}\,\mathrm{TRANS},\quad s_{\max}=\max_j\sum_k\mathrm{TRANS}_{jk}$};
+
+\node[boite, right=0.75cm of fin] (seuil) {%
+  {\color{ardoise}\bfseries Seuil de déclenchement}\\[2pt]
+  {\petit\color{gris} substitut de $\Phi^{-1}(\mathrm{PD})$}\\[8pt]
+  incident sur $j$ si $X_{ij}\ge K_j$\\[4pt]
+  {\grand $K_j=F^{-1}(1-p_j)$}\\[4pt]
+  $p_j=\mathbb{P}(S_{ij}\ge u_j)$\\[6pt]
+  {\petit\color{gris} $u_j$ : seuil de matérialité DORA}\\[1pt]
+  {\petit\color{gris} $F$ : loi à queue lourde}};
+
+\draw[fleche] (vas.east) -- (fin.west);
+\draw[fleche] (fin.east) -- (seuil.west);
+\end{tikzpicture}
+\end{document}

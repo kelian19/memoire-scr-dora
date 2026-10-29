@@ -1,0 +1,82 @@
+
+============================================================================================
+0. Donnees : la meme serie que le script 47 et que la calibration publiee
+============================================================================================
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+  582 pertes cyber x finance (M EUR) ; seuil publie u = 20.03 ; 91 exces.
+
+============================================================================================
+1. Balayage du seuil : effectif, xi (EMV, IC 95 %) et KS / AD calibres
+============================================================================================
+  p-values par bootstrap parametrique : on simule une GPD aux parametres estimes, on
+  REESTIME la GPD sur chaque echantillon simule, et l'on compare la statistique. B = 1000
+  par seuil. L'IC de xi est celui du rapport de vraisemblance profilee.
+
+  seuil     u (M EUR)   pctl   n_u      xi          IC 95 % xi    sigma    D KS   p KS   p AD  echecs
+  q75,0          8.62   74.9   146   0.982     [0,665 ; 1,392]    22.36   0.064  0.080  0.033       0
+  q77,5         10.95   77.5   131   0.933     [0,603 ; 1,371]    26.44   0.067  0.101  0.022       0
+  q80,0         12.88   80.2   115   0.750     [0,450 ; 1,159]    37.93   0.054  0.487  0.385       0
+  q82,5         16.90   82.5   102   0.698     [0,393 ; 1,126]    44.57   0.054  0.596  0.326       0
+  publie        20.03   84.4    91   0.598     [0,310 ; 1,012]    55.75   0.043  0.938  0.963       0
+  q85,0         22.03   84.9    88   0.601     [0,307 ; 1,028]    56.59   0.044  0.932  0.854       0
+  q87,5         31.82   87.5    73   0.541     [0,242 ; 0,988]    69.05   0.065  0.577  0.947       0
+  q90,0         47.42   89.9    59   0.534     [0,207 ; 1,045]    78.12   0.082  0.381  0.829       0
+  q92,5         73.81   92.4    44   0.598     [0,185 ; 1,306]    83.68   0.111  0.152  0.251       0
+  q95,0        105.39   94.8    30   0.382    [-0,006 ; 1,091]   139.06   0.091  0.724  0.707       0
+
+  Bruit Monte-Carlo d'une p-value : ecart-type au plus 0.016 (p = 0,5).
+
+  LECTURE.
+  Seuils ou ni KS ni AD ne rejettent a 5 % : 8 sur 10 (q80,0, q82,5, publie, q85,0, q87,5, q90,0, q92,5, q95,0).
+  Au seuil publie (u = 20.03, 91 exces) : D = 0.043, p KS = 0.938, p AD = 0.963.
+  Au-dessus du seuil publie, xi publie (0.598) est dans l'IC 95 % de 6 seuils sur 6.
+  Le test ECARTE des seuils ; il ne designe pas un optimum. Une p-value haute a haut seuil
+  peut venir du faible nombre d'exces (puissance faible), et la selection du seuil sur la
+  meme donnee n'est pas corrigee. Le seuil se lit donc avec la stabilite de xi.
+
+============================================================================================
+2. Au seuil publie : quatre estimateurs de la queue, IC a 95 % par bootstrap
+============================================================================================
+  Bootstrap non parametrique des 91 exces, B = 2000 (protocole de Franck,
+  percentiles 2,5 et 97,5). Le quantile de severite d'un sinistre q99,5 est calcule au
+  taux de depassement GELE p_u = 0.1509, comme le 663 M EUR publie : son IC ne porte
+  donc que l'incertitude sur (xi, sigma). Hill et les moments ne donnent que xi.
+
+  estimateur                   xi        IC 95 % xi   sigma     IC 95 % sigma   q99,5     IC 95 % q99,5  xi>=1  ech.
+  EMV                       0.598   [0,250 ; 0,890]   55.75     [37.6 ; 83.6]     642      [369 ; 1091]     12     0
+  Moments ponderes (PWM)    0.507   [0,255 ; 0,622]   59.19     [42.7 ; 85.5]     560       [360 ; 774]      0     0
+  Hill                      1.377   [1,183 ; 1,585]       -                 -       -                 -   2000     0
+  Moments (DEdH)            0.864   [0,524 ; 1,081]       -                 -       -                 -    215     0
+
+  EMV, IC 95 % de xi par vraisemblance profilee : [0.310 ; 1.012].
+  EMV, IC 95 % asymptotique (Fisher) : [0.270 ; 0.926].
+  Controle : l'EMV redonne la calibration publiee (xi = 0.5954, sigma = 57.97) a 0.0025 et 2.22 pres,
+  et le quantile 641.8 contre 662.78 publie.
+
+  LECTURE. Hill depasse nettement les trois autres : il suppose une queue de Pareto pure
+  au-dessus de u, et le script 47 montre que cet ecart est celui qu'un xi de 0,595 produit
+  sur cet echantillon. L'IC a 95 % de l'EMV est plus large que l'IC a 90 % publie
+  ([0,30 ; 0,83]) : seul le niveau change, pas l'estimation.
+
+============================================================================================
+Figure
+============================================================================================
+  figure ecrite : figures/G_seuil_ks_ic.png
+
+============================================================================================
+Grandeurs citees (sans separateur)
+============================================================================================
+  seuil q75,0 u=8.62 n=146 xi=0.982 ic=[0.665;1.392] D=0.064 pks=0.080 pad=0.033
+  seuil q77,5 u=10.95 n=131 xi=0.933 ic=[0.603;1.371] D=0.067 pks=0.101 pad=0.022
+  seuil q80,0 u=12.88 n=115 xi=0.750 ic=[0.450;1.159] D=0.054 pks=0.487 pad=0.385
+  seuil q82,5 u=16.90 n=102 xi=0.698 ic=[0.393;1.126] D=0.054 pks=0.596 pad=0.326
+  seuil publie u=20.03 n=91 xi=0.598 ic=[0.310;1.012] D=0.043 pks=0.938 pad=0.963
+  seuil q85,0 u=22.03 n=88 xi=0.601 ic=[0.307;1.028] D=0.044 pks=0.932 pad=0.854
+  seuil q87,5 u=31.82 n=73 xi=0.541 ic=[0.242;0.988] D=0.065 pks=0.577 pad=0.947
+  seuil q90,0 u=47.42 n=59 xi=0.534 ic=[0.207;1.045] D=0.082 pks=0.381 pad=0.829
+  seuil q92,5 u=73.81 n=44 xi=0.598 ic=[0.185;1.306] D=0.111 pks=0.152 pad=0.251
+  seuil q95,0 u=105.39 n=30 xi=0.382 ic=[-0.006;1.091] D=0.091 pks=0.724 pad=0.707
+  EMV xi=0.598 ic=[0.250;0.890] sigma=55.75 ic=[37.58;83.62] q=642 ic=[369;1091]
+  Moments ponderes (PWM) xi=0.507 ic=[0.255;0.622] sigma=59.19 ic=[42.66;85.51] q=560 ic=[360;774]
+  Hill xi=1.377 ic=[1.183;1.585] sigma=nan ic=[nan;nan] q=nan ic=[nan;nan]
+  Moments (DEdH) xi=0.864 ic=[0.524;1.081] sigma=nan ic=[nan;nan] q=nan ic=[nan;nan]

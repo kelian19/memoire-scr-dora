@@ -18,6 +18,7 @@ Périmètre cyber/ICT retenu :
 Usage : python notebooks/02_oprisk_exploratory.py
 """
 
+import os
 import numpy as np
 import pandas as pd
 import warnings
@@ -69,9 +70,19 @@ def filter_cyber(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def filter_finance(df: pd.DataFrame) -> pd.DataFrame:
-    """Filtre le secteur financier."""
-    return df[df["Industry Sector Name"].apply(
+    """Filtre le secteur financier.
+
+    La variable d'environnement OPRISK_ANNEE_MIN restreint en outre la periode : la calibration
+    figee du memoire (u = 20,03 ; p_u = 0,1509 ; xi = 0,5954) est celle de l'echantillon 2000-2026,
+    soit 570 pertes et 86 exces, quand la base courante en compte 582 et 91 (douze pertes d'avant
+    2000). Sans la variable, rien ne change.
+    """
+    out = df[df["Industry Sector Name"].apply(
         lambda v: "Financial" in str(v) if pd.notna(v) else False)].copy()
+    annee_min = os.environ.get("OPRISK_ANNEE_MIN")
+    if annee_min and "year" in out.columns:
+        out = out[out["year"] >= int(annee_min)].copy()
+    return out
 
 
 # ---------------------------------------------------------------------------

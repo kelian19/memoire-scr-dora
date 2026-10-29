@@ -1,0 +1,45 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+125 — RÉÉCHANTILLONNAGE ANNUEL CONJOINT, VERSION INSTITUT
+26 années complètes 2000-2025 ; 565 pertes ; 84 excès au-dessus de 20.03 M EUR ; aucune année sans perte : True.
+Nombre annuel de pertes : moyenne 21.73, écart-type 9.68, minimum 4, maximum 39.
+Fréquence ancrée par lambda_b = lambda_ref * n_b / n_ref ; la référence gelée 582/27 est conservée.
+Montants en M EUR du périmètre financier étudié ; bandes percentiles exploratoires.
+Contrôle : le facteur 1 reproduit le moteur aux huit cellules du calage sur les 26 années.
+Calage sur les 26 années : xi 0.611, sigma 54.7, taux de dépassement 0.1487 ; capital additif 5958 et 20268.
+  annees : 200/600 ; 48 s
+  annees : 400/600 ; 78 s
+  annees : 600/600 ; 108 s
+
+SCHÉMA ANNÉES ÉCHANGEABLES : 600 tirages réussis, 0 échecs journalisés ; 0 ajustements avec xi >= 1 conservés.
+  facteur de fréquence n_b/n_ref : 5 % 0.855, médiane 1.005, 95 % 1.145
+  règle      fréquence   rapport : 5 %  médiane    95 %   non conforme : 5 %  médiane     95 %
+  additive   fixée                3.01     3.36    4.23                 7259    19321    51189
+  additive   propagée             3.00     3.36    4.22                 7192    19144    52139
+  moyenne    fixée                1.75     1.96    2.43                 3233     8433    21798
+  moyenne    propagée             1.75     1.96    2.43                 3199     8380    22183
+  unique     fixée                1.99     2.25    2.68                 3930    10353    25642
+  unique     propagée             1.98     2.25    2.68                 3795    10271    25789
+  amplifiee  fixée                3.52     4.03    4.77                10378    26736    64948
+  amplifiee  propagée             3.52     4.03    4.77                10115    26496    64448
+  Largeur de la bande à 90 %, règle additive, due à la fréquence : rapport +0 %, état non conforme +2 %.
+  blocs : 200/600 ; 137 s
+  blocs : 400/600 ; 166 s
+  blocs : 600/600 ; 194 s
+
+SCHÉMA BLOCS DE TROIS ANNÉES : 600 tirages réussis, 0 échecs journalisés ; 0 ajustements avec xi >= 1 conservés.
+  facteur de fréquence n_b/n_ref : 5 % 0.827, médiane 1.035, 95 % 1.218
+  règle      fréquence   rapport : 5 %  médiane    95 %   non conforme : 5 %  médiane     95 %
+  additive   fixée                2.95     3.19    4.06                 4710    13257    46968
+  additive   propagée             2.96     3.19    4.07                 4644    13465    50377
+  moyenne    fixée                1.72     1.85    2.34                 2102     5856    20057
+  moyenne    propagée             1.72     1.85    2.35                 2049     5950    21467
+  unique     fixée                1.93     2.13    2.60                 2441     7224    23487
+  unique     propagée             1.93     2.13    2.61                 2465     7370    24974
+  amplifiee  fixée                3.40     3.82    4.64                 6501    18936    59277
+  amplifiee  propagée             3.39     3.82    4.64                 6560    19247    62924
+  Largeur de la bande à 90 %, règle additive, due à la fréquence : rapport -1 %, état non conforme +8 %.
+
+Limites : un seul calage de référence ; années échangeables ou en blocs de trois, sans tendance ;
+fréquence relative aux pertes enregistrées, pas par entité, avec dispersion et multiplicateurs posés ;
+la hausse du nombre annuel de pertes dans le temps n’est pas modélisée ici.
+Durée 194.1 s ; résultats agrégés : 125.json
