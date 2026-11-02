@@ -26,7 +26,7 @@ Le règlement européen DORA distingue cinq domaines, appelés ici piliers : gou
 incidents (P2), tests (P3), prestataires tiers (P4) et partage d'informations (P5). La charge de
 risque opérationnel de la Formule Standard ne dépend pas directement de leur conformité.
 
-Le risque mesuré est le risque opérationnel d'origine informatique de l'entité. Les pénalités réglementaires et le risque de souscription des polices cyber
+Le risque mesuré est le risque opérationnel d'origine informatique : les incidents d'un périmètre, pris ici en bloc. Les pénalités réglementaires et le risque de souscription des polices cyber
 qu'un assureur vend ne sont pas modélisés. Nous répartissons l'écart entre les cinq piliers et entre
 quatre paramètres du modèle que la non-conformité modifie, que nous appelons canaux : la fréquence
 des incidents, leur détection, leur propagation d'un pilier à l'autre et la dépendance à un
@@ -71,9 +71,9 @@ Accumulation & prestataire commun & $0$ & $0{,}68$ & $1\,728$ & $3\,402$ \\
 \end{center}
 
 \notesec{Résultats}
-À l'échelle du périmètre financier étudié, le besoin de capital est multiplié par $3{,}34$ entre
-l'entité conforme et l'entité non conforme sur les quatre canaux, soit un écart de $14\,139$~M\euro.
-Les canaux pris un à un en expliquent $9\,138$~M\euro, et leurs interactions $5\,001$~M\euro, soit
+À l'échelle du périmètre financier étudié, le besoin de capital est $3{,}34$ fois plus élevé à l'état non
+conforme sur les quatre canaux qu'à l'état conforme, soit un écart de $14\,139$~M\euro.
+Pris un à un, les canaux contribuent pour $9\,138$~M\euro{} ; leurs interactions ajoutent $5\,001$~M\euro, soit
 $35\,\%$. L'effet isolé est le capital ajouté par un canal seul, depuis l'état conforme. L'effet de
 fermeture est le capital retiré en corrigeant ce canal seul, depuis l'état non conforme sur les trois
 autres : un plan de remédiation doit citer ce second effet.
@@ -105,9 +105,13 @@ $8\,697$~M\euro{} ; recalculée sur quatre graines, la largeur de cette plage a 
 $189$~M\euro. La matrice se décompose en une partie symétrique, la force commune des liens,
 posée ici, et une partie antisymétrique, leur sens, qu'aucune des sources
 examinées ne fixe. Cette plage n'est ni un intervalle de confiance ni une borne démontrée : elle
-mesure ce que coûte l'ignorance du sens, à force posée.  Pour une entité notionnelle de $20\,000$~M\$ d'actifs, le capital du secteur est
-ramené à sa taille, la fréquence croissant avec les actifs selon un exposant estimé sur les grandes institutions : le besoin est de l'ordre de $24$~M\euro{} (de $15{,}8$ à $27{,}5$~M\euro{}
-aux sommets admissibles), une extrapolation d'ordre de grandeur qui dépend de la structure d'expert et de la calibration.
+mesure ce que coûte l'ignorance du sens, à force posée.
+
+Pour une entité notionnelle de $20\,000$~M\$ d'actifs, nous ramenons le capital du secteur à sa
+taille. La fréquence croît avec les actifs selon un exposant estimé sur les grandes institutions.
+À l'état non conforme, le besoin est de l'ordre de $24$~M\euro{} ($15{,}8$ à $27{,}5$~M\euro{} aux
+sommets admissibles, $8{,}3$ à $53{,}0$~M\euro{} par bootstrap des firmes). C'est une extrapolation
+d'ordre de grandeur, qui dépend de la structure d'expert et de la calibration.
 
 \notesec{Limites et recommandations}
 La fréquence de référence inclut douze pertes d'avant 2000, soit $2{,}1\,\%$ de plus que l'échantillon étudié.
@@ -143,7 +147,7 @@ called pillars here: governance (P1), incidents (P2), testing (P3), third-party 
 information sharing (P5). The Standard Formula operational risk charge does not directly depend
 on their compliance.
 
-The risk measured is the entity's own IT-related operational risk, that is its own incidents.
+The risk measured is IT-related operational risk: the incidents of a perimeter, taken here as a whole.
 Regulatory penalties and the underwriting risk of the cyber policies an insurer sells are not
 modelled. We split the gap across the five pillars and across four model parameters that
 non-compliance changes, which we call channels: incident frequency, detection, propagation from one
@@ -190,8 +194,8 @@ Accumulation & shared provider & $0$ & $0.68$ & $1\,728$ & $3\,402$ \\
 \end{center}
 
 \notesec{Results}
-At the scale of the financial sample, capital need is multiplied by $3.34$ between the
-compliant entity and the entity that is non-compliant on all four channels, a gap of $14\,139$~M\euro.
+At the scale of the financial sample, capital need is $3.34$ times higher in the
+non-compliant state on all four channels than in the compliant state, a gap of $14\,139$~M\euro.
 The channels taken one by one explain $9\,138$~M\euro, and their interactions $5\,001$~M\euro, or
 $35\,\%$. The standalone effect is the capital added by one channel alone, from the compliant state. The
 closure effect is the capital removed by fixing that channel alone, from the state that is
@@ -226,9 +230,13 @@ of this range has a standard deviation of $189$~M\euro.
 The matrix splits into a symmetric part,
 the common strength of the links, posited here, and an antisymmetric part, their
 direction, which none of the sources examined pins down. This range is neither a confidence interval
-nor a proven bound: it measures the cost of not knowing the direction, at posited strength.  For a notional entity with $20\,000$~M\$ of assets, sector capital is scaled down to its
-size, frequency growing with assets at an exponent estimated on large institutions: the need is about $24$~M\euro{} ($15.8$ to $27.5$~M\euro{} at the admissible vertices),
-an extrapolated order of magnitude that depends on the expert-set structure and on the calibration.
+nor a proven bound: it measures the cost of not knowing the direction, at posited strength.
+
+For a notional entity with $20\,000$~M\$ of assets, we scale the sector capital down to its size.
+Frequency grows with assets at an exponent estimated on large institutions. In the non-compliant
+state, the need is about $24$~M\euro{} ($15.8$ to $27.5$~M\euro{} at the admissible vertices, $8.3$
+to $53.0$~M\euro{} by firm bootstrap). This is an order-of-magnitude extrapolation that depends on
+the expert-set structure and on the calibration.
 
 \notesec{Limitations and recommendations}
 Reference frequency includes twelve losses from before 2000, $2.1\,\%$ more than

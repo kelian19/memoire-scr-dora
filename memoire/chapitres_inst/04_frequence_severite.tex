@@ -139,7 +139,7 @@ $\lambda_v = \lambda_{ref}\,\pi_v$, mais n'entre pas dans le moteur.
 % SOURCES-SCRIPTS: 62
 
 Nous avons relu les parts $\pi_v$ sur quatre jeux : premier trimestre 2025, premier semestre 2026,
-juillet à octobre 2026 et année 2026 entière, qui recouvre les deux précédents. Notre grille diffère
+juillet à octobre 2026 et janvier à octobre 2026, qui recouvre les deux précédents. Notre grille diffère
 de celle des décomptes publiés ; les écarts mêlent donc classement et période. Le multiplicateur
 non conforme va de $2{,}318$ à $2{,}471$, contre $2{,}487$ publié, soit $6{,}8\,\%$ d'écart au plus.
 Cette plage représente $0{,}138$ de celle des fourchettes posées ($1{,}933$ à $3{,}042$) : les
@@ -250,10 +250,11 @@ Pour chaque année d'origine, nous ajustons les deux lois sur les seules observa
 évaluons la prévision de l'année suivante, puis l'origine avance d'un an. La fenêtre va de $2004$ à $2025$
 ($539$ incidents, douze années notées), car avant $2004$ la base compte de un à neuf incidents par
 an, et $2026$ n'en compte que cinq. Le seuil est ré-estimé sur chaque échantillon d'apprentissage
-par la règle du percentile $85$.
+par la règle du percentile $85$. Les années $2023$ à $2025$, dont les comptes sont encore sous-remontés
+(\S\ref{sec:biais-chiffres}), sont traitées ici comme complètes : la limite n'est pas corrigée.
 
 L'intervalle de prévision à $90\,\%$ du nombre annuel d'incidents couvre $11$ années sur $12$ sous la binomiale négative,
-contre $9$ sous le Poisson ; son log-score cumulé gagne $3{,}054$ nats. Ce résultat ne valide
+contre $9$ sous le Poisson, sans test de la différence sur si peu d'années ; son log-score cumulé gagne $3{,}054$ nats. Ce résultat ne valide
 pas la surdispersion posée dans le moteur. La forme GPD n'est pas rejetée ($p=0{,}4087$), mais le test de Kupiec, qui compare les nombres de dépassements observé et attendu, rejette la couverture des quantiles de sévérité à $99\,\%$ ($p=0{,}0078$) et
 $99{,}5\,\%$ ($p=0{,}0140$). La dérive d'échelle estimée, $3{,}40\,\%$ par an, reste non
 significative ($p=0{,}1786$). Le niveau de charge annuelle est aussi rejeté sur les dernières

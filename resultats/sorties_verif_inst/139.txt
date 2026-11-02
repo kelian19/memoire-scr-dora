@@ -1,0 +1,13 @@
+Base chargée : 41,975 incidents valides (1 aberration(s) > 100,000M$ retirée(s))
+lambda 0.0209 ; multiplicateur 0.854 ; exposant 0.494
+correspondance              C     PC     NC   relu dans 136.txt
+etroite                  18.0   20.9   24.1   [18.0, 20.9, 24.1]
+retenue                  13.2   17.7   24.1   [13.2, 17.7, 24.1]
+large                    10.1   15.7   24.1   [10.1, 15.7, 24.1]
+conformite faible        13.2   15.7   16.9   [13.2, 15.7, 16.9]
+tres etroite             22.3   23.1   24.1   [22.3, 23.1, 24.1]
+Les cinq correspondances du 136 sont reproduites : le moteur est le bon.
+grille de g, besoin croissant : 8.2 9.3 9.7 10.1 10.8 11.0 11.6 12.6 13.2 14.4 15.7 16.3 16.9 18.0 19.7 20.9 22.3 24.1 25.2 27.0
+ecartement et ecart (%) : 0.80:159.0 0.75:150.1 0.70:138.4 0.65:123.4 0.60:119.4 0.55:108.9 0.50:91.9 0.45:83.0 0.40:67.9 0.35:53.6 0.30:47.8 0.25:43.1 0.20:33.8 0.15:22.5 0.10:15.3 0.05:8.1 0.00:0.0
+ecart retenu (g_C = 0,45) : 83.0
+figure ecrite : figures_inst/invariance_conformite_entite.png

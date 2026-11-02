@@ -1,0 +1,85 @@
+% =====================================================================
+% PREAMBULE COMMUN a cours_memoire.tex (parties I a IX) et a
+% cours_memoire_questions.tex (partie X et suivantes). Extrait du fichier
+% d'origine le 6 octobre 2026. Un seul endroit : toute retouche de style
+% vaut pour les deux documents.
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{eurosym}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,decorations.pathreplacing,shapes.geometric}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{navy}{HTML}{1F3864}
+\definecolor{bluemid}{HTML}{2E5496}
+\definecolor{lightblue}{HTML}{D6E0F0}
+\definecolor{accent}{HTML}{C0491F}
+\definecolor{vert}{HTML}{3D8361}
+
+\captionsetup{font=small,labelfont={bf,color=navy},labelsep=period}
+\graphicspath{{../figures/}}
+
+\newtcolorbox{phrasebox}{colback=vert!7,colframe=vert!70!black,boxrule=0.7pt,
+  arc=2pt,left=7pt,right=7pt,top=5pt,bottom=5pt,before skip=6pt,after skip=8pt}
+\newtcolorbox{cle}[1][]{colback=lightblue!40,colframe=navy,boxrule=0.6pt,
+  arc=2pt,left=7pt,right=7pt,top=5pt,bottom=5pt,#1}
+
+\providecommand{\Prob}{\mathbb{P}}
+\providecommand{\E}{\mathbb{E}}
+\providecommand{\R}{\mathbb{R}}
+
+\newcommand{\lequoi}[1]{\smallskip\noindent\textcolor{navy}{\textbf{Le problème.}}\ #1\par}
+\newcommand{\lidee}[1]{\smallskip\noindent\textcolor{navy}{\textbf{L'idée.}}\ #1\par}
+\newcommand{\laformule}[1]{\smallskip\noindent\textcolor{navy}{\textbf{La formule.}}\ #1\par}
+\newcommand{\cheznous}[1]{\smallskip\noindent\textcolor{navy}{\textbf{Chez nous.}}\ #1\par}
+\newcommand{\lepiege}[1]{\smallskip\noindent\textcolor{accent}{\textbf{Le piège.}}\ #1\par}
+\newcommand{\laphrase}[1]{\begin{phrasebox}\textbf{À dire à voix haute.} \emph{#1}\end{phrasebox}}
+
+% Questions du jury : la question, puis la reponse a tenir.
+\newtcolorbox{question}[1]{colback=accent!5,colframe=accent!75!black,boxrule=0.6pt,
+  arc=2pt,left=7pt,right=7pt,top=5pt,bottom=5pt,before skip=7pt,after skip=4pt,
+  fonttitle=\bfseries\color{white},title={#1}}
+\newcommand{\rep}[1]{\smallskip\noindent\textcolor{navy}{\textbf{La réponse.}}\ #1\par}
+\newcommand{\appui}[1]{\smallskip\noindent\small\textcolor{navy}{\textbf{Appui~:}} #1\par\normalsize}
+
+% Partie X, chapitre par chapitre : les reperes de pages, le chapitre en une phrase, et la
+% fiche \og par coeur\fg{} (tableau a deux colonnes dans un cadre, titre optionnel).
+\newcommand{\reperes}[1]{\noindent{\small\color{navy!75}#1}\par\smallskip}
+\newcommand{\enbref}[1]{\noindent\textcolor{navy}{\textbf{En une phrase.}}\ #1\par}
+\newtcolorbox{parcoeur}[1][À savoir par c\oe ur]{colback=navy!3,colframe=navy!85!black,
+  boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,before skip=7pt,after skip=5pt,
+  fonttitle=\bfseries\small\color{white},title={#1}}
+\newenvironment{fichetab}{\small\renewcommand{\arraystretch}{1.1}%
+  \tabularx{\linewidth}{@{}>{\raggedright\arraybackslash\bfseries}p{3.2cm}
+  >{\raggedright\arraybackslash}X@{}}}{\endtabularx}
+
+% Styles des schemas
+\tikzset{
+  brique/.style={draw=navy,fill=lightblue!45,rounded corners=2pt,inner sep=5pt,
+                 align=center,font=\footnotesize,minimum height=9mm},
+  pilier/.style={draw=navy,fill=white,circle,inner sep=1.5pt,minimum size=8mm,
+                 font=\footnotesize\bfseries,text=navy},
+  fleche/.style={-{Stealth[length=2mm]},draw=navy,line width=0.5pt},
+  flechef/.style={-{Stealth[length=2.6mm]},draw=accent,line width=1.1pt},
+  flechep/.style={-{Stealth[length=1.8mm]},draw=navy!45,line width=0.4pt},
+  etiq/.style={font=\scriptsize\itshape,text=navy!75},
+}
+
+\setcounter{secnumdepth}{2}
+\emergencystretch=1.2em   % noms propres longs (Kolmogorov-Smirnov, Pickands-Balkema)

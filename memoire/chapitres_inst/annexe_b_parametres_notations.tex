@@ -64,36 +64,36 @@ spécifique au périmètre.
 \endhead
 \bottomrule
 \endlastfoot
-Queue de sévérité $\xi$ & $0{,}5954$ (OpRisk, résultat principal) ; PRC $1{,}03$ ; $0{,}90$ posé en pire cas de modèle & calibré, incertain & GPD sur pertes réelles ; hétérogène par catégorie ($0{,}87$--$1{,}37$) & \textbf{forte} : de $0{,}60$ à $0{,}38$ quand le seuil monte au-dessus de celui retenu, dans l'IC90 $[0{,}30\,;0{,}83]$ ; pilote la queue \\
+Queue de sévérité $\xi$ & $0{,}5954$ (OpRisk, résultat principal) ; PRC $1{,}03$ ; $0{,}90$ posé en pire cas de modèle & calibré, incertain & GPD sur pertes réelles ; hétérogène par catégorie ($0{,}87$--$1{,}37$) & \textbf{forte} : de $0{,}60$ à $0{,}34$ quand le seuil monte au-dessus de celui retenu, dans l'IC90 $[0{,}30\,;0{,}83]$ ; pilote la queue \\
 Échelle GPD $\sigma$, seuil $u$, $p_u$ & $57{,}97$ M\euro{} ; $20{,}03$ M\euro{} ; $0{,}15$ & calibré & POT au percentile $85$ de l'échantillon 2000--2026, $86$ excès sur $570$ pertes ; $p_u=86/570$ (\S\ref{sec:pu-coherence}) & modérée (via la queue) \\
 Fréquence $\lambda$ & ${\sim}21{,}6$/an (OpRisk) & convention de calage & $582$ événements collectés / 27 ans, dont douze d'avant 2000 : $+2{,}1\,\%$ sur l'échantillon (\S\ref{sec:pu-coherence}) & sous-linéaire sur le niveau \\
 Multiplicateur de fréquence par état & $\times 1{,}525$ partiel ; $\times 2{,}487$ non conforme ($\lambda$ de $21{,}56$ à $53{,}62$) & semi-ancré & parts Hackmageddon et fourchettes posées sur des effets publiés (chapitre~\ref{chap:multietats}) ; aux bornes, $\lambda$ de $41{,}7$ à $65{,}6$ & \textbf{forte} : canal dominant du résultat principal \\
-Sur-dispersion $\phi$ & $9{,}20$ & \textbf{posé} (prudent) & $2{,}24$ mesuré sur la série annuelle détendancée, maintenu entre scénarios & élasticité $-0{,}44$ sur l'écart entre états \\
+Sur-dispersion $\phi$ & $9{,}20$ & \textbf{posé} (prudent) & $2{,}24$ mesuré sur la série annuelle détendancée ($2{,}39$ sur la série brute), maintenu entre scénarios & élasticité $-0{,}44$ sur l'écart entre états \\
 Choc commun fréquence $a$ & $0{,}60$ & \textbf{posé} (prudent) & dépasse l'IC empirique haut ($0{,}22$) : conservateur & enveloppe le modèle à paquets ($\times 2{,}5$) \\
-Structure $W = g\,T/s_{\max}$ & classeur qualitatif & \textbf{posé} / normatif & jugement d'expert consigné ; direction non identifiable & l'asymétrie départage les deux piliers de tête ; l'essentiel du surcoût de contagion vient de la partie symétrique \\
+Structure $W = g\,T/s_{\max}$ & classeur qualitatif & \textbf{posé} / normatif & jugement d'expert consigné ; direction non identifiable & l'asymétrie départage les deux piliers de tête ; l'essentiel de l'écart de capital dû à la contagion vient de la partie symétrique \\
 Gain de propagation $g$ & $0{,}90$ base ; par état $0{,}45/0{,}68/0{,}90$ & \textbf{posé} & amplitude de $W$, bornée par Leontief $\rho(W)\le g<1$ & \textbf{levier} : $\times 1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
 Score de conformité $q$ / états & continu $[0,1]$ (ou NC/PC/C) & \textbf{posé} & décrit le profil, subsume 3 ou 5 niveaux & \textbf{levier} : $-53\,\%$ de NC à C sur le seul score ; facteur $3{,}34$ sur les quatre canaux \\
-Multiplicateur de matérialité par état & $0{,}85/1{,}00/1{,}20$ & \textbf{posé} & module $p_u$ selon la conformité & modérée (canal détection) \\
+Multiplicateur de matérialité par état & $0{,}85/1{,}00/1{,}20$ & \textbf{posé} & module $p_u$ selon la conformité ($0{,}1509$ calibré, soit $0{,}128$ à $0{,}181$) & modérée (canal détection) \\
 Charge systémique $\gamma$ & $0{,}68$ & semi-ancré & proxy concentration cloud (AWS+Azure+GCP, Synergy 2025) & modérée \\
 Seuil de crise $\theta_{\text{crise}}$ & $-2{,}5$ & \textbf{posé} & déclenche le régime de co-mouvement extrême & agit sur la seule queue crise \\
 Probabilités d'état $P(\text{NC/PC/C})$ & $0{,}35/0{,}35/0{,}30$ & semi-ancré & enquêtes conformité DORA ${\sim}50\,\%$ non conformes (Deloitte, ESA) & déplace le mélange, pas les états \\
 Copule de dépendance $\theta$ & Gumbel $1{,}8$ & \textbf{posé} & queue supérieure entre briques & \textbf{négligeable} : $\Delta_{\text{DORA}}$ $<1{,}4\,\%$ sur $[1,4]$ \\
 Excès de source $u_{ij}$ & $\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ & \textbf{non identifié} & la direction elle-même ; normalisation $\sum_i u_{ij}=0$ (repérage, non information) & mesurée par l'échelle de repli (ch.~\ref{chap:partielle}) : rang~$1$ capte $74\,\%$ et resserre les bornes de $25\,\%$ ; à $u=0$ P1 et P4 deviennent indiscernables \\
 Élasticité sévérité/taille $b$ & $0{,}087$ $[0{,}026\,;0{,}148]$ & calibré, tronqué & EMV lognormale tronquée au seuil de collecte (ch.~\ref{chap:donnees}) & faible : $\times 0{,}86$ sur la sévérité transposée \\
+Exposant de fréquence $b_\lambda$ & $0{,}494$ (ET par firme $0{,}066$) & calibré au-delà de $100$~Md\$, \textbf{extrapolé} en dessous & NB2 sur $1\,402$ firmes, ch.~\ref{chap:resultats} & fort : $[8{,}3\,;53{,}0]$~M\euro{} pour l'entité notionnelle (bootstrap par firme) \\
 Plafond de sévérité & $40$ M\euro{} & \textbf{posé} & capacité de réassurance ($\xi\ge 1$) ; appliqué par pilier touché & borne la queue extrême \\
 \end{longtable}
 }
 
 \vspace{4pt}
-% SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43 76
+% SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43 76 136 137
 
-Les paramètres à forte sensibilité sont soit calibrés sur données (la queue $\xi$, dont
-l'incertitude est chiffrée), soit des \emph{leviers voulus} ($g$, $q$, le multiplicateur de
-fréquence), qui portent l'effet de la conformité et de la contagion sur le capital. Les paramètres purement posés qui
-ne sont pas des leviers ($\theta$ de copule, $\gamma$, $\theta_{\text{crise}}$, probabilités d'état,
-matérialité) ont une influence faible à modérée dans ces tests. Les correspondances entre conformité
-et canaux restent posées. Leur effet sur l'écart est déterminant ; l'unité de perte et le bootstrap
-conjoint en précisent la portée (\S\ref{sec:institut-unite-incertitude}).
+Les paramètres à forte sensibilité sont calibrés sur données (la queue $\xi$, d'incertitude chiffrée) ou
+sont des \emph{leviers voulus} ($g$, $q$, le multiplicateur de fréquence), qui portent l'effet de la
+conformité et de la contagion. Les paramètres posés qui ne sont pas des leviers ($\theta$, $\gamma$,
+$\theta_{\text{crise}}$, probabilités d'état, matérialité) ont une influence faible à modérée dans ces tests.
+Les correspondances entre conformité et canaux restent posées et leur effet sur l'écart est déterminant ;
+l'unité de perte et le bootstrap conjoint en précisent la portée (\S\ref{sec:institut-unite-incertitude}).
 
 \section{Table des notations}
 
@@ -107,7 +107,15 @@ conjoint en précisent la portée (\S\ref{sec:institut-unite-incertitude}).
 sans unité ; les pertes sont en M\euro{} et les fréquences en incidents par an. Les indices
 $i$, $j,k$, $n$ et $y$ désignent respectivement l'entité, les piliers, l'incident et l'année.
 Certains symboles ont un sens local : $A$ désigne une matrice antisymétrique ou des actifs,
-$S$ une matrice symétrique ou une coalition, et $\rho$ une corrélation ou un rayon spectral.
+$S$ une matrice symétrique, un ensemble de piliers atteints ou une coalition, et $\rho$ une
+corrélation ou un rayon spectral. De même, $\theta$ est la probabilité d'orientation d'une paire
+documentée (chapitre~\ref{ch:identifiabilite}), l'exposant d'additivité des coûts ou le paramètre
+de la copule de Gumbel (chapitre~\ref{ch:robustesse}) ; $\sigma$ est l'échelle de la GPD ou, au
+chapitre~\ref{ch:identifiabilite}, la production d'entropie ; $t$ est le degré d'ignorance
+directionnelle (chapitre~\ref{chap:partielle}) ou une durée en années (chapitre~\ref{chap:multietats}) ;
+$u$ est le seuil monétaire POT, et $u_{ij}$ l'excès de propagation propre à une source ; $q$ est le
+score de conformité de la table des paramètres (annexe~\ref{sec:ann-parametres}), distinct de $q_{\mathrm{obs}}$ et de $\qsev_\alpha$. Le sens
+se lit à chaque fois dans la phrase qui introduit le symbole.
 
 % LONGTABLE ET NON TABULAR. Un tabular ne peut pas se couper : la table dépassait le
 % bas de page, et hyperref plaçait alors les liens \ref des sept dernières lignes à des
@@ -166,7 +174,7 @@ $\xi,\ \sigma_{\text{GPD}},\ u$ & Indice de queue, échelle et seuil POT de la G
 $\zeta_u=p_u$ & Probabilité de dépassement du seuil par une sévérité élémentaire, $\Prob(X>u)$ & \ref{chap:socle} \\
 $N_u$ & Nombre d'excès au-delà de $u$ & \ref{chap:socle} \\
 $\lambda_{ref}$ & Fréquence de référence PRC ($341$/an) : \emph{clé de répartition} par vecteur, n'alimente pas le moteur & \ref{chap:donnees} \\
-$\lambda$ & Fréquence d'entrée, événements TIC enregistrés ($21{,}6$/an au secteur), avant le tirage de la perte par pilier & \ref{chap:donnees} \\
+$\lambda$ & Fréquence d'entrée : événements TIC enregistrés ($21{,}6$/an au secteur) & \ref{chap:donnees} \\
 $\phi\ (\varphi),\ a$ & Rapport variance/moyenne du comptage ; charge commune du mélange lognormal & \ref{chap:socle} \\
 $r,\ p$ & Forme et probabilité de la binomiale négative ($p$ distinct de $p_u$) & \ref{chap:socle} \\
 $N_y,\ Y_{n,k},\ X_n,\ L_y$ & Incidents de l'année ; perte du pilier $k$ dans l'incident $n$ ; perte de l'incident ; somme annuelle & \ref{chap:socle} \\
@@ -178,24 +186,26 @@ $U_j$ & Score de conformité $\Phi(C^\star_j)\in[0,1]$, de coupures $0{,}35$ et 
 $\gamma$ & Charge systémique de la latente de conformité ($0{,}68$) & \ref{chap:multietats} \\
 $\omega$ & Probabilité du choc commun d'accumulation ($0$ en C, $0{,}68$ en NC) & \ref{chap:multietats} \\
 $K_{\text{bas}},K_{\text{haut}}$ & Seuils ordonnés découpant les états NC / PC / C & \ref{chap:multietats} \\
-$Q$ & Générateur de la chaîne de mise en conformité (séjours de type phase) & \ref{chap:multietats} \\
+$Q$ & Générateur de la chaîne de conformité (séjours de type phase) & \ref{chap:multietats} \\
 $v_0,\ \overline B(t)$ & Probabilités initiales des phases ; capital moyen conditionnel en $t$, distinct du quantile du mélange & \ref{chap:multietats} \\
 $S_0,S_1,S_2$ & Scénarios C / PC / NC (multiplicateurs de fréquence) & \ref{chap:socle} \\
 \midrule
 \multicolumn{3}{@{}l}{\emph{\textcolor{navy}{Capital, allocation et décision}}} \\
-$\VaR_\alpha(L)$, $\TVaR_\alpha(L)$ & Value-at-Risk et Tail-VaR de la charge \textbf{annuelle agrégée} $L$, au niveau $\alpha=99{,}5\,\%$ : quantile de capital et diagnostic de moyenne de queue & \ref{chap:socle} \\
-$B,\ B_e,\ B(W),\ B(A)$ & Besoin ORSA du modèle, $\VaR_{99{,}5\%}(L)$, sous un état $e$, une matrice $W$ ou à des actifs $A$ ; pas un SCR réglementaire & \ref{chap:multietats} \\
+$\VaR_\alpha(L)$ & quantile de la charge \textbf{annuelle agrégée} $L$ à $\alpha=99{,}5\,\%$ : c'est le capital & \ref{chap:socle} \\
+$\TVaR_\alpha(L)$ & moyenne de queue de $L$ au même niveau : diagnostic de queue et base de l'allocation d'Euler, jamais le capital & \ref{chap:socle} \\
+$B,\ B_e,\ B(W),\ B(A)$ & Besoin ORSA, $\VaR_{99{,}5\%}(L)$, selon l'état, $W$ ou les actifs $A$ ; pas un SCR & \ref{chap:multietats} \\
 $\qsev_\alpha(X),\ \qbarsev_\alpha(X)$ & Quantile d'un sinistre unique et moyenne des pertes au-delà ; grandeurs descriptives distinctes du capital annuel & \ref{chap:socle} \\
 $\Delta_{DORA}$ & Écart de capital entre états NC et C supposés, sans lecture causale & \ref{chap:resultats} \\
-$C_j,\ AC_j,\ \varphi_j$ & Contributions à la TVaR en queue ; Shapley du pilier $j$ (distinct de $\phi$) & \ref{chap:resultats} \\
-$A,\ A_m,\ \Lambda$ & Actifs de l'entité ; actifs médians des pertes ; incidents annuels moyens du panel & \ref{chap:resultats} \\
-$b_\lambda,\ m(A)$ & Exposant de fréquence aux actifs ; facteur de sévérité à la taille de l'entité & \ref{chap:resultats} \\
-$D,\ d,\ \tau,\ \mathrm{Adj}$ & Écart ajouté ; $D/\mathrm{BSCR}$ ; part retenue en agrégation corrélée ; absorption des pertes & \ref{chap:resultats} \\
+$C_j,\ AC_j,\ \varphi_j$ & Contributions TVaR ; Shapley du pilier $j$ ($\neq\phi$) & \ref{chap:resultats} \\
+$A,\ A_m,\ \Lambda$ & Actifs de l'entité ; actifs médians ; incidents annuels du panel & \ref{chap:resultats} \\
+$b_\lambda,\ m(A)$ & Exposant de fréquence ; facteur de sévérité à la taille & \ref{chap:resultats} \\
+$q_{\mathrm{obs}}$ & Probabilité qu'un incident du périmètre soit enregistré ; supposée commune à tous, non identifiée par la donnée & \ref{chap:resultats} \\
+$D,\ d,\ \tau,\ \mathrm{Adj}$ & Écart ajouté ; $D/\mathrm{BSCR}$ ; part retenue (corrélée) ; absorption & \ref{chap:resultats} \\
 $\mathrm{LR}$ & Ratio de sinistralité, pertes attendues sur primes (sans unité) & \ref{chap:resultats} \\
 $\mathrm{CoC}$ & Coût du capital de la marge de risque ($6\,\%$, puis $4{,}75\,\%$) & \ref{chap:resultats} \\
 $\ell,\ \ell^\star$ & Portée d'un traité en excès de perte annuel ; portée optimale & \ref{chap:resultats} \\
 $\kappa$ & Coefficient d'inefficacité du transfert (capacité, base, contrepartie) & \ref{chap:resultats} \\
-$\theta$ & Paramètre de la copule de Gumbel (comparaison, non modèle) & \ref{ch:robustesse} \\
+$\theta$ & Paramètre de la copule de Gumbel (comparaison, non modèle) ; ailleurs, exposant d'additivité des coûts sur le nombre de piliers touchés ($\theta=1$ redonne le modèle publié) & \ref{ch:robustesse} \\
 \end{longtable}
 }
 

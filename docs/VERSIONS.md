@@ -2,10 +2,12 @@
 
 | Document | Statut |
 |---|---|
-| [main_institut_150.pdf](../memoire/main_institut_150.pdf) | Institut actuel, 152 pages ; downscaling et compléments d'octobre |
+| [main_institut_150.pdf](../memoire/main_institut_150.pdf) | Institut actuel, 156 pages ; downscaling et compléments actualisés le 2 novembre |
 | [main_ensae.pdf](../memoire/main_ensae.pdf) | Rapport ENSAE courant, 100 pages |
 | [main_institut.pdf](../memoire/main_institut.pdf) | Ancienne version Institut conservée, 195 pages |
 | [soutenance_ensae.pdf](../recherche/slides/beamer/soutenance_ensae.pdf) | Support de soutenance actuel |
+| [cours_memoire_ensae.pdf](../recherche/vasicek_lab/notes/cours_memoire_ensae.pdf) | Cours, 30 pages ; socle ENSAE et compléments Institut distingués |
+| [cours_memoire_questions_ensae.pdf](../recherche/vasicek_lab/notes/cours_memoire_questions_ensae.pdf) | Questions, 51 pages ; compléments Institut actualisés sur les scripts 136–139 |
 
 Le nom `main_institut_150` rappelle la cible initiale et ne garantit pas le nombre de pages.
 Les chiffres de downscaling ajoutés après le dépôt ENSAE sont des variantes conditionnelles,

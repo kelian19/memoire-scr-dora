@@ -1,5 +1,17 @@
 # Journal des versions
 
+## 1.2.1 — 2 novembre 2026
+
+- Institut actuel : 156 pages, SHA-256 `DE3E1B78…`.
+- Résumé, abstract et figure 9.3 alignés sur la descente retenue ; script 139.
+- Périmètre financier limité au registre, sans généralisation au secteur mondial.
+- Beamer Institut recalé sur 24,1 M€, comparaison des entités, VaR/ES et capture.
+- Exception DORA de classification tardive précisée ; distinction entre paramètres posés et estimés.
+- Empreinte, pagination de contrôle et guides publics synchronisés.
+- Cours et questions : compléments Institut actualisés sur 136–139, distinction avec le rapport ENSAE déposé ; sources de compilation incluses.
+- Relecture par l'agent Caroline : contraste MOVEit présenté comme descriptif sans test du net, recommandations P1/P4 conditionnelles à la direction, normalisation de la descente précisée. Cette revue n'est pas une validation humaine.
+- Harnais de cet export : 7 437 nombres confirmés ; aucune validation économique du niveau n'en découle.
+
 ## 1.2.0 — 29 octobre 2026
 
 - Mise à jour de la version Institut : `memoire/main_institut_150.pdf`, 152 pages,
@@ -13,7 +25,7 @@
   en-tête adapté pour éviter le chevauchement avec le logo.
 - Migration vers l'arborescence `memoire/`, `recherche/`, `resultats/`, `outils/` et ajout des
   sorties Institut nécessaires aux contrôles.
-- Harnais de l'export : 7 363 nombres confirmés, aucun hors contrôle non déclaré.
+- Harnais de l'export du 29 octobre : 7 363 nombres confirmés, aucun hors contrôle non déclaré.
   Ce contrôle de concordance n'est pas une validation des modèles.
 - Données brutes et images de signatures exclues ; masques des entités et valeurs d'élicitation conservés.
 

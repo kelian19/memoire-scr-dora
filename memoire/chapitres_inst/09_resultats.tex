@@ -18,13 +18,15 @@ puis calcule le quantile à $99{,}5\,\%$ de la somme annuelle. Les comparaisons 
 moteur, les mêmes graines et la même loi de sévérité de base dans le scénario principal ; les
 calculs d'entité emploient le protocole distinct du \S\ref{sec:ancrage}.
 
-Trois lectures doivent accompagner le résultat : l'écart entre états quand les quatre canaux
+Trois lectures accompagnent le résultat : l'écart entre états quand les quatre canaux
 changent ensemble (\S\ref{sec:chiffre-de-tete}), son déplacement quand on change le coût d'un
 incident (\S\ref{sec:institut-unite-perte}) et son incertitude de calibration
 (\S\ref{sec:institut-bootstrap-joint}). Les attributions et les cas d'usage se lisent sous ces
-conditions. Les montants concernent le périmètre financier étudié : leur niveau varie d'un
-facteur $41$ selon sévérité et fréquence, contre au plus $33\,\%$ de leur moyenne pour les
-rapports au socle (chapitre~\ref{chap:partielle}). Nous comparons OpRisk ($\hat\xi=0{,}595$)
+conditions. Les montants valent pour le périmètre financier représenté par le registre ; sans exposition
+exhaustive ni taux de capture identifié, ils n'estiment pas le capital de l'ensemble du secteur financier mondial.
+Leur niveau varie d'un facteur $41$ avec la loi de sévérité et la fréquence ;
+les rapports au socle varient d'au plus $33\,\%$ de leur moyenne (chapitre~\ref{chap:partielle}).
+Nous comparons OpRisk ($\hat\xi=0{,}595$)
 et PRC ($\hat\xi=1{,}03$), plafonnée à $40$~M\euro{} par perte élémentaire.
 % SOURCES-SCRIPTS: 65 66 12 16 63
 
@@ -47,10 +49,10 @@ socle $5\,275$~M\euro{} calculé sans contagion au chapitre~\ref{chap:partielle}
 \toprule
 \textbf{Lecture} (besoin à $99{,}5\,\%$, M\euro, états posés) & \textbf{canaux} & \textbf{conforme} & \textbf{non conf.} & \textbf{facteur} \\
 \midrule
-Score de conformité seul, $g$ figé au niveau NC & 1 & 7987 & 16\,847 & $2{,}11$ \\
-Fréquence $+$ propagation (lecture~B) & 2 & 6664 & 15\,074 & $2{,}26$ \\
-$+$ détection (lecture~C) & 3 & 5932 & 16\,595 & $2{,}80$ \\
-\textbf{$+$ accumulation P4 (les quatre canaux)} & \textbf{4} & \textbf{6049} & \textbf{20\,188}
+Score de conformité seul, $g$ figé au niveau NC & 1 & 7\,987 & 16\,847 & $2{,}11$ \\
+Fréquence $+$ propagation (lecture~B) & 2 & 6\,664 & 15\,074 & $2{,}26$ \\
+$+$ détection (lecture~C) & 3 & 5\,932 & 16\,595 & $2{,}80$ \\
+\textbf{$+$ accumulation P4 (les quatre canaux)} & \textbf{4} & \textbf{6\,049} & \textbf{20\,188}
 & $\mathbf{3{,}34}$ \\
 \bottomrule
 \end{tabular}
@@ -109,11 +111,10 @@ propagation, l'écart passe de $8\,860$ à $8\,410$~M\euro{} alors que le facteu
 base conforme passant de $7\,987$ à $6\,664$~M\euro. Les canaux se multiplient presque, le produit
 des quatre facteurs isolés étant de $3{,}47$ pour un facteur publié de $3{,}34$
 (figure~\ref{fig:treillis-canaux-rapport}). Les quatre effets isolés somment à $9\,138$~M\euro{} et
-l'écart de $14\,139$ les dépasse de $5\,001$, l'interaction. Elle correspond à ce que donnerait un
-produit des facteurs ($5\,813$~M\euro{} pour un modèle purement multiplicatif) plus qu'à un effet
-propre de la cascade (\S\ref{sec:inverse}). Les
-trajectoires et la priorisation restent conduites en lecture~B, car elles concernent l'ordre de
-remédiation, que le canal ajouté ne déplace pas.
+l'écart de $14\,139$ les dépasse de $5\,001$, l'interaction. Elle est proche de ce que donnerait un
+modèle purement multiplicatif ($5\,813$~M\euro, \S\ref{sec:interaction-canaux}). Les
+trajectoires et la priorisation restent conduites en lecture~B ; l'ordre de remédiation n'a pas été
+recalculé à quatre canaux.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{treillis_canaux.png}
@@ -149,7 +150,9 @@ que la queue l'est.}
 \label{tab:delta}
 \end{table}
 
-L'intervalle large côté OpRisk est la signature d'une queue d'indice $0{,}60$, et le surcoût est positif dans tous les tirages. Il porte sur la lecture B. L'écart à quatre canaux est accompagné ici de sa dispersion entre graines (écart-type de $734$~M\euro) ; le bootstrap conjoint de la section~\ref{sec:institut-bootstrap-joint} traite son incertitude de calibration. Lorsqu'on
+L'intervalle large côté OpRisk vient d'une queue d'indice $0{,}60$, et le surcoût est positif dans tous les tirages. Il porte sur la lecture B. L'écart à quatre canaux est accompagné ici de sa dispersion entre graines (écart-type de $734$~M\euro) ; le bootstrap conjoint de la section~\ref{sec:institut-bootstrap-joint} traite son incertitude de calibration.
+
+Lorsqu'on
 réinjecte le résidu de la conversion de \citet{jacobs2014}, $0{,}523$ en logarithme, c'est-à-dire un
 facteur $2{,}4$ à $90\,\%$ autour de la droite, l'intervalle PRC reste étroit et le niveau du
 surcoût bouge de $7\,\%$.
@@ -332,7 +335,7 @@ la propagation. Ce rapport caractérise cette spécification, non l'ensemble des
 \label{sec:ancrage}
 
 La descente d'échelle (\emph{downscaling}) adapte le nombre d'incidents et le montant des pertes aux actifs de l'entité, puis recalcule la distribution annuelle et son quantile. Les actifs mesurent ici la taille ;
-les fonds propres mesurent la capacité d'absorption. Le métier n'a pas de coefficient estimé.
+les fonds propres mesurent la capacité d'absorption. Le métier n'est pas intégré (\S\ref{sec:entites-reelles}).
 Pour l'entité notionnelle, le repère forfaitaire de la Formule Standard est d'environ $450$~M\euro. Le socle sans contagion du périmètre financier étudié vaut $5\,275$~M\euro{} ;
 les deux ne se comparent pas.
 % SOURCES-SCRIPTS: 60 49
@@ -341,7 +344,7 @@ les deux ne se comparent pas.
 
 Au niveau du
 sinistre unique, le quantile de sévérité ($663$~M\euro) et sa moyenne de queue ($1\,752$~M\euro)
-sont en revanche du même ordre que les grandes pertes cyber observées ($1\,288$ à $2\,208$~M\euro). Les calculs d'entité changent de protocole : ils emploient la
+sont du même ordre que les grandes pertes cyber observées ($1\,288$ à $2\,208$~M\euro). Les calculs d'entité changent de protocole : ils emploient la
 cascade indépendante de l'évaluateur du chapitre~\ref{chap:partielle}, sans choc commun P4, et
 seul le gain de propagation y varie entre états. À matrice $W$ inchangée, une entité d'actifs $A$
 reçoit une fréquence et une sévérité lues à sa taille :
@@ -357,33 +360,42 @@ où le panel est formé des firmes du secteur financier dont les actifs sont con
 $2005$--$2022$, et de leurs pertes des sous-catégories liées aux systèmes d'information et aux prestataires.
 La fréquence y est ajustée par une binomiale négative à lien logarithmique sur les seules firmes de plus de
 $100$~Md\$ d'actifs ($6\,048$ lignes, $1\,402$ firmes) : $b_\lambda=0{,}494$ (erreur-type $0{,}066$ par grappes de firmes),
-$A_0=570$~Md\$ est la moyenne géométrique de leurs actifs et $\lambda_0$ la fréquence à cette taille.
+dispersion $r=0{,}594$. Ici $A_0=570$~Md\$ est la moyenne géométrique de leurs actifs et $\lambda_0$ la fréquence à cette taille.
+Cette dispersion est estimée en coupe sur des firmes-années : elle mesure aussi l'hétérogénéité entre firmes.
 
 $N$ suit cette binomiale négative de moyenne $\lambda(A)$, $S_a$ est
 l'ensemble des piliers touchés depuis l'amorce $a$, et les $Y_k$ sont les sévérités élémentaires : la GPD
 calibrée au-delà du seuil, un tirage parmi les $484$ pertes observées sous le seuil sinon. $A_m$ est la taille
-médiane des pertes retenues, $b=0{,}087$ l'élasticité de la sévérité, d'où $m = 0{,}854$ à la taille de l'entité
-notionnelle. Cette élasticité est estimée sur les pertes TIC du panel, corrigée de la troncature
+médiane des actifs associés aux événements TIC du panel financier $2005$--$2022$, distinct des
+$570$ pertes cyber. À $20\,000$~M\$ d'actifs, $\lambda(A)=0{,}0209$/an et $m(A)=0{,}854$.
+L'élasticité $b=0{,}087$ est estimée sur les pertes TIC du panel, corrigée de la troncature
 (\S\ref{sec:biais-chiffres}) ; l'appliquer à la sévérité cyber-finance du modèle est une hypothèse de
 transfert, qui s'ajoute à son incertitude d'estimation.
 
 Sur tout le panel, $b_\lambda$ vaut $0{,}074$ : la fréquence dépendrait à peine des actifs. Une firme y
 est observée de la première à la dernière année où elle apparaît dans la base, pour un risque quelconque.
 Les firmes de moins de $1$~Md\$ d'actifs le sont $1{,}44$ an en moyenne, celles de plus de $100$~Md\$
-$4{,}31$ ans, ce qui rend plausible un biais de fenêtre. Il n'est pas démontré : $57{,}8\,\%$ des grandes
-firmes ne sont observées qu'un an, et une année sans événement enregistré n'est pas une année sans incident.
+$4{,}31$ ans, ce qui rend plausible un biais de fenêtre. Il n'est pas démontré, mais $57{,}8\,\%$ des grandes
+firmes ne sont observées qu'un an : leur fréquence peut être surestimée, la première année contenant un
+événement par construction, dans un sens que nous ne mesurons pas. Une année sans événement enregistré
+n'est pas une année sans incident.
+
 L'exposant monte avec le seuil de taille : $0{,}139$ au-delà de $1$~Md\$, $0{,}269$ au-delà de $10$~Md\$,
 $0{,}494$ au-delà de $100$~Md\$ et $0{,}513$ au-delà de $300$~Md\$. À fenêtre d'au moins cinq ans, il vaut
 $0{,}223$ sur tout le panel et $0{,}530$ sur les grandes firmes ; un effet fixe d'année ne le déplace pas
-($0{,}497$). Nous retenons la valeur à $100$~Md\$ comme variante privilégiée sous ces hypothèses ; elle est
-extrapolée aux entités plus petites, et c'est la réserve principale de cette lecture. La sévérité ne croît pas avec la
-taille : sur les $521$ pertes dont les actifs sont connus, la pente de la perte sur la taille est de $-0{,}07$
-(erreur-type $0{,}03$), et elle reste négative parmi les firmes de plus de $50$~Md\$.
+($0{,}497$). Nous retenons la valeur à $100$~Md\$ comme variante privilégiée sous ces hypothèses. Elle est
+extrapolée aux entités plus petites, ce qui constitue la réserve principale de cette lecture. L'exposant baissant
+avec le seuil de taille ($0{,}375$ au-delà de $50$~Md\$), la fréquence d'une entité de $20$~Md\$ serait plus
+élevée : l'extrapolation tend à sous-estimer le besoin.
 
-Cette lecture remplace, après le dépôt du rapport ENSAE, la lecture du registre et les deux conventions
-d'exposition de la version précédente. Elle lève le gel de la calibration pour la seule partie entité ;
-les résultats du périmètre financier ne changent pas. Avec l'exposant et le moteur de la version
-précédente, le même script redonne les $169{,}0$~M\euro{} publiés.
+La sévérité ne croît pas avec la taille. Sur les $521$ pertes cyber du secteur financier dont les
+actifs sont connus, la pente brute de la perte sur la taille est de $-0{,}07$ (erreur-type $0{,}03$) ;
+elle reste négative parmi les firmes de plus de $50$~Md\$. L'élasticité $b=0{,}087$ vient du panel de pertes TIC, corrigée de la troncature, et sert à $m(A)$.
+
+Cette lecture remplace la lecture du registre et les deux conventions d'exposition du
+tableau~\ref{tab:echelle}. Seule la calibration d'entité change ; les résultats du périmètre financier
+sont identiques. Avec l'exposant et le moteur de la lecture du registre, le script reproduit les
+$169{,}0$~M\euro{} de la ligne correspondante.
 
 \begin{table}[htbp]\centering
 \small
@@ -407,18 +419,17 @@ Les lignes sont des lectures d'échelle, non des entités observées.}
 \label{tab:echelle}
 \end{table}
 
-Diviser $\lambda$ par $1\,031$ divise la perte moyenne par $1\,158$ et le capital par $336$. Le chiffre
+Du périmètre financier à la lecture retenue, $\lambda$ est divisé par $1\,031$, la perte moyenne par $1\,158$ et le capital par $336$. Le chiffre
 d'entité est une bande, $[15{,}8\,;27{,}5]$~M\euro{} sur les $1\,024$ sommets admissibles, qui ne traduit
 que l'ignorance de la direction. Un bootstrap par firme réestimant intercept, pente et dispersion
-donne $[8{,}3\,;53{,}0]$~M\euro{}, à sévérité et graine fixées ; la pente seule, à $\pm 1{,}96$ fois
-l'ancienne erreur-type hessienne de $0{,}043$, donne $[12{,}3\,;41{,}9]$. Aucune de ces bandes ne corrige
-la sélection du registre. Estimée au-delà de $300$~Md\$, la fréquence donne $20{,}6$~M\euro. Les
+donne $[8{,}3\,;53{,}0]$~M\euro{}, à sévérité et graine fixées. Aucune de ces bandes ne corrige
+la sélection du registre. Avec la fréquence estimée au-delà de $300$~Md\$, le besoin vaut $20{,}6$~M\euro. Les
 $24$~M\euro{} restent une extrapolation d'ordre de grandeur (\S\ref{sec:entites-reelles}).
 
 La baisse depuis $169$~M\euro{} ne tient pas à l'exposant seul. Sur les huit combinaisons de fréquence,
 de dispersion et de pertes sous le seuil, à nombres communs et sur quatre graines, la nouvelle fréquence
-avec la dispersion précédente donne un quantile nul, une perte n'ayant lieu que dans $0{,}29\,\%$ des
-années. Entre les deux protocoles complets, le quantile passe de $171{,}4$ à $24{,}6$~M\euro{} et la
+avec la dispersion précédente et des pertes sous le seuil nulles donne un quantile nul, une perte n'ayant
+lieu que dans $0{,}29\,\%$ des années. Entre les deux protocoles complets, le quantile passe de $171{,}4$ à $24{,}6$~M\euro{} et la
 moyenne des pires années de $624$ à $177$~M\euro{} ($169$ et $24{,}1$ sur une graine).
 
 À cette fréquence, une perte n'a lieu que dans $2{,}06\,\%$ des années : le quantile à $99{,}5\,\%$ se lit
@@ -428,17 +439,18 @@ moyenne des $0{,}5\,\%$ pires années de $105{,}4$ à $256{,}2$~M\euro{} ($155{,
 
 Le gain de propagation pris à ses trois valeurs d'état ($0{,}45$, $0{,}68$, $0{,}90$) fait passer le
 besoin de capital de l'entité de $13{,}2$ à $17{,}7$ puis $24{,}1$~M\euro. Le seul canal de propagation
-l'augmente ainsi de $83\,\%$ (figure~\ref{fig:invariance-g-rapport}, en lecture du registre). Le repère forfaitaire reste à $450$~M\euro. Les correspondances testées entre état et $g$ conservent le signe de l'écart (\S\ref{sec:invariance-g}) ; cette vérification sur grille porte sur la cascade indépendante et ne démontre pas la monotonie du moteur de marche.
+l'augmente ainsi de $83\,\%$ (figure~\ref{fig:invariance-g-rapport}). Le repère forfaitaire reste à $450$~M\euro. Les correspondances testées entre état et $g$ conservent le signe de l'écart (\S\ref{sec:invariance-g}) ; cette vérification sur grille porte sur la cascade indépendante et ne démontre pas la monotonie du moteur de marche.
 % SOURCES-SCRIPTS: 60 49 130 136 137
 
 \begin{figure}[H]\centering
-\figover{S23_invariance_conformite.png}
-\caption{Capital d'entité et valeurs du gain de propagation $g$, en lecture du registre. (a)~Le capital croît avec $g$, sur
-vingt points de grille à nombres aléatoires communs, quand la charge forfaitaire ne dépend pas de
-l'état. (b)~Cinq correspondances entre état et $g$, de très étroite à large : toutes respectent
-l'ordre du capital, et le forfait reste plat. (c)~À $g_{NC}=0{,}90$ fixé, l'écart croît avec
-l'écartement $g_{NC}-g_C$ ; la valeur retenue est marquée, et elle seule relève du scénario.}
-% SOURCES-SCRIPTS: 66 67
+\figover{invariance_conformite_entite.png}
+\caption{Besoin de l'entité notionnelle et gain de propagation $g$, sous la descente retenue.
+(a)~Le besoin croît avec $g$, sur vingt points de grille à nombres aléatoires communs, quand la
+charge forfaitaire ($450$~M\euro, hors échelle) ne dépend pas de l'état. (b)~Cinq correspondances
+entre état et $g$, de très étroite à large : toutes respectent l'ordre du besoin. (c)~À
+$g_{NC}=0{,}90$ fixé, l'écart croît avec l'écartement $g_{NC}-g_C$ ; la valeur retenue est marquée,
+et elle seule relève du scénario.}
+% SOURCES-SCRIPTS: 136 139
 \label{fig:invariance-g-rapport}
 \end{figure}
 
@@ -447,11 +459,12 @@ l'écartement $g_{NC}-g_C$ ; la valeur retenue est marquée, et elle seule relè
 
 Une fréquence faible dans le registre peut venir d'incidents rares ou d'un enregistrement incomplet.
 Notons $q_{\mathrm{obs}}$ la probabilité qu'un incident du périmètre soit enregistré, supposée
-indépendante du montant. Avec une binomiale négative $\mathrm{NB}(\mu,r)$ de moyenne $\mu$ et de forme $r$,
+la même pour tous les incidents, indépendante de leur montant et de leur nombre ; la nature publique des
+pertes contredit probablement cette indépendance. Avec une binomiale négative $\mathrm{NB}(\mu,r)$ de moyenne $\mu$ et de forme $r$,
 \begin{equation}\label{eq:descente-capture}
-N_{\mathrm{réel}}\sim\mathrm{NB}\bigl(\mu/q_{\mathrm{obs}},r\bigr),\qquad
-N_{\mathrm{enregistré}}\mid N_{\mathrm{réel}}\sim\mathrm{Binom}\bigl(N_{\mathrm{réel}},q_{\mathrm{obs}}\bigr)
-\ \Longrightarrow\ N_{\mathrm{enregistré}}\sim\mathrm{NB}(\mu,r).
+N_{\text{réel}}\sim\mathrm{NB}\bigl(\mu/q_{\mathrm{obs}},r\bigr),\qquad
+N_{\text{enregistré}}\mid N_{\text{réel}}\sim\mathrm{Binom}\bigl(N_{\text{réel}},q_{\mathrm{obs}}\bigr)
+\ \Longrightarrow\ N_{\text{enregistré}}\sim\mathrm{NB}(\mu,r).
 \end{equation}
 La capture multiplie l'intensité du mélange Poisson--Gamma par $q_{\mathrm{obs}}$ sans changer $r$ :
 plusieurs fréquences réelles donnent la même loi des comptes enregistrés, et le registre ne permet pas
@@ -502,7 +515,7 @@ Grand groupe (posé) & $2\,400\,000$ & -- & $528{,}6\ [437\,;556]$ & $1\,326$ & 
 \end{center}
 \noindent\parbox{\textwidth}{\footnotesize Besoin retenu : quantile à $99{,}5\,\%$, exposant $b_\lambda=0{,}494$,
 point à la matrice d'expert et bande sur les $1\,024$ sommets admissibles. Pires années : moyenne des
-$0{,}5\,\%$ pires années. Registre : $b_\lambda = 0{,}074$, version précédente. État supposé : gain de
+$0{,}5\,\%$ pires années. Registre : $b_\lambda = 0{,}074$ (tableau~\ref{tab:echelle}). État supposé : gain de
 propagation au niveau non conforme, autres paramètres à leur base. Nul : le quantile à $99{,}5\,\%$ est nul
 (taille de bascule, ci-dessous). Les tailles de la petite entité et du grand groupe sont posées.}
 \end{minipage}
@@ -511,20 +524,20 @@ propagation au niveau non conforme, autres paramètres à leur base. Nul : le qu
 \noindent Les quatre SCR sont publiés, les deux assureurs non-vie les donnant dans leur état
 S.25.01, à $425$ et $812{,}5$~M\euro. Seul le total d'actif de trois entités est déduit, par
 l'identité comptable, et l'approximation est conservatrice. Les mêmes états publient également le
-module de risque opérationnel. Le repère de $3\,\%$ des provisions donne $54{,}1$ contre $59$ publié
+module de risque opérationnel. Le repère de $3\,\%$ des provisions non-vie donne $54{,}1$ contre $59$ publié
 sur la première entité non-vie, et $62{,}1$ contre $39{,}7$ sur la seconde, soit $-8\,\%$ et $+56\,\%$. Ce
 repère n'est donc qu'un ordre de grandeur, jamais une borne.
 
-La lecture du registre faisait peu varier le besoin avec les actifs : un facteur $134$ sur la taille
-le multipliait par $2{,}6$. La lecture retenue le multiplie par $194$ entre l'assureur non-vie A et
-l'assureur vie D, et la moyenne des pires années par $11{,}7$. Ce facteur ne valide rien : il dépend de la
-position du quantile près de la masse en zéro. Rapporté au SCR publié, le besoin vaut
+Dans la lecture du registre, un facteur $134$ sur la taille multiplie le besoin par $2{,}6$ ; la lecture
+retenue le multiplie par $194$ entre l'assureur non-vie A et l'assureur vie D, et la moyenne des pires
+années par $11{,}7$. Ce facteur ne mesure pas la validité du modèle : il dépend de la position du quantile
+près de la masse en zéro. Rapporté au SCR publié, le besoin vaut
 $0{,}2\,\%$, $0{,}6\,\%$, $3{,}0\,\%$ et $1{,}3\,\%$ de A à D. L'écart entre états subsiste, de $+36\,\%$
 à $+85\,\%$.
 
 Le quantile à $99{,}5\,\%$ est nul lorsque la probabilité annuelle d'une perte est inférieure à $0{,}5\,\%$.
 Toute perte d'incident étant positive, cette probabilité vaut $1-(r/(r+\lambda))^r$, d'où une taille de bascule
-de $1\,076$~M\euro{} d'actifs, entre $1\,053$ et $1\,145$ en simulation sur quatre graines et entre $100$ et
+de $1\,076$~M\euro{} d'actifs (forme fermée), entre $1\,053$ et $1\,145$ en simulation sur quatre graines et entre $100$ et
 $3\,889$ sous le bootstrap par firme : un ordre de grandeur. Juste au-dessus, le quantile reste porté par les
 pertes courantes : $1{,}0$~M\euro{} pour l'assureur non-vie A, dont la probabilité annuelle de perte est de
 $0{,}74\,\%$, et nul dans $18\,\%$ des tirages du bootstrap. Ce besoin quasi nul ne signifie pas l'absence de
@@ -533,10 +546,10 @@ mieux par la moyenne des pires années, qui croît régulièrement avec la taill
 $0{,}66$ entre entités voisines). Cette bascule ne définit pas le domaine de validité statistique du modèle.
 
 Au levier médian ($10{,}0\,\%$), le SCR de l'entité notionnelle serait de $1\,932$~M\euro{} et le besoin
-en représenterait $1{,}2\,\%$. Ce critère de poids ne définit pas une validité statistique.
+en représenterait $1{,}2\,\%$.
 
 La réserve d'extrapolation vient de deux sources. L'exposant de fréquence, estimé au-delà de
-$100$~Md\$, est appliqué à des entités plus petites. L'échelle de la sévérité est adaptée à la taille,
+$100$~Md\$, est appliqué à des entités plus petites, dans le sens probable d'une sous-estimation. L'échelle de la sévérité est adaptée à la taille,
 mais sa forme reste celle de grandes institutions financières. Les $24$~M\euro{} ne constituent donc pas
 un majorant établi. Pour une entité, il faut comparer les lectures d'exposition et les écarts entre
 états ; un montant unique ne suffit pas. Un rapport entre états élimine une erreur d'échelle
@@ -549,7 +562,9 @@ $-0{,}961$, erreur-type $0{,}207$), avec un gain hors échantillon par firme. Il
 déclaration autant qu'un moindre risque. Nous ne l'intégrons pas ; il ramènerait l'entité notionnelle à $4{,}5$~M\euro{}
 et l'assureur vie D à $77{,}9$~M\euro. Enfin, les $443$ pertes de sévérité de $2005$--$2022$ sont un
 sous-ensemble des $1\,476$ événements comptés en fréquence, qui couvrent des catégories plus larges
-(\S\ref{chap:donnees}). La calibration sur les grandes institutions vise donc à réduire l'effet des fenêtres
+(chapitre~\ref{chap:donnees}). Seuls $30\,\%$ des événements comptés en fréquence entrent donc dans la
+population de sévérité ; la sévérité est supposée identique pour les autres, ce qui n'est pas testé.
+La calibration sur les grandes institutions vise à réduire l'effet des fenêtres
 d'observation courtes ; son extrapolation aux petites entités reste à valider, et le métier n'est pas intégré.
 % SOURCES-SCRIPTS: 65 136 137
 
@@ -557,20 +572,38 @@ d'observation courtes ; son extrapolation aux petites entités reste à valider,
 \label{sec:entites-capture}
 
 Appliquée à trois entités, sévérité et cascade inchangées, l'équation~\eqref{eq:descente-capture}
-donne la sensibilité à une capture de moitié, scénario et non estimation (moyennes sur quatre graines de
-$600\,000$ années, gain de propagation non conforme). La VaR passe de $0{,}9$ à $8{,}9$~M\euro{} pour
-l'assureur A, de $23{,}1$ à $74{,}0$~M\euro{} pour l'entité notionnelle et de $193{,}5$ à $349{,}1$~M\euro{}
-pour l'assureur vie D ; la moyenne des pires années de la notionnelle passe de $160{,}6$ à $282{,}4$~M\euro.
-La loi des comptes enregistrés est la même dans les deux cas. La fréquence du périmètre financier vient du
-même registre : une capture incomplète la sous-estimerait aussi, et ne l'appliquer qu'aux entités
-fausserait la comparaison entre les deux échelles. À capture complète, ces valeurs retrouvent la référence
-au bruit près ($23{,}1$ contre $24{,}1$ sur une graine).
+donne la sensibilité à des captures de $50$, $25$ et $10\,\%$, scénarios et non estimations (moyennes sur
+quatre graines de $600\,000$ années, gain de propagation non conforme). Pour l'entité notionnelle, la VaR
+passe de $23{,}1$ à $74{,}0$, puis $153{,}9$ et $327{,}7$~M\euro{} (tableau~\ref{tab:entites-capture}).
+
+\begin{table}[htbp]\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}r rr rr rr@{}}
+\toprule
+ & \multicolumn{2}{c}{Non-vie A} & \multicolumn{2}{c}{Notionnelle} & \multicolumn{2}{c}{Vie D} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Capture & VaR & ES & VaR & ES & VaR & ES \\
+\midrule
+$100\,\%$ & $0{,}9$ & $51{,}9$ & $23{,}1$ & $160{,}6$ & $193{,}5$ & $591{,}5$ \\
+$50\,\%$ & $8{,}9$ & $97{,}8$ & $74{,}0$ & $282{,}4$ & $349{,}1$ & $945{,}3$ \\
+$25\,\%$ & $37{,}1$ & $181{,}0$ & $153{,}9$ & $468{,}5$ & $582{,}8$ & $1\,482{,}0$ \\
+$10\,\%$ & $112{,}6$ & $354{,}6$ & $327{,}7$ & $850{,}9$ & $1\,095{,}9$ & $2\,583{,}5$ \\
+\bottomrule
+\end{tabular}
+\caption{Capital selon la part des incidents enregistrés, en M\euro{} : VaR à $99{,}5\,\%$ et moyenne des
+$0{,}5\,\%$ pires années (ES). Les captures sont des scénarios.}
+\label{tab:entites-capture}
+\end{table}
+
+La fréquence du périmètre financier vient du même registre : une capture incomplète la sous-estimerait
+aussi, et ne l'appliquer qu'aux entités fausserait la comparaison entre les deux échelles. À capture
+complète, ces valeurs retrouvent la référence au bruit près ($23{,}1$ contre $24{,}1$ sur une graine).
 % SOURCES-SCRIPTS: 136 138
 
 \section{Agrégation au capital total}
 \label{sec:agregation-scr}
 
-Le SCR opérationnel s'ajoute au BSCR (\S\ref{chap:reglementaire}). Pour un écart $D$, nous comparons
+Le SCR opérationnel s'ajoute au BSCR (section~\ref{chap:reglementaire}). Pour un écart $D$, nous comparons
 deux conventions ORSA hypothétiques : addition intégrale ou agrégation avec le BSCR à corrélation
 $\rho$. Leur application exige d'éviter le double compte du risque informatique déjà couvert.
 \begin{equation}\label{eq:agregation}
@@ -584,7 +617,7 @@ $\rho$. Leur application exige d'éviter le double compte du risque informatique
 \end{equation}
 Le facteur $\tau$ est la fraction de $D$ retenue par la convention corrélée. Pour $D$ petit devant le
 BSCR, elle vaut environ $\rho$, contre une prise en compte intégrale en convention additive.
-Le BSCR n'étant pas publié, nous le minorons par $\mathrm{SCR}-\mathrm{SCR}_{Op}$ si $\mathrm{Adj}\le0$,
+Le BSCR n'étant pas relevé dans nos sources, nous le minorons par $\mathrm{SCR}-\mathrm{SCR}_{Op}$ si $\mathrm{Adj}\le0$,
 et par $\mathrm{SCR}/1{,}3$ si les frais des unités de compte sont nuls ($Exp_{ul}=0$).
 Minorer le BSCR majore $\tau$ : les taux non-vie du tableau sont des majorants, leurs inverses des
 minorants. Pour les assureurs vie, où $Exp_{ul}=0$ n'est pas vérifié, ces garanties ne s'appliquent pas.
@@ -624,7 +657,7 @@ recouvrement avec le risque déjà couvert ; ces calculs ne déterminent pas une
 \label{sec:detenir-transferer}
 % SOURCES-SCRIPTS: 60
 
-Par convention, détenir un capital $B$ coûte chaque année $\mathrm{CoC}\times B$, au taux de la marge de risque : $6\,\%$, puis $4{,}75\,\%$ au 30 janvier 2027 (directive (UE)~2025/2). À un ratio sinistres sur primes de $48{,}5\,\%$, la prime vaut environ $2{,}1$ fois la perte attendue. Les $24{,}1$~M\euro{} de l'entité, pour $0{,}85$~M\euro{} de perte moyenne, donnent un multiple de $28{,}4$, contre $8{,}3$ sur le périmètre financier étudié.
+Par convention, détenir un capital $B$ coûte chaque année $\mathrm{CoC}\times B$, au taux de la marge de risque : $6\,\%$, puis $4{,}75\,\%$ au 30 janvier 2027 \citep[directive (UE)~2025/2,][]{eu2025_2}. À un ratio sinistres sur primes de $48{,}5\,\%$, la prime vaut environ $2{,}1$ fois la perte attendue. Les $24{,}1$~M\euro{} de l'entité, pour $0{,}85$~M\euro{} de perte moyenne, donnent un multiple de $28{,}4$, contre $8{,}3$ sur le périmètre financier étudié.
 
 Un traité en excès de perte annuel de portée $\ell$, sans rétention, cède $\min(L,\ell)$ de la charge
 $L$, et le coût de financement de l'entité est
@@ -634,9 +667,9 @@ C(\ell)=\frac{\E\bigl[\min(L,\ell)\bigr]}{\mathrm{LR}}
 \end{equation}
 où $\mathrm{LR}$ est le ratio de sinistralité et $\mathrm{CoC}$ le taux de coût du capital. Ce coût est
 minimal en $\ell^\star=B=24{,}1$~M\euro{} et passe alors de $1{,}15$ à $0{,}39$~M\euro{} par
-an, soit $-66\,\%$. Pertes conservées comprises, il passe de $2{,}00$ à $1{,}05$~M\euro{} ($-47\,\%$). Ce gain suppose un contrat idéal, que capacité, exclusions et contrepartie réduisent. Face au meilleur traité, le transfert reste préférable tant que moins de $65{,}8\,\%$ de la portée achetée reste sans allègement de capital, $82{,}4\,\%$ pertes conservées comprises. Si la conformité ramène $\lambda$ de $0{,}021$ à $0{,}0105$ (valeur posée), ce coût optimal baisse de $55\,\%$.
+an, soit $-66\,\%$. Pertes conservées comprises, il passe de $2{,}00$ à $1{,}05$~M\euro{} ($-47\,\%$). Ce gain suppose un contrat idéal, que capacité, exclusions et contrepartie réduisent. Face au meilleur traité, le transfert reste préférable tant que moins de $65{,}8\,\%$ de la portée achetée reste sans allègement de capital, $82{,}4\,\%$ pertes conservées comprises. Si la conformité ramène $\lambda$ de $0{,}021$ à $0{,}0105$ (valeur posée), ce coût optimal baisse de $55\,\%$. En Formule Standard, un traité n'allège pas le $SCR_{Op}$ : l'allègement n'existe qu'en ORSA ou en modèle interne, sous les critères d'atténuation du règlement délégué \citep{eu2015_35}.
 
-Le rapport entre coût de détention et prix de transfert est invariant à un changement d'échelle pur. La descente d'échelle modifie la forme de la perte, et le seul balayage disponible borne cet effet à $+36\,\%$ (de $2{,}78$ à $3{,}78$).
+Le rapport entre coût de détention et prix de transfert est invariant à un changement d'échelle pur. La descente d'échelle modifie la forme de la perte, et le seul balayage disponible, tracé dans la lecture précédente ($169$ à $43$~M\euro), place cet effet à $+36\,\%$ (de $2{,}78$ à $3{,}78$) ; il n'a pas été refait sous la lecture retenue.
 % SOURCES-SCRIPTS: 58 67 136
 
 \section{Cas d'usage, de l'état de conformité à la décision}

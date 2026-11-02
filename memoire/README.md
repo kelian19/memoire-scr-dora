@@ -1,6 +1,6 @@
 # Manuscrits
 
-- [Institut actuel](main_institut_150.pdf) : 152 pages, avec compléments d'octobre.
+- [Institut actuel](main_institut_150.pdf) : 156 pages, avec compléments d'octobre.
 - [ENSAE courant](main_ensae.pdf) : 100 pages.
 - [Institut conservé](main_institut.pdf) : ancienne version de 195 pages.
 - [Variante Overleaf Nexialog](overleaf/README.md).

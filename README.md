@@ -11,23 +11,25 @@ Auteur : **Kélian Kaddouri**. Encadrement : **Hugo Rapior** (Nexialog Consultin
 **Caroline Hillairet** (ENSAE Paris).
 
 Ce dépôt publie un export du travail de recherche : manuscrits, code, sorties numériques et
-contrôles. Mise à jour du **29 octobre 2026**. Les résultats restent conditionnels aux hypothèses
+contrôles. Mise à jour du **2 novembre 2026**. Les résultats restent conditionnels aux hypothèses
 de fréquence, de sévérité et de propagation ; ils ne valident pas un capital individuel.
 
 ## Lire
 
 | Document | Lien |
 |---|---|
-| **Mémoire Institut actuel — 152 pages** | [main_institut_150.pdf](memoire/main_institut_150.pdf) |
+| **Mémoire Institut actuel — 156 pages** | [main_institut_150.pdf](memoire/main_institut_150.pdf) |
 | Rapport ENSAE courant — 100 pages | [main_ensae.pdf](memoire/main_ensae.pdf) |
 | Ancienne version Institut conservée — 195 pages | [main_institut.pdf](memoire/main_institut.pdf) |
+| Soutenance Institut actuelle | [soutenance_institut.pdf](recherche/slides/beamer/soutenance_institut.pdf) |
 | Soutenance ENSAE actuelle | [soutenance_ensae.pdf](recherche/slides/beamer/soutenance_ensae.pdf) |
 | Préparation à la soutenance | [cours_memoire_ensae.pdf](recherche/vasicek_lab/notes/cours_memoire_ensae.pdf) |
+| Questions chapitre par chapitre et compléments Institut | [cours_memoire_questions_ensae.pdf](recherche/vasicek_lab/notes/cours_memoire_questions_ensae.pdf) |
 | Sources Overleaf avec réglages Nexialog | [Mode d'emploi](memoire/overleaf/README.md) |
 | Versions et statut des calculs | [Guide des versions](docs/VERSIONS.md) |
 | Matériel complémentaire | [Zenodo](https://doi.org/10.5281/zenodo.22874524) |
 
-Le nom `main_institut_150` conserve la cible initiale ; le PDF actuel compte 152 pages.
+Le nom `main_institut_150` conserve la cible initiale ; le PDF actuel compte 156 pages.
 Les fichiers de la première publication restent accessibles à l'étiquette `v1.1.0`.
 
 ## Question, modèle et portée

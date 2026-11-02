@@ -1,0 +1,160 @@
+% Compléments distincts du rapport ENSAE déposé ; actualisés le 2 novembre 2026.
+% Chiffres : sorties_verif_inst/136.txt à 139.txt. Nom conservé pour les maîtres existants.
+\clearpage
+\part*{Compléments Institut après dépôt}
+\addcontentsline{toc}{part}{Compléments Institut après dépôt}
+
+\begin{cle}
+Cette partie porte sur la version Institut et les analyses disponibles au 2 novembre.
+Elle ne change pas les folios du rapport ENSAE cités dans le cours. Le rapport déposé décrit
+$582$ pertes et $91$ excès ; les analyses Institut sur $2000$--$2026$ retiennent $570$ pertes et
+$86$ excès. Toujours annoncer le périmètre et dire si le résultat est dans le rapport ou constitue
+un complément. Le protocole de capital publié ne devient pas validé par l'ajout de ces diagnostics.
+\end{cle}
+
+\section{Descendre à l'entité : la variante retenue et ses limites}
+\lequoi{Le registre observe les pertes déclarées, sans donner une exposition exhaustive. Une
+faible relation entre actifs et incidents enregistrés ne prouve pas une faible relation entre
+actifs et risque réel.}
+\laformule{Pour une entité d'actifs $A$,
+\[
+\lambda(A)=\lambda_0\left(\frac{A}{A_0}\right)^{b_\lambda},\qquad
+m(A)=\left(\frac{A}{A_m}\right)^b,\qquad
+B(A)=\operatorname{VaR}_{99{,}5\%}\!\left(\sum_{n=1}^{N}m(A)\sum_{k\in S_n}Y_{n,k}\right).
+\]
+$A$ est le total des actifs, $A_0$ la moyenne géométrique des actifs du panel d'ajustement et
+$\lambda_0$ la fréquence ajustée à cette taille. $A_m$ est la médiane des actifs associés aux
+événements TIC du panel financier $2005$--$2022$, distinct des $570$ pertes cyber ;
+$b$ règle l'échelle des pertes. $N$ suit une binomiale négative de moyenne $\lambda(A)$ et de
+forme $r$ ; $S_n$ contient les piliers atteints et $Y_{n,k}$ leurs pertes élémentaires.
+Le quantile est recalculé ; on ne divise pas directement le capital du périmètre financier.}
+\cheznous{Le panel financier avec actifs connus porte sur $2005$--$2022$. La variante ajuste
+la fréquence sur les firmes de plus de $100$~Md\$ : $6\,048$ firmes-années, $1\,402$ firmes,
+$A_0=570$~Md\$, $b_\lambda=0{,}494$, erreur-type par firme $0{,}066$, et $r=0{,}594$.
+À $20$~Md\$ d'actifs, $\lambda(A)=0{,}0209$/an et le facteur de sévérité vaut $0{,}854$.
+L'élasticité de sévérité $b=0{,}087$ provient d'un ajustement tronqué sur les pertes TIC ;
+son application aux pertes cyber-finance est une hypothèse de transfert. Les $484$ pertes
+observées sous le seuil servent désormais de corps empirique, au lieu de pertes nulles.
+Le métier n'est pas intégré au protocole retenu.}
+\lepiege{Le calcul d'entité utilise la cascade indépendante sans choc commun P4. Le chiffre de
+tête à quatre canaux utilise la marche avec ce choc ; les $32$ configurations par pilier utilisent
+la marche sans ce choc. Une validation obtenue sur l'un de ces protocoles ne se transfère pas
+automatiquement aux autres.}
+\lepiege{L'estimation au-delà de $100$~Md\$ est extrapolée aux entités plus petites.
+La restriction vise à réduire l'effet des fenêtres courtes sans démontrer une correction de
+sélection : $57{,}8\,\%$ des grandes firmes ne sont observées qu'un an. La dispersion estimée
+contient aussi l'hétérogénéité entre firmes.}
+\laphrase{La variante retenue donne $24{,}1$~M\euro{} pour l'entité notionnelle non conforme,
+contre $169$~M\euro{} dans la lecture historique du registre. Fréquence, dispersion et pertes
+sous le seuil changent ensemble ; la baisse ne vient pas de l'exposant seul. C'est une
+extrapolation conditionnelle, pas un capital individuel validé.}
+\appui{Mémoire Institut, \S~9.5 ; scripts 136 et 137. Les anciennes lectures à exposants
+$0{,}074$, $0{,}27$ et $1$ restent des comparaisons historiques ; $0{,}27$ n'est plus la lecture
+retenue. Le rapport ENSAE déposé conserve ses chiffres historiques.}
+
+\section{Lire une plage sans confondre les incertitudes}
+\cheznous{Au point d'expert, les états de propagation C, PC et NC donnent respectivement
+$13{,}2$, $17{,}7$ et $24{,}1$~M\euro{}, soit $+83\,\%$ de C à NC. La figure 9.3 est recalée
+sur cette descente par le script 139. La plage aux $1\,024$ sommets est de $15{,}8$ à
+$27{,}5$~M\euro{}. Le bootstrap des firmes, qui réestime intercept, pente et dispersion,
+donne $8{,}3$ à $53{,}0$~M\euro{}, à sévérité et graine fixées.}
+\lepiege{La première plage fait varier le sens des liens à force posée ; elle n'est ni un
+intervalle de confiance ni une preuve d'extrema globaux. La seconde traite le calage de fréquence
+sous le protocole du panel ; elle ne corrige pas la sélection du registre. On ne les fusionne
+pas en un intervalle global. Les $6\,049$ à $20\,188$~M\euro{} concernent un autre protocole,
+sur le périmètre financier représenté par le registre, non tout le secteur mondial.}
+\laphrase{Une plage doit toujours dire ce qui varie et ce qui reste fixé. La nouvelle lecture
+donne un ordre de grandeur, tout en montrant que la connaissance du registre domine la précision
+d'un chiffre isolé.}
+\appui{Mémoire Institut, \S~9.5--9.6 ; scripts 136, 137 et 139.}
+
+\section{Capture des incidents : plusieurs risques pour le même registre}
+\laformule{Avec une capture indépendante du montant et du nombre d'incidents,
+\[
+N_{\text{réel}}\sim\mathrm{NB}(\mu/q_{\mathrm{obs}},r),\qquad
+N_{\text{enregistré}}\mid N_{\text{réel}}\sim\mathrm{Binom}(N_{\text{réel}},q_{\mathrm{obs}}),
+\]
+la loi observée est $\mathrm{NB}(\mu,r)$. Ici $\mu$ est la moyenne enregistrée et
+$q_{\mathrm{obs}}$ la probabilité de capture. Le registre seul ne sépare pas ces deux quantités.}
+\cheznous{Pour la notionnelle, les captures supposées de $100$, $50$, $25$ et $10\,\%$
+donnent des VaR de $23{,}1$, $74{,}0$, $153{,}9$ et $327{,}7$~M\euro{}, moyennes sur quatre
+graines. Les ES correspondantes valent $160{,}6$, $282{,}4$, $468{,}5$ et $850{,}9$~M\euro{}.
+Les $23{,}1$~M\euro{} se comparent aux $24{,}1$ d'une graine, au bruit de simulation près.}
+\lepiege{Ces captures sont des scénarios, jamais des taux estimés. Les pertes publiques ont
+probablement une capture liée à leur montant : l'indépendance est une hypothèse forte.
+Le périmètre financier est concerné lui aussi ; corriger les seules entités fausserait la comparaison.}
+\laphrase{Les $24$ millions ne sont ni une borne prudente ni un risque réel identifié :
+plusieurs fréquences réelles peuvent produire le même registre observé.}
+\appui{Mémoire Institut, \S~9.5.2 et 9.6.2 ; script 138.}
+
+\section{Un quantile nul n'est pas une absence d'incident}
+\laformule{Pour une perte annuelle non négative $L$,
+\[
+\Prob(L=0)\ge0{,}995\quad\Longrightarrow\quad
+\operatorname{VaR}_{99{,}5\%}(L)=0.
+\]
+La condition porte sur la \emph{perte}, pas sur le seul nombre $N$ d'incidents. Sous la lecture
+retenue, toutes les pertes d'incident sont positives, corps inclus ; la masse nulle vient donc
+des années sans incident. Pour la binomiale négative,
+$\Prob(L>0)=1-(r/(r+\lambda))^r$. L'ancien moteur annulait les pertes sous le seuil : il pouvait,
+en plus, compter un incident sans perte positive.}
+\cheznous{La bascule en forme fermée vaut $1\,076$~M\euro{} d'actifs. Les simulations donnent
+$1\,053$ à $1\,145$~M\euro{} sur quatre graines ; le bootstrap des firmes donne $100$ à
+$3\,889$~M\euro{}. À $500$~M\euro{} d'actifs, la petite entité a une VaR nulle mais une ES
+d'environ $23$~M\euro{}. L'assureur A n'a plus une VaR nulle : elle vaut environ $1{,}0$~M\euro{}.}
+\laphrase{La VaR nulle reflète la masse en zéro de la charge simulée à ce niveau de probabilité.
+Un quantile plus élevé, ou une autre mesure de perte, peut informer autrement le risque.
+Cette bascule ne définit pas la validité statistique du modèle.}
+\appui{Mémoire Institut, \S~9.6 ; script 137 pour la bascule et son incertitude, 136 pour les entités.}
+
+\section{Expliquer comment les quatre paramètres sont choisis}
+\cheznous{La fréquence de base est comptée dans le registre. Le passage non conforme utilise
+$\lambda_{NC}=\lambda_C\sum_v\pi_v m_v$ : $\pi_v$ est la part observée d'un vecteur d'attaque,
+$m_v$ le centre d'une fourchette posée à partir d'effets publiés sur des contrôles. Le mélange
+vaut environ $2{,}4875$, d'où $21{,}56$ à $53{,}62$ incidents par an. La détection multiplie
+le taux $86/570=0{,}1509$ par $0{,}85$ ou $1{,}20$, facteurs posés. Les gains
+$0{,}45/0{,}68/0{,}90$, la structure $T$ et le choc commun $\omega=0{,}68$ en NC sont posés.}
+\lepiege{Ni les fourchettes des multiplicateurs ni les contraintes d'admissibilité sur $W$
+ne sont des intervalles de confiance. La co-occurrence entre piliers n'est pas estimée dans
+l'application. $T$ reste fixé, mais $W=gT/s_{\max}$ varie avec $g$. Le partage de graines
+n'annule pas le bruit de simulation.}
+\laphrase{Le calcul est reproductible ; le passage entre états reste un scénario. Il faut
+annoncer séparément les données, les hypothèses et les sensibilités.}
+\appui{Beamer ENSAE, diapo 9 en deux étapes ; mémoire Institut, chapitres 4 à 6 et 9.}
+
+\section{Apprentissage statistique : un gain à vérifier hors période d'ajustement}
+\lidee{Le script 131 demande si les caractéristiques observées améliorent une simple tendance
+temporelle. Il prédit le dépassement de $u=20{,}03$~M\euro{} parmi les pertes enregistrées.
+Ce n'est ni une fréquence annuelle d'incidents ni une mesure de conformité.}
+\cheznous{Évaluation en origine glissante de $2014$ à $2025$ : $280$ pertes, $60$ dépassements.
+M0 est un taux constant ; M1 une tendance logistique ; M2 une logistique pénalisée enrichie ;
+M3 un boosting sur l'année, le métier, la région, la catégorie et les actifs. Les hyperparamètres
+sont fixés avant l'évaluation ; l'incertitude est calculée par bootstrap des douze années évaluées.
+Le gain de log-score de M3 contre M1 vaut $+0{,}0193$, intervalle à $90\,\%$
+$[-0{,}0371\,;+0{,}0571]$. Aucun gain positif résolu n'est établi dans les variantes testées.}
+\lepiege{Pour $37\,\%$ des pertes, les actifs décrivent une information financière postérieure
+à l'incident. Les masquer ne fait pas apparaître de gain résolu. La variante GPD à covariables
+attribue une densité nulle à un excès observé : sa moyenne sur les $59$ autres excès omet cet
+échec de support et ne peut pas être présentée comme son score complet.}
+\laphrase{Le boosting a le meilleur score moyen, mais le gain n'est pas distingué de zéro avec
+la précision disponible. Ce diagnostic ne prouve pas que les caractéristiques sont inutiles ;
+il ne justifie pas de remplacer ici le modèle de référence.}
+\appui{Mémoire Institut, \S~4.7.1 ; script 131 et sortie 131, après dépôt ENSAE.}
+
+\section{Descriptions SAS : observer un récit et identifier un mécanisme}
+\lidee{Le script 132 est un pilote de $50$ descriptions ; le script 133 agrège le codage de
+$570$ descriptions, pilote inclus. Au niveau strict, le texte établit une défaillance ; au
+niveau large, le codeur ajoute une défaillance impliquée. Un seul assistant IA a codé ces textes.}
+\cheznous{Le corpus complet contient $65$ incidents multi-piliers au sens strict et $203$ au sens
+large. La corrélation de rang avec la matrice d'expert est de $0{,}67$ et $0{,}75$ pour les
+co-occurrences brutes, mais de $0{,}33$ et $0{,}12$ pour les coefficients $\phi$, qui tiennent
+compte des marges. Une forte fréquence de P1 contribue donc à l'accord brut apparent.}
+\lepiege{Ces codes ne sont pas des défaillances mesurées et n'estiment ni $S$ ni $A$.
+Aucune direction n'est codée. Un second codage est préparé sur $100$ descriptions, $50$ par strate,
+avec questionnaire en aveugle et clé séparée. Les réponses ne sont pas encore reçues : aucun
+accord intercodeurs n'est annoncé. Le pilote et le corpus complet ne sont pas deux validations indépendantes.}
+\laphrase{Les textes peuvent aider à préciser ce qu'il faudrait observer. Avant de s'en servir
+pour estimer un lien, il faut vérifier que deux lecteurs indépendants y repèrent les mêmes faits,
+puis relier ces faits aux variables du modèle.}
+\appui{Scripts 132--133 ; protocole \path{docs/protocoles/validation_codage_sas.md}.
+Les textes sous licence et la clé ne font pas partie des fichiers à publier.}

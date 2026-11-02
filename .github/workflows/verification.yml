@@ -90,7 +90,7 @@ jobs:
       - name: Version Institut actuelle
         run: |
           tectonic --keep-logs memoire/main_institut_150.tex
-          python -c "import pymupdf; d=pymupdf.open('memoire/main_institut_150.pdf'); assert d.page_count == 152, d.page_count; assert not any('??' in p.get_text() for p in d), 'Renvoi non resolu'"
+          python -c "import pymupdf; d=pymupdf.open('memoire/main_institut_150.pdf'); assert d.page_count == 156, d.page_count; assert not any('??' in p.get_text() for p in d), 'Renvoi non resolu'"
 
       - name: PDF de contrôle
         if: always()

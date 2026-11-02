@@ -26,28 +26,28 @@
 % des piliers, les deux canaux a bornes posees, et trois antitheses retirees. L'abstract
 % passe en romain, comme le resume francais.
 Le règlement européen DORA impose aux entités financières de maîtriser leurs risques informatiques.
-Nous comparons le besoin de capital entre états de conformité supposés, puis examinons sa sensibilité
+Nous comparons le besoin de capital entre états de conformité supposés, puis sa sensibilité
 aux informations manquantes sur la contagion et les coûts.
 
 Le modèle combine le nombre annuel d'incidents, leurs pertes et leur propagation entre les cinq
 domaines de contrôle. Le besoin de capital est le quantile à $99{,}5\,\%$ de la perte annuelle,
 avec addition des coûts par pilier touché. Les pénalités et les polices cyber vendues sont exclues.
 
-Sur le périmètre financier étudié, le besoin passe de $6\,049$ à $20\,188$~M\euro{} entre les états
+Sur le périmètre financier représenté par le registre, le besoin passe de $6\,049$ à $20\,188$~M\euro{} entre états
 conforme et non conforme, soit un facteur $3{,}34$. Ces montants dépendent des paramètres de scénario
-et de la règle de coût. Pour une entité de $20\,000$~M\$ d'actifs, la plage de $131{,}5$ à
-$183{,}3$~M\euro{} reste une extrapolation d'ordre de grandeur.
+et de la règle de coût. Pour une entité de $20\,000$~M\$ d'actifs, le besoin non conforme est de
+$24$~M\euro{} ($15{,}8$ à $27{,}5$ aux sommets admissibles ; $8{,}3$ à $53{,}0$ par bootstrap des
+firmes), extrapolation non validée.
 
-Les sources ne permettent pas de calibrer la propagation. Nous conservons la force des liens
-posée à dire d'expert et faisons varier leur sens. Le capital va de $6\,858$ à $8\,697$~M\euro{}
-aux $1\,024$ sommets admissibles, la largeur variant de $189$~M\euro{} (écart-type) d'une graine
-à l'autre ; ces extrema ne sont pas des bornes globales démontrées.
+La propagation n'étant pas calibrable, nous posons la force des liens à dire d'expert et faisons
+varier leur sens. Dans un autre calage, le capital va de $6\,858$ à $8\,697$~M\euro{} aux $1\,024$
+sommets admissibles, dont la largeur a un écart-type de $189$~M\euro{} entre graines ; ces extrema ne sont pas des bornes globales démontrées.
 Documenter le sens de six dépendances réduirait cette plage de $32{,}7\,\%$ en moyenne
 ($22$ à $44\,\%$ selon la graine). Ce scénario précise l'intérêt d'un registre d'incidents,
-sans garantir le gain d'une collecte réelle.
+sans garantir le gain d'une collecte.
 
 \paragraph{Mots-clés.} Risque cyber ; DORA ; SCR ; Solvabilité II ; théorie des valeurs
-extrêmes ; cascade dirigée ; identification partielle ; bornes de capital ; inférence
+extrêmes ; cascade dirigée ; identification partielle ; plage de capital ; inférence
 bayésienne ; valeur de l'information.
 
 % USAGE DE L'IA GENERATIVE, VERSION INSTITUT A 150 PAGES. Exige par le § 5.1.c des Recommandations
@@ -58,7 +58,7 @@ bayésienne ; valeur de l'information.
 ont servi à la rédaction et à la reformulation du manuscrit, à l'écriture des scripts d'analyse
 et à la relecture du texte, sous le contrôle de l'auteur. Les analyses, les choix
 méthodologiques et l'interprétation des résultats relèvent de l'auteur. Aucun résultat chiffré
-n'est produit par l'assistant : tout nombre publié provient de l'exécution d'un script du dépôt.
+n'est produit par l'assistant : tout nombre publié provient de l'exécution d'un script du dépôt, hors valeurs posées et citations externes déclarées comme telles.
 L'annexe~\ref{ann:ia} détaille cet usage et les contrôles qui l'encadrent.
 
 % =====================================================================
@@ -95,14 +95,15 @@ The model combines annual incident counts, losses and propagation across five co
 Capital need is the $99.5\,\%$ quantile of annual loss, with costs added across affected pillars.
 Regulatory penalties and the cyber policies an insurer sells are excluded.
 
-For the financial sample, capital need rises from $6\,049$ to $20\,188$~M\euro{} between the
+For the financial perimeter represented by the loss register, capital need rises from $6\,049$ to $20\,188$~M\euro{} between the
 compliant and non-compliant states, a factor of $3.34$. These amounts depend on scenario parameters
-and on the cost rule. For an entity with $20\,000$~M\$ of assets, the range from $131.5$ to
-$183.3$~M\euro{} remains an extrapolated order of magnitude.
+and on the cost rule. For an entity with $20\,000$~M\$ of assets, the non-compliant need is
+$24$~M\euro{} ($15.8$ to $27.5$ at the admissible vertices; $8.3$ to $53.0$ by firm bootstrap),
+an unvalidated extrapolation.
 
-The sources cannot calibrate propagation. We hold expert-set link strength fixed and vary
-direction. Capital ranges from $6\,858$ to $8\,697$~M\euro{} at the $1\,024$ admissible vertices,
-the width varying by $189$~M\euro{} (standard deviation) across seeds; these extrema are not
+Propagation cannot be calibrated, so we set expert link strength and vary direction. In another
+calibration, capital ranges from $6\,858$ to $8\,697$~M\euro{} at the $1\,024$ admissible vertices,
+the width having a standard deviation of $189$~M\euro{} across seeds; these extrema are not
 proven global bounds. Documenting six link directions would narrow
 this range by $32.7\,\%$ on average, from $22$ to $44\,\%$ depending on the simulation seed.
 This scenario indicates the potential value of an incident register without guaranteeing
@@ -126,4 +127,4 @@ the benefit of collecting actual observations.
 
 % =====================================================================
 
-% SOURCES-SCRIPTS: 28 39 33 43 68 92 66 89 91 100 30 55 65 117 130 134
+% SOURCES-SCRIPTS: 28 39 33 43 68 92 66 89 91 100 30 55 65 117 130 134 136

@@ -52,7 +52,7 @@ Au lieu d'un unique seuil de défaut, nous en posons deux, ordonnés, qui décou
 \text{C si } C^\star>K_{\text{haut}}.
 \end{equation}
 Les seuils sont fixés par les probabilités d'état ancrées sur les enquêtes de
-conformité de fin 2025 ($0{,}35$, $0{,}35$ et $0{,}30$ pour NC, PC et C, annexe~B), d'où $K_{\text{bas}}=\Phi^{-1}(p_{\text{NC}})$ et
+conformité de fin 2025 ($0{,}35$, $0{,}35$ et $0{,}30$ pour NC, PC et C, annexe~\ref{sec:ann-parametres}), d'où $K_{\text{bas}}=\Phi^{-1}(p_{\text{NC}})$ et
 $K_{\text{haut}}=\Phi^{-1}(p_{\text{NC}}+p_{\text{PC}})$. Sur le score $U=\Phi(C^\star)$, uniforme sur $[0,1]$, ces seuils sont les coupures $0{,}35$ et $0{,}70$. Ce probit ordonné généralise la latente
 de défaut binaire en une latente de conformité à trois niveaux. Sachant l'environnement $\Theta$, on
 obtient
@@ -100,10 +100,10 @@ l'agrégation sont conservées ; les différences entre les entrées restent des
   propager vaut $e_j=g(c_j)\,s_j/\max_k s_k$, où $s_j$ est la somme de la ligne $j$ de $T$ et
   $c_j$ l'état du pilier $j$.
 \item La \emph{détection} agit sur $p_u$, le taux de dépassement, c'est-à-dire la probabilité
-  qu'une sévérité élémentaire dépasse le seuil $u$ du chapitre~\ref{chap:socle} (notée $\zeta_u$ dans ce
-  chapitre). Le moteur l'applique à chaque pilier touché, si bien que la probabilité de perte matérielle d'un incident est plus élevée et dépend aussi de la propagation. Le taux $p_u$ varie avec l'état parce qu'une entité conforme intercepte et remédie tôt, de sorte qu'une
+  qu'une sévérité élémentaire dépasse le seuil $u$ (notée $\zeta_u$ au chapitre~\ref{chap:socle}). Le moteur l'applique à chaque pilier touché, si bien que la probabilité de perte matérielle d'un incident est plus élevée et dépend aussi de la propagation. Le taux $p_u$ varie avec l'état parce qu'une entité conforme intercepte et remédie tôt, de sorte qu'une
   moindre fraction des piliers touchés atteint la sévérité matérielle. Nous multiplions $p_u$ par $0{,}85$
-  à l'état conforme et par $1{,}20$ à l'état non conforme, deux valeurs posées.
+  à l'état conforme et par $1{,}20$ à l'état non conforme, deux valeurs posées : le taux calibré de
+  $0{,}1509$ passe ainsi de $0{,}128$ à $0{,}181$.
 \item L'\emph{accumulation par un prestataire commun} transforme, à l'état non conforme, un
   incident amorcé sur le pilier des tiers en choc commun. Ce choc touche chacun des autres piliers
   avec la probabilité $\omega$, nulle à l'état conforme et égale à $0{,}68$ à l'état non conforme. Cette borne haute est posée
@@ -158,8 +158,8 @@ auto-évitante des capitaux par état n'est pas couverte par ce contrôle.
 
 Sur une grille de vingt points, à nombres aléatoires communs, aucun pas n'est décroissant, pour le
 capital comme pour la perte moyenne, à l'échelle d'entité comme du secteur. Les applications testées respectant $g_C < g_{PC} < g_{NC}$ donnent $B_C < B_{PC} < B_{NC}$. La grille ne démontre pas cette propriété pour toute valeur de $g$. L'existence et le sens de l'écart sont
-ainsi vérifiés numériquement sur ces vingt points et sur les cinq applications du tableau, et seule
-son amplitude est un scénario.
+ainsi observés sur ces vingt points et sur les cinq applications du tableau, pour la cascade
+indépendante, et seule son amplitude est un scénario.
 
 \begin{center}\small
 \renewcommand{\arraystretch}{1.25}
@@ -235,7 +235,7 @@ cent.
 
 À l'échelle lente, l'état suit une chaîne de Markov à temps continu
 $\text{NC}\to\text{PC}\to\text{C}$, dont l'état conforme est absorbant dans le cas de base. Le
-retour vers un état moins conforme est traité en sensibilité. Nous retenons des séjours de type phase (Erlang-$k$), pour réduire la probabilité de séjours très courts.
+retour vers un état moins conforme est traité en sensibilité. Nous retenons des séjours de type phase (Erlang-$k$), pour réduire la probabilité de séjours très courts. Dans le cas de base, $k=2$, la durée moyenne du séjour est de $1{,}5$ an en NC puis $1{,}5$ an en PC, posée sur des durées de projet DORA, et la distribution initiale est $(0{,}35\,;0{,}35\,;0{,}30)$.
 
 Une Erlang de forme supérieure à un a une densité nulle à l'origine, mais n'impose aucune durée minimale strictement positive. Cette loi est posée. Une loi d'Erlang est la somme de $k$ durées exponentielles indépendantes de même taux. Chaque état transitoire est développé en $k$ phases. Le générateur $Q$ contient les taux de passage hors diagonale ; sa diagonale est l'opposé de leur somme. L'exponentielle de matrice donne les probabilités de transition :
 \begin{equation}
@@ -248,10 +248,10 @@ où $v_0$ est le vecteur-ligne des probabilités initiales et $t$ le temps écou
 \end{equation}
 Il s'agit d'une moyenne de quantiles, qui diffère du quantile à $99{,}5\,\%$ de la loi mélangée,
 dont la queue vient des composantes les plus lourdes. Sur le mélange des $32$
-configurations, l'écart mesuré est de l'ordre de $9{,}3\,\%$. La trajectoire se lit donc comme l'espérance du
+configurations, le quantile du mélange dépasse la moyenne des quantiles d'environ $9{,}3\,\%$ ($904$~M\euro). La trajectoire se lit donc comme l'espérance du
 besoin de capital sous l'incertitude d'état.
 
-% SOURCES-SCRIPTS: 08b 77
+% SOURCES-SCRIPTS: 08b 77 17
 
 \section{Couplage systémique et analogie de crédit}
 \label{sec:couplage}

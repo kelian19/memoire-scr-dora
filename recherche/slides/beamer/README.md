@@ -1,8 +1,10 @@
 # Supports de soutenance
 
 Le [support ENSAE](soutenance_ensae.pdf) accompagne le rapport court
-[`main_ensae.pdf`](../../../memoire/main_ensae.pdf). Il comporte 22 diapositives sur 25 pages
+[`main_ensae.pdf`](../../../memoire/main_ensae.pdf). Il comporte 23 diapositives sur 27 pages
 PDF, du fait des étapes d'affichage. Les compléments après dépôt sont signalés dans le support.
+Le choix des paramètres distingue les bases issues des données, les hypothèses entre états
+et les plages de scénario ; le multiplicateur de fréquence est détaillé par vecteur d'attaque.
 
 Le [support Institut](soutenance_institut.pdf) est distinct et accompagne
 [`main_institut_150.tex`](../../../memoire/main_institut_150.tex).

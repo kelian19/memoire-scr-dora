@@ -73,9 +73,9 @@ Un \emph{biais de survie} pourrait sous-représenter les entités disparues, mai
 
 \section{Hétérogénéité temporelle et actualisation des sinistres}
 
-Le sous-échantillon cyber-finance OpRisk contient des pertes de $1979$ à $2026$, période sur laquelle les montants nominaux dérivent.
+Le sous-échantillon cyber-finance OpRisk compte $570$ pertes de $2000$ à $2026$, période sur laquelle les montants nominaux dérivent.
 Pour chaque perte, la base donne le montant de l'année de l'événement et sa valeur courante, corrigée
-de l'inflation générale. Leur rapport, égal à un pour les années récentes, atteint $1{,}747$ en
+de l'inflation générale. Leur rapport, proche de un pour les années récentes, atteint $1{,}747$ en
 $2004$, d'où une inflation implicite de $2{,}19\,\%$ par an. Nous calibrons cependant sur le premier,
 c'est-à-dire sur des montants \emph{nominaux}. Ce choix minore les sinistres anciens ramenés en euros
 courants, donc la queue et le capital. Son effet sur la dérive des pertes est mesuré au
@@ -143,13 +143,13 @@ reposent sur $\lambda$ ; les besoins d'entité utilisent la fréquence $\lambda(
 % SOURCES-SCRIPTS: 57
 
 Corrigée de la troncature au seuil de collecte, l'élasticité de la sévérité à la taille est de
-$b=0{,}087$, et la sévérité transposée à l'entité notionnelle n'est multipliée que par $0{,}861$. Le
-biais de taille est mesuré dans le registre. Sous les hypothèses du chain-ladder, les $97$ événements observés sur 2023--2025 deviennent $255$ à l'ultime, soit $85{,}0$ par an contre $74{,}1$ sur 2015--2022, et la fréquence est relevée d'un facteur $1{,}147$. Cette projection suggère un retard de
+$b=0{,}087$, et la sévérité transposée à l'entité notionnelle n'est multipliée que par $0{,}861$ dans ce calage ($0{,}854$ sous la descente de la \S\ref{sec:ancrage}). Le
+biais de taille est mesuré dans le registre. Sous les hypothèses du chain-ladder, les $97$ événements observés sur 2023--2025 deviennent $255$ à l'ultime, soit $85{,}0$ par an contre $74{,}1$ sur 2015--2022 en comptes observés, et la fréquence est relevée d'un facteur $1{,}147$. Les années 2015--2022, portées elles aussi à l'ultime, donnent la même moyenne, $85{,}0$ : le facteur mesure donc la remontée encore incomplète des comptes observés, non une hausse récente. Cette projection suggère un retard de
 remontée, sans établir l'évolution du risque TIC réel. Les régressions et le triangle de
 développement sont déportés \matcomp.
 % SOURCES-SCRIPTS: 67
 
-Les deux corrections se compensent presque sur la perte moyenne, $0{,}861\times1{,}147=0{,}987$, soit
+Si l'on retient ce facteur, les deux corrections se compensent presque sur la perte moyenne, $0{,}861\times1{,}147=0{,}987$, soit
 un effet net de $1{,}3\,\%$, inférieur à l'incertitude d'estimation de chacune, mais elles ne se compensent pas sur le capital. À queue lourde, le quantile à $99{,}5\,\%$ répond à la sévérité bien plus qu'à la fréquence. Leur effet net sur le capital n'est pas chiffré. La correction de taille agit sur la sévérité et celle de troncature sur la fréquence ; leur compensation sur la moyenne ne détermine pas le signe de l'effet sur le quantile.
 
 \section{Hackmageddon et la structure du risque}
@@ -294,7 +294,7 @@ même temps que la date de fin d'exposition que dans $12{,}5\,\%$ des cas.}
 \label{fig:presence-croisee}
 \end{figure}
 
-Les $12{,}5\,\%$ du croisement le plus pauvre représentent encore plus de neuf mille incidents. La
+Les $12{,}5\,\%$ du croisement le plus pauvre (figure~\ref{fig:presence-croisee}) représentent encore plus de neuf mille incidents. La
 matrice montre surtout que les lacunes se cumulent. Une analyse qui croiserait le volume touché, le type de brèche et la durée
 d'exposition ne disposerait plus que de $10{,}9\,\%$ de la base. Rien n'indique que cette fraction
 soit représentative, puisque les trois manques ont la même origine. Le modèle ne
@@ -538,7 +538,7 @@ exempte de biais de visibilité ; faute d'événements joints, la corrélation e
 piliers ne s'estime pas, et le chapitre~\ref{chap:cascade} la remplace par une structure de
 dépendance explicite. Le registre des incidents majeurs que DORA instaure atténuera ces limites sans les lever : limité aux incidents au-dessus d'un seuil de matérialité, il restera tronqué.
 
-S'il renseigne la taille de l'entité et le prestataire en cause, il permettra de conditionner la sévérité à la taille et de cartographier les tiers (chapitre~\ref{chap:partielle}), sans changer la structure du modèle.
+S'il renseigne la taille de l'entité et le prestataire en cause, il permettra de conditionner la sévérité à la taille et de cartographier les tiers (section~\ref{ch:livrable}), sans changer la structure du modèle.
 
 D'autres bases, sinistres assurantiels ou enquêtes sectorielles, auraient leurs propres biais. L'indice
 de queue domine l'incertitude du modèle (chapitre~\ref{ch:robustesse}) : une base de plus ne la

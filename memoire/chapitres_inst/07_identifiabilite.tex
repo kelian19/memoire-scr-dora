@@ -45,10 +45,10 @@ donc pas, à elle seule, de conclure à une impossibilité générale d'identifi
 La première source, la chronologie américaine des fuites de données, est volumineuse
 ($74\,783$ incidents, $25\,009$ organisations) mais manque de taxonomie et de volume informatif. La
 catégorie non déterminée (\texttt{UNKN}) représente en effet 52,7\,\% des incidents. La date de
-survenance n'est exploitable que dans 49,6\,\% des cas, de façon non aléatoire selon le type
+survenance n'est exploitable que dans 54,8\,\% des cas, de façon non aléatoire selon le type
 d'incident, et ordonner par date de déclaration mesurerait le délai de détection, pas la contagion.
-Restreinte aux types informatifs et aux trimestres consécutifs, la base ne donne que 71 transitions
-$j(t\!-\!1)\to k(t)$, c'est-à-dire $3{,}6$ observations par cellule hors diagonale, et 34 dans le
+Restreinte aux types informatifs et aux trimestres consécutifs, la base ne donne que 89 transitions
+$j(t\!-\!1)\to k(t)$, c'est-à-dire $4{,}5$ observations par cellule hors diagonale, et 38 dans le
 secteur financier.
 
 La deuxième, SAS OpRisk, offre 4\,329 transitions annuelles entre 7 catégories de risque, environ 103
@@ -123,12 +123,13 @@ temps des centaines d'organisations. Si la contagion dirigée existe, ce choc ex
 au pilier~4, doit élever dans les mois suivants, chez les organisations touchées, le risque de
 défaillances relevant d'autres piliers. Une différence de différences sur
 188 organisations financières touchées, contre un groupe de contrôle apparié et sur des fenêtres de
-$180$~jours, donne $+1{,}17$ jour de déclaration d'incident par organisation (IC bootstrap $[+1{,}07\,;+1{,}27]$).
+$180$~jours, donne $+1{,}17$ jour de déclaration d'incident par organisation (IC bootstrap à $95\,\%$ $[+1{,}07\,;+1{,}27]$).
 
-Calé sur une fausse date un an plus tôt, le même dispositif donne $+1{,}11$. L'effet est donc
-compatible avec une régression vers la moyenne du groupe de contrôle sélectionné, et l'effet net de $+0{,}06$ est
-indiscernable de zéro. La cible resterait de toute façon non attribuable, car la source classe les
-incidents par vecteur d'attaque, avec $32\,\%$ de non déterminés.
+Calé sur une fausse date un an plus tôt, sur $20$ organisations traitées et $181$ de contrôle, le même
+dispositif donne $+1{,}11$, sans intervalle. La différence ponctuelle est de $+0{,}06$, mais les cohortes
+diffèrent et aucun intervalle du contraste n'est calculé. Le placebo fragilise l'interprétation causale. La cible
+resterait de toute façon non attribuable, car la source classe les incidents par vecteur d'attaque, avec
+$32\,\%$ de non déterminés ($16$ des $50$ incidents des organisations touchées).
 
 % SOURCES-SCRIPTS: 62 35
 
@@ -140,13 +141,13 @@ qu'aucune base agrégée ne fait. Nous codons sept rapports (Cyber Safety Review
 GAO, SEC, OCC), dont deux sur des entités financières régulées, en transitions dirigées $j \to k$
 telles que le rapport les décrit. L'unité de codage est le couple (incident, paire de piliers).
 
-Sur $17$ transitions, l'asymétrie $\Delta$ de l'équation~\eqref{eq:asymetrie} vaut $17$, contre $8{,}4 \pm 2{,}2$ sous un placebo par
-permutation, d'où $z=+3{,}93$ ($p=0{,}0004$), là où le pas annuel d'OpRisk donnait $z=-0{,}33$.
+Sur $17$ transitions, l'asymétrie $\Delta$ de l'équation~\eqref{eq:asymetrie} vaut $17$, contre $8{,}4 \pm 2{,}2$ sous une orientation
+aléatoire de chaque transition, d'où $z=+3{,}93$ ($p=0{,}0004$), là où le pas annuel d'OpRisk donnait $z=-0{,}33$.
 Toutes les transitions vont dans le sens dominant de leur paire. P1, la gouvernance, n'est jamais une
 cible ($9$ sorties, $0$ entrée) et P2, la gestion des incidents, n'a aucune sortie ($0$ sortie,
 $7$ entrées), structure que le classeur qualitatif (la matrice $W$ posée à dire d'expert) posait par jugement.
 
-Le placebo teste la cohérence du codage, mais pas l'exogénéité de la direction. Une enquête
+Ce test mesure la cohérence du codage, non l'exogénéité de la direction. Une enquête
 officielle, mandatée pour déterminer une cause racine, conclut en effet souvent à une défaillance de
 gouvernance, si bien que P1 peut ressortir comme source par convention d'écriture. S'y ajoutent un
 codeur unique, des sources en partie secondaires et un échantillon d'incidents notoires. Le corpus
@@ -154,8 +155,8 @@ corrobore donc la structure sans la calibrer, et le coût du biais est borné au
 \S\ref{sec:biais-narration}. Une mesure de fiabilité par second codeur en aveugle reste en attente.
 
 Les trois relectures de praticiens reçues ne distinguent pas un ordre de propagation d'une cause
-commune, ce qui corrobore la frontière mais pas la matrice. Les deux dernières contestent le sens
-unique de deux arcs sans déplacer le capital publié (annexe~\ref{ch:elicitation}, \S\ref{sec:relecture-praticien}).
+commune, ce qui corrobore la frontière mais pas la matrice ; la troisième n'apporte pas d'argument. Deux
+des trois contestent le sens unique de deux arcs, sans déplacer le capital publié (annexe~\ref{ch:elicitation}, \S\ref{sec:relecture-praticien}).
 % SOURCES-SCRIPTS: 53
 
 \section{Corpus étendu et matrice ordonnée}

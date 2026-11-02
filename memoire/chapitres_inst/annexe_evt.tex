@@ -161,8 +161,8 @@ La simulation suivante vérifie si cet écart d'estimateurs est compatible avec 
 
 Nous simulons $2\,000$ échantillons sous le modèle publié, c'est-à-dire le corps observé sous le seuil et
 une queue GPD de paramètres $(\hat\xi,\hat\sigma) = (0{,}595\,;57{,}97)$ au-dessus. Nous appliquons à chacun
-le même estimateur de Hill, aux mêmes $k$. Si un monde où $\xi$ vaut $0{,}595$ reproduit les valeurs
-observées, celles-ci ne prouvent rien : elles sont ce qu'un tel $\xi$ produit.
+le même estimateur de Hill, aux mêmes $k$. Si des échantillons simulés avec $\xi=0{,}595$ reproduisent les valeurs
+observées, celles-ci ne permettent pas de rejeter cet indice.
 
 \begin{center}\footnotesize
 \renewcommand{\arraystretch}{1.25}
@@ -221,12 +221,11 @@ seuil au-dessus duquel $\hat\xi$ se stabilise. Cette règle fournit un contrôle
 le mieux ajusté du balayage, avec une $p$-value d'Anderson-Darling de $0{,}986$ contre $0{,}943$ pour le
 second meilleur candidat. Deux diagnostics sur le même échantillon désignent des points voisins, ce qui n'était pas garanti.
 
-La règle la plus permissive descendrait plus bas et donnerait davantage de capital, ce qui écarte le
-soupçon d'un choix opportuniste. Elle retient $15{,}53$~M\euro, soit $22{,}5\,\%$ sous le seuil publié, où le
-quantile de sévérité vaut $731{,}0$ contre $662{,}8$, soit $10{,}3\,\%$ de plus. Le seuil publié n'est donc
-pas celui qui maximise le chiffre. Parmi les candidats acceptables, il est du côté qui le minore.
+La règle la plus permissive descendrait plus bas. Elle retient $15{,}53$~M\euro, soit $22{,}5\,\%$ sous le
+seuil publié, et donne un quantile de sévérité de $731{,}0$ contre $662{,}8$, soit $10{,}3\,\%$ de plus. Le
+seuil publié ne maximise donc pas ce quantile : parmi les candidats acceptables, il le minore.
 
-Sur les seuils testés, remonter réduit l'écart-type bootstrap du quantile à $99{,}5\,\%$,
+Sur les seuils testés, remonter réduit l'écart-type bootstrap du quantile de sévérité à $99{,}5\,\%$,
 de $578{,}7$ à $137{,}5$~M\euro, soit une division par $4{,}2$, alors que le nombre d'excès passe
 de $171$ à $29$. Au percentile $70$, l'indice atteint $1{,}126$ : la moyenne diverge, mais pas le quantile.
 Ces ajustements changent à la fois la queue estimée et l'effectif. Ils ne démontrent ni la disparition
@@ -320,7 +319,7 @@ anti-conservatrice. Ils ne se compensent pas, puisqu'ils ne portent pas sur la m
 % SOURCES-SCRIPTS: 90
 
 On pourrait affirmer qu'une dérive commune aux deux états de conformité se simplifie dans un rapport, donc que
-l'écart DORA n'est pas concerné. L'affirmation est exacte pour une variation de la seule échelle de sévérité,
+l'écart entre états n'est pas concerné. L'affirmation est exacte pour une variation de la seule échelle de sévérité,
 et nous l'avons mesurée. Multiplier l'échelle multiplie les deux états par le même
 facteur, $1{,}3209$ en conforme contre $1{,}3166$ en non conforme, soit un rapport de $0{,}9968$ alors que les
 niveaux montent de $32\,\%$. Pour cette variation, l'invariance d'échelle du facteur entre états vaut donc à
@@ -333,7 +332,8 @@ c'est la forme qui pèse. La composante de forme déplace seule le facteur de $-
 résolue. Les deux sont additives, le résidu d'interaction valant $0{,}05$ écart-type. Le facteur entre états
 passe ainsi de $3{,}337$ à $3{,}164$, un déplacement résolu.
 
-L'écart en euros bouge à peine, mais par compensation et non par insensibilité. Il passe de $14\,129$ à
+L'écart en euros bouge à peine, mais par compensation et non par insensibilité. Il passe de $14\,129$ (protocole de ce
+script, quatre graines ; $14\,139$ au chapitre~\ref{chap:resultats}) à
 $13\,629$~M\euro, soit $-3{,}5\,\%$ pour un écart-type de $733$~M\euro{} entre graines, donc un déplacement non
 résolu. Il serait faux d'en conclure que l'écart est robuste à la sévérité : la composante de forme seule le
 ramènerait à $10\,382$~M\euro{} et celle d'échelle seule le porterait à $18\,577$. L'écart est très sensible à la

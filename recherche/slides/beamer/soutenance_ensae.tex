@@ -370,6 +370,60 @@
 % Reference interne (hors diapositive) : rapport, chapitres 4 à 6 et 9. États et écarts entre états supposés ; capital de scénario, niveau illustratif.
 \end{frame}
 
+\begin{frame}[t]{Comment choisit-on les paramètres ?}
+  \suivimethode{2,3,4,5}{Origine des paramètres}
+  \framesubtitle{\ajout Séparer les valeurs issues des données et les hypothèses entre états}
+  \only<1>{%
+  \scriptsize
+  \renewcommand{\arraystretch}{1.16}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{.13\linewidth} r r Y >{\raggedright\arraybackslash}p{.18\linewidth}@{}}
+    \toprule
+    Paramètre & C & NC & Construction de la valeur & Statut \\
+    \midrule
+    Fréquence $\lambda$ & 21,56 & 53,62 & Base : $582/27$ incidents par an dans le registre. Passage NC : parts des vecteurs d'attaque pondérées par des multiplicateurs. & \shortstack[l]{Base comptée\\Passage semi-ancré} \\
+    \rowcolor{clair}Détection $p_u$ & 0,128 & 0,181 & Base : $86/570=0{,}1509$ au-dessus du seuil $u$. Facteurs $0{,}85$ en C et $1{,}20$ en NC. & \shortstack[l]{Base calculée\\Facteurs posés} \\
+    Propagation $g$ & 0,45 & 0,90 & Trois gains choisis : $0{,}45/0{,}68/0{,}90$. Force relative des liens $T$ posée à dire d'expert. & Posé \\
+    \rowcolor{clair}Accumulation $\omega$ & 0 & 0,68 & Scénario haut motivé par la concentration des tiers ; cette concentration ne calibre pas la probabilité du choc. & Posé, non identifié \\
+    \bottomrule
+  \end{tabularx}\par\vspace{2mm}
+  \begin{columns}[T,onlytextwidth]
+    \column{.51\textwidth}\footnotesize
+    \textbf{Sévérité :} seuil au percentile 85, paramètres GPD ajustés aux pertes. La dispersion $\varphi=9{,}20$ du moteur reste posée ; le test Poisson / binomiale négative ne la calibre pas.
+    \column{.45\textwidth}\footnotesize
+    \textbf{Exploré sur une plage :} multiplicateurs par vecteur et sens des liens, à force fixée. Une plage de scénario n'est pas un intervalle de confiance.
+  \end{columns}
+  }
+  \only<2>{%
+  \begin{columns}[T,onlytextwidth]
+    \column{.57\textwidth}\scriptsize
+    \[\lambda_{NC}=\lambda_C\sum_v\pi_v m_v,\qquad \lambda_C=582/27.\]
+    $v$ : type d'attaque ; $\pi_v$ : sa part dans Hackmageddon ; $m_v$ : centre de sa fourchette de multiplicateur.\par\vspace{1.5mm}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabularx}{\linewidth}{@{}Y r l r@{}}
+      \toprule
+      Vecteur d'attaque & $\pi_v$ & Fourchette $m_v$ & Centre \\
+      \midrule
+      Hameçonnage & 0,388 & [1,8 ; 3,0] & 2,40 \\
+      \rowcolor{clair}Vulnérabilité & 0,338 & [2,0 ; 2,6] & 2,30 \\
+      Chaîne d'approvisionnement & 0,158 & [1,9 ; 2,6] & 2,25 \\
+      \rowcolor{clair}Identifiants compromis & 0,063 & [3,0 ; 8,0] & 5,50 \\
+      Autres & 0,053 & [1,3 ; 1,6] & 1,45 \\
+      \bottomrule
+    \end{tabularx}\par\vspace{1.3mm}
+    \[\sum_v\pi_v m_v\simeq2{,}4875\quad\Longrightarrow\quad\lambda_{NC}\simeq53{,}62/\mathrm{an}.\]
+    \column{.39\textwidth}\footnotesize
+    \textbf{Observé : les parts $\pi_v$.}\par
+    Le recensement décrit le mélange des attaques, pas leur effet sur la conformité.\par\vspace{1.5mm}
+    \textbf{Posé : les fourchettes des $m_v$.}\par
+    Elles traduisent des effets publiés sur des contrôles : authentification forte, formation, etc. Elles ne sont pas des effets DORA estimés. « Autres » n'a pas de source dédiée.\par\vspace{1.5mm}
+    \textbf{Aux bornes choisies :}\par
+    multiplicateur de 1,933 à 3,042 ; $\lambda_{NC}$ de 41,7 à 65,6/an. Ce sont des scénarios, pas un IC.
+  \end{columns}
+  }
+% Références internes : rapport, chapitres 4 et 6 ; parts Hackmageddon et fourchettes du script 08b ; synthèse du chapitre 9.
+\end{frame}
+
 \begin{frame}{Comment l'état règle-t-il la propagation ?}
   \suivimethode{1,2,5}{État et propagation}
   \framesubtitle{\ajout État de conformité $\longrightarrow$ gain $g$ $\longrightarrow$ matrice $W$}
@@ -378,7 +432,7 @@
   \textbf{1 · Construire l'état}
   \[C^\star=\gamma\Theta+\sqrt{1-\gamma^2}\,\varepsilon\]
   $\Theta$ : facteur commun ; $\varepsilon$ : choc propre, normales centrées réduites indépendantes.\par\vspace{.5mm}
-  $\gamma=0{,}68$ : charge du facteur commun.\par\vspace{.5mm}
+  $\gamma=0{,}68$ : charge posée du facteur commun, distincte de la probabilité de choc $\omega$.\par\vspace{.5mm}
   $U=\Phi(C^\star)$ : score uniforme, $\Phi$ loi normale standard.\par\vspace{2mm}
   \centering
   \begin{tikzpicture}[x=1mm,y=1mm]
@@ -390,7 +444,7 @@
   \foreach \x/\l in {0/0,19.6/{0,35},39.2/{0,70},56/1}
     \node[below,font=\footnotesize] at (\x,-0.5) {\l};
   \end{tikzpicture}\par\vspace{1.5mm}
-  {\footnotesize NC non conforme · PC partiellement conforme · C conforme}
+  {\footnotesize NC non conforme · PC partiellement conforme · C conforme. Coupures posées, ancrées sur des enquêtes de conformité.}
   \column{.49\textwidth}\small
   \textbf{2 · Associer un gain posé}\par\vspace{2mm}
   \centering
@@ -465,7 +519,7 @@
     \column{.38\textwidth}\small
     \textbf{Diagnostic}\par\vspace{1mm}
     Kolmogorov-Smirnov (KS) et Anderson-Darling (AD) : p-value après réestimation, pour neuf seuils candidats.\par\vspace{2mm}
-    Au seuil de \textbf{20,03 M€}, elles valent 0,91 (KS) et 0,98 (AD).\par\vspace{2mm}
+    Le seuil retenu, \textbf{20,03 M€}, est le percentile 85 de l'échantillon. KS vaut 0,91 et AD 0,98.\par\vspace{2mm}
     Les diagnostics évaluent la compatibilité avec la GPD, sans établir un optimum.\par\vspace{2mm}
     Hill dépasse l'estimateur du maximum de vraisemblance : un écart que la simulation reproduit sous $\xi=0{,}595$ (rapport, chapitre 4).
   \end{columns}
@@ -593,7 +647,7 @@
   $t$ : amplitude d'asymétrie ; $S$ reste fixé.\par\vspace{2mm}
   \textbf{Filtrer.} Garder $W=S+A$ tel que
   \[0\le W_{jk}\le1,\qquad\rho(W)<1.\]
-  {\footnotesize\color{gris}Ces configurations diffèrent des $5!=120$ ordres des cinq piliers.}
+  {\footnotesize Ces contraintes bornent les matrices explorées, à $S$ posée ; elles ne viennent pas d'un IC statistique. Les configurations diffèrent des $5!=120$ ordres des piliers.}
   \end{columns}
 % Reference interne (hors diapositive) : rapport, chapitre 8. Sommets d'un pavé, puis filtre d'admissibilité ; les extrema globaux ne sont pas démontrés.
 \end{frame}
@@ -663,23 +717,22 @@
   \begin{columns}[T,onlytextwidth]
     \column{.58\textwidth}\footnotesize
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\linewidth}{@{}l Y r r@{}}
+    \begin{tabularx}{\linewidth}{@{}Y r r r r@{}}
       \toprule
-      \textbf{Canal} & \textbf{Paramètre} & \textbf{C} & \textcolor{accent}{\textbf{NC}} \\
+      \textbf{État} & $\lambda$ & $p_u$ & $g$ & $\omega$ \\
       \midrule
-      Fréquence & $\lambda$ : incidents par an & 21,56 & \textcolor{accent}{53,62} \\
-      Détection & $p_u$ : dépassement de $u$ & 0,128 & \textcolor{accent}{0,181} \\
-      Propagation & $g$ : gain de $W$ & 0,45 & \textcolor{accent}{0,90} \\
-      Accumulation & probabilité de choc commun & 0 & \textcolor{accent}{0,68} \\
+      Conforme & 21,56 & 0,128 & 0,45 & 0 \\
+      \textcolor{accent}{Non conforme} & 53,62 & 0,181 & 0,90 & 0,68 \\
       \bottomrule
-    \end{tabularx}\par\vspace{2mm}
+    \end{tabularx}\par\vspace{1mm}
+    {\scriptsize $\lambda$ : incidents/an ; $p_u$ : dépassement du seuil ; $g$ : gain de propagation ; $\omega$ : probabilité de choc commun.\par}\vspace{1mm}
     \textbf{Calcul pour chaque état $e$}
     \setlength{\abovedisplayskip}{1mm}\setlength{\belowdisplayskip}{1mm}
     \setlength{\abovedisplayshortskip}{1mm}\setlength{\belowdisplayshortskip}{1mm}
     \[B_e=\VaR_{99{,}5\,\%}\!\left(\sum_{n=1}^{N_e}X_{n,e}\right).\]
     {\scriptsize $e$ : conforme (C) ou non conforme (NC) ; $N_e$ : incidents annuels ; $X_{n,e}$ : perte de l'incident $n$, après détection, propagation et accumulation.\par\vspace{1mm}
-    Même moteur et mêmes graines ; les quatre canaux varient selon $e$.\par\vspace{1mm}}
-    {\scriptsize\color{gris}Paramètres non conformes posés, non estimés.}
+    Mêmes lois de base et structure $T$ ; $p_u$ module la matérialité et $g$ la matrice $W$.\par\vspace{1mm}}
+    {\scriptsize Les passages entre états sont des hypothèses. Le couplage des tirages réduit le bruit de comparaison sans le supprimer.}
     \column{.38\textwidth}
     \centering
     \begin{tikzpicture}[x=1mm,y=1mm]

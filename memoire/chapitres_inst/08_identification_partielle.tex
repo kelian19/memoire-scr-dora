@@ -8,17 +8,19 @@
 % qui garde chapitres/.
 % Scripts : 30 (bornes), 31 (comparaison des regimes), 33 (relatif/absolu), 34, 61, 67.
 % =====================================================================
-\chapter{Identification partielle et bornes de capital}
+\chapter{Identification partielle et plage de capital}
 \label{chap:partielle}
 
 Nous faisons varier le sens des liens à fréquence, sévérité et partie symétrique fixées.
 Le diagnostic utilise la cascade indépendante du tableau~\ref{tab:lecture-mecanismes}, avec son
 calage propre. La chaîne reste incident, perte, somme annuelle, quantile. La plage des quantiles
 ainsi obtenus, conditionnelle aux liens posés, ne constitue pas un intervalle de confiance.
+Tous les montants de ce chapitre portent sur le périmètre financier représenté par le registre,
+non sur une entité ni sur l'ensemble du secteur financier mondial ; les écarts d'une entité ne s'en déduisent pas.
 
 \section{Modèle en couches}
 
-Le socle, indépendant de $W$, regroupe la fréquence d'entrée surdispersée, l'accumulation par cause
+Dans ce chapitre, le socle, indépendant de $W$, désigne le besoin sans contagion ; il regroupe la fréquence d'entrée surdispersée, l'accumulation par cause
 commune et la sévérité GPD. Sans contagion ($W = 0$), le besoin de capital est de $5\,275$~M\euro{} dans le calage
 de référence (sévérité OpRisk, fréquence de l'état conforme, gain de propagation $g=0{,}90$).
 
@@ -54,7 +56,8 @@ $\widehat B$ désigne le quantile estimé par simulation. Ces extrema ne constit
 \[
   \left[\min_{W\in V(1)}\widehat{B}(W),\max_{W\in V(1)}\widehat{B}(W)\right] \;=\; [\,6\,858 \;;\; 8\,697\,]~\text{M\euro{}} ,
 \]
-avec un facteur $1{,}27$ entre les deux bouts. La contagion ajoute entre $+30\,\%$ et
+avec un facteur $1{,}27$ entre les deux bouts ; sur quatre graines, la largeur de la plage a un écart-type de
+$189$~M\euro{}. La contagion ajoute entre $+30\,\%$ et
 $+65\,\%$ au socle. Le point d'expert, $8\,110$~M\euro{}, n'est qu'un point de cet ensemble
 (figure~\ref{fig:pave-sommets}).
 
@@ -129,7 +132,7 @@ P1 et P4 et à resserrer la bande ; le questionnaire diffusé est resté sans r�
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{@{}p{4.3cm} r r r r@{}}
 \toprule
-\textbf{Calibration} & \textbf{socle} & \textbf{bornes} &
+\textbf{Calibration} & \textbf{socle} & \textbf{plage aux sommets} &
 \textbf{haute/socle} & \textbf{\% insensible au sens} \\
 \midrule
 Référence (OpRisk)   & $5\,275$  & $[6\,858\,;8\,697]$   & $1{,}65$ & $78{,}9\,\%$ \\

@@ -202,13 +202,13 @@ donnée ouverte tranche déjà deux points opposés (figure~\ref{fig:p4-open}).
 La taxonomie fine du tiers y est trop rare. La sous-catégorie \og Vendors \& Suppliers \fg{} d'OpRisk
 ne compte que $20$ incidents en finance, soit $1\,\%$ des incidents TIC, et \texttt{actor.Partner} du
 VCDB en compte $56$. Ces effectifs tombent à zéro deux niveaux plus bas, ce qui renvoie au registre.
-La concentration et l'origine tierces sont en revanche ancrées sur des données européennes
-officielles, qui permettent de situer deux paramètres jusque-là posés.
+La concentration et l'origine tierces sont en revanche documentées par des données européennes
+officielles. Elles situent le scénario sans calibrer de paramètre.
 \begin{itemize}\itemsep2pt
 \item Le premier rapport d'incidents DORA des autorités européennes \citep{esas2026_incidents}
       établit que $29\,\%$ des $3\,383$ incidents TIC majeurs de $2025$ proviennent d'une défaillance
-      de tiers. P4 est donc une amorce majeure, ce que le classeur posait par jugement
-      ($\text{\texttt{ROOT}}[4]=0{,}90$).
+      de tiers. Cette part d'origine va dans le sens où le classeur pose
+      $\text{\texttt{ROOT}}[4]=0{,}90$ ; elle ne le calibre pas.
 \item L'analyse des registres d'externalisation par la BCE \citep{ecb2024_outsourcing} montre que plus
       de $30\,\%$ du budget des grandes banques va à $10$ fournisseurs, et $50\,\%$ du budget critique
       à $30$. Les autorités européennes ont désigné $19$ fournisseurs TIC critiques. Ces chiffres motivent le scénario d'accumulation, sans identifier $\omega$ ni mesurer la
@@ -239,7 +239,7 @@ La matérialité vient des incidents à découverte lente, d'où un taux de mat�
 la part de découverte lente, ancrée à $\pi_{\text{slow}}=0{,}45$.
 
 Ce point est mesuré, mais l'élasticité de la détection à la maturité de P2 et P3 (de combien un
-pilier conforme détecte-t-il plus vite) ne l'est pas, et nous la bornons. Le surcoût du seul canal
+pilier conforme détecte-t-il plus vite) ne l'est pas, et nous la bornons. L'écart de capital dû au seul canal
 détection est alors une bande, de $1\,775$ à $8\,052$~M\euro{} selon l'élasticité. Le multiplicateur
 grossier $0{,}85/1{,}20$ est retrouvé pour une élasticité $\eta\approx 0{,}36$. Il est donc compatible avec un point de la
 courbe de scénario ancrée sur le VCDB, sans que son élasticité soit estimée (figure~\ref{fig:detection}).
@@ -248,7 +248,7 @@ courbe de scénario ancrée sur le VCDB, sans que son élasticité soit estimée
 \figover{Z10_detection_survie.png}
 \caption{P2 et P3, la détection comme courbe de survie. (a)~Distribution bimodale observée au VCDB.
 (b)~Le multiplicateur de matérialité comme point de la courbe de survie ; le multiplicateur grossier
-actuel correspond à $\eta\approx0{,}36$. (c)~Surcoût du canal détection, borné sur l'élasticité.}
+actuel correspond à $\eta\approx0{,}36$. (c)~Écart de capital du canal détection, borné sur l'élasticité.}
 % SOURCES-SCRIPTS: 39 67
 \label{fig:detection}
 \end{figure}
@@ -366,6 +366,7 @@ classée, parce que son appartenance dépend de la graine. Une frontière non r�
 résultat : elle indique que la cible tombe dans le bruit de simulation.
 
 \subsection{Décomposition de l'interaction}
+\label{sec:interaction-canaux}
 % SOURCES-SCRIPTS: 68 84 88 100
 
 L'interaction n'est plus un résidu, elle se décompose et vit aux paires. La décomposition de Möbius
@@ -428,8 +429,8 @@ fermeture. (c)~Les six croisés de paires avec leur écart-type de simulation ; 
 
 La fréquence et la détection pèsent lourd en capital et sont calibrables : ce sont les leviers de
 remédiation à activer en premier. La propagation et l'accumulation pèsent aussi, mais elles sont
-bornées. Elles mesurent surtout une incertitude, que la donnée résorbera, c'est-à-dire le registre DORA,
-plus sûrement qu'une action directe (figure~\ref{fig:kpi}).
+bornées. Elles mesurent surtout une incertitude, qu'un registre d'incidents mieux renseigné pourrait réduire,
+plus sûrement qu'une action directe sur le contrôle (figure~\ref{fig:kpi}).
 
 \begin{figure}[H]\centering
 \figover{Z13_kpi_pilotables.png}
@@ -469,8 +470,8 @@ $4{,}75\,\%$, taux qu'emploient les calculs d'échelle d'entité. Le portage mon
 $672$~M\euro/an, soit une baisse de $21\,\%$, et le majorant du retour passe de $35$ à $45$ ans. Aucune
 conclusion ne bascule : la durée reste un majorant, et la composante dominante du bénéfice n'est pas
 monétisée. La chaîne publiée reste au taux historique, la calibration étant gelée
-(figure~\ref{fig:roi}). La conformité n'est donc pas un simple coût. Elle libère du capital, que le modèle chiffre, face à un
-coût externe et incertain, affiché comme tel. On priorise les leviers calibrables.
+(figure~\ref{fig:roi}). Dans le scénario posé, passer de l'état non conforme à l'état conforme libère ce capital, face à un
+coût de remédiation externe et incertain, affiché comme tel. Les leviers calibrables passent en premier.
 
 \begin{figure}[H]\centering
 \figover{J6_roi_conformite.png}

@@ -16,8 +16,8 @@
 \markboth{Conclusion}{}
 
 \section*{Apports et résultats}
-Ce travail calcule des écarts conditionnels de capital entre états de conformité supposés, puis
-examine leur dépendance à la direction de la contagion et au coût des piliers touchés. Sur le
+Nous calculons des écarts conditionnels de capital entre états de conformité supposés, puis
+examinons leur dépendance à la direction de la contagion et au coût des piliers touchés. Sur le
 périmètre financier étudié, et non pour un assureur, le besoin de capital lié au risque
 opérationnel informatique passe de $6\,049$ à $20\,188$~M\euro{} entre l'état conforme et
 l'état non conforme, soit un facteur $3{,}34$. Les deux états diffèrent sur quatre canaux : la
@@ -28,8 +28,8 @@ l'état des autres contrôles. Un plan de remédiation doit donc citer l'effet d
 depuis son état de départ, en incluant les interactions.
 
 La cascade distingue des ordres d'atteinte qu'un score statique des seuls piliers touchés ne représente pas :
-$22$ des $26$ ensembles de piliers changent de criticité (note de $1$ à $10$) selon l'ordre d'atteinte.
-La normalisation de Leontief garantit la stabilité du système latent, cycles compris. Un processus de Hawkes
+$22$ des $26$ ensembles de piliers changent de criticité (note de $1$ à $10$, chapitre~\ref{chap:cascade}) selon l'ordre d'atteinte.
+La normalisation de Leontief impose $\rho(W)\le g<1$ : la série des marches converge, cycles compris. Un processus de Hawkes
 ne se distingue pas de la cascade à la résolution disponible, et nous retenons la cascade par parcimonie.
 
 La queue de sévérité et la fréquence d'entrée sont ajustées sur les données ; la propagation et
@@ -46,7 +46,7 @@ trouvent chacune une réponse conditionnelle dans les chapitres~4 à~10.
 \section*{Non-identifiabilité de la direction}
 La direction de la contagion n'est pas identifiable sur les trois sources étudiées
 (chronologie américaine, SAS OpRisk, VERIS), pour des raisons distinctes. L'expérience
-MOVEit ne distingue pas son effet net de zéro après le placebo. Les deux champs manquants existent
+MOVEit donne un placebo qui fragilise le dispositif causal, sans identifier un effet net. Les deux champs manquants existent
 dans le schéma VERIS, mais ne sont renseignés ensemble que dans \emph{un} incident sur $10\,591$.
 
 Le socle sans contagion ne dépend pas de la direction, mais conserve des paramètres posés
@@ -60,8 +60,8 @@ Un registre mieux renseigné permettrait d'éprouver la contagion : survenance �
 par domaine de contrôle, consolidation des causes communes et ensemble des piliers
 touchés. Dans le modèle, leur loi jointe peut distinguer une matrice de sa transposée.
 
-La notification DORA pourrait rendre obligatoires les deux premiers champs, déjà
-prévus dans VERIS. Fixer les six sens documentés par sept rapports post-incident
+La notification DORA, qui ne couvre que les incidents majeurs, pourrait rendre obligatoires la date de
+survenance et le domaine de contrôle, déjà prévus dans VERIS. Fixer les six sens documentés par sept rapports post-incident
 réduirait la plage de $32{,}7\,\%$ en moyenne, de $22$ à $44\,\%$ selon la graine,
 ordre de grandeur et non promesse. Les dépendances les plus utiles, dont
 gouvernance--incidents, en lèveraient chacune $11$ à $13\,\%$, sans ordre résolu.
@@ -70,7 +70,7 @@ gouvernance--incidents, en lèveraient chacune $11$ à $13\,\%$, sans ordre rés
 
 Remédier, détenir ou transférer le risque se comparent ensuite en euros par an, avec une prime de réassurance
 calculée sur un ratio de sinistralité de $48{,}5\,\%$. Pour l'entité notionnelle de $20\,000$~M\$ d'actifs,
-dont le besoin de capital ($24$~M\euro{}) est une extrapolation d'ordre de grandeur, le coût annuel
+dont le besoin de capital à l'état non conforme ($24$~M\euro{}, de $8{,}3$ à $53{,}0$ par bootstrap des firmes) est une extrapolation d'ordre de grandeur, le coût annuel
 de détention représente $1{,}35$ à $1{,}71$ fois la sinistralité attendue. Dans le scénario de traité en excès de perte idéalisé, le coût de financement baisse d'environ deux tiers, et de près de moitié pertes conservées comprises ; la capacité du marché, les
 exclusions et le risque de contrepartie l'entament. Plusieurs fréquences réelles restent compatibles
 avec les mêmes comptes du registre (\S\ref{sec:entites-capture}).
@@ -86,10 +86,11 @@ propagation, posés, et l'additivité des coûts entre piliers touchés. L'élas
 l'état non conforme contre $0{,}39$ à l'état conforme (\S\ref{sec:additivite-couts}).
 Ces sensibilités évaluent l'effet des conventions, sans déterminer leur valeur empirique.
 
-Dans la construction additive, sur les sensibilités étudiées, le signe du surcoût et les deux piliers les plus coûteux, la gouvernance et la gestion des
-prestataires tiers, sont conservés. L'ordre de remédiation entre ces deux piliers dépend en revanche du
-niveau d'émission de la gouvernance : il tient tant que celle-ci n'est dégradée que du
-quart, et bascule à la moitié. Le niveau de capital reste illustratif ; les bandes de calibration
+Dans la construction additive, le signe de l'écart est conservé sur les sensibilités étudiées.
+Au point d'expert, P1 et P4 portent les plus grandes parts ; quand la direction varie, le diagnostic
+des gains de remédiation les place le plus souvent en tête, sans garantie pour toute matrice.
+Au point d'expert, l'ordre P1/P4 bascule si l'émission de P1 est divisée par deux.
+Le niveau de capital reste illustratif ; les bandes de calibration
 en montrent l'incertitude, conditionnellement aux autres hypothèses.
 
 L'unité de perte modifie l'amplitude et l'attribution de l'écart

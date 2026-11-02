@@ -1,6 +1,6 @@
 # Manifeste du lot 2000-2026
 
-Dernier lancement le 2026-10-29T16:21:14+01:00, code du commit `3aee10c` plus les
+Dernier lancement le 2026-11-02T11:24:30+01:00, code du commit `be02f8a` plus les
 modifications non committees du depot a cet instant. Variable : `OPRISK_ANNEE_MIN=2000`.
 Interpreteur : `python -X utf8 -I`. Effectifs : 570 pertes de l'echantillon de severite, 86 exces,
 582/27 pour le numerateur de la frequence (inchange). Les sorties absentes de ce dossier sont lues
@@ -44,6 +44,10 @@ Exécution 2026-10-29T16:06:07+01:00 : scripts 138. Journaux détaillés : `docs
 
 Exécution 2026-10-29T16:21:14+01:00 : scripts 138. Journaux détaillés : `docs/collaboration/local/journaux_reexecution/2026-10-29_162001_352230`.
 
+Exécution 2026-11-02T11:23:42+01:00 : scripts 139. Journaux détaillés : `docs/collaboration/local/journaux_reexecution/2026-11-02_112256_527036`.
+
+Exécution 2026-11-02T11:24:30+01:00 : scripts 139. Journaux détaillés : `docs/collaboration/local/journaux_reexecution/2026-11-02_112353_210744`.
+
 | script | fichier | code | Traceback | duree | octets | md5 |
 |---|---|---|---|---|---|---|
 | 14 | 14_robustesse_delta_cascade.py | 0 | non | 92 s | 1870 | 6b00d0ba |
@@ -81,6 +85,7 @@ Exécution 2026-10-29T16:21:14+01:00 : scripts 138. Journaux détaillés : `docs
 | 136 | 136_descente_grandes_institutions.py | 0 | non | 128 s | 11553 | 27bbcf4d |
 | 137 | 137_descente_diagnostics.py | 0 | non | 135 s | 14134 | 690af3a2 |
 | 138 | 138_descente_observation.py | 0 | non | 73 s | 1591 | 7849aeef |
+| 139 | 139_figure_invariance_entite.py | 0 | non | 37 s | 1036 | 343db72e |
 
 Publication publique : les empreintes des sorties dont les chemins locaux ont ete retires
 sont recalculees sur les fichiers nettoyes. Les codes de retour et dates restent ceux des

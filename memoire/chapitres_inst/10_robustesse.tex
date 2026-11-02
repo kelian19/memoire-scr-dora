@@ -114,9 +114,9 @@ $43{,}6\,\%$ des tirages et P4 dans $37{,}7\,\%$, avec un écart de regret maxim
 $1{,}5\,\%$. Dans ces tirages, P1 et P4 arrivent le plus souvent en tête, et P5 n'arrive jamais en tête ;
 ce diagnostic sur échantillon ne couvre pas l'énumération des $1\,024$ sommets.
 
-Les rapports post-incident sur-attribuant à la gouvernance, nous
-dégradons l'émission de P1 par $W_{1k}\to(1-a)W_{1k}$, et le classement tient jusqu'à $a=0{,}25$
-puis bascule vers P4 à $a=0{,}50$. Même à $a=1$, le niveau d'entité ne perd que $37{,}7\,\%$, l'équivalent de
+Si les rapports post-incident sur-attribuent à la gouvernance, nous
+dégradons l'émission de P1 par $W_{1k}\to(1-a)W_{1k}$ : le classement tient jusqu'à $a=0{,}25$
+puis bascule vers P4 à $a=0{,}50$. À $a=1$, le niveau d'entité baisse de $37{,}7\,\%$, soit
 $0{,}78$ fois la largeur de la bande d'identification.
 % SOURCES-SCRIPTS: 30 64 22 67 136
 
@@ -168,7 +168,7 @@ Les sources examinées ne réunissent pas les observations nécessaires pour est
 (chapitre~\ref{ch:identifiabilite}). Dans VERIS, le domaine de contrôle est renseigné pour
 $0{,}12\,\%$ des $10\,591$ incidents, une chronologie datée pour $1{,}19\,\%$.
 Un seul incident, hors secteur financier, réunit les deux. Il s'agit d'une lacune de collecte ;
-la section~\ref{ch:livrable} décrit les champs nécessaires.
+la section~\ref{sec:spec-registre} décrit les champs nécessaires.
 
 Les sources ne renseignent pas le coût par pilier d'un incident. La sévérité cyber
 en euros provient ici du risque opérationnel bancaire (chapitre~\ref{chap:socle}),
@@ -267,7 +267,7 @@ Le quantile robuste pourrait dimensionner une couverture, ce que la section~\ref
 \label{sec:pu-coherence}
 
 Le modèle POT combine le seuil $u$, le taux empirique de dépassement $p_u$ et les paramètres $(\xi,\sigma)$ des excès. À seuil et échantillon fixés, $p_u$ se calcule par comptage ; il ne constitue pas un paramètre libre supplémentaire. La
-calibration publie $u=20{,}03$~M\euro{} et $p_u=0{,}1509$, qui sont ceux de l'échantillon 2000--2026 : le seuil en est le percentile~$85$ et laisse $86$ excès sur $570$ pertes. Le taux recompté vaut $86/570=0{,}1509$ et le quantile de sévérité à $99{,}5\,\%$ recalculé à ce taux est de $662{,}71$~M\euro, contre $662{,}78$ publiés. Une version antérieure déclarait ici un écart de taux, venu d'un décompte sur la base courante, qui contient douze pertes d'avant 2000.
+calibration publie $u=20{,}03$~M\euro{} et $p_u=0{,}1509$, qui sont ceux de l'échantillon 2000--2026 : le seuil en est le percentile~$85$ et laisse $86$ excès sur $570$ pertes. Le taux recompté vaut $86/570=0{,}1509$ et le quantile de sévérité à $99{,}5\,\%$ recalculé à ce taux est de $662{,}71$~M\euro, contre $662{,}78$ publiés.
 
 L'écart qui reste porte sur la fréquence. Son numérateur compte ces douze pertes : $582/27=21{,}56$ incidents par an contre $570/27=21{,}11$ sur l'échantillon, soit $2{,}1\,\%$ de plus. Le capital croît avec la fréquence, mais le dénominateur de $27$ ans compte l'année 2026, incomplète à la date de l'extraction : le sens de l'écart de niveau n'est pas établi. Le tableau
 donne le sens des écarts connus.
@@ -336,7 +336,7 @@ sensibilité distincte, sans recalibration des résultats d'entité.
 Dans la lecture retenue, le besoin ne dépasse pas $0{,}13\,\%$ du bilan, contre $4{,}83\,\%$ pour le plus
 petit assureur en lecture du registre. Un plafond de $0{,}059\,\%$ des actifs sur chaque sévérité élémentaire,
 soit $11$ et $22$~M\euro, divise par deux le besoin de l'entité notionnelle et de l'assureur vie C. Pour les
-assureurs A, B et D, il faudrait un plafond inférieur à $0{,}05\,\%$ du bilan. La réserve d'extrapolation
+assureurs A, B et D, aucun plafond de la grille testée ($0{,}05$ à $5\,\%$ du bilan) ne divise le besoin par deux. La réserve d'extrapolation
 dépend donc de la fraction du bilan qu'un sinistre peut coûter, hypothèse économique à documenter.
 
 Un plafond par sinistre ne borne pas la charge annuelle : il supprime la queue
@@ -355,11 +355,11 @@ simultanée en est la sortie même. À l'état non conforme, elle est majoritair
 énoncés d'additivité. Au sein d'un sinistre, l'addition des coûts des piliers touchés est une
 hypothèse de construction, non testée. Chaque pilier y tire sa perte dans la loi calibrée sur des incidents complets.
 
-Par la cascade seule, hors choc commun P4, un sinistre simulé touche en moyenne $1{,}38$ pilier (état conforme) ou $1{,}93$ (non conforme). À taux de dépassement élémentaire de base fixé, son quantile à $99{,}5\,\%$ vaut alors $1{,}27$ ou $1{,}58$ fois celui d'un incident. Avec le choc commun P4 du moteur des quatre canaux, l'état non conforme touche $2{,}44$ piliers en moyenne et ce rapport vaut $1{,}85$. Ce n'est pas un effet sur le capital annuel : le double comptage est chiffré, non corrigé. En fonction des piliers non conformes, le capital est presque
+Par la cascade seule, hors choc commun P4, un sinistre simulé touche en moyenne $1{,}38$ pilier (état conforme) ou $1{,}93$ (non conforme). À taux de dépassement élémentaire de base fixé, son quantile à $99{,}5\,\%$ vaut alors $1{,}27$ ou $1{,}58$ fois celui d'un incident. Avec le choc commun P4 du moteur des quatre canaux, l'état non conforme touche $2{,}44$ piliers en moyenne et ce rapport vaut $1{,}85$. Ce n'est pas un effet sur le capital annuel : le surcroît d'incidents matériels dû à $p_u$ appliqué à chaque pilier touché est chiffré, non corrigé. En fonction des piliers non conformes, le capital est presque
 additif, comme le mesure un $R^2=0{,}9945$ sur les $32$ configurations. En fonction des quatre canaux,
 il est super-additif en euros, $+5\,001$~M\euro{} d'interaction sur $14\,139$ ($+35\,\%$,
 chapitre~\ref{chap:resultats}), car les canaux se composent presque multiplicativement
-(\S\ref{sec:inverse}).
+(\S\ref{sec:interaction-canaux}).
 
 Nous relâchons la première hypothèse par un exposant. La perte d'un sinistre touchant $k$ piliers
 devient $\bigl(\sum_j X_j\bigr)k^{\,\theta-1}$, et $\theta=1$ redonne le modèle publié. Pour $\theta$ dans $[0{,}70\,;1{,}30]$, l'écart entre états parcourt
@@ -386,8 +386,8 @@ Pour comparer des scénarios, et non pour arrêter un capital d'entité, trois r
 \begin{enumerate}[leftmargin=*,nosep]
 \item Juger une remédiation par l'effet de fermeture d'un canal depuis l'état de départ, sans
 additionner les gains de plusieurs canaux (chapitre~\ref{chap:resultats}).
-\item Traiter d'abord la gouvernance et la gestion des prestataires tiers, leur ordre dépendant de
-l'émission retenue pour la gouvernance (\S\ref{sec:res-robustesse}).
+\item Au point d'expert, privilégier gouvernance et prestataires tiers. Quand la direction varie,
+ils arrivent le plus souvent en tête, sans garantie pour toute matrice (\S\ref{sec:res-robustesse}).
 \item Arbitrer entre remédier, détenir et transférer en euros par an (\S\ref{sec:detenir-transferer}).
 \end{enumerate}
 Pour le superviseur, la priorité est la donnée manquante. Les trois sources agrégées échouent pour des raisons distinctes. La chronologie américaine manque de
@@ -504,9 +504,8 @@ entre un arc de la matrice de propagation et un effet sur le canal de détection
 Les données étant sous licence, le lecteur dispose des sorties agrégées versionnées. Un programme
 rattache chaque nombre publié au script qui l'imprime ; citations externes et valeurs posées sont
 déclarées avec leur motif, et tout nombre hors contrôle non déclaré constitue un défaut. Ce contrôle
-confirme l'origine d'un nombre, non son interprétation : la relecture a trouvé des erreurs de sens
-parmi des nombres confirmés. La calibration est gelée : les erreurs sont corrigées, le prix des
-entrées conservées est déclaré (\S\ref{sec:pu-coherence}).
+confirme l'origine d'un nombre, non son interprétation. La calibration reste fixe ; ses écarts connus sont
+chiffrés (\S\ref{sec:pu-coherence}).
 
 Sur le modèle de la validation qu'impose l'article 124 de la directive Solvabilité~II, une
 validation indépendante devrait examiner trois points. Les hypothèses structurelles non testées

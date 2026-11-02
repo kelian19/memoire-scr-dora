@@ -1,0 +1,154 @@
+% Réponses complémentaires actualisées le 2 novembre 2026 ; sorties 136--139.
+% Ne pas attribuer ces calculs au rapport ENSAE déposé. Nom conservé pour compatibilité.
+\clearpage
+\part*{Compléments récents : questions Institut après dépôt}
+\addcontentsline{toc}{part}{Compléments récents : questions Institut après dépôt}
+\begin{cle}
+Les questions suivantes portent sur les calculs Institut disponibles au 2 novembre. Pour l'ENSAE,
+les présenter seulement comme des compléments après dépôt. Les appuis sont des sections Institut,
+des scripts et leurs sorties ; les folios ENSAE du reste du document sont conservés.
+\end{cle}
+
+\begin{question}{\og Votre résultat est-il 169 ou 24 millions, et est-ce une borne prudente ?\fg{}}
+\rep{Le rapport ENSAE déposé conserve $169$~M\euro{}, lecture historique du registre. La variante
+retenue dans l'Institut donne $24{,}1$~M\euro{} pour la notionnelle de $20$~Md\$ d'actifs, dans
+l'état supposé non conforme. Fréquence, dispersion et corps sous le seuil changent ensemble.
+Le chiffre n'est pas une borne prudente ni un capital individuel validé. La plage aux sommets
+est $15{,}8$ à $27{,}5$~M\euro{} ; le bootstrap des firmes donne $8{,}3$ à $53{,}0$, sans corriger
+la sélection du registre. Les valeurs aux sommets ne sont pas des extrema globaux démontrés.}
+\appui{Institut, \S~9.5--9.6 ; scripts 136 et 137.}
+\end{question}
+
+\begin{question}{\og Pourquoi retenir 0,494 plutôt que 0,074 ou 0,27 ?\fg{}}
+\rep{Le $0{,}074$ est ajusté sur tout le registre, où les petites firmes ont des fenêtres
+d'observation courtes. Le $0{,}27$ était un milieu géométrique posé entre ce coefficient et
+la proportionnalité. La variante retenue ajuste une NB2 sur $1\,402$ firmes de plus de
+$100$~Md\$ : pente $0{,}494$, erreur-type par firme $0{,}066$, forme $r=0{,}594$.
+L'ajustement donne $\lambda(A)=0{,}0209$/an à $20$~Md\$ d'actifs. La restriction ne prouve
+pas que le biais de sélection est corrigé : $57{,}8\,\%$ des grandes firmes ne sont suivies
+qu'un an. L'extrapolation en dessous de $100$~Md\$ reste la limite principale.}
+\appui{Institut, équation~9.1 et \S~9.5 ; scripts 136 et 137.}
+\end{question}
+
+\begin{question}{\og Comment votre VaR peut-elle être nulle alors que des incidents surviennent ?\fg{}}
+\rep{Le quantile porte sur la perte annuelle. Sous la lecture retenue, le corps empirique est
+strictement positif : un incident produit une perte, mais sa probabilité annuelle peut rester
+inférieure à $0{,}5\,\%$. La petite entité de $500$~M\euro{} d'actifs a une VaR nulle et une
+ES d'environ $23$~M\euro{}. L'assureur A a désormais une VaR d'environ $1$~M\euro{}.
+La bascule en forme fermée est $1\,076$~M\euro{} d'actifs, avec une plage bootstrap de
+$100$ à $3\,889$~M\euro{}. Dans l'ancien moteur, une perte pouvait en plus être nulle sous le seuil ;
+ce mécanisme ne décrit pas la variante actuelle. Une VaR nulle ne signifie pas risque nul.}
+\appui{Institut, \S~9.6 ; scripts 136 et 137.}
+\end{question}
+
+\begin{question}{\og Un million pour l'assureur A, n'est-ce pas trop faible ?\fg{}}
+\rep{Je ne peux pas valider ce niveau. La probabilité de perte n'est que de $0{,}74\,\%$ dans
+le scénario de référence : la VaR à $99{,}5\,\%$ est proche de la masse en zéro. L'ES vaut
+environ $51$~M\euro{}. Si la capture supposée passe de $100$ à $50\,\%$, la VaR de A passe
+de $0{,}9$ à $8{,}9$~M\euro{} sur quatre graines. Ce diagnostic rend visible la sensibilité
+à l'observation ; il ne permet ni de choisir un taux de capture ni d'affirmer que le besoin
+réel est couvert.}
+\appui{Institut, tableau de comparaison et tableau 9.6 ; scripts 136 et 138.}
+\end{question}
+
+\begin{question}{\og Comment savez-vous combien d'incidents ne sont pas enregistrés ?\fg{}}
+\rep{Je ne le sais pas. Une capture binomiale de probabilité $q_{\mathrm{obs}}$ transforme
+une NB de moyenne $\mu/q_{\mathrm{obs}}$ en une NB de moyenne observée $\mu$, sans changer
+sa forme $r$. Plusieurs risques réels ont donc la même loi observée. Pour la notionnelle,
+les captures posées de $100$, $50$, $25$ et $10\,\%$ donnent $23{,}1$, $74{,}0$, $153{,}9$
+et $327{,}7$~M\euro{}. Ce sont des sensibilités, pas des estimations. La capture est supposée
+indépendante du montant ; si les grosses pertes sont plus publiées, sévérité et capture doivent
+être modélisées ensemble. Le périmètre financier souffre de cette limite lui aussi.}
+\appui{Institut, \S~9.5.2 et 9.6.2 ; script 138.}
+\end{question}
+
+\begin{question}{\og Que fait exactement le passage conforme / non conforme dans les calculs d'entité ?\fg{}}
+\rep{Dans ce diagnostic d'entité, seul le gain de propagation change : $g=0{,}45$, $0{,}68$
+et $0{,}90$ donnent $13{,}2$, $17{,}7$ et $24{,}1$~M\euro{}, soit $+83\,\%$ entre C et NC.
+Le chiffre à quatre canaux du périmètre financier fait aussi varier fréquence, détection et
+accumulation. Ce ne sont pas les mêmes protocoles, et le facteur $3{,}34$ ne se transpose pas
+directement à l'entité. La figure 9.3 utilise désormais le protocole d'entité du script 136,
+contrôlé et retracé par le script 139.}
+\appui{Institut, \S~9.1 et 9.5, figure 9.3 ; scripts 136 et 139.}
+\end{question}
+
+\begin{question}{\og Quels paramètres sont estimés, posés ou bornés ?\fg{}}
+\rep{La fréquence de base est comptée dans le registre et la loi de sévérité est ajustée
+aux pertes. Pour la fréquence non conforme, les parts des vecteurs d'attaque sont observées ;
+les multiplicateurs sont les centres de fourchettes traduites de résultats publiés sur des
+contrôles. Ce passage est semi-ancré, non estimé directement. Les facteurs de détection,
+les gains par état, la structure relative $T$ et la probabilité de choc commun sont posés.
+Les fourchettes et les contraintes sur les directions de $W$ définissent des scénarios
+admissibles, pas des intervalles de confiance. La co-occurrence n'est pas estimée ici.}
+\appui{Beamer ENSAE, diapo 9 ; Institut, chapitres 4 à 6 et annexe E.}
+\end{question}
+
+\begin{question}{\og Le placebo MOVEit prouve-t-il un effet net nul ?\fg{}}
+\rep{Non. Les $+1{,}17$ jours et le placebo de $+1{,}11$ donnent une différence descriptive
+de $+0{,}06$. Le premier calcul porte sur $188$ organisations traitées, le placebo sur $20$ ;
+aucun intervalle ni test de leur contraste n'est calculé. Le placebo fragilise l'interprétation
+causale du dispositif ; il ne démontre ni un effet net nul ni une absence générale de contagion.}
+\appui{Institut, \S~7.4 ; script 35.}
+\end{question}
+
+\begin{question}{\og La gouvernance et les tiers sont-ils toujours les deux priorités ?\fg{}}
+\rep{Ils sont prioritaires au point d'expert et arrivent le plus souvent en tête lorsque
+la direction varie. Dans les $220$ directions examinées, P1 et P4 sont premiers dans
+$43{,}6\,\%$ et $37{,}7\,\%$ des cas ; P2 ou P3 peuvent passer devant. Une contribution
+de Shapley, le gain de remédier un pilier et le premier d'un ordre optimal sont des objets
+différents. Je précise la matrice, l'état de départ et le critère de décision avant de recommander.}
+\appui{Institut, \S~9.3 et chapitre 10 ; sortie 30 pour les gains de remédiation.}
+\end{question}
+
+\begin{question}{\og Tous vos résultats utilisent-ils exactement la même cascade ?\fg{}}
+\rep{Non. Le chiffre de tête à quatre canaux emploie la marche auto-évitante avec un choc commun
+P4. Les configurations par pilier utilisent la marche sans ce choc. L'exploration des matrices
+et les calculs d'entité utilisent la cascade indépendante sans choc commun. Je précise le
+protocole avant de comparer les montants ; une vérification sur l'un ne valide pas automatiquement les autres.}
+\appui{Institut, tableau des mécanismes du chapitre 5 ; \S~6.5 et \S~9.5.}
+\end{question}
+
+\begin{question}{\og Pourquoi ne pas remplacer votre modèle par de l'apprentissage statistique ?\fg{}}
+\rep{Je l'ai testé sur une question précise : les caractéristiques améliorent-elles la prévision
+du dépassement de seuil parmi les pertes enregistrées ? Sur $280$ pertes évaluées en origine
+glissante, le boosting a le meilleur score moyen. Son gain contre la tendance seule est
+$+0{,}0193$, avec un intervalle à $90\,\%$ de $-0{,}0371$ à $+0{,}0571$. Le gain n'est donc
+pas résolu. Cela ne prouve pas une impossibilité ; avec ce protocole et ces données, je n'ai
+pas de justification empirique suffisante pour remplacer la référence.}
+\appui{Institut, \S~4.7.1 ; script 131.}
+\end{question}
+
+\begin{question}{\og Vos actifs ne contiennent-ils pas une information postérieure à l'incident ?\fg{}}
+\rep{Oui, pour $37\,\%$ des pertes. La version déclarée utilise l'année d'information financière
+disponible dans la base, ce qui peut introduire une fuite temporelle. Le diagnostic masque
+donc les actifs postérieurs à l'année de l'événement, et compare aussi des modèles sans actifs.
+Les intervalles des gains incluent encore zéro. La validation repose toutefois sur douze blocs
+annuels, et certaines firmes sont présentes avant et après la séparation temporelle.}
+\appui{Script 131, disponibilités des actifs et sensibilités.}
+\end{question}
+
+\begin{question}{\og Votre GPD enrichie par les caractéristiques prédit-elle mieux les excès ?\fg{}}
+\rep{Aucun gain résolu n'apparaît, et il faut citer l'échec de support : la variante enrichie
+donne une densité nulle à une perte observée. La moyenne de score sur les $59$ autres excès
+omet cette observation ; ce n'est donc pas son score complet. La comparaison est utile pour
+tester une alternative, mais elle ne valide pas la GPD commune ni son quantile annuel.}
+\appui{Institut, \S~4.7.1 ; partie sévérité du script 131.}
+\end{question}
+
+\begin{question}{\og Les descriptions SAS permettent-elles enfin de calibrer votre matrice ?\fg{}}
+\rep{Pas à ce stade. Le codage complet des $570$ descriptions donne $65$ incidents multi-piliers
+au sens strict, $203$ au sens large. L'accord de rang avec l'expert paraît élevé sur les
+co-occurrences brutes, mais devient faible après prise en compte des marges : $0{,}33$ et
+$0{,}12$. Un seul assistant IA a codé les textes, sans validation indépendante ; aucun sens
+de transmission n'est codé. Ces résultats n'estiment ni $S$ ni $A$.}
+\appui{Script 133 ; le script 132 est le pilote de 50 descriptions, inclus dans ce corpus.}
+\end{question}
+
+\begin{question}{\og Qu'avez-vous préparé pour vérifier ce codage ?\fg{}}
+\rep{Un lot en aveugle de $100$ descriptions, équilibré entre $50$ fraudes et $50$ interruptions.
+Le second lecteur voit les textes et la grille, sans les codes du premier lecteur. L'outil
+refuse de traiter une réponse manquante comme un ensemble vide, puis calcule les accords et
+le kappa par pilier et par strate. Le lot n'a pas les proportions de la base ; les réponses
+indépendantes sont encore attendues. Aucun chiffre d'accord n'est donc présenté.}
+\appui{\path{docs/protocoles/validation_codage_sas.md} ; outil \texttt{double\_codage\_sas.py}.}
+\end{question}

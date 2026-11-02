@@ -310,10 +310,10 @@ Le règlement organise la résilience en cinq domaines, notés P1 à P5, que nou
 \item P1, gouvernance du risque lié aux technologies (articles~$5$ à~$16$) : responsabilité non
       délégable de l'organe de direction, cartographie des actifs et des dépendances critiques,
       contrôle interne continu.
-\item P2, gestion, classification et notification des incidents (articles~$17$ à~$23$) : notification initiale dès que possible, sous quatre heures après classification majeure et au plus tard vingt-quatre heures après prise de connaissance. Si la classification intervient après ce délai, la notification suit sous quatre heures. Le rapport intermédiaire est dû sous soixante-douze heures après la notification initiale, le rapport final sous un mois après le rapport intermédiaire ou sa dernière mise à jour \citep{eu2025_301}.
+\item P2, gestion, classification et notification des incidents (articles~$17$ à~$23$) : notification dès que possible, sous quatre heures après classification majeure et au plus tard vingt-quatre heures après connaissance ; si la classification est plus tardive, sous quatre heures après celle-ci. Rapport intermédiaire sous soixante-douze heures après notification, rapport final sous un mois après le rapport intermédiaire ou sa dernière mise à jour \citep{eu2025_301}.
 \item P3, tests de résilience opérationnelle numérique (articles~$24$ à~$27$), dont des tests de
       pénétration guidés par la menace (TLPT), au moins tous les trois ans, pour les entités
-      significatives (article~$26$).
+      identifiées par l'autorité compétente (article~$26$).
 \item P4, gestion du risque lié aux prestataires tiers (articles~$28$ à~$44$) : registre
       d'informations des contrats, clauses impératives de l'article~$30$, stratégie de sortie et
       surveillance des prestataires critiques. Leur chaîne de sous-traitance est prise en compte sans limite générale au troisième rang.
@@ -339,7 +339,7 @@ incidents confirmés est celui d'un seuil de matérialité, et la collecte régl
 les incidents au-dessus de ce seuil.
 
 Pour la modélisation, l'exigence la plus utile est le registre d'informations. En recensant les
-contrats TIC critiques et leurs chaînes de sous-traitance, il produit une donnée sur la concentration
+contrats TIC, dont ceux qui soutiennent des fonctions critiques, et leurs chaînes de sous-traitance, il produit une donnée sur la concentration
 technologique que l'évaluation interne des risques ne savait pas chiffrer. Il ne couvre que
 la dépendance déclarée et ne dit rien de l'ordre dans lequel les défaillances s'enchaînent
 (section~\ref{ch:livrable}).
@@ -421,7 +421,7 @@ cascade dirigée. L'assurance conserve sous Solvabilité~II le choix entre la Fo
 paramètres propres à l'entreprise et un modèle interne, partiel ou global, approuvé par l'autorité de
 contrôle.
 
-Dans la Formule Standard, l'exigence pour risque opérationnel ($SCR_{Op}$) s'ajoute au capital de
+Dans la Formule Standard \citep{SolvabiliteII2009, eu2015_35}, l'exigence pour risque opérationnel ($SCR_{Op}$) s'ajoute au capital de
 solvabilité requis de base ($BSCR$), ajusté de la capacité d'absorption des pertes :
 \begin{equation}
 SCR = BSCR + Adj + SCR_{Op},
@@ -431,7 +431,7 @@ SCR_{Op} = \min(0{,}3 \times BSCR,\ Op) + 0{,}25 \times Exp_{ul},
 \end{equation}
 où $Adj$ est l'ajustement pour la capacité d'absorption des pertes, $Exp_{ul}$ les frais annuels des contrats en unités de compte et $Op = \max(Op_{premiums}, Op_{provisions})$ applique des coefficients forfaitaires aux primes et
 aux provisions. Cette forme est simplifiée, car l'article~204 du règlement délégué~2015/35 ajoute des
-termes de croissance, de la forme $\max\!\left(0;\, 0{,}04 \times \Delta\!\right)$, qui pénalisent
+termes de croissance, de la forme $\max\!\left(0;\, c \times \Delta\!\right)$, avec $c=0{,}04$ en vie et $0{,}03$ en non-vie, qui pénalisent
 les hausses de primes supérieures à $20\,\%$ d'un exercice à l'autre.
 
 Fondée sur des indicateurs de
@@ -489,7 +489,7 @@ distribution des pertes en ORSA, sans la présenter comme une règle bancaire eu
 La charge de l'équation~\eqref{reg:eq:scrop} est examinée ici au regard d'une question précise :
 traduire en capital une différence d'état de conformité DORA entre deux entités. Ce n'est pas la
 question que le module cherche à résoudre. Il vise une charge simple, comparable d'une entité à
-l'autre et peu exposée au risque de modèle, ce qui justifie sa forme forfaitaire au pilier~1. Les
+l'autre et peu exposée au risque de modèle, ce qui justifie sa forme forfaitaire au premier pilier de Solvabilité~II. Les
 limites relevées ci-dessous portent donc sur son adéquation à l'objet étudié, non sur sa légitimité
 réglementaire. Faute de sous-module cyber, l'évaluation de cet objet revient aux modèles internes
 et à l'ORSA. Deux propriétés de la formule fondent la critique.
@@ -546,7 +546,7 @@ L3 · Absence de loi de perte
 \addlinespace
 L4 · Plafond relatif
 & Composante hors frais des unités de compte plafonnée à $0{,}3\,BSCR$.
-& Pour l'assureur non-vie~A ($Adj=0$ posé), la marge sous le plafond, $50{,}8$~M\euro, est dépassée par le besoin non conforme ($112{,}1$) mais pas par l'écart de contagion ($34{,}9$, soit $0{,}69$ fois).
+& Pour l'assureur non-vie~A ($Adj=0$ posé), la marge sous le plafond, $50{,}8$~M\euro, n'est dépassée ni par le besoin non conforme ($1{,}0$, soit $0{,}02$ fois la marge) ni par l'écart de contagion ($0{,}4$) : le plafond ne contraint pas cette entité.
 & Agrégation de l'écart en ORSA (\S\ref{sec:agregation-scr}). \\
 \addlinespace
 L5 · Absence de structure de dépendance
@@ -582,9 +582,9 @@ tableau~\ref{tab:benchmark-sf}.}
 \label{fig:critique-formule-standard}
 \end{figure}
 
-Ces limites ne plaident pas pour remplacer le forfait du pilier~1, dont la comparabilité entre
+Ces limites ne plaident pas pour remplacer le forfait du premier pilier de Solvabilité~II, dont la comparabilité entre
 entités reste un objectif prudentiel propre. Elles délimitent ce qu'il ne peut pas exprimer : la
-réponse étudiée relève du pilier~2, où l'ORSA admet une loi de perte propre à l'entité et des
+réponse étudiée relève du deuxième pilier, où l'ORSA admet une loi de perte propre à l'entité et des
 scénarios de conformité.
 
 \subsection{Recouvrement de Solvabilité~II et de DORA}
