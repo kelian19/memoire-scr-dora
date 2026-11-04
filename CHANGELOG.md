@@ -1,5 +1,13 @@
 # Journal des versions
 
+## 1.2.2 — 4 novembre 2026
+
+- Soutenance Institut : parcours de 25 diapositives sur 28 pages, puis réserves et annexes ; 79 pages au total.
+- Soutenance ENSAE : 22 diapositives principales sur 26 pages, puis downscaling après dépôt en réserve R1, page 27.
+- Documentation des supports et de l'export Overleaf actualisée ; listes de la variante Nexialog alignées sur le maître Institut.
+- Mémoire Institut : 156 pages, empreinte `DE3E1B78…` ; contenu du PDF conservé.
+- Harnais de l'export : 7 437 nombres confirmés. Les limites de calibration et d'identification restent déclarées.
+
 ## 1.2.1 — 2 novembre 2026
 
 - Institut actuel : 156 pages, SHA-256 `DE3E1B78…`.

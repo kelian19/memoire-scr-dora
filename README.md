@@ -11,7 +11,7 @@ Auteur : **Kélian Kaddouri**. Encadrement : **Hugo Rapior** (Nexialog Consultin
 **Caroline Hillairet** (ENSAE Paris).
 
 Ce dépôt publie un export du travail de recherche : manuscrits, code, sorties numériques et
-contrôles. Mise à jour du **2 novembre 2026**. Les résultats restent conditionnels aux hypothèses
+contrôles. Mise à jour du **4 novembre 2026**. Les résultats restent conditionnels aux hypothèses
 de fréquence, de sévérité et de propagation ; ils ne valident pas un capital individuel.
 
 ## Lire

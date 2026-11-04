@@ -283,7 +283,7 @@
     \column{0.26\textwidth}
     \chiffre{582 pertes / 91 excès}{Base étendue décrite dans le rapport, dont douze pertes antérieures à 2000.}
     \vspace{2mm}
-    \chiffre{570 pertes / 86 excès}{Filtre 2000--2026 : échantillon des compléments après dépôt, aux slides 10 et 11. Seuil commun : 20,03 M€.}
+    \chiffre{570 pertes / 86 excès}{Filtre 2000--2026 : échantillon des compléments après dépôt, aux slides 9, 10 et 17. Seuil commun : 20,03 M€.}
     \vspace{4mm}
     \chiffre{1 sinistre}{au-delà de 10\Meur sur le marché français en 2025 : la sévérité se calibre sur une base internationale}
   \end{columns}
@@ -292,137 +292,6 @@
 % =============================================================================
 
 \section{Modèle}
-
-\begin{frame}[t]{Comment relier la conformité au capital ?}
-  \framesubtitle{Quatre canaux ; paramètres de conformité posés (chapitres 4 à 6) ; cadres rouges : ajouts}
-  \centering
-  \resizebox{\linewidth}{!}{%
-  \begin{tikzpicture}[x=1mm,y=1mm,
-    bloc/.style={draw=nexialog!65,fill=white,align=center,inner sep=1mm,
-      font=\fontsize{6.5}{7.6}\selectfont},
-    canal/.style={fill=nexialog,text=white,rounded corners=.5mm,
-      align=center,text width=23mm,inner sep=1mm,font=\fontsize{7}{8.2}\selectfont},
-    flux/.style={-{Stealth[length=1.3mm]},draw=nexialog!75,line width=.6pt}]
-    \path[use as bounding box] (0,-55) rectangle (146,0);
-    % 1 : état latent et deux seuils, comme dans le croquis.
-    \node[bloc,draw=accent,line width=.9pt,minimum width=28mm,minimum height=54mm] (etat) at (14,-27) {};
-    \node[align=center,font=\fontsize{7}{8.2}\selectfont,text=nexialog] at (14,-5.5)
-      {\textbf{1 · État de conformité}\\pour chaque pilier};
-    \node[font=\fontsize{7}{8.2}\selectfont] at (14,-12.5)
-      {$C^\star=\gamma\Theta+\sqrt{1-\gamma^2}\,\varepsilon$};
-    \draw[nexialog!60,->] (2,-19)--(26,-19);
-    \foreach \x/\lab in {10/{$K_{\rm bas}$},18/{$K_{\rm haut}$}}{
-      \draw[nexialog] (\x,-18)--(\x,-20);
-      \node[below,font=\fontsize{5.5}{6}\selectfont] at (\x,-20) {\lab};}
-    \foreach \x/\lab in {5/NC,14/PC,23/C}
-      \node[font=\fontsize{6}{7}\selectfont,text=nexialog] at (\x,-16.5) {\lab};
-    \draw[filet] (3,-26)--(25,-26);
-    \node[anchor=north west,align=left,text width=24.5mm,inner sep=0pt,font=\fontsize{5.6}{7}\selectfont,text=gris] at (2,-27.5)
-      {NC : non conforme\\PC : partiellement conforme\\C : conforme\\[1mm]
-       $C^\star$ : capacité latente\\$\Theta$ : facteur commun\\$\varepsilon$ : choc propre\\$\gamma$ : charge du facteur\\$K$ : seuils de classement};
-    \begin{uncoverenv}<2->
-    % 2 : quatre canaux, alignés avec leurs trois mécanismes.
-    \node[bloc,draw=accent,line width=.9pt,fill=nexialog!5,minimum width=27mm,minimum height=54mm] at (46.5,-27) {};
-    \node[font=\fontsize{7}{8.2}\selectfont,text=nexialog] at (46.5,-3) {\textbf{2 · Quatre canaux}};
-    \node[canal] (lambda) at (46.5,-9) {Fréquence $\lambda$\\moyenne d'incidents/an};
-    \node[canal] (pu) at (46.5,-26) {Détection $p_u$\\probabilité de dépasser $u$};
-    \node[canal] (gain) at (46.5,-38.5) {Propagation $g$\\intensité des transmissions};
-    \node[canal] (acc) at (46.5,-49.5) {Accumulation\\prestataire commun\\(choc commun)};
-    \draw[flux] (etat.east)--(33,-27);
-    % 3--5 : lois et matrice ; T remplace l'ancien nom de code TRANS.
-    \node[bloc,text width=40mm,minimum height=17mm] (freq) at (86,-9) {
-      \textcolor{nexialog}{\textbf{3 · Fréquence} (ch. 4)}\\[.6mm]
-      $N$ : nombre annuel, loi binomiale négative\\[.8mm]
-       $\lambda$ : moyenne ; $\varphi=9{,}20$\\[.5mm]
-      $\varphi=\mathrm{Var}(N)/\mathbb E[N]$ : dispersion.};
-    \node[bloc,text width=40mm,minimum height=17mm] (sev) at (86,-26.5) {
-      \textcolor{nexialog}{\textbf{4 · Sévérité} (ch. 4)}\\[.6mm]
-      Excès : Pareto généralisée (GPD)\\[.7mm]
-      $\xi$ : forme ; $\sigma$ : échelle des pertes\\[.6mm]
-      $Y_k=0$ avec prob. $1-p_u$,\\sinon $u+\mathrm{GPD}(\xi,\sigma)$ ; $u=20{,}03$ M€.};
-    \node[bloc,draw=accent,line width=.9pt,text width=40mm,minimum height=20mm] (casc) at (86,-45) {
-      \textcolor{nexialog}{\textbf{5 · Cascade dirigée} (ch. 5)}\\[.7mm]
-      $W=g\,\dfrac{T}{\max_j\sum_k T_{jk}}$\\[.7mm]
-      $T$ : forces des liens ; $W$ : probabilités.\\
-      $S_a$ : piliers touchés depuis l'amorce $a$.\\
-      \textcolor{accent}{Accumulation : si l'amorce est P4, un choc commun touche les autres piliers.}};
-    \draw[flux] (lambda.east)--(freq.west);
-    \draw[flux] (pu.east)--(sev.west);
-    \draw[flux] (gain.east)--([yshift=3mm]casc.west);
-    \draw[flux] (acc.east)--([yshift=-3mm]casc.west);
-    \end{uncoverenv}
-    \begin{uncoverenv}<3->
-    % 6--7 : un bloc final commun, rouge Nexialog comme dans la référence.
-    \node[bloc,draw=accent,fill=accent,text=white,text width=27mm,minimum height=35mm] (cap) at (131,-27) {
-      \textbf{6–7 · Pertes et capital}\\[2mm]
-      $X_n=\displaystyle\sum_{k\in S_a}Y_{n,k}$\\[1mm]
-      perte d'un sinistre\\[2mm]
-      $\VaR_{99{,}5\%}\!\left(\displaystyle\sum_{n=1}^{N}X_n\right)$\\[1mm]
-      quantile de la charge\\annuelle agrégée};
-    \draw[flux] (freq.east)--node[above,font=\scriptsize] {$N$} ([yshift=11mm]cap.west);
-    \draw[flux] (sev.east)--node[above,font=\scriptsize] {$Y_k$} (cap.west);
-    \draw[flux] (casc.east)--node[below,font=\scriptsize] {$S_a$} ([yshift=-11mm]cap.west);
-    \node[align=center,font=\fontsize{6}{7.2}\selectfont,text=nexialog] (ent) at (131,-51)
-      {\textbf{8 · À l'échelle d'une entité}\\$A$ : actifs ; $m(A)$ : facteur de perte};
-    \draw[flux] (cap.south)--(ent.north);
-    \end{uncoverenv}
-  \end{tikzpicture}}
-% Reference interne (hors diapositive) : rapport, chapitres 4 à 6 et 9. États et écarts entre états supposés ; capital de scénario, niveau illustratif.
-\end{frame}
-
-\begin{frame}[t]{Comment choisit-on les paramètres ?}
-  \suivimethode{2,3,4,5}{Origine des paramètres}
-  \framesubtitle{\ajout Séparer les valeurs issues des données et les hypothèses entre états}
-  \only<1>{%
-  \scriptsize
-  \renewcommand{\arraystretch}{1.16}
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{.13\linewidth} r r Y >{\raggedright\arraybackslash}p{.18\linewidth}@{}}
-    \toprule
-    Paramètre & C & NC & Construction de la valeur & Statut \\
-    \midrule
-    Fréquence $\lambda$ & 21,56 & 53,62 & Base : $582/27$ incidents par an dans le registre. Passage NC : parts des vecteurs d'attaque pondérées par des multiplicateurs. & \shortstack[l]{Base comptée\\Passage semi-ancré} \\
-    \rowcolor{clair}Détection $p_u$ & 0,128 & 0,181 & Base : $86/570=0{,}1509$ au-dessus du seuil $u$. Facteurs $0{,}85$ en C et $1{,}20$ en NC. & \shortstack[l]{Base calculée\\Facteurs posés} \\
-    Propagation $g$ & 0,45 & 0,90 & Trois gains choisis : $0{,}45/0{,}68/0{,}90$. Force relative des liens $T$ posée à dire d'expert. & Posé \\
-    \rowcolor{clair}Accumulation $\omega$ & 0 & 0,68 & Scénario haut motivé par la concentration des tiers ; cette concentration ne calibre pas la probabilité du choc. & Posé, non identifié \\
-    \bottomrule
-  \end{tabularx}\par\vspace{2mm}
-  \begin{columns}[T,onlytextwidth]
-    \column{.51\textwidth}\footnotesize
-    \textbf{Sévérité :} seuil au percentile 85, paramètres GPD ajustés aux pertes. La dispersion $\varphi=9{,}20$ du moteur reste posée ; le test Poisson / binomiale négative ne la calibre pas.
-    \column{.45\textwidth}\footnotesize
-    \textbf{Exploré sur une plage :} multiplicateurs par vecteur et sens des liens, à force fixée. Une plage de scénario n'est pas un intervalle de confiance.
-  \end{columns}
-  }
-  \only<2>{%
-  \begin{columns}[T,onlytextwidth]
-    \column{.57\textwidth}\scriptsize
-    \[\lambda_{NC}=\lambda_C\sum_v\pi_v m_v,\qquad \lambda_C=582/27.\]
-    $v$ : type d'attaque ; $\pi_v$ : sa part dans Hackmageddon ; $m_v$ : centre de sa fourchette de multiplicateur.\par\vspace{1.5mm}
-    \renewcommand{\arraystretch}{1.15}
-    \begin{tabularx}{\linewidth}{@{}Y r l r@{}}
-      \toprule
-      Vecteur d'attaque & $\pi_v$ & Fourchette $m_v$ & Centre \\
-      \midrule
-      Hameçonnage & 0,388 & [1,8 ; 3,0] & 2,40 \\
-      \rowcolor{clair}Vulnérabilité & 0,338 & [2,0 ; 2,6] & 2,30 \\
-      Chaîne d'approvisionnement & 0,158 & [1,9 ; 2,6] & 2,25 \\
-      \rowcolor{clair}Identifiants compromis & 0,063 & [3,0 ; 8,0] & 5,50 \\
-      Autres & 0,053 & [1,3 ; 1,6] & 1,45 \\
-      \bottomrule
-    \end{tabularx}\par\vspace{1.3mm}
-    \[\sum_v\pi_v m_v\simeq2{,}4875\quad\Longrightarrow\quad\lambda_{NC}\simeq53{,}62/\mathrm{an}.\]
-    \column{.39\textwidth}\footnotesize
-    \textbf{Observé : les parts $\pi_v$.}\par
-    Le recensement décrit le mélange des attaques, pas leur effet sur la conformité.\par\vspace{1.5mm}
-    \textbf{Posé : les fourchettes des $m_v$.}\par
-    Elles traduisent des effets publiés sur des contrôles : authentification forte, formation, etc. Elles ne sont pas des effets DORA estimés. « Autres » n'a pas de source dédiée.\par\vspace{1.5mm}
-    \textbf{Aux bornes choisies :}\par
-    multiplicateur de 1,933 à 3,042 ; $\lambda_{NC}$ de 41,7 à 65,6/an. Ce sont des scénarios, pas un IC.
-  \end{columns}
-  }
-% Références internes : rapport, chapitres 4 et 6 ; parts Hackmageddon et fourchettes du script 08b ; synthèse du chapitre 9.
-\end{frame}
 
 \begin{frame}{Comment l'état règle-t-il la propagation ?}
   \suivimethode{1,2,5}{État et propagation}
@@ -707,6 +576,137 @@
 % Reference interne (hors diapositive) : rapport, § 8.1–8.2, figure 9.1. $S$ posée, fréquence conforme, $g=0{,}90$. Extrema globaux non démontrés.
 \end{frame}
 
+\begin{frame}[t]{Comment relier la conformité au capital ?}
+  \framesubtitle{Quatre canaux ; paramètres de conformité posés (chapitres 4 à 6) ; cadres rouges : ajouts}
+  \centering
+  \resizebox{\linewidth}{!}{%
+  \begin{tikzpicture}[x=1mm,y=1mm,
+    bloc/.style={draw=nexialog!65,fill=white,align=center,inner sep=1mm,
+      font=\fontsize{6.5}{7.6}\selectfont},
+    canal/.style={fill=nexialog,text=white,rounded corners=.5mm,
+      align=center,text width=23mm,inner sep=1mm,font=\fontsize{7}{8.2}\selectfont},
+    flux/.style={-{Stealth[length=1.3mm]},draw=nexialog!75,line width=.6pt}]
+    \path[use as bounding box] (0,-55) rectangle (146,0);
+    % 1 : état latent et deux seuils, comme dans le croquis.
+    \node[bloc,draw=accent,line width=.9pt,minimum width=28mm,minimum height=54mm] (etat) at (14,-27) {};
+    \node[align=center,font=\fontsize{7}{8.2}\selectfont,text=nexialog] at (14,-5.5)
+      {\textbf{1 · État de conformité}\\pour chaque pilier};
+    \node[font=\fontsize{7}{8.2}\selectfont] at (14,-12.5)
+      {$C^\star=\gamma\Theta+\sqrt{1-\gamma^2}\,\varepsilon$};
+    \draw[nexialog!60,->] (2,-19)--(26,-19);
+    \foreach \x/\lab in {10/{$K_{\rm bas}$},18/{$K_{\rm haut}$}}{
+      \draw[nexialog] (\x,-18)--(\x,-20);
+      \node[below,font=\fontsize{5.5}{6}\selectfont] at (\x,-20) {\lab};}
+    \foreach \x/\lab in {5/NC,14/PC,23/C}
+      \node[font=\fontsize{6}{7}\selectfont,text=nexialog] at (\x,-16.5) {\lab};
+    \draw[filet] (3,-26)--(25,-26);
+    \node[anchor=north west,align=left,text width=24.5mm,inner sep=0pt,font=\fontsize{5.6}{7}\selectfont,text=gris] at (2,-27.5)
+      {NC : non conforme\\PC : partiellement conforme\\C : conforme\\[1mm]
+       $C^\star$ : capacité latente\\$\Theta$ : facteur commun\\$\varepsilon$ : choc propre\\$\gamma$ : charge du facteur\\$K$ : seuils de classement};
+    \begin{uncoverenv}<2->
+    % 2 : quatre canaux, alignés avec leurs trois mécanismes.
+    \node[bloc,draw=accent,line width=.9pt,fill=nexialog!5,minimum width=27mm,minimum height=54mm] at (46.5,-27) {};
+    \node[font=\fontsize{7}{8.2}\selectfont,text=nexialog] at (46.5,-3) {\textbf{2 · Quatre canaux}};
+    \node[canal] (lambda) at (46.5,-9) {Fréquence $\lambda$\\moyenne d'incidents/an};
+    \node[canal] (pu) at (46.5,-26) {Détection $p_u$\\probabilité de dépasser $u$};
+    \node[canal] (gain) at (46.5,-38.5) {Propagation $g$\\intensité des transmissions};
+    \node[canal] (acc) at (46.5,-49.5) {Accumulation\\prestataire commun\\(choc commun)};
+    \draw[flux] (etat.east)--(33,-27);
+    % 3--5 : lois et matrice ; T remplace l'ancien nom de code TRANS.
+    \node[bloc,text width=40mm,minimum height=17mm] (freq) at (86,-9) {
+      \textcolor{nexialog}{\textbf{3 · Fréquence} (ch. 4)}\\[.6mm]
+      $N$ : nombre annuel, loi binomiale négative\\[.8mm]
+       $\lambda$ : moyenne ; $\varphi=9{,}20$\\[.5mm]
+      $\varphi=\mathrm{Var}(N)/\mathbb E[N]$ : dispersion.};
+    \node[bloc,text width=40mm,minimum height=17mm] (sev) at (86,-26.5) {
+      \textcolor{nexialog}{\textbf{4 · Sévérité} (ch. 4)}\\[.6mm]
+      Excès : Pareto généralisée (GPD)\\[.7mm]
+      $\xi$ : forme ; $\sigma$ : échelle des pertes\\[.6mm]
+      $Y_k=0$ avec prob. $1-p_u$,\\sinon $u+\mathrm{GPD}(\xi,\sigma)$ ; $u=20{,}03$ M€.};
+    \node[bloc,draw=accent,line width=.9pt,text width=40mm,minimum height=20mm] (casc) at (86,-45) {
+      \textcolor{nexialog}{\textbf{5 · Cascade dirigée} (ch. 5)}\\[.7mm]
+      $W=g\,\dfrac{T}{\max_j\sum_k T_{jk}}$\\[.7mm]
+      $T$ : forces des liens ; $W$ : probabilités.\\
+      $S_a$ : piliers touchés depuis l'amorce $a$.\\
+      \textcolor{accent}{Accumulation : si l'amorce est P4, un choc commun touche les autres piliers.}};
+    \draw[flux] (lambda.east)--(freq.west);
+    \draw[flux] (pu.east)--(sev.west);
+    \draw[flux] (gain.east)--([yshift=3mm]casc.west);
+    \draw[flux] (acc.east)--([yshift=-3mm]casc.west);
+    \end{uncoverenv}
+    \begin{uncoverenv}<3->
+    % 6--7 : un bloc final commun, rouge Nexialog comme dans la référence.
+    \node[bloc,draw=accent,fill=accent,text=white,text width=27mm,minimum height=35mm] (cap) at (131,-27) {
+      \textbf{6–7 · Pertes et capital}\\[2mm]
+      $X_n=\displaystyle\sum_{k\in S_a}Y_{n,k}$\\[1mm]
+      perte d'un sinistre\\[2mm]
+      $\VaR_{99{,}5\%}\!\left(\displaystyle\sum_{n=1}^{N}X_n\right)$\\[1mm]
+      quantile de la charge\\annuelle agrégée};
+    \draw[flux] (freq.east)--node[above,font=\scriptsize] {$N$} ([yshift=11mm]cap.west);
+    \draw[flux] (sev.east)--node[above,font=\scriptsize] {$Y_k$} (cap.west);
+    \draw[flux] (casc.east)--node[below,font=\scriptsize] {$S_a$} ([yshift=-11mm]cap.west);
+    \node[align=center,font=\fontsize{6}{7.2}\selectfont,text=nexialog] (ent) at (131,-51)
+      {\textbf{8 · À l'échelle d'une entité}\\$A$ : actifs ; $m(A)$ : facteur de perte};
+    \draw[flux] (cap.south)--(ent.north);
+    \end{uncoverenv}
+  \end{tikzpicture}}
+% Reference interne (hors diapositive) : rapport, chapitres 4 à 6 et 9. États et écarts entre états supposés ; capital de scénario, niveau illustratif.
+\end{frame}
+
+\begin{frame}[t]{Comment choisit-on les paramètres ?}
+  \suivimethode{2,3,4,5}{Origine des paramètres}
+  \framesubtitle{\ajout Séparer les valeurs issues des données et les hypothèses entre états}
+  \only<1>{%
+  \scriptsize
+  \renewcommand{\arraystretch}{1.16}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{.13\linewidth} r r Y >{\raggedright\arraybackslash}p{.18\linewidth}@{}}
+    \toprule
+    Paramètre & C & NC & Construction de la valeur & Statut \\
+    \midrule
+    Fréquence $\lambda$ & 21,56 & 53,62 & Base : $582/27$ incidents par an dans le registre. Passage NC : parts des vecteurs d'attaque pondérées par des multiplicateurs. & \shortstack[l]{Base comptée\\Passage semi-ancré} \\
+    \rowcolor{clair}Détection $p_u$ & 0,128 & 0,181 & Base : $86/570=0{,}1509$ au-dessus du seuil $u$. Facteurs $0{,}85$ en C et $1{,}20$ en NC. & \shortstack[l]{Base calculée\\Facteurs posés} \\
+    Propagation $g$ & 0,45 & 0,90 & Trois gains choisis : $0{,}45/0{,}68/0{,}90$. Force relative des liens $T$ posée à dire d'expert. & Posé \\
+    \rowcolor{clair}Accumulation $\omega$ & 0 & 0,68 & Scénario haut motivé par la concentration des tiers ; cette concentration ne calibre pas la probabilité du choc. & Posé, non identifié \\
+    \bottomrule
+  \end{tabularx}\par\vspace{2mm}
+  \begin{columns}[T,onlytextwidth]
+    \column{.51\textwidth}\footnotesize
+    \textbf{Sévérité :} seuil au percentile 85, paramètres GPD ajustés aux pertes. La dispersion $\varphi=9{,}20$ du moteur reste posée ; le test Poisson / binomiale négative ne la calibre pas.
+    \column{.45\textwidth}\footnotesize
+    \textbf{Exploré sur une plage :} multiplicateurs par vecteur et sens des liens, à force fixée. Une plage de scénario n'est pas un intervalle de confiance.
+  \end{columns}
+  }
+  \only<2>{%
+  \begin{columns}[T,onlytextwidth]
+    \column{.57\textwidth}\scriptsize
+    \[\lambda_{NC}=\lambda_C\sum_v\pi_v m_v,\qquad \lambda_C=582/27.\]
+    $v$ : type d'attaque ; $\pi_v$ : sa part dans Hackmageddon ; $m_v$ : centre de sa fourchette de multiplicateur.\par\vspace{1.5mm}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabularx}{\linewidth}{@{}Y r l r@{}}
+      \toprule
+      Vecteur d'attaque & $\pi_v$ & Fourchette $m_v$ & Centre \\
+      \midrule
+      Hameçonnage & 0,388 & [1,8 ; 3,0] & 2,40 \\
+      \rowcolor{clair}Vulnérabilité & 0,338 & [2,0 ; 2,6] & 2,30 \\
+      Chaîne d'approvisionnement & 0,158 & [1,9 ; 2,6] & 2,25 \\
+      \rowcolor{clair}Identifiants compromis & 0,063 & [3,0 ; 8,0] & 5,50 \\
+      Autres & 0,053 & [1,3 ; 1,6] & 1,45 \\
+      \bottomrule
+    \end{tabularx}\par\vspace{1.3mm}
+    \[\sum_v\pi_v m_v\simeq2{,}4875\quad\Longrightarrow\quad\lambda_{NC}\simeq53{,}62/\mathrm{an}.\]
+    \column{.39\textwidth}\footnotesize
+    \textbf{Observé : les parts $\pi_v$.}\par
+    Le recensement décrit le mélange des attaques, pas leur effet sur la conformité.\par\vspace{1.5mm}
+    \textbf{Posé : les fourchettes des $m_v$.}\par
+    Elles traduisent des effets publiés sur des contrôles : authentification forte, formation, etc. Elles ne sont pas des effets DORA estimés. « Autres » n'a pas de source dédiée.\par\vspace{1.5mm}
+    \textbf{Aux bornes choisies :}\par
+    multiplicateur de 1,933 à 3,042 ; $\lambda_{NC}$ de 41,7 à 65,6/an. Ce sont des scénarios, pas un IC.
+  \end{columns}
+  }
+% Références internes : rapport, chapitres 4 et 6 ; parts Hackmageddon et fourchettes du script 08b ; synthèse du chapitre 9.
+\end{frame}
+
 % =============================================================================
 
 \section{Résultats}
@@ -767,46 +767,13 @@
     Fréquence : {\editorial 4\,328 M€} isolé, {\editorial\color{accent}8\,775 M€} en fermeture.
     L'écart entre les deux lectures mesure les interactions que le canal porte.\par\vspace{1mm}
     {\scriptsize\color{gris}Les effets de fermeture ne s'additionnent pas.}\par\vspace{1mm}
-    {\small\color{accent}\itshape$\rightarrow$\enspace Et pour une entité donnée ?\par}
+    {\small\color{accent}\itshape$\rightarrow$\enspace Quelles conclusions retenir ?\par}
   \end{columns}
 % Reference interne (hors diapositive) : rapport, chapitre 9, figure 9.1. Gains conditionnels aux paramètres posés ; les gains de fermeture ne s'additionnent pas.
 \end{frame}
 
 
 
-\begin{frame}{Comment passer du marché à une entité ?}
-  \suivimethode{8}{Échelle de l'entité}
-  \framesubtitle{Entité notionnelle : adapter les lois, puis recalculer le capital}
-  \begin{columns}[T,onlytextwidth]
-  \column{.49\textwidth}\footnotesize
-  \setlength{\abovedisplayskip}{1mm}\setlength{\belowdisplayskip}{1mm}
-  \setlength{\abovedisplayshortskip}{1mm}\setlength{\belowdisplayshortskip}{1mm}
-  \textbf{1 · Fréquence à la taille}
-  \[\lambda(A)=\lambda_0\Big(\frac{A}{A_0}\Big)^{b_\lambda},\qquad b_\lambda=0{,}494\]
-  \textbf{2 · Sévérité à la taille}
-  \[m(A)=\Big(\frac{A}{A_m}\Big)^{b},\qquad b=0{,}087\]
-  \textbf{3 · Perte et capital de l'entité}
-  \[X=m(A)\sum_{k\in S_a}Y_k,\qquad \mathcal B(A)=\VaR_{99{,}5\,\%}\Big(\sum_{n=1}^{N}X_n\Big)\]
-  {\scriptsize $A$ : actifs ; $b_\lambda$ estimé sur les firmes de plus de 100 Md\$ (tout le panel : 0,074, fenêtres d'observation plus courtes chez les petites firmes) ;
-  $A_m$ : actifs médians des pertes TIC ; pertes sous le seuil incluses ; $N$ : binomiale négative de moyenne $\lambda(A)$.\par}
-  \column{.47\textwidth}\footnotesize
-  {\scriptsize\color{accent}\textbf{Complément après dépôt : chiffres différents du rapport}\par}\vspace{1mm}
-  \renewcommand{\arraystretch}{1.25}
-  \begin{tabular}{@{}lrrr@{}}
-    \toprule
-    \textbf{Entité} & \textbf{Rapport} & \shortstack[r]{\textbf{Nouvelle}\\\textbf{calibration}} & \shortstack[r]{\textbf{Pires}\\\textbf{années}} \\
-    \midrule
-    Assureur non-vie A & 112 & 1 & 51 \\
-    \textbf{Notionnelle} & 169 & \textcolor{accent}{\textbf{24}} & 156 \\
-    Assureur vie D & 294 & 193 & 591 \\
-    \bottomrule
-  \end{tabular}\par\vspace{1mm}
-  {\scriptsize En M€. Besoin : quantile à 99,5 \% ; pires années : moyenne des 0,5 \% pires années.\par}\vspace{1mm}
-  Notionnelle : bootstrap par firme $[8{,}3\,;53{,}0]$ M€. La baisse vient surtout de la fréquence, et dépend de la dispersion.\par\vspace{2mm}
-  {\scriptsize\color{accent}Vise à réduire l'effet des fenêtres courtes ; extrapolation aux petites entités à valider ; métier non intégré.}
-  \end{columns}
-% Reference interne (hors diapositive) : scripts 136 et 137 (complement apres depot, sorties 136.txt et 137.txt) ; rapport ENSAE, § 9, pour 112, 169 et 294. $W$ et moteur inchanges.
-\end{frame}
 \section{Bilan}
 
 
@@ -866,4 +833,41 @@
 \end{frame}}
 
 % =============================================================================
+\appendix
+\section{Réserve}
+
+\begin{frame}[label=reserve-downscaling]{Réserve R1 · Du registre à une entité}
+  \suivimethode{8}{Échelle de l'entité}
+  \framesubtitle{Complément après dépôt · Entité notionnelle, niveau à valider}
+  \begin{columns}[T,onlytextwidth]
+  \column{.49\textwidth}\footnotesize
+  \setlength{\abovedisplayskip}{1mm}\setlength{\belowdisplayskip}{1mm}
+  \setlength{\abovedisplayshortskip}{1mm}\setlength{\belowdisplayshortskip}{1mm}
+  \textbf{1 · Fréquence à la taille}
+  \[\lambda(A)=\lambda_0\Big(\frac{A}{A_0}\Big)^{b_\lambda},\qquad b_\lambda=0{,}494\]
+  \textbf{2 · Sévérité à la taille}
+  \[m(A)=\Big(\frac{A}{A_m}\Big)^{b},\qquad b=0{,}087\]
+  \textbf{3 · Perte et capital de l'entité}
+  \[X=m(A)\sum_{k\in S_a}Y_k,\qquad \mathcal B(A)=\VaR_{99{,}5\,\%}\Big(\sum_{n=1}^{N}X_n\Big)\]
+  {\scriptsize $A$ : actifs ; $b_\lambda$ estimé sur les firmes de plus de 100 Md\$ (tout le panel : 0,074, fenêtres d'observation plus courtes chez les petites firmes) ;
+  $A_m$ : actifs médians des pertes TIC ; pertes sous le seuil incluses ; $N$ : binomiale négative de moyenne $\lambda(A)$.\par}
+  \column{.47\textwidth}\footnotesize
+  {\scriptsize\color{accent}\textbf{Complément après dépôt : chiffres différents du rapport}\par}\vspace{1mm}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{@{}lrrr@{}}
+    \toprule
+    \textbf{Entité} & \textbf{Rapport} & \shortstack[r]{\textbf{Nouvelle}\\\textbf{calibration}} & \shortstack[r]{\textbf{Pires}\\\textbf{années}} \\
+    \midrule
+    Assureur non-vie A & 112 & 1 & 51 \\
+    \textbf{Notionnelle} & 169 & \textcolor{accent}{\textbf{24}} & 156 \\
+    Assureur vie D & 294 & 193 & 591 \\
+    \bottomrule
+  \end{tabular}\par\vspace{1mm}
+  {\scriptsize En M€. Besoin : quantile à 99,5 \% ; pires années : moyenne des 0,5 \% pires années.\par}\vspace{1mm}
+  Notionnelle : bootstrap par firme $[8{,}3\,;53{,}0]$ M€. La baisse vient surtout de la fréquence, et dépend de la dispersion.\par\vspace{2mm}
+  {\scriptsize\color{accent}Vise à réduire l'effet des fenêtres courtes ; extrapolation aux petites entités à valider ; métier non intégré.}
+  \end{columns}
+% Reference interne (hors diapositive) : scripts 136 et 137 (complement apres depot, sorties 136.txt et 137.txt) ; rapport ENSAE, § 9, pour 112, 169 et 294. $W$ et moteur inchanges.
+\end{frame}
+
 \end{document}

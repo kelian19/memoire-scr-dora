@@ -1,5 +1,6 @@
 """Exporte la version Institut et ses dependances locales dans un projet Overleaf autonome."""
 import argparse
+from datetime import date
 import hashlib
 import json
 from pathlib import Path
@@ -20,6 +21,8 @@ def main():
     parser.add_argument("destination", type=Path, help="Nouveau dossier de preparation")
     parser.add_argument("--nexialog", action="store_true",
                         help="Fond Nexialog, en-tete adapte et figures regroupees pour Overleaf")
+    parser.add_argument("--date", type=date.fromisoformat, default=date.today(),
+                        help="Date de preparation ISO (par defaut : aujourd'hui)")
     args = parser.parse_args()
     stage = args.destination.resolve()
     stage.mkdir(parents=True, exist_ok=False)
@@ -98,7 +101,7 @@ def main():
         if args.nexialog else "Version Institut sans fond de page Nexialog.\n"
     )
     (stage / "LIRE_AVANT_IMPORT.txt").write_text(
-        "VERSION INSTITUT — 29 octobre 2026\n\n"
+        f"VERSION INSTITUT — export du {args.date.isoformat()}\n\n"
         "Importer ce ZIP dans un NOUVEAU projet Overleaf pour conserver le projet actuel.\n"
         "Document principal : main.tex. Compilateur : XeLaTeX.\n"
         "Contenu : version Institut actuelle, dont la methode de downscaling et la comparaison d'entites.\n"
