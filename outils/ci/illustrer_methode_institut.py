@@ -168,11 +168,11 @@ fig.savefig(OUT/'incident_et_controles.pdf');plt.close(fig)
 fig,ax=plt.subplots(figsize=(8.2,3.65))
 ax.set(xlim=(0,12),ylim=(0,5.5));ax.axis('off')
 for y,title,col,vals,sub in [
-    (3.8,'CONFORME',INK,('21,56','0,128','0,45','0'),r'C'),
-    (1.45,'NON CONFORME',RED,('53,62','0,181','0,90','0,68'),r'NC')]:
+    (3.8,'CONFORME',INK,('21,56','0,128','0,45','sans choc commun'),r'C'),
+    (1.45,'NON CONFORME',RED,('53,62','0,181','0,90',r'$\omega=0,68$'),r'NC')]:
     ax.text(.25,y+.95,title,fontweight='bold',fontsize=11,color=col)
     text=(r'$\lambda='+vals[0]+r'$ incidents/an ; '+r'$p_u='+vals[1]+r'$'
-          +'\n'+r'$g='+vals[2]+r'$ ; '+r'$\omega='+vals[3]+r'$')
+          +'\n'+r'$g='+vals[2]+r'$ ; '+vals[3])
     module(ax,.25,y-.75,4.5,1.5,'Paramètres du scénario',text,col)
     arrow(ax,(4.8,y),(5.55,y))
     module(ax,5.6,y-.75,3.4,1.5,'Même moteur',

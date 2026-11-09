@@ -24,9 +24,9 @@
   fourchettes sont POSEES : chacune traduit un effet publie en multiplicateur prudent, sans
   estimation sur donnee du projet. Le multiplicateur est donc semi-ancre, au sens de la
   table des parametres : sa provenance est tracee, sa valeur n'est pas calibree.
-  phishing_social_eng    Ponemon/IBM Cost of a Data Breach 2025 — formation réduit le risque jusqu'à 86%
-  exploit_vuln           ENISA Threat Landscape 2025 — conversion intrusion 70% (exploit) vs 27% (phishing), ratio x2.6
-  supply_chain_tiers     IBM/Ponemon 2023-2025 — surcoût +11.8%/+8.3% ; SecurityScorecard 2025 — part tierce 15%->36%/an
+  phishing_social_eng    Ponemon/IBM Cost of a Data Breach 2025 — formation : effet sur le coût, non sur la fréquence DORA
+  exploit_vuln           ENISA Threat Landscape 2025 — conversion intrusion 70% (exploit) vs 27% (phishing), sans effet de conformité estimé
+  supply_chain_tiers     IBM/Ponemon 2025 — coût des brèches ; SecurityScorecard 2025 — part tierce 35.5% en 2024, sans effet de conformité estimé
   identifiants           Microsoft Research, arXiv:2305.00945 — MFA réduit compromission de 99.22% (population), 98.56% (identifiants déjà fuités)
   autres                 Pas de source dédiée — multiplicateur transverse prudent, borné par les autres vecteurs
 

@@ -298,7 +298,7 @@
     Aucune de ces sources ne dit quel pilier a entraîné l'autre : la direction de la contagion n'y est pas observée.
     \question{Comment relier ces pertes à l'état de conformité de chaque pilier ?}
     \column{0.26\textwidth}
-    \chiffre{91 excès}{au-delà du seuil $u$, sur les 582 pertes cyber × finance du rapport ; sur la seule période 2000--2026 : 86 excès sur 570, mêmes $\xi$ et $\sigma$}
+    \chiffre{86 excès}{au-delà du seuil $u$, sur les 570 pertes cyber × finance de 2000--2026, population de calibration ; sur les 582 du registre : 91 excès}
     \vspace{4mm}
     \chiffre{1 sinistre}{au-delà de 10\Meur sur le marché français en 2025 : la sévérité se calibre sur une base internationale}
   \end{columns}
@@ -316,7 +316,7 @@
     \textbf{Comptage}\par
     Binomiale négative : une dispersion supérieure à Poisson.\par\vspace{4mm}
     \textbf{Pertes extrêmes}\par
-    GPD ajustée à 91 excès au-delà de 20,03 M€ ; sur 2000--2026 (86 excès), mêmes paramètres.\par\vspace{4mm}
+    GPD ajustée à 86 excès au-delà de 20,03 M€, sur 570 pertes de 2000--2026.\par\vspace{4mm}
     \textbf{Paramètres}\par
     $\xi=0{,}595$ : forme.\par
     $\sigma=57{,}97$ M€ : échelle.
@@ -642,7 +642,7 @@
       Fréquence & $\lambda$ : incidents par an & 21,56 & \textcolor{accent}{53,62} \\
       Détection & $p_u$ : dépassement de $u$ & 0,128 & \textcolor{accent}{0,181} \\
       Propagation & $g$ : gain de $W$ & 0,45 & \textcolor{accent}{0,90} \\
-      Accumulation & probabilité de choc commun & 0 & \textcolor{accent}{0,68} \\
+      Accumulation & probabilité de choc commun & sans choc & \textcolor{accent}{0,68} \\
       \bottomrule
     \end{tabularx}\par\vspace{2mm}
     \textbf{Protocole.} Même moteur, mêmes graines, même sévérité de base : seuls ces quatre paramètres changent.
@@ -1135,7 +1135,7 @@
       \toprule
       Forme de la queue & Kolmogorov-Smirnov sur la probabilité intégrale des excès : $D=0{,}100$, $p=0{,}4087$ ; la GPD n'est pas rejetée \\
       \rowcolor{clair}Quantiles de sévérité & Kupiec rejette à 99\,\% ($p=0{,}0078$ ; 8 dépassements pour 2,8 attendus) et à 99,5\,\% ($p=0{,}0140$ ; 5 pour 1,4) \\
-      Dérive d'échelle & $3{,}40\,\%$ par an dans la queue ($p=0{,}1786$), $3{,}30\,\%$ corrigée de l'inflation ; effet d'au moins $+16{,}9\,\%$ sur le quantile \\
+      Dérive d'échelle & $3{,}40\,\%$ par an dans la queue ($p=0{,}1786$), $3{,}30\,\%$ corrigée de l'inflation ; $+16{,}9\,\%$ sur le quantile dans cette variante, sans borne démontrée \\
       \rowcolor{clair}Facteur entre états & De $3{,}337$ à $3{,}164$ ($-5{,}2\,\%$) sous la sévérité dérivée ; écart en euros $-3{,}5\,\%$ \\
       Charge annuelle & Rejetée (Kolmogorov-Smirnov, $p=0{,}0042$), sur les dernières années seulement ; indépendance fréquence-sévérité conservée \\
       \bottomrule
@@ -1231,7 +1231,7 @@
       Fréquence & $\lambda$, incidents par an & 21,56 & 53,62 \\
       \rowcolor{clair}Propagation & $g$, gain de la normalisation & 0,45 & 0,90 \\
       Détection & $p_u$, dépassement par pilier touché & 0,128 & 0,181 \\
-      \rowcolor{clair}Accumulation & $\omega$, probabilité de choc commun & 0 & 0,68 \\
+      \rowcolor{clair}Accumulation & $\omega$, probabilité de choc commun & sans choc & 0,68 \\
       \bottomrule
     \end{tabularx}\par\vspace{1.5mm}
     Statuts : multiplicateur de fréquence posé ; valeurs de $g$ posées ; détection par multiplicateurs $0{,}85$ et $1{,}20$ posés ; accumulation en borne haute posée, non identifiée.\par\vspace{1.2mm}
@@ -1318,7 +1318,7 @@
     \textbf{Deux constructions de la cascade.} La cascade indépendante (Bernoulli par arête, percolation) est la seule définie quand une ligne de $W$ somme à plus de un : elle sert aux bornes. La marche auto-évitante, un successeur par pas, sert aux capitaux. Passer de l'une à l'autre déplace le secteur de $-4\,\%$.
     \column{.47\textwidth}\scriptsize
     {\editorial\normalsize Une matrice et sa transposée}\par\vspace{1mm}
-    Au premier ordre, la co-occurrence ne dépend de $W$ que par $S=\tfrac12(W+W^\top)$ : $W$ et $W^\top$ y sont indiscernables. La loi complète des ensembles touchés, elle, les distingue.\par\vspace{1mm}
+    Au premier ordre (amorce uniforme, faible intensité), la co-occurrence ne dépend de $W$ que par $S=\tfrac12(W+W^\top)$ : $W$ et $W^\top$ y sont indiscernables. La loi complète des ensembles touchés les distingue.\par\vspace{.4mm}
     \renewcommand{\arraystretch}{1.12}
     \begin{tabular}{@{}lrr@{}}
       \toprule
@@ -1431,7 +1431,7 @@
   \begin{columns}[T,onlytextwidth]
     \column{.55\textwidth}\scriptsize
     \setlength{\abovedisplayskip}{.5mm}\setlength{\belowdisplayskip}{.5mm}
-    \textbf{Décomposition.} $W=S+A$, avec $S=\tfrac12(W+W^\top)$ et $A=\tfrac12(W-W^\top)$, orthogonales au sens de Frobenius. Une co-occurrence est symétrique : elle ne voit que $S$.
+    \textbf{Décomposition.} $W=S+A$, avec $S=\tfrac12(W+W^\top)$ et $A=\tfrac12(W-W^\top)$, orthogonales au sens de Frobenius. Sous amorce uniforme et au premier ordre, une co-occurrence ne dépend que de $S$ ; avec des amorces inégales, le terme en $A$ subsiste.
     \[\sum_{a}r\,\mathbb P\big(\{j,k\}\subseteq S_a\big)=2r\,S_{jk}+O(\|W\|^2)\]
     \textbf{Chaîne auxiliaire.} De noyau $P$ et de loi stationnaire $\pi>0$, le noyau adjoint est $\tilde P_{jk}=\pi_kP_{kj}/\pi_j$ ; avec $A_\pi=(P-\tilde P)/2$, le courant vaut $J_{jk}=2\pi_j(A_\pi)_{jk}$, nul à l'équilibre détaillé. La forme de Dirichlet
     \[\mathcal E(f,f)=\tfrac12\sum_{j,k}\pi_j(S_\pi)_{jk}\,(f_k-f_j)^2\]
@@ -1836,7 +1836,7 @@
       \rowcolor{clair}Forme NB2 $r$ & 0,0112 & 0,594 \\
       Corps sous le seuil & nul & empirique \\
       \rowcolor{clair}Sévérité $m(A)$ & 0,854 & 0,854 \\
-      Besoin non conforme (M€) & 169,0 & 24,1 \\
+      Besoin à $g$ non conforme seul (M€) & 169,0 & 24,1 \\
       \bottomrule
     \end{tabularx}\par\vspace{1.5mm}
     La baisse ne vient pas de l'exposant seul : fréquence, dispersion et corps changent ensemble. Le plan factoriel du script 137 les sépare.\par\vspace{1.5mm}
@@ -1890,7 +1890,7 @@
     \toprule
     Question & Réponse chiffrée & Section \\
     \midrule
-    Quel ordre de grandeur ? & 24,1 M€ non conforme ; 15,8 à 27,5 aux sommets, 8,3 à 53,0 par bootstrap des firmes. Extrapolation non validée. & § 9.5 \\
+    Quel ordre de grandeur ? & 24,1 M€ avec le seul $g$ non conforme ; 15,8 à 27,5 aux sommets, 8,3 à 53,0 par bootstrap des firmes. Extrapolation non validée. & § 9.5 \\
     \rowcolor{clair}Que change la propagation ? & 13,2 / 17,7 / 24,1 M€ pour $g=0{,}45/0{,}68/0{,}90$, soit +83\,\%. Repère forfaitaire : 450 M€ dans les trois états. & § 9.5 \\
     Le registre couvre-t-il le risque ? & Capture non identifiée : à 100 / 50 / 25 / 10\,\% supposés, la VaR vaut 23,1 / 74,0 / 153,9 / 327,7 M€ (quatre graines). & § 9.6 \\
     \rowcolor{clair}Combien coûte la détention ? & 1,15 à 1,45 M€/an. Diviser la fréquence par deux (posé) ramène le besoin de 24,1 à 4,7 M€. & § 9.8 \\
@@ -1898,7 +1898,7 @@
     \rowcolor{clair}Par quel pilier commencer ? & En lecture B : P1 puis P4, premiers dans 43,6\,\% et 37,7\,\% des 220 sommets tirés. À quatre canaux : P4 puis P1, par construction de l'accumulation. Diagnostic sur le périmètre financier. & § 9.3 \\
     \bottomrule
   \end{tabularx}\par\vspace{1.3mm}
-  Le niveau d'entité est extrapolé ; la priorisation utilise un autre protocole. Pour A, le besoin non conforme vaut 1,0 M€ et l'écart de contagion 0,4 M€ : annoncer la convention d'agrégation et le recouvrement avec le risque déjà couvert.
+  Le niveau d'entité est extrapolé ; la priorisation utilise un autre protocole. Pour A, le besoin à $g$ non conforme seul vaut 1,0 M€ et l'écart de contagion 0,4 M€ : annoncer la convention d'agrégation et le recouvrement avec le risque déjà couvert.
   \source{rapport Institut, § 9.9. Aucun état réel de conformité des assureurs n'est observé dans les données.}
 \end{frame}
 
@@ -1945,9 +1945,9 @@
     Fréquence gelée (582/27 contre 570/27) & non établi & $+2{,}1\,\%$ sur $\lambda$ ; le dénominateur compte 2026, année incomplète \\
     \rowcolor{clair}Couverture réelle de l'IC90 de $\xi$ & incertitude sous-estimée & $86\,\%$ au lieu de $90\,\%$ ; demi-largeur à élargir d'environ $10\,\%$ \\
     Taux $p_u$ appliqué à chaque pilier touché & majore & 3,66 incidents matériels par an à l'état conforme, 5,67 aux paramètres de base, contre 3,19 dans la donnée \\
-    \rowcolor{clair}Échelle de sévérité non stationnaire & sous-estime, si réelle & Dérive de $3{,}40\,\%$ par an ($p=0{,}1786$) ; au moins $+16{,}9\,\%$ sur le quantile, borne basse \\
+    \rowcolor{clair}Échelle de sévérité non stationnaire & sous-estime, si réelle & Dérive de $3{,}40\,\%$ par an ($p=0{,}1786$) ; $+16{,}9\,\%$ sur le quantile dans cette variante, sans borne démontrée \\
     \multicolumn{3}{@{}l}{\textit{Choix posés, tous deux prudents}} \\
-    Charge systémique $a$ & majore & $0{,}60$ posé, au-delà de la borne haute empirique $0{,}22$ \\
+    Charge systémique $a$ & majore & $0{,}60$ posé, au-delà de la borne haute empirique $0{,}22$ ; sans effet sur les capitaux centraux \\
     \rowcolor{clair}Surdispersion du moteur $\varphi$ & majore & $9{,}20$ posé contre $2{,}24$ mesuré \\
     \multicolumn{3}{@{}l}{\textit{Limites de périmètre et de transposition, de sens opposés}} \\
     Attritionnel absent de la donnée & sous-estime & Non chiffrable : base tronquée à son seuil de collecte \\
@@ -2089,7 +2089,7 @@
     {\color{accent}Il confirme l'origine d'un nombre, non son interprétation :} la relecture a trouvé des erreurs de sens parmi les nombres confirmés. Les superlatifs et comptages sont donc calculés dans les scripts.
     \column{.31\textwidth}\footnotesize
     {\editorial\normalsize Gel et registre des limites}\par\vspace{1.5mm}
-    Le gel distingue correction d'erreur et changement d'entrée. Les erreurs sont corrigées ; le prix des entrées conservées est déclaré : $+2{,}1\,\%$ sur la fréquence et au moins $+16{,}9\,\%$ sur le quantile de sévérité pour la dérive d'échelle.\par\vspace{1.5mm}
+    Le gel distingue correction d'erreur et changement d'entrée. Les erreurs sont corrigées ; les écarts associés aux entrées conservées sont déclarés : $+2{,}1\,\%$ sur la fréquence et $+16{,}9\,\%$ sur le quantile de sévérité dans la variante de dérive d'échelle, sans borne démontrée.\par\vspace{1.5mm}
     L'écart de fréquence est recalculé à chaque exécution. Les expériences nouvelles conservent une référence historique et font varier explicitement leurs hypothèses.
     \column{.31\textwidth}\footnotesize
     {\editorial\normalsize Validation indépendante}\par\vspace{1.5mm}
@@ -2139,7 +2139,7 @@
     \rowcolor{clair}$\sigma$, $u$, $p_u$ & 57,97 M€ ; 20,03 M€ ; 0,15 & calibré & Modérée, via la queue ; $p_u=86/570$ \\
     Fréquence $\lambda$ & $\sim21{,}6$/an (OpRisk) & convention de calage & Sous-linéaire sur le niveau ; 582 événements sur 27 ans \\
     \rowcolor{clair}Multiplicateur de fréquence & $\times1{,}525$ partiel ; $\times2{,}487$ NC & posé & Forte : parts d'attaque citées, fourchettes de l'auteur ; $\lambda$ de 41,7 à 65,6 aux bornes \\
-    Surdispersion $\varphi$ & 9,20 & posé (prudent) & Élasticité $-0{,}44$ sur l'écart entre états ; 2,24 mesuré \\
+    Surdispersion $\varphi$ & 9,20 & posé (prudent) & Élasticité sur l'écart entre états non résolue ; 2,24 mesuré \\
     Structure $W=gT/s_{\max}$ & classeur qualitatif & posé / normatif & La direction départage les deux piliers de tête ; surcoût porté par la partie symétrique \\
     \rowcolor{clair}Gain de propagation $g$ & 0,90 ; par état 0,45 / 0,68 / 0,90 & posé & Levier : $\times1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
     Charge systémique $\gamma$ & 0,68 & posé & Modérée ; aucune correspondance démontrée avec la concentration du nuage \\
@@ -2177,7 +2177,7 @@
     Une seule queue $\xi$ est appliquée aux cinq piliers. La queue est pourtant hétérogène selon la catégorie bâloise : $\xi$ varie de $0{,}87$ (Employment) à $1{,}37$ (Execution, Delivery \& Process Management), dispersion $0{,}50$. L'assignation aux piliers n'est pas un fait : la catégorie la plus proche des TIC compte 111 observations, sous le seuil d'estimation de 150.\par\vspace{1mm}
     Nous énumérons les 120 assignations des cinq queues observées aux piliers. À moyenne des queues fixe, donner à chaque pilier sa propre queue relève le capital de $+55\,\%$ à $+96\,\%$ : la VaR croît plus vite que linéairement en $\xi$, \textbf{une queue commune sous-estime donc le capital}. Le pilier de tête reste dominant dans $83\,\%$ des 30 assignations tirées.\par\vspace{2mm}
     {\editorial\normalsize Accumulation chez un prestataire}\par\vspace{1mm}
-    P4 n'est pas un nœud de cascade comme les autres : un prestataire partagé dégrade plusieurs piliers à la fois (MOVEit : 191 victimes d'un seul choc). Nous lui substituons un choc commun de probabilité $\omega$ ; c'est une co-occurrence symétrique, la seule structure entre piliers que la donnée soutienne.
+    P4 n'est pas un nœud de cascade comme les autres : un prestataire partagé dégrade plusieurs piliers à la fois (MOVEit : 191 victimes d'un seul choc). Nous lui substituons un choc commun de probabilité $\omega$ ; c'est une co-occurrence symétrique, motivée par ces incidents sans que ceux-ci en calibrent l'intensité.
     \column{.47\textwidth}\scriptsize
     L'intensité $\omega$ n'est pas identifiée au sein d'une entité isolée : nous la bornons sur $[0,\gamma]$, $\gamma=0{,}68$. À $\omega=\gamma$, la dépendance partagée emporte en moyenne $3{,}7$ piliers d'un coup, soit $+19\,\%$ de capital par rapport au traitement en nœud de cascade. La probabilité qu'un incident P4 touche au moins trois piliers passe de $0{,}22$ à $0{,}90$.\par\vspace{1.5mm}
     \renewcommand{\arraystretch}{1.12}

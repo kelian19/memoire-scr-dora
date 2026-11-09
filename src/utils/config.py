@@ -176,7 +176,7 @@ FREQUENCY = {
     "lambda_ref": 341,           # incidents/an (fréquence de référence)
     "r": None,                   # à calibrer sur PRC
     "p": None,
-    "dispersion_factor": 9.20,   # Var/Mean observé — MAINTENU constant entre scénarios
+    "dispersion_factor": 9.20,   # valeur posée (2,24 mesuré) — MAINTENU constant entre scénarios
     "facteur_recalibration": 1.30,
 }
 

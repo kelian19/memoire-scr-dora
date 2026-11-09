@@ -138,7 +138,7 @@ Indice de queue $\xi$ & estimé & $3{,}79$ \\
 Échelle $\sigma$ & estimé & $0{,}97$ \\
 Taux de dépassement $p_u$ & estimé & $0{,}82$ \\
 Fréquence $\lambda$ & estimé & $0{,}45$ \\
-Sur-dispersion $\varphi$ & posé & $-0{,}44$ \\
+Sur-dispersion $\varphi$ & posé & non résolue \\
 \textbf{Gain de propagation} $\boldsymbol{g}$ & \textbf{posé} & $\mathbf{0{,}37}$ \\
 Seuil $u$ seul & choix de méthode & $0{,}03$ \\
 \bottomrule
@@ -146,8 +146,8 @@ Seuil $u$ seul & choix de méthode & $0{,}03$ \\
 \end{center}
 
 \vspace{4pt}
-\noindent La propagation a l'élasticité la plus faible des leviers substantiels, $0{,}37$ contre
-$3{,}79$ pour l'indice de queue. Le même classement ressort de l'ablation, qui fait tomber la VaR de
+\noindent Le bruit de simulation ne permet pas de classer les élasticités inférieures à un ; celle de la propagation, $0{,}37$, reste loin des
+$3{,}79$ de l'indice de queue. Cet écart ressort aussi de l'ablation, qui fait tomber la VaR de
 $20\,\%$ en retirant la propagation et de $76\,\%$ en retirant la queue lourde. Les correspondances état--$g$ testées conservent l'ordre du capital dans la cascade indépendante
 (\S\ref{sec:invariance-g}) ; l'amplitude reste conditionnelle aux valeurs retenues.
 À ignorance totale, la largeur de l'ensemble admissible s'élève à $1\,839$~M\euro, soit $34{,}9\,\%$
@@ -296,7 +296,7 @@ Taux $p_u$, calibré par incident, appliqué à chaque pilier touché & majore &
 Échelle de sévérité non stationnaire & sous-estime, si elle est réelle & dérive de $3{,}40\,\%$ par an dans la queue ($p=0{,}1786$, non significative), $3{,}30\,\%$ corrigée de l'inflation ; $+16{,}9\,\%$ sur le quantile dans cette variante, sans borne démontrée (\S\ref{soc:sec:backtest}) \\
 \midrule
 \multicolumn{3}{@{}l}{\emph{Choix posés, tous deux prudents}} \\*
-Charge systémique $a$ & majore & $0{,}60$ posé, au-delà de la borne haute empirique $0{,}22$ \\
+Charge systémique $a$ & majore & $0{,}60$ posé, au-delà de la borne haute empirique $0{,}22$ ; chaîne à sévérité normalisée, sans effet sur les capitaux centraux \\
 Sur-dispersion du moteur $\varphi$ & majore & $9{,}20$ posé contre $2{,}24$ mesuré \\
 \midrule
 \multicolumn{3}{@{}l}{\emph{Limites de périmètre et de transposition, de sens opposés}} \\*

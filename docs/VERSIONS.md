@@ -2,7 +2,7 @@
 
 | Document | Statut |
 |---|---|
-| [main_institut_150.pdf](../memoire/main_institut_150.pdf) | Institut de travail, 158 pages ; correctifs des 5–6 novembre et lecture clarifiée le 9 novembre, SHA-256 `79E1BC70…` |
+| [main_institut_150.pdf](../memoire/main_institut_150.pdf) | Institut de travail, 158 pages ; corrections après l'audit du 9 novembre, SHA-256 `778EF454…` |
 | [main_ensae.pdf](../memoire/main_ensae.pdf) | Rapport ENSAE courant, 100 pages |
 | [main_institut.pdf](../memoire/main_institut.pdf) | Ancienne version Institut conservée, 195 pages |
 | [soutenance_ensae.pdf](../recherche/slides/beamer/soutenance_ensae.pdf) | 21 diapositives principales / 23 pages, puis treize réserves jusqu'à la page 37 |

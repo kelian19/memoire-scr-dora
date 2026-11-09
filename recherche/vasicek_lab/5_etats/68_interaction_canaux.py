@@ -463,3 +463,11 @@ os.makedirs(outdir, exist_ok=True)
 path = os.path.join(outdir, "S24_interaction_canaux.png")
 fig.savefig(path, dpi=200, bbox_inches="tight")
 print("\nfigure ecrite :", path)
+
+# VARIANTE INSTITUT, memes valeurs, statuts du chapitre 6. figures_inst/ passe avant figures/ pour
+# main_institut_150 ; S24 reste inchangee car la version figee et le supplement la lisent.
+STATUT_INSTITUT = {"calibrable": "mesurable", "borne": "non identifié"}
+ax2.set_yticklabels([f"{AFFICHE[i]}\n({STATUT_INSTITUT[CANAUX[i][2]]})" for i in range(N)], fontsize=8.5)
+outdir_inst = os.path.join(HERE, "figures_inst")
+os.makedirs(outdir_inst, exist_ok=True)
+fig.savefig(os.path.join(outdir_inst, "S24_interaction_canaux.png"), dpi=200, bbox_inches="tight")

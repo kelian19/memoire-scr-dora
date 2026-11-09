@@ -1,5 +1,14 @@
 # Journal des versions
 
+## 1.2.5 — 9 novembre 2026
+
+- Les 24 M€ d'entité correspondent au seul gain de propagation non conforme ; les quatre canaux restent un protocole distinct.
+- S présentée comme posée ; lecture des co-occurrences assortie des conditions de premier ordre et d'amorce uniforme.
+- État conforme sans choc commun : P4 reste un nœud de cascade, ce qui diffère d'un choc commun de probabilité nulle.
+- Élasticité de la surdispersion signalée comme non résolue ; dérive d'échelle présentée comme une variante, sans borne démontrée.
+- Supports de soutenance et figures alignés ; Institut de travail à 158 pages, empreinte `778EF454…`.
+- Harnais : 7 543 nombres confirmés. La cible de remise reste 150 pages et les hypothèses de scénario conservent leurs limites.
+
 ## 1.2.4 — 9 novembre 2026
 
 - Carte de lecture reliant les questions, protocoles, paramètres, scripts et sorties du mémoire.

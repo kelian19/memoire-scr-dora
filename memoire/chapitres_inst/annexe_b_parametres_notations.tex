@@ -67,8 +67,8 @@ Queue de sévérité $\xi$ & $0{,}5954$ (OpRisk, résultat principal) ; PRC $1{,
 Échelle GPD $\sigma$, seuil $u$, $p_u$ & $57{,}97$ M\euro{} ; $20{,}03$ M\euro{} ; $0{,}15$ & calibré & POT au percentile $85$ de l'échantillon 2000--2026, $86$ excès sur $570$ pertes ; $p_u=86/570$ (\S\ref{sec:pu-coherence}) & modérée (via la queue) \\
 Fréquence $\lambda$ & ${\sim}21{,}6$/an (OpRisk) & convention de calage & $582$ événements collectés / 27 ans, dont douze d'avant 2000 : $+2{,}1\,\%$ sur l'échantillon (\S\ref{sec:pu-coherence}) & sous-linéaire sur le niveau \\
 Multiplicateur de fréquence par état & $\times 1{,}525$ partiel ; $\times 2{,}487$ non conforme ($\lambda$ de $21{,}56$ à $53{,}62$) & \textbf{posé} & parts Hackmageddon citées, fourchettes de l'auteur ; aucune source ne mesure l'effet de la conformité (chapitre~\ref{chap:multietats}) ; aux bornes, $\lambda$ de $41{,}7$ à $65{,}6$ & \textbf{forte} : canal dominant du résultat principal \\
-Sur-dispersion $\phi$ & $9{,}20$ & \textbf{posé} (prudent) & $2{,}24$ mesuré sur la série annuelle détendancée ($2{,}39$ sur la série brute), maintenu entre scénarios & élasticité $-0{,}44$ sur l'écart entre états \\
-Choc commun fréquence $a$ & $0{,}60$ & \textbf{posé} (prudent) & dépasse l'IC empirique haut ($0{,}22$) : conservateur & enveloppe le modèle à paquets ($\times 2{,}5$) \\
+Sur-dispersion $\phi$ & $9{,}20$ & \textbf{posé} (prudent) & $2{,}24$ mesuré sur la série annuelle détendancée ($2{,}39$ sur la série brute), maintenu entre scénarios & élasticité sur l'écart entre états non résolue par la simulation \\
+Choc commun fréquence $a$ & $0{,}60$ & \textbf{posé} (prudent) & dépasse l'IC empirique haut ($0{,}22$) : conservateur & enveloppe le modèle à paquets ($\times 2{,}5$) ; sans effet sur les capitaux centraux \\
 Structure $W = g\,T/s_{\max}$ & classeur qualitatif & \textbf{posé} / normatif & jugement d'expert consigné ; direction non identifiable & l'asymétrie départage les deux piliers de tête ; l'essentiel de l'écart de capital dû à la contagion vient de la partie symétrique \\
 Gain de propagation $g$ & $0{,}90$ base ; par état $0{,}45/0{,}68/0{,}90$ & \textbf{posé} & amplitude de $W$, bornée par Leontief $\rho(W)\le g<1$ & \textbf{levier} : $\times 1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
 Score de conformité $q$ / états & continu $[0,1]$ (ou NC/PC/C) & \textbf{posé} & décrit le profil, subsume 3 ou 5 niveaux & \textbf{levier} : $-53\,\%$ de NC à C sur le seul score ; facteur $3{,}34$ sur les quatre canaux \\
@@ -183,7 +183,7 @@ $b$ & Élasticité de la sévérité à la taille de la firme & \ref{chap:donnee
 $C^\star_j,\ \Theta,\ \varepsilon_j$ & Capacité latente du pilier $j$ ; facteur commun ; choc propre (normales réduites indépendantes) & \ref{chap:multietats} \\
 $U_j$ & Score de conformité $\Phi(C^\star_j)\in[0,1]$, de coupures $0{,}35$ et $0{,}70$ & \ref{chap:multietats} \\
 $\gamma$ & Charge systémique de la latente de conformité ($0{,}68$) & \ref{chap:multietats} \\
-$\omega$ & Probabilité du choc commun d'accumulation ($0$ en C, $0{,}68$ en NC) & \ref{chap:multietats} \\
+$\omega$ & Probabilité du choc commun d'accumulation ($0{,}68$ en NC ; en C, pas de choc, P4 reste n\oe{}ud de cascade) & \ref{chap:multietats} \\
 $K_{\text{bas}},K_{\text{haut}}$ & Seuils ordonnés découpant les états NC / PC / C & \ref{chap:multietats} \\
 $Q$ & Générateur de la chaîne de conformité (séjours de type phase) & \ref{chap:multietats} \\
 $v_0,\ \overline B(t)$ & Probabilités initiales des phases ; capital moyen conditionnel en $t$, distinct du quantile du mélange & \ref{chap:multietats} \\

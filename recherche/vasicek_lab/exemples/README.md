@@ -31,7 +31,8 @@ La fréquence suit une binomiale négative, avec variance égale à deux fois la
 Les amorces sont équiprobables entre les cinq piliers. La matrice de liens, écrite dans le
 script et dans le JSON, est fictive. Lors d'une amorce P4, le mécanisme de choc commun
 **remplace** la cascade : P4 et chacun des autres piliers avec probabilité ω. À ω = 0,
-une amorce P4 ne touche que P4.
+une amorce P4 ne touche que P4. Cette convention est propre à l'exemple : dans le moteur
+publié, l'état conforme n'a pas de choc commun et P4 y reste un nœud de cascade.
 
 Les piliers touchés tirent chacun une perte matérielle avec probabilité p_u. Sinon leur
 perte vaut zéro : cet exemple ne modélise pas les petites pertes sous le seuil. Au-delà

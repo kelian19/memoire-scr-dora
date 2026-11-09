@@ -518,7 +518,7 @@
 
 \begin{frame}{Peut-on identifier le sens de la propagation ?}
   \suivimethode{5}{Direction des liens}
-  \framesubtitle{\ajout La donnée voit quand les piliers tombent ensemble, pas qui entraîne qui}
+  \framesubtitle{\ajout Les bases disponibles n'identifient pas les liens entre piliers}
   \vspace{1mm}
   {\centering
   \begin{tikzpicture}[x=1mm,y=1mm,
@@ -529,16 +529,15 @@
       panneau/.style={fill=bleuclair,rounded corners=2.5mm}]
     % 1. Ce que la donnée montre
     \fill[panneau] (0,0) rectangle (42,28);
-    \node[titre] at (21,24.5) {Ce que la donnée montre};
+    \node[titre] at (21,24.5) {Une co-occurrence};
     \node[touche] (o1) at (11,13) {P1}; \node[touche] (o2) at (31,13) {P2};
     \draw[accent,dashed,line width=.7pt,rounded corners=4mm] (4,7) rectangle (38,19);
     \node[font=\scriptsize,text=accent] at (21,3.5) {touchés \textbf{ensemble}};
     % Passage
     \draw[-{Stealth[length=2.2mm]},draw=gris,line width=.9pt] (45,13)--(57,13);
-    \node[font=\scriptsize,text=gris,align=center] at (51,19) {deux\\lectures};
     % 2. Deux explications
     \fill[panneau] (60,0) rectangle (118,28);
-    \node[titre] at (89,24.5) {Ce qu'elle ne dit pas};
+    \node[titre] at (89,24.5) {Deux lectures possibles};
     \node[pil] (h1) at (68,18) {P1}; \node[pil] (h2) at (92,18) {P2};
     \draw[fl] (h1)--(h2);
     \node[font=\scriptsize,anchor=west] at (98,18) {P1 entraîne P2};
@@ -549,13 +548,13 @@
     % 3. L'équation
     \node[font=\huge] at (59,-10) {$\textcolor{nexialog}{W}\;=\;\textcolor{nexialog}{S}\;+\;\textcolor{accent}{A}$};
     \node[font=\footnotesize,text=nexialog,align=right,anchor=east] at (35,-10)
-      {\textbf{S : force moyenne du lien}\\vue par la donnée};
+      {\textbf{S : force moyenne du lien}\\posée ici};
     \node[font=\footnotesize,text=accent,align=left,anchor=west] at (84,-10)
-      {\textbf{A : sens du lien}\\invisible dans la donnée};
+      {\textbf{A : sens du lien}\\explorée, non identifiée};
   \end{tikzpicture}\par}
   \vspace{2mm}
-  {\centering\small On fixe donc $S$ et l'on explore \textbf{tous les sens possibles} (slides 13 à 15).\par}
-  {\centering\tiny\color{gris}$S=\tfrac12(W+W^{\top})$, $A=\tfrac12(W-W^{\top})$ ; équivalence au premier ordre (amorce uniforme, faible intensité).\par}
+  {\centering\small Nous fixons $S$ et explorons les \textbf{directions $A$ admissibles} (slides 13 à 15).\par}
+  {\centering\tiny\color{gris}$S=\tfrac12(W+W^{\top})$, $A=\tfrac12(W-W^{\top})$ ; au premier ordre, avec des amorces $r_j$ : $r_jW_{jk}+r_kW_{kj}=(r_j+r_k)S_{jk}+(r_j-r_k)A_{jk}$.\par}
 % Reference interne (hors diapositive) : rapport, chapitres 5, 7 et 8. Lecture de la co-occurrence au premier ordre : amorce uniforme, faible intensité. $S$ est posé à dire d'expert dans l'application. Chiffres du reseau a cinq piliers (0,506 ; 62,31 % -> 50,77 % ; 295 M€ ; 1 173 M€) gardes pour les questions.
 \end{frame}
 
@@ -662,11 +661,11 @@
       \toprule
       \textbf{État} & $\lambda$ & $p_u$ & $g$ & $\omega$ \\
       \midrule
-      Conforme & 21,56 & 0,128 & 0,45 & 0 \\
+      Conforme & 21,56 & 0,128 & 0,45 & sans \\
       \textcolor{accent}{Non conforme} & 53,62 & 0,181 & 0,90 & 0,68 \\
       \bottomrule
     \end{tabularx}\par\vspace{1mm}
-    {\scriptsize $\lambda$ : incidents/an ; $p_u$ : dépassement du seuil ; $g$ : gain de propagation ; $\omega$ : probabilité de choc commun.\par}\vspace{1mm}
+    {\scriptsize $\lambda$ : incidents/an ; $p_u$ : dépassement du seuil ; $g$ : gain de propagation ; $\omega$ : probabilité de choc commun ; sans choc, P4 reste un nœud de cascade.\par}\vspace{1mm}
     \textbf{Calcul pour chaque état $e$}
     \setlength{\abovedisplayskip}{1mm}\setlength{\belowdisplayskip}{1mm}
     \setlength{\abovedisplayshortskip}{1mm}\setlength{\belowdisplayshortskip}{1mm}
@@ -717,38 +716,46 @@
 
 \section{Échelle d'entité}
 
-\begin{frame}[label=descente-entite]{Comment descendre du registre à une entité ?}
+\begin{frame}[label=descente-entite]{Comment descendre du registre à un assureur ?}
   \suivimethode{8}{Échelle de l'entité}
-  \framesubtitle{Complément après dépôt · Entité notionnelle, niveau à valider}
+  \framesubtitle{Complément après dépôt : chiffres différents du rapport}
   \begin{columns}[T,onlytextwidth]
-  \column{.49\textwidth}\footnotesize
-  \setlength{\abovedisplayskip}{1mm}\setlength{\belowdisplayskip}{1mm}
-  \setlength{\abovedisplayshortskip}{1mm}\setlength{\belowdisplayshortskip}{1mm}
+  \column{.40\textwidth}\footnotesize
+  \setlength{\abovedisplayskip}{0.5mm}\setlength{\belowdisplayskip}{0.5mm}
+  \setlength{\abovedisplayshortskip}{0.5mm}\setlength{\belowdisplayshortskip}{0.5mm}
   \textbf{1 · Fréquence à la taille}
-  \[\lambda(A)=\lambda_0\Big(\frac{A}{A_0}\Big)^{b_\lambda},\qquad b_\lambda=0{,}494\]
+  \[\lambda(A)=\lambda_0\,(A/A_0)^{b_\lambda},\quad b_\lambda=0{,}494\]
   \textbf{2 · Sévérité à la taille}
-  \[m(A)=\Big(\frac{A}{A_m}\Big)^{b},\qquad b=0{,}087\]
-  \textbf{3 · Perte et capital de l'entité}
-  \[X=m(A)\sum_{k\in S_a}Y_k,\qquad \mathcal B(A)=\VaR_{99{,}5\,\%}\Big(\sum_{n=1}^{N}X_n\Big)\]
-  {\scriptsize $A$ : actifs ; $b_\lambda$ estimé sur les firmes de plus de 100 Md\$ (tout le panel : 0,074, fenêtres d'observation plus courtes chez les petites firmes) ;
-  $A_m$ : actifs médians des pertes TIC ; pertes sous le seuil incluses ; $N$ : binomiale négative de moyenne $\lambda(A)$.\par}
-  \column{.47\textwidth}\footnotesize
-  {\scriptsize\color{accent}\textbf{Complément après dépôt : chiffres différents du rapport}\par}\vspace{1mm}
-  \renewcommand{\arraystretch}{1.25}
-  \begin{tabular}{@{}lrrr@{}}
+  \[m(A)=(A/A_m)^{b},\quad b=0{,}087\]
+  \textbf{3 · Capital de l'assureur}
+  \[\textstyle\mathcal B(A)=\VaR_{99{,}5\,\%}\big(\sum_{n=1}^{N}X_n\big)\]
+  {\scriptsize $A$ : actifs ; $N$ : binomiale négative de moyenne $\lambda(A)$ ; $X_n$ : perte d'un incident, multipliée par $m(A)$, pertes sous le seuil incluses.\par}
+  \column{.57\textwidth}\footnotesize
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{@{}lrrrrr@{}}
     \toprule
-    \textbf{Entité} & \textbf{Rapport} & \shortstack[r]{\textbf{Nouvelle}\\\textbf{calibration}} & \shortstack[r]{\textbf{Pires}\\\textbf{années}} \\
+    \textbf{Assureur} & \shortstack[r]{\textbf{Actifs}\\\textbf{(Md€)}} & \textbf{Rapport} & \shortstack[r]{\textbf{Nouvelle}\\\textbf{calibration}} & \shortstack[r]{\textbf{Bootstrap}\\\textbf{fréquence}} & \shortstack[r]{\textbf{Pires}\\\textbf{années}} \\
     \midrule
-    Assureur non-vie A & 112 & 1 & 51 \\
-    \textbf{Notionnelle} & 169 & \textcolor{accent}{\textbf{24}} & 156 \\
-    Assureur vie D & 294 & 193 & 591 \\
+    Non-vie A & 2,3 & 112 & 1 & [0 ; 9] & 51 \\
+    Non-vie B & 5,3 & 136 & 5 & [0,2 ; 19] & 78 \\
+    Vie C & 38 & 196 & 48 & [23 ; 79] & 244 \\
+    Vie D & 310 & 294 & \textcolor{accent}{\textbf{193}} & [178 ; 228] & 591 \\
     \bottomrule
   \end{tabular}\par\vspace{1mm}
-  {\scriptsize En M€. Besoin : quantile à 99,5 \% ; pires années : moyenne des 0,5 \% pires années.\par}\vspace{1mm}
-  Notionnelle : bootstrap par firme $[8{,}3\,;53{,}0]$ M€. La baisse vient surtout de la fréquence, et dépend de la dispersion.\par\vspace{2mm}
-  {\scriptsize\color{accent}Vise à réduire l'effet des fenêtres courtes ; extrapolation aux petites entités à valider ; métier non intégré.}
+  {\scriptsize En M€. Besoin : quantile à 99,5 \%. Pires années : moyenne des 0,5 \% pires années. Bilans SFCR 2024, assureurs anonymisés.\par}
   \end{columns}
-% Reference interne (hors diapositive) : scripts 136 et 137 (complement apres depot, sorties 136.txt et 137.txt) ; rapport ENSAE, § 9, pour 112, 169 et 294. $W$ et moteur inchanges.
+  \vspace{1mm}
+  {\color{accent}\hrule height 0.4pt}\vspace{1mm}
+  \footnotesize\textbf{\color{accent}Contraintes de lecture}\par\vspace{0.5mm}
+  \begin{columns}[T,onlytextwidth]
+  \column{.485\textwidth}\scriptsize
+  \textbf{Zone d'estimation.} $b_\lambda$ est estimé au-delà de 100 Md\$ d'actifs : seul D y est, A, B et C sont extrapolés.\par\vspace{1mm}
+  \textbf{État supposé.} Propagation au niveau non conforme : ce n'est pas un diagnostic de ces assureurs.
+  \column{.485\textwidth}\scriptsize
+  \textbf{Quantile près de zéro.} A subit une perte dans 0,74 \% des années : 1 M€ ne veut pas dire un risque nul, lire les pires années.\par\vspace{1mm}
+  \textbf{Non intégré.} Métier de l'assureur et sous-déclaration du registre ; la sévérité garde la forme des grandes institutions.
+  \end{columns}
+% Reference interne (hors diapositive) : scripts 136 et 137 (complement apres depot, sorties 136.txt et 137.txt) ; rapport ENSAE, § 9, pour 112, 136, 196 et 294. $W$ et moteur inchanges.
 \end{frame}
 
 
@@ -846,7 +853,7 @@
     Fréquence $\lambda$ & 21,56 & 53,62 & Base C : $582/27$ incidents par an dans le registre. \textbf{NC : obtenu par les vecteurs d'attaque}, $\lambda_{NC}=\lambda_C\sum_v\pi_v m_v$, avec $\sum_v\pi_v m_v\simeq2{,}4875$ (part $\pi_v$ de chaque vecteur, multiplicateur $m_v$). & \shortstack[l]{Base comptée\\Passage semi-ancré} \\
     \rowcolor{clair}Détection $p_u$ & 0,128 & 0,181 & Base : $86/570=0{,}1509$ au-dessus du seuil $u$. Facteurs $0{,}85$ en C et $1{,}20$ en NC. & \shortstack[l]{Base calculée\\Facteurs posés} \\
     Propagation $g$ & 0,45 & 0,90 & Trois gains choisis : $0{,}45/0{,}68/0{,}90$. Force relative des liens $T$ posée à dire d'expert. & Posé \\
-    \rowcolor{clair}Accumulation $\omega$ & 0 & 0,68 & Scénario haut motivé par la concentration des tiers ; cette concentration ne calibre pas la probabilité du choc. & Posé, borné \\
+    \rowcolor{clair}Accumulation $\omega$ & sans & 0,68 & Scénario haut motivé par la concentration des tiers ; cette concentration ne calibre pas la probabilité du choc. & Posé, plage explorée \\
     \bottomrule
   \end{tabularx}\par\vspace{2mm}
   \begin{columns}[T,onlytextwidth]
@@ -878,7 +885,7 @@
     \textbf{Observé : les parts $\pi_v$.}\par
     Le recensement décrit le mélange des attaques, pas leur effet sur la conformité.\par\vspace{1.5mm}
     \textbf{Posé : les fourchettes des $m_v$.}\par
-    Elles traduisent des effets publiés sur des contrôles : authentification forte, formation, etc. Elles ne sont pas des effets DORA estimés. « Autres » n'a pas de source dédiée.\par\vspace{1.5mm}
+    Situées à l'aide de sources voisines sur des contrôles (authentification forte, formation, etc.), sans effet de conformité mesuré. « Autres » n'a pas de source dédiée.\par\vspace{1.5mm}
     \textbf{Aux bornes choisies :}\par
     multiplicateur de 1,933 à 3,042 ; $\lambda_{NC}$ de 41,7 à 65,6/an. Ce sont des scénarios, pas un IC.
   \end{columns}
