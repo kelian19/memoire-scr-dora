@@ -6,15 +6,16 @@ Source unique du dispositif, partagee par les scripts 30 (bornes de capital) et
 
 L'IDEE. Toute matrice se decompose de facon unique en
         W = S + A,   S = (W + W^T)/2 symetrique,   A = (W - W^T)/2 antisymetrique.
-La donnee identifie la CO-OCCURRENCE (deux piliers touches ensemble), donc S. Elle
-n'identifie PAS la DIRECTION, donc A (placebo z = -0,33, 0/18 aretes significatives).
+La donnee documente des CO-OCCURRENCES (deux piliers touches ensemble), sans identifier
+les coefficients structurels de S. S est fixe a partir du bareme de l'auteur ; la
+DIRECTION, portee par A, n'est pas identifiee (placebo z = -0,33, 0/18 aretes significatives).
 L'ensemble admissible est alors
 
         W(A) = S + A,  A antisymetrique,  |A_jk| <= t * S_jk,  W sous-critique,
 
 la borne |A_jk| <= S_jk venant de la seule positivite (W_jk >= 0 ET W_kj >= 0).
-Le parametre t dans [0,1] mesure ce que la donnee ignore de la direction : t = 1 est
-l'ignorance totale (etat actuel), t = 0 la direction connue nulle.
+Le parametre t dans [0,1] regle la plage des directions explorees : t = 1 laisse tous
+les signes admissibles, t = 0 impose A = 0 par convention, sans preuve de symetrie.
 
 L'EVALUATION. A nombres aleatoires COMMUNS : le tirage des annees, des amorces, des
 uniformes et des severites est fait UNE fois, puis reutilise pour toute matrice W.

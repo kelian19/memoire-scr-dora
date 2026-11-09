@@ -9,7 +9,7 @@ import sys
 from urllib.parse import unquote, urlsplit
 
 RACINE = (Path(__file__).resolve().parent / '../..').resolve()
-GUIDES = ('README.md', 'CONTRIBUTING.md', 'docs/DEMARRAGE.md', 'docs/VERSIONS.md', 'docs/ARCHITECTURE.md', 'memoire/README.md', 'memoire/overleaf/README.md', '.github/pull_request_template.md')
+GUIDES = ('README.md', 'CONTRIBUTING.md', 'docs/DEMARRAGE.md', 'docs/VERSIONS.md', 'docs/ARCHITECTURE.md', 'memoire/README.md', 'memoire/overleaf/README.md', 'recherche/vasicek_lab/README.md', 'recherche/vasicek_lab/CARTE_CALCULS.md', 'recherche/vasicek_lab/exemples/README.md', '.github/pull_request_template.md')
 INDISPENSABLES = (
     "projet.py", "requirements.txt", 'outils/ci/harnais_strict.py',
     'memoire/main_ensae.tex',

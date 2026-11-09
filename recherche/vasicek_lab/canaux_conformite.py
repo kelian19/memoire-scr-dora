@@ -15,10 +15,10 @@ fonctions. Toute modification ici deplace la sortie des deux scripts, donc du me
 calibration est gelee depuis le 7 aout 2026, seules les corrections d'erreur sont recevables.
 
 LES QUATRE CANAUX (etats C = cible conforme -> NC = non conforme, scripts 16/38/39/42) :
-  frequence    lam      21,6 -> 53,6    calibrable (KPI d'entree, script 08b)
-  detection    p_u      x0,85 -> x1,20  calibrable (delai P2, confinement P3)
-  propagation  g        0,45 -> 0,90    borne (le canal NON identifie : W)
-  accumulation phi_cs   0 -> 0,68       borne (concentration des tiers P4, script 38/42)
+  frequence    lam      21,6 -> 53,6    base estimee ; multiplicateur pose, ancre sur des publications
+  detection    p_u      x0,85 -> x1,20  taux de base estime ; deux facteurs poses, non calibres
+  propagation  g        0,45 -> 0,90    deux valeurs posees ; W non identifiee
+  accumulation phi_cs   0 -> 0,68       borne de scenario posee, non estimee (scripts 38/42)
 """
 
 import os

@@ -3,6 +3,23 @@
 Laboratoire du modèle de cascade dirigée. Chaque script est autonome, produit une figure
 dans `figures/` et imprime ses diagnostics.
 
+## Commencer par le calcul courant
+
+La [carte des calculs](CARTE_CALCULS.md) relie chaque question au protocole, au script,
+à la sortie et à sa limite. Le manuscrit Institut courant est
+[`main_institut_150.pdf`](../../memoire/main_institut_150.pdf), 158 pages au 9 novembre 2026.
+Les expériences anciennes restent disponibles pour la traçabilité ; leur présence ne signifie
+pas qu'elles portent le résultat principal actuel.
+
+Pour suivre une année fictive jusqu'à la VaR et à l'ES, sans données privées :
+
+```bash
+python recherche/vasicek_lab/exemples/calcul_synthetique.py
+```
+
+Voir les [hypothèses de cet exemple](exemples/README.md). Ses paramètres sont fictifs et ses
+résultats ne reproduisent aucun montant du mémoire.
+
 ## Règles de structure, à ne pas casser
 
 - **Le moteur reste à la racine.** `scr_engine.py`, `euro_cascade_model.py`,
@@ -27,7 +44,8 @@ script `120` dans `1_fondations/`. Ils conservent le moteur et le calage histori
 
 La feuille de route de janvier, conservee dans le depot de travail, commence
 avec `121` dans `5_etats/`, le module `institut_remediation.py` et ses tests
-scientifiques dans `tests/`. Les résultats restent expérimentaux et séparés du manuscrit.
+scientifiques dans `tests/`. Certains de ces résultats ont été intégrés au manuscrit Institut ;
+leur statut courant est indiqué dans la carte des calculs.
 Le script `122`, dans `5_etats/`, poursuit avec les frontières d'efficacité et
 de coût annuel entre P1 et P4, en incluant les calibrations extrêmes de `120`.
 Le script `123`, dans `1_fondations/`, relit les calibrations de `120` et compare le
@@ -63,13 +81,13 @@ Le script `128`, dans `2_donnees/`, diagnostique par ses résidus compensés le 
 |---|---|---|
 | `05_faisabilite_donnees` | M | **W n'est pas calibrable.** Placebo directionnel z = -0,33. Le cœur du chapitre identifiabilité. |
 | `08b_calibration_frequence_entree` | N_frequence | la fréquence d'entrée est calibrée, pas posée |
-| `08c_hawkes_frequence_entree` | O | rejet du Hawkes : l'excitation est intra-journalière |
+| `08c_hawkes_frequence_entree` | O | diagnostic historique du Hawkes ; à la résolution disponible, le mémoire ne départage pas Hawkes et cascade |
 | `08d_poisson_compose_batch` | P | Poisson composé à paquets, signature MOVEit |
 | `08h_hawkes_variantes_bessy_roland` | O2 | le rejet tient face au noyau à retard et à la logique two-phase |
 | `28_test_vcdb_sous_piliers` | X | sous-piliers : P2 et P3 atteignables en open data, P4 s'effondre |
 | `35_event_study_moveit` | Z6 | event-study du choc P4 MOVEit : DiD dévoré par le placebo (net nul), cible non attribuable. La tentative d'identification la plus dure, négative et assumée. |
 | `57_biais_taille_et_troncature` | S20 | les deux biais déclarés d'OpRisk, mesurés : élasticité sévérité/taille par EMV tronquée (b = 0,087), et chain-ladder sur le triangle survenance x saisie |
-| `60_descente_echelle_entite` | S21 | **la descente secteur vers entité, cohérente.** lambda estimé comme fonction de la taille (b_lambda = 0,074) et lu à la taille cible au lieu d'un seau, sévérité transposée à la même taille, les deux composées. SCR d'entité **169 M**, bande **[131,5 ; 183,3]**, socle **78,1**. |
+| `60_descente_echelle_entite` | S21 | **Historique : ancienne descente à 169 M€**, conservée pour comparaison. Le protocole courant est le script `136`, complété par `137` et `138` : 24,1 M€ pour l'entité notionnelle, extrapolation conditionnelle non validée. |
 
 > **Attention au protocole du panel firme-année.** Le filtre annuel s'applique AVANT le
 > calcul de la fenêtre d'observation. L'inverser allonge les spans et fait tomber lambda
@@ -105,11 +123,13 @@ puis le passage en euros : `12_scr_euro_cascade` (S6), `13_delta_dora_cascade` (
 | `03_calibration_W` | K1, K2 | le protocole de calibration tenté, et son échec documenté |
 | `25_scr_continu_contagion` | U | le SCR borné sur l'**amplitude** g de la contagion |
 | `29_cascade_branchement` | Y | marche auto-évitante contre branchement multitype : SCR inchangé à 4 %, résultat de robustesse |
-| `30_identification_partielle_W` | Z | le SCR borné sur la **direction** : W = S + A, S identifiée, A libre. Bornes exhaustives sur les 1024 sommets, valeur de l'information, priorité minimax. |
+| `30_identification_partielle_W` | Z | sensibilité à la **direction** : W = S + A, **S posée par l'auteur**, A variable. Énumération des 1 024 sommets ; extrema sur cet ensemble fini, sans garantie sur le pavé continu. |
 | `31_comparaison_regimes` | Z2 | les deux régimes face à face **avant élicitation** : poser W (un point) contre le borner (socle + bande). Test de biais du panel. |
 
 > Bornes de référence (t = 1, ignorance totale de la direction) : socle **5275 M**,
-> SCR dans **[6858 ; 8697] M**. Déterministes, énumération exhaustive des sommets.
+> Capital dans **[6858 ; 8697] M€**, à fréquence conforme, sans détection ni accumulation,
+> en cascade indépendante. L'énumération des sommets est déterministe ; les capitaux restent
+> estimés par Monte-Carlo. Cette plage n'est ni un intervalle de confiance ni une borne globale.
 > Les scripts 30 et 31 doivent toujours s'accorder sur ces valeurs ; si ce n'est plus
 > le cas, c'est que quelqu'un a dupliqué le noyau au lieu d'importer `partial_id`.
 
@@ -119,8 +139,9 @@ masquées dans cette version. Le moteur de Cooke (`26`, `26b`) reste hors de la 
 tant que l'élicitation est ouverte. Le questionnaire est dans `../cascade_qualitative/elicitation/`.
 
 ### 8_benchmarks
-`23_benchmark_copule` (S18), `27_benchmark_formule_standard` (W). Ensemble : la Formule
-Standard exprime 0 % de l'effet DORA, la copule 62 %, la cascade 100 %.
+`23_benchmark_copule` (S18), `27_benchmark_formule_standard` (W). Comparaisons conditionnelles
+aux scénarios de ces scripts. Les pourcentages rapportés prennent la cascade comme référence ;
+ils ne mesurent pas une part observée de l'effet de DORA.
 
 ### 9_cas_usage
 `08e` (Q, pilier 2), `08f` (R, pilier 3), `08g` (S, pilier 4). Orientés KPI.

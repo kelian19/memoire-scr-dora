@@ -27,6 +27,8 @@ de fréquence, de sévérité et de propagation ; ils ne valident pas un capital
 | Questions chapitre par chapitre et compléments Institut | [cours_memoire_questions_ensae.pdf](recherche/vasicek_lab/notes/cours_memoire_questions_ensae.pdf) |
 | Sources Overleaf avec réglages Nexialog | [Mode d'emploi](memoire/overleaf/README.md) |
 | Versions et statut des calculs | [Guide des versions](docs/VERSIONS.md) |
+| Questions, protocoles et scripts courants | [Carte des calculs](recherche/vasicek_lab/CARTE_CALCULS.md) |
+| Une année fictive jusqu'au capital | [Exemple exécutable sans données privées](recherche/vasicek_lab/exemples/README.md) |
 | Matériel complémentaire | [Zenodo](https://doi.org/10.5281/zenodo.22874524) |
 
 Le nom `main_institut_150` conserve la cible initiale ; le PDF actuel compte 158 pages.
@@ -61,6 +63,7 @@ cd memoire-scr-dora
 python -m venv .venv
 # Activer cet environnement, puis :
 pip install -r requirements.txt
+python recherche/vasicek_lab/exemples/calcul_synthetique.py
 python projet.py structure
 python outils/ci/harnais_strict.py
 pip install -r requirements-test.txt
@@ -83,12 +86,17 @@ Les signatures ne sont pas distribuées sous forme d'images ; la compilation sai
 memoire/       manuscrits, sources LaTeX et bibliographies
 recherche/     modèles, expériences, figures et soutenance
 src/           modules Python
-src/utils/     paramètres communs du modèle
+src/utils/     configuration de la chaîne LDA et de certains modules partagés
 resultats/     sorties vérifiées et compléments numériques
 outils/ci/     contrôles et exporteur Overleaf
 docs/          guides de cette publication
 data/          documentation ; données brutes exclues
 ```
+
+Le calcul courant à quatre canaux est porté par
+`recherche/vasicek_lab/canaux_conformite.py`. La descente à l'entité et l'exploration des
+directions ont des protocoles distincts ; leurs entrées sont indiquées dans la carte des calculs.
+Modifier `src/utils/config.py` ne pilote pas à lui seul toutes les expériences.
 
 Les données sous licence, les notes internes et les identités des quatre entités SFCR sont
 exclues ou masquées. Les valeurs vraies du questionnaire d'élicitation restent hors publication.

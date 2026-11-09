@@ -1,5 +1,14 @@
 # Journal des versions
 
+## 1.2.4 — 9 novembre 2026
+
+- Carte de lecture reliant les questions, protocoles, paramètres, scripts et sorties du mémoire.
+- Ancienne descente à 169 M€ signalée comme historique ; S posée et statut Monte-Carlo précisés dans la documentation du laboratoire.
+- Exemple synthétique exécutable : quatre canaux, détail des incidents, somme annuelle, VaR et ES ; six tests sur des cas contrôlés, sans données privées.
+- Introduction et ouverture des résultats orientées vers les trois questions et la table des calages ; Institut toujours à 158 pages, empreinte `79E1BC70…`.
+- Configuration de la chaîne LDA distinguée des entrées des autres protocoles ; liens des nouveaux guides contrôlés automatiquement.
+- Harnais : 7 548 nombres confirmés. Limite de remise inchangée à 150 pages ; validation empirique du capital toujours partielle.
+
 ## 1.2.3 — 9 novembre 2026
 
 - Correctifs de modélisation et de documentation des 5–6 novembre récupérés depuis `style`.

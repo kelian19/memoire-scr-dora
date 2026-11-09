@@ -2,7 +2,7 @@
 
 | Document | Statut |
 |---|---|
-| [main_institut_150.pdf](../memoire/main_institut_150.pdf) | Institut de travail, 158 pages ; correctifs des 5–6 novembre, diffusion du 9 novembre |
+| [main_institut_150.pdf](../memoire/main_institut_150.pdf) | Institut de travail, 158 pages ; correctifs des 5–6 novembre et lecture clarifiée le 9 novembre, SHA-256 `79E1BC70…` |
 | [main_ensae.pdf](../memoire/main_ensae.pdf) | Rapport ENSAE courant, 100 pages |
 | [main_institut.pdf](../memoire/main_institut.pdf) | Ancienne version Institut conservée, 195 pages |
 | [soutenance_ensae.pdf](../recherche/slides/beamer/soutenance_ensae.pdf) | 21 diapositives principales / 23 pages, puis treize réserves jusqu'à la page 37 |
@@ -15,6 +15,10 @@ La cible de remise reste de 150 pages ; les 158 pages actuelles bloquent le cont
 de dépôt. Ce dépassement est publié comme écart connu, sans relever le seuil du contrôle.
 Les chiffres de downscaling ajoutés après le dépôt ENSAE sont des variantes conditionnelles,
 pas des capitaux individuels validés. Les taux de capture des incidents restent des scénarios.
+
+La [carte des calculs](../recherche/vasicek_lab/CARTE_CALCULS.md) distingue les résultats courants,
+les sensibilités et les expériences historiques. L'[exemple synthétique](../recherche/vasicek_lab/exemples/README.md)
+illustre le calcul annuel avec des paramètres fictifs ; il n'ajoute aucun résultat au mémoire.
 
 Le [journal des versions](../CHANGELOG.md) décrit les mises à jour. Le matériel complémentaire
 est référencé par le [DOI Zenodo](https://doi.org/10.5281/zenodo.22874524) ; cette mise à jour GitHub
