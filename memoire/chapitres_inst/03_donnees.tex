@@ -191,13 +191,13 @@ pas en 2023, et une lecture naïve lui prête une hausse de 11 points là où, a
 
 OpRisk Global est la base de référence historique du risque opérationnel au sens de Bâle. Le risque cyber y est reconstruit à
 partir des catégories \og Systems Security\fg{} et \og Business Disruption and System Failures\fg{}, et
-le périmètre cyber $\times$ finance retient $570$ pertes de 2000 à 2026, soit $27$ années. La base courante en compte douze de plus, antérieures à 2000. La fréquence gelée, $582/27 = 21{,}56$ incidents par an, les compte, alors que l'échantillon de sévérité n'en compte que $570$ ($570/27 = 21{,}11$). Elle dépasse ainsi de $2{,}1\,\%$ celle de l'échantillon. Le dénominateur de $27$ ans compte l'année 2026, incomplète à la date de l'extraction (cinq pertes), si bien que le sens de l'écart sur le niveau de fréquence n'est pas établi ; nous le déclarons sans corriger la valeur (\S\ref{sec:pu-coherence}). \citet{elingwirfs2019}
+le périmètre cyber $\times$ finance retient $570$ pertes de 2000 à 2026, soit $27$ années. La base courante en compte douze de plus, antérieures à 2000. La fréquence retenue, $582/27 = 21{,}56$ incidents par an, les compte, alors que l'échantillon de sévérité n'en compte que $570$ ($570/27 = 21{,}11$). Elle dépasse ainsi de $2{,}1\,\%$ celle de l'échantillon. Le dénominateur de $27$ ans compte l'année 2026, incomplète à la date de l'extraction (cinq pertes), si bien que le sens de l'écart sur le niveau de fréquence n'est pas établi ; nous le déclarons sans corriger la valeur (\S\ref{sec:pu-coherence}). \citet{elingwirfs2019}
 en extraient également les pertes d'origine informatique. Cette base alimentait les modèles internes de
 mesure avancée (section~\ref{chap:reglementaire}), qui calibraient la sévérité extrême sur des pertes
 observées sans passer par un indicateur de volume. Nous reprenons cette logique.
 
-Sur la population de la fréquence (secteur financier, catégories TIC, 2005--2022, $1\,476$
-observations), la sévérité se décrit ainsi :
+Sur la population de la fréquence (secteur financier, cinq sous-catégories TIC, 2005--2022, $1\,476$
+observations), filtre plus large que le filtre cyber de la sévérité, cette dernière se décrit ainsi :
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{l r l r}
@@ -211,9 +211,9 @@ P90 & 25{,}3 M\$ & Total cumulé & 49{,}8 Md\$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-Les montants de ce tableau sont en dollars ; le moteur les convertit en euros au taux fixe de $0{,}92$. Le décile supérieur concentre $92{,}3\,\%$ de la perte totale et le centile supérieur $65{,}1\,\%$,
+Les montants de ce tableau sont en dollars ; le moteur les convertit en euros au taux fixe de $0{,}92$~\euro{} pour un dollar. La descente à l'entité (\S\ref{sec:ancrage}) emploie un autre cours en sens inverse : les bilans publiés en euros sont portés en dollars à $1{,}04$~\$ pour un euro, soit $0{,}96$~\euro{} pour un dollar, ordre de grandeur de fin 2024, pour être lus sur le panel exprimé en dollars. Les deux conventions ne sont pas alignées. L'entité notionnelle de $20\,000$~M\$ s'affiche à $19\,231$~M\euro{} au second cours et vaudrait $18\,400$~M\euro{} au premier ; ses calculs partent du montant en dollars et n'en dépendent pas. Pour les assureurs publiés, le cours n'agit que par le bilan porté en dollars. Le décile supérieur concentre $92{,}3\,\%$ de la perte totale et le centile supérieur $65{,}1\,\%$,
 ce qui justifie la théorie des valeurs extrêmes du chapitre~\ref{chap:socle}.
-% SOURCES-SCRIPTS: 67
+% SOURCES-SCRIPTS: 67 140
 
 Nous ajustons la loi de Pareto généralisée sur les $570$ pertes cyber $\times$ finance au-delà d'un
 seuil $u = 20$~M\euro, qui est le percentile~85 des montants et où le graphique des excès moyens devient
@@ -244,7 +244,7 @@ déduplication retire $1\,643$ lignes, soit $10{,}9\,\%$ des lignes, une borne b
 
 La chronologie PRC compte $74\,783$ incidents, dont $31\,217$ documentent un volume touché
 positif. La base SAS compte $41\,976$ lignes brutes et $41\,975$ pertes après retrait d'une
-aberration de saisie, dont $1\,099$ en catégories TIC et $570$ dans le croisement cyber $\times$
+aberration de saisie, dont $1\,099$ dans le filtre cyber de la sévérité, tous secteurs confondus, et $570$ dans le croisement cyber $\times$
 finance retenu pour la sévérité. Le tableau donne pour chaque variable son type, son rôle et la part
 de lignes renseignées, \texttt{UNKN} compté comme un manquant.
 
@@ -474,7 +474,7 @@ SAS & secteur d'activité          & $711{,}9$    & $20$ & $0{,}128$ \\
 % SOURCES-SCRIPTS: 104
 
 \vspace{2pt}
-\noindent Les cinq tests rejettent l'indépendance, mais ce rejet n'apprend rien. Avec quinze mille et
+\noindent Ces tests portent sur toutes les lignes de chaque base, tous secteurs et toutes catégories, et non sur le périmètre de calibration. Les cinq tests rejettent l'indépendance, mais ce rejet n'apprend rien. Avec quinze mille et
 quarante mille observations, le $\chi^2$ détecte des écarts sans portée pratique, et sa p-valeur mesure
 l'effectif autant que l'association. Le renseignement est dans le $V$, une taille d'effet bornée par un
 qui ne croît pas avec $n$.
@@ -482,9 +482,7 @@ qui ne croît pas avec $n$.
 Aucune des cinq associations n'atteint $0{,}20$, alors que $0{,}30$ marque
 conventionnellement une association moyenne. La plus forte, la catégorie bâloise dans SAS, vaut $0{,}176$.
 Ces nombres autorisent à dire que la catégorie d'un incident informe la probabilité qu'il soit lourd. Ils
-n'en font pas une variable de segmentation. Segmenter par la catégorie bâloise, qui compte sept
-modalités, ramènerait les $86$ excès de la calibration à une douzaine par modalité, effectif sur lequel
-l'ajustement d'une queue serait très instable. C'est le premier argument en faveur d'une queue commune.
+n'en font pas une variable de segmentation. La catégorie bâloise compte sept modalités sur toute la base, mais le périmètre de calibration n'en retient que des sous-ensembles liés au cyber. Ses $86$ excès, répartis entre eux, laisseraient un ajustement de queue très instable. C'est le premier argument en faveur d'une queue commune.
 
 \subsection{Forme, dépendance de rang et hétérogénéité des variables quantitatives}
 \label{subsec:tests-quantitatifs}
@@ -525,8 +523,9 @@ Trois diagnostics complémentaires convergent : le $V$ de Cramér reste sous $0{
 $0{,}08$ et les corrélations de rang sous $0{,}16$. La catégorie d'un incident et la taille de l'entité
 qui le subit informent faiblement sa sévérité, et segmenter la queue sur l'une ou l'autre coûterait des
 degrés de liberté sans pouvoir explicatif en retour. Nous ajustons donc une queue commune. Ce choix repose
-sur des tailles d'effet mesurées. Il reste une hypothèse : l'indice varie selon la catégorie bâloise, et aucune
+sur des tailles d'effet mesurées. Il reste une hypothèse : sur toute la base, l'indice varie de $0{,}87$ à $1{,}37$ selon la catégorie bâloise (\S\ref{sec:xi-pilier}), et aucune
 base n'observe la sévérité par pilier.
+% SOURCES-SCRIPTS: 67
 
 
 \section{Limites des données}

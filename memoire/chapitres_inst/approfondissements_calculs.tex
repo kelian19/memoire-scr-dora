@@ -2,7 +2,7 @@
 \section{Unité de perte et incertitude jointe}
 \label{sec:institut-unite-incertitude}
 
-Les pertes historiques décrivent des incidents complets ; la construction additive en
+Les pertes observées décrivent des incidents complets ; la construction additive en
 tire une par pilier touché. Nous comparons quatre constructions, sans coûts observés
 par pilier pour les départager, à fréquence, dispersion et canaux communs.
 
@@ -26,7 +26,7 @@ modifient $K$, sans modifier $Y$. Cela ne réfute pas ces canaux ; leur effet
 financier exige de mesurer le coût selon les piliers touchés.
 
 L'interaction additive calculée sans simulation garde le signe de son estimation
-Monte-Carlo. Ces comparaisons isolent l'unité de perte, sans remplacer les résultats historiques.
+Monte-Carlo. Ces comparaisons isolent l'unité de perte, sans remplacer le résultat principal.
 
 Les constructions additive et amplifiée diffèrent par la dépendance entre les $K$ composantes d'un
 incident, à marges égales. Un mélange les relie : avec probabilité $\rho$, un choc commun les rend comonotones, c'est-à-dire déterminées par le même rang aléatoire dans leur loi marginale ; sinon elles sont indépendantes. De $\rho=0$ à $\rho=1$, le capital croît de $16\,\%$ à l'état conforme et
@@ -50,7 +50,7 @@ portent sur leurs écarts et rapports appariés, jamais sur une soustraction de 
 \input{chapitres_inst/approfondissements_table_bootstrap}
 
 Ces bandes supposent les pertes échangeables, dont la loi jointe ne dépend pas de leur ordre, et le seuil fixé ; elles excluent sélection et
-non-stationnarité, et laissent fixes la fréquence historique, la dispersion, les multiplicateurs et la
+non-stationnarité, et laissent fixes la fréquence de référence, la dispersion, les multiplicateurs et la
 cascade d'expert. La dispersion des rapports montre que la forme de queue ne s'annule pas entre états.
 
 \subsection{Mélange prédictif annuel}
@@ -110,7 +110,7 @@ an : la puissance est faible, et ce n'est pas un backtest du quantile à $99{,}5
 Nous tirons des années complètes de 2000 à 2025, avec leurs pertes, ou des blocs de trois années
 consécutives, puis nous réestimons à chaque tirage le taux de dépassement et la queue. Le nombre
 annuel de pertes enregistrées, de $4$ à $39$, module aussi la fréquence par
-$\lambda_b=\lambda_{\mathrm{ref}}\,n_b/n_{\mathrm{ref}}$, ce qui conserve la référence historique.
+$\lambda_b=\lambda_{\mathrm{ref}}\,n_b/n_{\mathrm{ref}}$, ce qui conserve la fréquence de référence.
 
 \input{chapitres_inst/approfondissements_table_annuel}
 

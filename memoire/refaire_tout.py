@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """TOUTE LA CHAINE EN UNE COMMANDE : generer, compiler, controler, recopier.
 
-    python exploratory/memoire_cascade/refaire_tout.py
+    python memoire/refaire_tout.py
 
 MOTIF. Cette chaine a ete faite a la main des dizaines de fois, et chaque etape
 oubliee a deja coute une erreur reelle, consignee dans CLAUDE.md :
@@ -50,13 +50,15 @@ SORTIES = os.path.abspath(os.path.join(os.path.dirname(__file__), '../resultats/
 # devenu « tableau 9.x » decale une coupure de ligne ; ce paragraphe se reecrit en phase 4.
 # La ligne de base ENSAE se revoit a chaque phase de la reduction, jamais pour masquer un
 # debordement neuf non explique.
-DEBORDEMENTS_BASE = {"main_ensae": 3, "main_institut": 2}
+DEBORDEMENTS_BASE = {"main_ensae": 3, "main_institut": 2, "main_institut_150": 0}
 PAGES_MAX_ENSAE = 100        # limite de la version ENSAE finalisee
 PAGES_CIBLE_ENSAE = 100
+PAGES_MAX_INSTITUT_150 = 150
 
 VERSIONS = [
     ("main_ensae", "KADDOURI_Kelian_MS25.pdf", PAGES_MAX_ENSAE),
     ("main_institut", "KADDOURI_Kelian_institut.pdf", None),
+    ("main_institut_150", "KADDOURI_Kelian_institut_150.pdf", PAGES_MAX_INSTITUT_150),
 ]
 
 INTERMEDIAIRES = (".aux", ".bbl", ".blg", ".log", ".out", ".toc")
@@ -90,6 +92,7 @@ def trouver_tectonic():
     """tectonic n'est pas dans le PATH sur les deux postes, et son nom differe."""
     noms = ["tectonic.exe", "tectonic"] if platform.system() == "Windows" else ["tectonic"]
     pistes = [os.path.join(REPO, "outils", "tectonic", n) for n in noms]
+    pistes += [os.path.join(ICI, n) for n in noms]
     pistes += [r"C:\Users\kelia\miniconda3\Library\bin\tectonic.exe"]
     for p in pistes:
         if os.path.isfile(p):
@@ -301,46 +304,14 @@ def etape_pdf():
 # ---------------------------------------------------------------------------
 
 def etape_harnais():
-    titre("4. HARNAIS DE VERIFICATION DES NOMBRES")
-    total = confirmes = 0
-    hors_controle = []
-    print("  %-44s%8s%10s%9s" % ("chapitre", "verif.", "confirmes", "taux"))
-    print("  " + "-" * 71)
-    # la version ENSAE lit ses chapitres dans chapitres_sfe/, et ce qu'elle retire vit dans
-    # supplement/ (reduction SFE, phase 3, 1er octobre 2026) : les deux se verifient aussi
-    fichiers = [(d, f) for d in ("chapitres", "chapitres_sfe", "supplement")
-                if os.path.isdir(os.path.join(ICI, d))
-                for f in sorted(os.listdir(os.path.join(ICI, d))) if f.endswith(".tex")]
-    for d, f in fichiers:
-        dossier = os.path.join(ICI, d)
-        etiquette = f[:-4] if d == "chapitres" else "%s/%s" % (d, f[:-4])
-        # encodage fixe des deux cotes : lancee sous PYTHONIOENCODING=utf-8, la sortie du
-        # harnais etait relue dans l'encodage du poste, et « vérifiables » n'etait plus reconnu
-        r = subprocess.run([sys.executable, os.path.join(ICI, "verif_chiffres.py"),
-                            SORTIES, os.path.join(dossier, f)],
-                           capture_output=True, text=True, encoding="utf-8", errors="replace",
-                           env=dict(os.environ, PYTHONIOENCODING="utf-8"))
-        s = (r.stdout or "") + (r.stderr or "")
-        m = re.search(r"(\d+) nombres v.rifiables, (\d+) confirm", s)
-        h = re.search(r"Hors controle non declare\s*:\s*(\d+)", s)
-        if h and int(h.group(1)) > 0:
-            hors_controle.append("%s (%s)" % (etiquette, h.group(1)))
-        if m:
-            v, c = int(m.group(1)), int(m.group(2))
-            total += v
-            confirmes += c
-            print("  %-44s%8d%10d%8.1f %%" % (etiquette, v, c, 100 * c / v if v else 0))
-        else:
-            print("  %-44s%8s%10s%9s" % (etiquette, "-", "-", "sans script"))
-    print("  " + "-" * 71)
-    print("  %-44s%8d%10d%8.1f %%"
-          % ("TOTAL", total, confirmes, 100 * confirmes / total if total else 0))
-    print()
-    ok = verdict("confirmation >= 97 %", total and confirmes / total >= 0.97,
-                 "%.1f %%" % (100 * confirmes / total if total else 0))
-    ok &= verdict("hors controle non declare = 0", not hors_controle,
-                  ", ".join(hors_controle) if hors_controle else "")
-    return ok
+    titre("4. HARNAIS STRICT DE VERIFICATION DES NOMBRES")
+    # Le harnais commun couvre aussi chapitres_inst/ et ses sorties surchargées.
+    r = subprocess.run(
+        [sys.executable, os.path.join(REPO, "outils", "ci", "harnais_strict.py")],
+        cwd=REPO, env=dict(os.environ, PYTHONIOENCODING="utf-8"),
+    )
+    return verdict("harnais strict, toutes versions", r.returncode == 0,
+                   "code %d" % r.returncode)
 
 
 # ---------------------------------------------------------------------------
@@ -378,11 +349,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--sans-harnais", action="store_true",
                     help="saute l'etape 4, qui prend une minute")
-    ap.add_argument("--version", choices=("ensae", "institut", "toutes"), default="toutes",
+    ap.add_argument("--version", choices=("ensae", "institut", "institut150", "toutes"), default="toutes",
                     help="version a compiler et recopier (defaut : toutes)")
     a = ap.parse_args()
     if a.version != "toutes":
-        VERSIONS = [v for v in VERSIONS if v[0] == "main_" + a.version]
+        base = "main_institut_150" if a.version == "institut150" else "main_" + a.version
+        VERSIONS = [v for v in VERSIONS if v[0] == base]
 
     print(GRAS + "CHAINE COMPLETE DU MEMOIRE" + FIN)
     print("depot : %s" % REPO)

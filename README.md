@@ -11,14 +11,14 @@ Auteur : **Kélian Kaddouri**. Encadrement : **Hugo Rapior** (Nexialog Consultin
 **Caroline Hillairet** (ENSAE Paris).
 
 Ce dépôt publie un export du travail de recherche : manuscrits, code, sorties numériques et
-contrôles. Mise à jour du **4 novembre 2026**. Les résultats restent conditionnels aux hypothèses
+contrôles. Mise à jour du **9 novembre 2026**. Les résultats restent conditionnels aux hypothèses
 de fréquence, de sévérité et de propagation ; ils ne valident pas un capital individuel.
 
 ## Lire
 
 | Document | Lien |
 |---|---|
-| **Mémoire Institut actuel — 156 pages** | [main_institut_150.pdf](memoire/main_institut_150.pdf) |
+| **Mémoire Institut actuel — 158 pages** | [main_institut_150.pdf](memoire/main_institut_150.pdf) |
 | Rapport ENSAE courant — 100 pages | [main_ensae.pdf](memoire/main_ensae.pdf) |
 | Ancienne version Institut conservée — 195 pages | [main_institut.pdf](memoire/main_institut.pdf) |
 | Soutenance Institut actuelle | [soutenance_institut.pdf](recherche/slides/beamer/soutenance_institut.pdf) |
@@ -29,7 +29,10 @@ de fréquence, de sévérité et de propagation ; ils ne valident pas un capital
 | Versions et statut des calculs | [Guide des versions](docs/VERSIONS.md) |
 | Matériel complémentaire | [Zenodo](https://doi.org/10.5281/zenodo.22874524) |
 
-Le nom `main_institut_150` conserve la cible initiale ; le PDF actuel compte 156 pages.
+Le nom `main_institut_150` conserve la cible initiale ; le PDF actuel compte 158 pages.
+**Version de travail : la cible de remise de 150 pages reste dépassée de huit pages.**
+Le contrôle de pagination bloque la chaîne de dépôt et la compilation complète en CI ; publier
+cette version de travail ne vaut pas validation de la remise.
 Les fichiers de la première publication restent accessibles à l'étiquette `v1.1.0`.
 
 ## Question, modèle et portée
@@ -60,6 +63,8 @@ python -m venv .venv
 pip install -r requirements.txt
 python projet.py structure
 python outils/ci/harnais_strict.py
+pip install -r requirements-test.txt
+python -m pytest recherche/vasicek_lab/tests src/tests -q
 tectonic memoire/main_institut_150.tex
 ```
 

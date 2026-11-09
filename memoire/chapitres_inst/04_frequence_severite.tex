@@ -200,8 +200,8 @@ reposent sur $2\,000$ rééchantillonnages des excès ; ils ne couvrent pas le c
 Hill estime la forme par les logarithmes des pertes rapportées au seuil. L'EMV et les moments pondérés par les probabilités de rang (PWM, \emph{probability-weighted moments}) portent
 sur les excès. La ligne Moments utilise les deux premiers moments des logarithmes des pertes
 rapportées au seuil. Hors d'une Pareto pure, ces estimateurs ne coïncident pas à seuil fini. Hill et les moments
-ne fournissent pas seuls une échelle GPD. Cette réestimation ne remplace pas les constantes gelées.
-L'annexe~\ref{ann:evt} conserve le diagnostic historique de Hill.
+ne fournissent pas seuls une échelle GPD. Cette réestimation ne remplace pas les paramètres retenus.
+L'annexe~\ref{ann:evt} donne le diagnostic de Hill.
 
 \section{Adéquation des lois}
 \label{soc:sec:validation}
@@ -217,7 +217,7 @@ Sur les mêmes $86$ excès à $20{,}03$~M\euro, les tests de Kolmogorov--Smirnov
 Sur $1\,000$ réplications paramétriques avec réestimation, Kolmogorov--Smirnov bilatéral donne
 $p=0{,}907$ et Anderson--Darling $p=0{,}983$ ; chaque réplication simule la loi ajustée puis réestime ses paramètres. Le balayage ne démontre pas un seuil optimal. Mesurée par simulation, la couverture
 réelle de l'intervalle à $90\,\%$ de $\xi$ est de $87\,\%$, donc l'intervalle est trop
-étroit et l'élargir d'environ $8\,\%$ rétablirait le nominal. La sous-couverture concerne l'incertitude de l'estimation ; elle n'établit pas le signe d'un biais du capital. La fréquence gelée et la dérive d'échelle font l'objet de diagnostics distincts (\S\ref{sec:pu-coherence} et \S\ref{soc:sec:backtest}).
+étroit et l'élargir d'environ $8\,\%$ rétablirait le nominal. La sous-couverture concerne l'incertitude de l'estimation ; elle n'établit pas le signe d'un biais du capital. La fréquence retenue et la dérive d'échelle font l'objet de diagnostics distincts (\S\ref{sec:pu-coherence} et \S\ref{soc:sec:backtest}).
 
 Le test du rapport de vraisemblance rejette le Poisson au profit de la binomiale négative (statistique $130{,}5$, $p\approx 10^{-30}$ sur $14\,944$ cellules firme-année), bien que $\Var/\E=1{,}19$ reste proche de un. Ce $p$ traite les cellules comme indépendantes et ignore la dépendance par firme ; le rejet ne calibre pas non plus le facteur $9{,}2$ du moteur.
 
@@ -274,10 +274,11 @@ Aucun modèle à caractéristiques n'améliore la tendance temporelle seule avec
 à $90\,\%$ excluant zéro. Le boosting obtient le meilleur log-score ; son gain de $0{,}0193$
 a pour intervalle $[-0{,}0371\,;+0{,}0571]$, par bootstrap des années évaluées.
 
-Nous appliquons le script \texttt{131} aux $570$ pertes, dont $86$ au-dessus de $20{,}03$~M\euro,
+Le calcul porte sur les $570$ pertes, dont $86$ au-dessus de $20{,}03$~M\euro,
 en excluant les cinq pertes de l'année $2026$, incomplète. L'évaluation en origine glissante,
 de $2014$ à $2025$, porte sur $280$ pertes, dont $60$ dépassements. La cible est conditionnelle à l'enregistrement d'une perte ;
 elle n'est pas une fréquence annuelle d'incident.
+% SOURCES-SCRIPTS: 131
 
 Nous comparons un taux constant (M0), une régression logistique sur l'année (M1), une régression
 logistique pénalisée $L_2$ (M2) et un boosting d'arbres de gradient (M3). M2 et M3 ajoutent le métier

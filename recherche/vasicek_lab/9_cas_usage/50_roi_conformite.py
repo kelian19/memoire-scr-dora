@@ -180,11 +180,11 @@ cols = [BLUE if r[2] == "calibrable" else MUTED for r in rows]
 yp = np.arange(len(rows))[::-1]
 ax1.barh(yp, dscr, color=cols, alpha=0.9)
 for y_, r in zip(yp, rows):
-    ax1.text(r[1] + 60, y_, f"{r[1]:.0f} M€  →  {COC*r[1]:.0f} M€/an  ({r[2]})",
+    ax1.text(r[1] + 60, y_, f"{r[1]:.0f} M€  →  {COC*r[1]:.0f} M€/an  ({'mesurable' if r[2] == 'calibrable' else 'non identifié'})",
              va="center", fontsize=8.5, color=INK2)
 ax1.set_yticks(yp); ax1.set_yticklabels(names, fontsize=9)
 ax1.set_xlim(0, max(dscr) * 1.7)
-ax1.set_xlabel("capital libéré ΔB (M€) ; bleu : calibrable, gris : borné", color=INK2, fontsize=9)
+ax1.set_xlabel("capital libéré ΔB (M€) ; bleu : écart posé, mesurable ; gris : écart posé, non identifié", color=INK2, fontsize=9)
 ax1.set_title("(a)  Le capital libéré par levier\n(et sa valeur annuelle à 6 %)", fontsize=11,
               color=INK, pad=8)
 

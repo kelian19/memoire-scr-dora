@@ -219,7 +219,7 @@ La règle de stabilité retient $19{,}32$~M\euro{} contre $20{,}03$ publiés, so
 quantile supérieur de $1{,}5\,\%$ à celui qui est publié. Le seuil publié est donc voisin du plus bas
 seuil au-dessus duquel $\hat\xi$ se stabilise. Cette règle fournit un contrôle rétrospectif du seuil publié ; elle n'a pas été préenregistrée avant sa calibration. Le seuil publié est aussi
 le mieux ajusté du balayage, avec une $p$-value d'Anderson-Darling de $0{,}986$ contre $0{,}943$ pour le
-second meilleur candidat. Deux diagnostics sur le même échantillon désignent des points voisins, ce qui n'était pas garanti.
+second meilleur candidat ($0{,}983$ au \S\ref{soc:sec:validation}, avec d'autres réplications). Deux diagnostics sur le même échantillon désignent des points voisins, ce qui n'était pas garanti.
 
 La règle la plus permissive descendrait plus bas. Elle retient $15{,}53$~M\euro, soit $22{,}5\,\%$ sous le
 seuil publié, et donne un quantile de sévérité de $731{,}0$ contre $662{,}8$, soit $10{,}3\,\%$ de plus. Le
@@ -239,7 +239,7 @@ incertitude elle-même mal connue. Le choix reste conditionnel à l'adéquation 
 \subsection{Fréquence et forme de la queue}
 % SOURCES-SCRIPTS: 89 91
 
-La binomiale négative l'emporte sur le Poisson hors échantillon, et c'est le résultat le plus net. Les comptes annuels du périmètre ont
+La binomiale négative l'emporte sur le Poisson hors échantillon. Les comptes annuels du périmètre ont
 pour moyenne $24{,}50$ et pour variance $58{,}55$, soit un indice de dispersion de $2{,}39$, sans tendance
 significative ($-0{,}092$ incident par an, $p=0{,}7297$). Une loi sans mémoire n'est donc pas mal
 spécifiée sur ce point.
@@ -252,7 +252,7 @@ $-44{,}388$, soit $3{,}054$ nats sur douze années. Ce résultat favorise la bin
 la significativité de son avantage prédictif. Il ne valide pas le facteur de dispersion posé
 dans le moteur, qui reste distinct des ajustements de ce backtest.
 
-La forme de la queue survit, et ce n'était pas acquis. Chaque ajustement d'origine ne dispose que de vingt à
+La forme de la queue n'est pas rejetée, alors que chaque ajustement d'origine ne dispose que de vingt à
 quatre-vingt-dix excès. La transformée de probabilité intégrale des excès de test doit être uniforme si la loi
 ajustée est la bonne. Elle a pour moyenne $0{,}532$ et le test de Kolmogorov-Smirnov ne la rejette pas
 ($D=0{,}100$, $p=0{,}4087$). L'écart de cette moyenne à $0{,}500$ indique des pertes qui tombent plus haut
@@ -350,7 +350,7 @@ Les tests précédents portent sur les lois marginales prises séparément, alor
 la charge annuelle. Un modèle composé peut avoir deux marginales correctes et un agrégat faux, reproche que cette
 classe de modèles reçoit le plus souvent. L'observable noté est la somme annuelle des sinistres dépassant le
 seuil d'apprentissage, qui est l'objet que produit la chaîne publiée puisqu'elle donne une sévérité nulle sous le
-seuil. La prédictive est obtenue par $200\,000$ années simulées à chaque origine. Le verdict est négatif. La
+seuil. La prédictive est obtenue par $200\,000$ années simulées à chaque origine. L'agrégat est rejeté. La
 transformée intégrale de l'agrégat vaut $0{,}734$ en moyenne pour $0{,}500$ attendu, et Kolmogorov-Smirnov la
 rejette ($D = 0{,}484$, $p = 0{,}0042$). L'intervalle de prévision annoncé à $90\,\%$ n'en couvre que $75{,}0\,\%$,
 avec trois dépassements de sa borne haute concentrés dans les quatre dernières années notées.
@@ -368,7 +368,7 @@ L'avantage de la binomiale négative sur les comptes se retrouve peu sur la char
 Notée au score de probabilité continu classé
 sur la charge agrégée, son avance sur le Poisson tombe à $0{,}3\,\%$. La charge annuelle est portée par un sinistre
 unique, donc par la queue de sévérité et non par la surdispersion du comptage. La binomiale négative reste le bon
-choix, mais elle n'est plus un déterminant du niveau de capital et il ne faut pas la présenter ainsi.
+choix, mais elle ne détermine pas le niveau de capital.
 
 Reste l'indépendance entre fréquence et sévérité. Le modèle composé retenu la suppose ; des modèles composés dépendants existent aussi.
 Une dépendance positive pourrait modifier la queue de l'agrégat. Sur l'ensemble de la distribution, la

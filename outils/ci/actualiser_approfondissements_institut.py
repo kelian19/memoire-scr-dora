@@ -47,7 +47,7 @@ def main():
 \end{tabular}
 \end{center}
 \noindent Montants en M\euro{} pour le périmètre financier étudié. Les quatre règles
-utilisent le calage historique ; l'incident amplifié a un exposant posé égal à un.
+utilisent le calage principal ; l'incident amplifié a un exposant posé égal à un.
 Les déplacements sous raffinement de grille restent de l'ordre du M\euro{}.
 '''
     ecrire('approfondissements_table_unite.tex', texte)

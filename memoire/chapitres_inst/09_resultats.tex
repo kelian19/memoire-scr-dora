@@ -30,6 +30,31 @@ Nous comparons OpRisk ($\hat\xi=0{,}595$)
 et PRC ($\hat\xi=1{,}03$), plafonnée à $40$~M\euro{} par perte élémentaire.
 % SOURCES-SCRIPTS: 65 66 12 16 63
 
+Plusieurs calages coexistent dans ce mémoire. Le tableau~\ref{tab:quel-chiffre} indique ce que chacun fixe. La plage de direction des chapitres précédents, de $6\,858$ à $8\,697$~M\euro, ne s'applique pas au chiffre de tête : elle est calculée sans les canaux de détection et d'accumulation, à fréquence conforme, et dans une autre cascade.
+
+\begin{table}[H]\centering\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.2cm} >{\raggedright\arraybackslash}p{3.0cm} >{\raggedright\arraybackslash}p{5.4cm} l@{}}
+\toprule
+\textbf{Chiffre (M\euro)} & \textbf{Moteur} & \textbf{Canaux et état} & \textbf{Lieu} \\
+\midrule
+$\mathbf{6\,049\to20\,188}$, facteur $3{,}34$ & marche, Monte-Carlo & quatre canaux, C vers NC & \S\ref{sec:chiffre-de-tete} \\
+$5\,944\to19\,890$, facteur $3{,}35$ & marche, Fourier & mêmes canaux, règle additive & \S\ref{sec:institut-unite-perte} \\
+$4\,774\to10\,720$, facteur $2{,}25$ & marche, Fourier & mêmes canaux, une perte par incident & \S\ref{sec:institut-unite-perte} \\
+$5\,932\to16\,595$ ; $6\,664\to15\,074$ & marche, Monte-Carlo & trois canaux (lecture C) ; deux canaux (lecture B) & tableau~\ref{tab:scretat} \\
+$8\,301$ ; $8\,123$ ; $8\,318$ & marche, trois tirages & fréquence C, $g=0{,}90$, $p_u$ de base (lecture A) & tableau~\ref{tab:scretat} \\
+$8\,110$, plage $[6\,858\,;8\,697]$ & cascade indépendante & même calage, sans détection ni accumulation & chapitre~\ref{chap:partielle} \\
+$5\,275$ & sans contagion & socle du calage précédent & chapitre~\ref{chap:partielle} \\
+$6\,018\to19\,742$, facteur $3{,}28$ ; NC aux sommets $[17\,462\,;20\,678]$ & cascade indépendante & quatre canaux, $1\,024$ sommets & ci-dessous \\
+\bottomrule
+\end{tabular}
+\caption{Quel chiffre pour quel calcul. C : état conforme ; NC : état non conforme.}
+\label{tab:quel-chiffre}
+\end{table}
+
+La marche auto-évitante n'est pas définie aux sommets où l'émission d'un pilier dépasse $1$. La plage de direction à quatre canaux se lit donc dans la cascade indépendante, dont le point du barème donne un facteur de $3{,}28$. Le besoin non conforme y va de $17\,462$ à $20\,678$~M\euro{} (écart-type de la largeur : $486$~M\euro{} entre quatre graines), l'écart de $11\,605$ à $14\,765$~M\euro{} et le facteur de $2{,}96$ à $3{,}51$, à signes de $A$ identiques dans les deux états. Ces extrema restent ceux des sommets, conditionnels à la partie symétrique posée.
+% SOURCES-SCRIPTS: 140 119 16 30 43 48 49 60
+
 \section{Besoin de capital par état de conformité}
 
 \subsection*{Scénario principal et remédiations partielles}
@@ -85,9 +110,9 @@ dans chaque lecture. Les lettres renvoient uniquement à ces combinaisons de can
 \cmidrule(lr){2-4}\cmidrule(lr){6-8}
 État & Fréq. & $+$ prop. & $+$ dét. & & Fréq. & $+$ prop. & $+$ dét. \\
 \midrule
-Conforme               & 8301  & 6664  & 5932  & & 2589 & 1903 & 1642 \\
-Partiellement conforme & 11059 & 9625  & 9625  & & 3653 & 3118 & 3118 \\
-Non conforme           & 15074 & 15074 & 16595 & & 5520 & 5520 & 6577 \\
+Conforme               & 8\,301  & 6\,664  & 5\,932  & & 2\,589 & 1\,903 & 1\,642 \\
+Partiellement conforme & 11\,059 & 9\,625  & 9\,625  & & 3\,653 & 3\,118 & 3\,118 \\
+Non conforme           & 15\,074 & 15\,074 & 16\,595 & & 5\,520 & 5\,520 & 6\,577 \\
 \bottomrule
 \end{tabular}
 \caption{Besoin de capital par état, trois lectures (A~: fréquence ; B~: $+$~propagation ; C~:
@@ -113,8 +138,8 @@ des quatre facteurs isolés étant de $3{,}47$ pour un facteur publié de $3{,}3
 (figure~\ref{fig:treillis-canaux-rapport}). Les quatre effets isolés somment à $9\,138$~M\euro{} et
 l'écart de $14\,139$ les dépasse de $5\,001$, l'interaction. Elle est proche de ce que donnerait un
 modèle purement multiplicatif ($5\,813$~M\euro, \S\ref{sec:interaction-canaux}). Les
-trajectoires et la priorisation restent conduites en lecture~B ; l'ordre de remédiation n'a pas été
-recalculé à quatre canaux.
+trajectoires restent conduites en lecture~B ; le \S\ref{sec:res-prio} donne l'ordre de remédiation en
+lecture~B puis à quatre canaux.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{treillis_canaux.png}
@@ -138,10 +163,10 @@ $100\,\%$ des tirages sont positifs (tableau~\ref{tab:delta}).
 \toprule
 & médiane & IC90\,\% \\
 \midrule
-$\Delta_{\text{DORA}}$ NC vs C (OpRisk) & 6476 & $[2940\,;47368]$ \\
-$\Delta_{\text{DORA}}$ PC vs C (OpRisk) & 2346 & $[1137\,;13566]$  \\
-$\Delta_{\text{DORA}}$ NC vs C (PRC)    & 3668 & $[3201\,;4094]$  \\
-$\Delta_{\text{DORA}}$ PC vs C (PRC)    & 1257 & $[1077\,;1466]$  \\
+$\Delta_{\text{DORA}}$ NC vs C (OpRisk) & 6\,476 & $[2\,940\,;47\,368]$ \\
+$\Delta_{\text{DORA}}$ PC vs C (OpRisk) & 2\,346 & $[1\,137\,;13\,566]$  \\
+$\Delta_{\text{DORA}}$ NC vs C (PRC)    & 3\,668 & $[3\,201\,;4\,094]$  \\
+$\Delta_{\text{DORA}}$ PC vs C (PRC)    & 1\,257 & $[1\,077\,;1\,466]$  \\
 \bottomrule
 \end{tabular}
 \caption{Surcoût de non-conformité (M\euro), lecture B, bootstrap deux niveaux. Côté OpRisk la
@@ -164,7 +189,7 @@ surcoût bouge de $7\,\%$.
 
 Si l'on bascule un pilier à la fois de conforme à non conforme, le surcoût se décompose selon le
 classement $P1>P4>P2>P3>P5$, celui du classement ROOT du modèle qualitatif. Cet accord est attendu et
-ne constitue pas une validation indépendante, car les amorces de la cascade sont semées selon ROOT, posé par le même expert que
+ne constitue pas une validation indépendante, car les amorces de la cascade sont semées selon ROOT, posé par l'auteur comme
 la matrice dont $W$ est tirée (\S\ref{sec:baremes}).
 
 Les surcoûts isolés ne somment pas au surcoût total, la différence étant une interaction qu'un modèle sans
@@ -214,13 +239,13 @@ Le tableau~\ref{tab:shapley} en donne les valeurs.
 \cmidrule{2-4}\cmidrule{6-8}
 pilier & marginal & $\varphi_j$ & part & & marginal & $\varphi_j$ & part \\
 \midrule
-P1 gouvernance & 3481 & 3717 & $34{,}0\,\%$ & & 1375 & 1608 & $32{,}4\,\%$ \\
-P4 tiers       & 2658 & 2810 & $25{,}7\,\%$ & & 1075 & 1252 & $25{,}3\,\%$ \\
-P2 incidents   & 1634 & 1867 & $17{,}1\,\%$ & &  721 &  920 & $18{,}6\,\%$ \\
-P3 tests       & 1094 & 1484 & $13{,}6\,\%$ & &  571 &  738 & $14{,}9\,\%$ \\
-P5 partage     &  665 & 1048 &  $9{,}6\,\%$ & &  311 &  438 &  $8{,}8\,\%$ \\
+P1 gouvernance & 3\,481 & 3\,717 & $34{,}0\,\%$ & & 1\,375 & 1\,608 & $32{,}4\,\%$ \\
+P4 tiers       & 2\,658 & 2\,810 & $25{,}7\,\%$ & & 1\,075 & 1\,252 & $25{,}3\,\%$ \\
+P2 incidents   & 1\,634 & 1\,867 & $17{,}1\,\%$ & &  721 &  920 & $18{,}6\,\%$ \\
+P3 tests       & 1\,094 & 1\,484 & $13{,}6\,\%$ & &  571 &  738 & $14{,}9\,\%$ \\
+P5 partage     &  665 & 1\,048 &  $9{,}6\,\%$ & &  311 &  438 &  $8{,}8\,\%$ \\
 \midrule
-somme          & 9531 & 10\,927 & $100{,}0\,\%$ & & 4052 & 4957 & $100{,}0\,\%$ \\
+somme          & 9\,531 & 10\,927 & $100{,}0\,\%$ & & 4\,052 & 4\,957 & $100{,}0\,\%$ \\
 \bottomrule
 \end{tabular}
 \caption{Valeur de Shapley du surcoût $\Delta_{\text{DORA}}$ (M\euro, périmètre financier étudié, trois canaux : fréquence, propagation, détection ; base
@@ -275,6 +300,14 @@ valeur d'accélération. L'écart de capital intégré entre le pire ordre et l'
 $21\,\%$. Remédier au coup par coup le pilier au plus fort gain immédiat coûte plus cher, car les
 interactions de cascade imposent de raisonner sur l'horizon entier.
 % SOURCES-SCRIPTS: 18
+
+À quatre canaux, P4 arrive premier sur les huit graines. Sa part de Shapley vaut $40{,}6\,\%$ contre $25{,}6\,\%$ pour P1 (écarts-types de $190$ et $208$~M\euro), et
+le meilleur ordre devient $P4\to P1\to P2\to P3\to P5$. Le pire donne une somme des capitaux avant
+remédiation supérieure de $38{,}7\,\%$ à celle de cet optimum. Ce rang tient à la construction : l'accumulation, posée à $0{,}68$, n'agit que si P4 est non conforme,
+et sa contribution revient à ce pilier. Les amorces pèsent aussi. Rendues uniformes au lieu de suivre ROOT, barème de
+l'auteur, elles ramènent P1 à $19{,}1\,\%$ et portent P5 de $6{,}8$ à $13{,}3\,\%$, P4 restant premier ($35{,}4\,\%$).
+Le classement des piliers découle donc des barèmes et des canaux retenus ; il ne constitue pas un résultat empirique.
+% SOURCES-SCRIPTS: 140
 
 Le test de résistance inverse fixe le capital et cherche les états qui le produisent, la monotonie
 du \S\ref{sec:kpi} rendant croissant l'ensemble des configurations atteignant une cible, donc décrit
@@ -394,7 +427,7 @@ elle reste négative parmi les firmes de plus de $50$~Md\$. L'élasticité $b=0{
 
 Cette lecture remplace la lecture du registre et les deux conventions d'exposition du
 tableau~\ref{tab:echelle}. Seule la calibration d'entité change ; les résultats du périmètre financier
-sont identiques. Avec l'exposant et le moteur de la lecture du registre, le script reproduit les
+sont identiques. Avec l'exposant et le moteur de la lecture du registre, le calcul reproduit les
 $169{,}0$~M\euro{} de la ligne correspondante.
 
 \begin{table}[htbp]\centering
@@ -412,7 +445,7 @@ Registre, deux canaux composés & $0{,}092$ & $\times 0{,}854$ & $169$~M\euro & 
 $\mathbf{24}$~M\euro & $\mathbf{0{,}85}$~M\euro \\
 \bottomrule
 \end{tabular}
-\caption{Comparaison des lectures d'échelle. Les lignes historiques adaptent la fréquence et l'échelle
+\caption{Comparaison des lectures d'échelle. Les lignes de seuil adaptent la fréquence et l'échelle
 de sévérité ; celles du registre emploient l'exposant $0{,}074$. La dernière réestime la fonction de
 fréquence et la dispersion sur les grandes institutions et inclut les pertes observées sous le seuil.
 Les lignes sont des lectures d'échelle, non des entités observées.}
@@ -517,7 +550,7 @@ Grand groupe (posé) & $2\,400\,000$ & -- & $528{,}6\ [437\,;556]$ & $1\,326$ & 
 point à la matrice d'expert et bande sur les $1\,024$ sommets admissibles. Pires années : moyenne des
 $0{,}5\,\%$ pires années. Registre : $b_\lambda = 0{,}074$ (tableau~\ref{tab:echelle}). État supposé : gain de
 propagation au niveau non conforme, autres paramètres à leur base. Nul : le quantile à $99{,}5\,\%$ est nul
-(taille de bascule, ci-dessous). Les tailles de la petite entité et du grand groupe sont posées.}
+(taille de bascule, ci-dessous). Les tailles de la petite entité et du grand groupe sont posées. Actifs en euros au cours de $1{,}04$~\$ pour un euro (chapitre~\ref{chap:donnees}).}
 \end{minipage}
 
 \vspace{2pt}
@@ -674,7 +707,7 @@ Le rapport entre coût de détention et prix de transfert est invariant à un ch
 
 \section{Cas d'usage, de l'état de conformité à la décision}
 \label{sec:cas-usage-chiffre}
-% SOURCES-SCRIPTS: 60 49 66 58 67 18 65 95 30 136 137
+% SOURCES-SCRIPTS: 60 49 66 58 67 18 65 95 30 136 137 140
 
 Pour un assureur notionnel de $19\,231$~M\euro{} d'actifs, les résultats du chapitre répondent aux
 questions suivantes, sous les scénarios et protocoles indiqués.
@@ -699,8 +732,8 @@ la sinistralité attendue. Si la conformité divise $\lambda$ par deux (valeur p
 Peut-on le transférer ? & Un traité en excès de perte de portée $24{,}1$~M\euro{} ramène le coût de $1{,}15$ à
 $0{,}39$~M\euro{} par an ($-66\,\%$ ; $-47\,\%$ pertes conservées comprises), gain d'un contrat idéal. La détention redevient préférable si plus de $65{,}8$ à $82{,}4\,\%$ de
 la portée reste sans allègement de capital. & \S\ref{sec:detenir-transferer} \\
-Par quel pilier commencer ? & Au point de calage : P1, puis P4, P2, P3 et P5. P1 et P4 sont presque à égalité ($43{,}6\,\%$ et $37{,}7\,\%$ de $220$ sommets tirés). L'écart de capital intégré entre le pire ordre et
-l'ordre optimal atteint $21\,\%$. & \S\ref{sec:res-prio} \\
+Par quel pilier commencer ? & En lecture~B, au point de calage : P1, puis P4, P2, P3 et P5. P1 et P4 sont presque à égalité ($43{,}6\,\%$ et $37{,}7\,\%$ de $220$ sommets tirés). À quatre canaux, P4 passe en tête, par construction du canal d'accumulation. L'écart de capital intégré entre le pire ordre et
+l'ordre optimal atteint $21\,\%$ en lecture~B. & \S\ref{sec:res-prio} \\
 \bottomrule
 \end{tabular}
 \end{center}

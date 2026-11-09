@@ -16,7 +16,7 @@
 \addcontentsline{toc}{chapter}{Note de synthèse}
 \markboth{Note de synthèse}{}
 
-% SOURCES-SCRIPTS: 28 30 43 48 60 63 67 68 74 91 92 95 110 08b 89 99 65 66 76 38 130 119 120 134 136
+% SOURCES-SCRIPTS: 28 30 43 48 60 63 67 68 74 91 92 95 110 08b 89 99 65 66 76 38 130 119 120 134 136 140
 
 \notesec{Contexte et objectif}
 Comment le besoin de capital varie-t-il entre états de conformité supposés ? Nous calculons
@@ -38,7 +38,7 @@ Le niveau change d'un facteur $22$ selon la seule source de sévérité. Sous la
 \notesec{Démarche}
 La base SAS OpRisk Global fournit $570$ pertes informatiques d'institutions financières de 2000 à 2026. Une loi de Pareto généralisée, ajustée au-delà de $20{,}03$~M\euro{} sur $86$ excès, décrit les
 pertes élevées (indice de queue $0{,}5954$). Le nombre annuel d'incidents suit une loi binomiale négative. Un incident naît sur
-un pilier, puis se transmet aux autres selon une matrice d'influence dirigée, posée à dire d'expert
+un pilier, puis se transmet aux autres selon une matrice d'influence dirigée, posée par l'auteur à dire d'expert
 puis bornée.  Le
 capital est le quantile à $99{,}5\,\%$ de la charge annuelle, calculé dans chaque état.
 
@@ -92,7 +92,7 @@ de son état de départ, et non du seul effet isolé de chaque canal.
 
 Cet écart dépend du coût de l'incident. À calage fixé, le calcul par Fourier donne
 $13\,946$~M\euro{} sous la règle additive, à moins d'une erreur type ($367$~M\euro) de l'estimation
-de Monte-Carlo, contre $5\,946$ avec une perte unique. Sous la règle additive, le bootstrap conjoint
+de Monte-Carlo, contre $5\,946$ avec une perte unique, soit un facteur de $2{,}25$ au lieu de $3{,}34$. Sous la règle additive, le bootstrap conjoint
 de la sévérité donne une bande nominale à $95\,\%$ de $[4\,872\,;90\,361]$~M\euro{} pour l'écart,
 mais de $[3{,}04\,;5{,}22]$ pour le facteur entre états (chapitre~\ref{ch:robustesse}). La queue
 rend le niveau très incertain et le facteur beaucoup moins ; ces bandes restent conditionnelles à
@@ -100,12 +100,12 @@ la fréquence et aux autres paramètres posés.
 
 Les données publiques ne disent pas quel pilier entraîne l'autre : nous calculons le capital aux
 $1\,024$ sommets de l'ensemble des matrices d'influence admissibles, la structure symétrique étant
-posée à dire d'expert. Dans le calage de référence (fréquence conforme, gain $0{,}90$), les valeurs aux sommets vont de $6\,858$ à
+posée par l'auteur à dire d'expert. Dans le calage de référence (fréquence conforme, gain $0{,}90$, sans détection ni accumulation, cascade indépendante), les valeurs aux sommets vont de $6\,858$ à
 $8\,697$~M\euro{} ; recalculée sur quatre graines, la largeur de cette plage a un écart-type de
 $189$~M\euro. La matrice se décompose en une partie symétrique, la force commune des liens,
 posée ici, et une partie antisymétrique, leur sens, qu'aucune des sources
 examinées ne fixe. Cette plage n'est ni un intervalle de confiance ni une borne démontrée : elle
-mesure ce que coûte l'ignorance du sens, à force posée.
+mesure ce que coûte l'ignorance du sens, à force posée. À quatre canaux, dans la même cascade, le facteur entre états va de $2{,}96$ à $3{,}51$.
 
 Pour une entité notionnelle de $20\,000$~M\$ d'actifs, nous ramenons le capital du secteur à sa
 taille. La fréquence croît avec les actifs selon un exposant estimé sur les grandes institutions.
@@ -136,7 +136,7 @@ la direction. VERIS prévoit ces champs ; ils sont renseignés ensemble dans un 
 \addcontentsline{toc}{chapter}{Executive summary}
 \markboth{Executive summary}{}
 
-% SOURCES-SCRIPTS: 28 30 43 48 60 63 67 68 74 91 92 95 110 08b 89 99 65 66 76 38 130 119 120 134 136
+% SOURCES-SCRIPTS: 28 30 43 48 60 63 67 68 74 91 92 95 110 08b 89 99 65 66 76 38 130 119 120 134 136 140
 
 \begin{otherlanguage*}{english}
 \notesec{Context and objective}
@@ -162,7 +162,7 @@ entity with $20\,000$~M\$ of assets is given with the results. The level changes
 SAS OpRisk Global provides $570$ IT losses at financial institutions from 2000 to 2026. A generalised Pareto distribution, fitted above $20.03$~M\euro{} on $86$ exceedances, describes
 the high losses (tail index $0.5954$). The annual
 incident count is negative binomial. An incident starts in one pillar, then spreads to the others
-through a directed influence matrix, posited by expert judgement and then bounded.  Capital is the $99.5\,\%$ quantile
+through a directed influence matrix, posited by the author's expert judgement and then bounded.  Capital is the $99.5\,\%$ quantile
 of the annual loss, computed in each state.
 
 Compliance changes the calculation parameters. Hackmageddon attack-vector shares weight
@@ -215,22 +215,22 @@ its starting state, not only on the standalone effect of each channel.
 
 The gap depends on incident cost. At fixed calibration, Fourier computation gives
 $13\,946$~M\euro{} under the additive rule, within one standard error ($367$~M\euro) of the
-Monte Carlo estimate, against $5\,946$ with a single incident loss. Under
+Monte Carlo estimate, against $5\,946$ with a single incident loss, a factor of $2.25$ instead of $3.34$. Under
 the additive rule, the joint bootstrap of severity gives a nominal $95\,\%$ band of
 $[4\,872;90\,361]$~M\euro{} for the gap, but of $[3.04;5.22]$ for the factor between states
 (Chapter~\ref{ch:robustesse}). The tail makes the level highly uncertain and the factor much less
 so; both bands remain conditional on frequency and on the other posited parameters.
 
 Public data do not say which pillar drives the other: we compute capital at the $1\,024$
-vertices of the set of admissible influence matrices, the symmetric structure being set by expert
-judgement. In the reference calibration (compliant-state frequency, gain $0.90$),
+vertices of the set of admissible influence matrices, the symmetric structure being set by the author's expert
+judgement. In the reference calibration (compliant-state frequency, gain $0.90$, no detection or accumulation, independent cascade),
 the vertex values range from $6\,858$ to $8\,697$~M\euro; recomputed over four seeds, the width
 of this range has a standard deviation of $189$~M\euro.
 
 The matrix splits into a symmetric part,
 the common strength of the links, posited here, and an antisymmetric part, their
 direction, which none of the sources examined pins down. This range is neither a confidence interval
-nor a proven bound: it measures the cost of not knowing the direction, at posited strength.
+nor a proven bound: it measures the cost of not knowing the direction, at posited strength. With all four channels, in the same cascade, the factor between states ranges from $2.96$ to $3.51$.
 
 For a notional entity with $20\,000$~M\$ of assets, we scale the sector capital down to its size.
 Frequency grows with assets at an exponent estimated on large institutions. In the non-compliant

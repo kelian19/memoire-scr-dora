@@ -226,12 +226,12 @@ décrit aussi la structure entre piliers.
 \label{sec:triangulation-agregation}
 
 La charge annuelle est une somme composée, addition d'un nombre aléatoire de pertes. Son quantile peut se calculer sans
-simuler. L'inversion de Fourier de sa fonction génératrice, méthode numérique distincte de la récursion de \citet{panjer1981}, donne $5\,945$ et $19\,890$~M\euro{} contre $6\,049$ et $20\,188$ par Monte-Carlo.
+simuler. L'inversion de Fourier de sa fonction génératrice, méthode numérique distincte de la récursion de \citet{panjer1981}, donne $5\,945$ et $19\,890$~M\euro{} contre $6\,049$ et $20\,188$ par Monte-Carlo ; le $5\,944$ du \S\ref{sec:institut-unite-perte} s'en écarte de moins que son pas de grille, $2$~M\euro.
 L'écart, de $0{,}75$ et $0{,}59$ erreur type de la référence simulée, n'est donc pas résolu. L'approximation par perte unique \citep{bockerkluppelberg2005} reste à moins de dix pour cent
 au second ordre. Ce contrôle, qui ne teste pas la vérité du modèle, vérifie l'agrégation : le quantile publié ne
 diffère pas du quantile calculé sans simulation au-delà du bruit de simulation.
 
-% SOURCES-SCRIPTS: 96
+% SOURCES-SCRIPTS: 96 119
 
 \subsection{Quantile de sévérité prédictif et robuste}
 \label{sec:predictive-robuste}
@@ -345,7 +345,7 @@ donne un quantile annuel de $38$~M\euro{}, soit le double. Le préprint climatiq
 \citet{ccrn2026} propose un plafond par exposition et une saturation renchérissant
 les atteintes simultanées. Ces formes rejoignent nos limites de transposition et
 d'additivité (\S\ref{sec:additivite-couts}). Leurs paramètres synthétiques ne sont
-pas repris, et les résultats historiques ne sont pas recalibrés.
+pas repris.
 
 \section{Défaillances simultanées et additivité des coûts}
 \label{sec:additivite-couts}
@@ -353,7 +353,7 @@ pas repris, et les résultats historiques ne sont pas recalibrés.
 La cascade produit pour chaque sinistre un ensemble de piliers touchés, si bien que la défaillance
 simultanée en est la sortie même. À l'état non conforme, elle est majoritaire : $62{,}31\,\%$ des sinistres touchent plus d'un pilier par la cascade seule, hors choc commun P4 ($73{,}25\,\%$ avec lui), contre $31{,}15\,\%$ à l'état conforme. Nous distinguons alors trois
 énoncés d'additivité. Au sein d'un sinistre, l'addition des coûts des piliers touchés est une
-hypothèse de construction, non testée. Chaque pilier y tire sa perte dans la loi calibrée sur des incidents complets.
+hypothèse de construction, non testée. Chaque pilier y tire sa perte dans la loi calibrée sur des incidents complets, ce qui porte le nombre d'incidents matériels à $5{,}67$ par an aux paramètres de base contre $3{,}19$ dans la donnée. Elle s'accorde mal avec les lectures de l'annexe~\ref{chap:adaptations}, où P2 et P3 gouvernent la détection (\S\ref{sec:detection}), P1 agit comme un modificateur et P5 comme un réducteur de fréquence (\S\ref{sec:perspectives-pilier}). Le facteur entre états dépend de ce choix : $2{,}25$ avec une perte par incident, $3{,}35$ sous la règle additive (\S\ref{sec:institut-unite-perte}).
 
 Par la cascade seule, hors choc commun P4, un sinistre simulé touche en moyenne $1{,}38$ pilier (état conforme) ou $1{,}93$ (non conforme). À taux de dépassement élémentaire de base fixé, son quantile à $99{,}5\,\%$ vaut alors $1{,}27$ ou $1{,}58$ fois celui d'un incident. Avec le choc commun P4 du moteur des quatre canaux, l'état non conforme touche $2{,}44$ piliers en moyenne et ce rapport vaut $1{,}85$. Ce n'est pas un effet sur le capital annuel : le surcroît d'incidents matériels dû à $p_u$ appliqué à chaque pilier touché est chiffré, non corrigé. En fonction des piliers non conformes, le capital est presque
 additif, comme le mesure un $R^2=0{,}9945$ sur les $32$ configurations. En fonction des quatre canaux,
@@ -375,7 +375,7 @@ saturation de la capacité de réponse tirent en sens contraire, et aucune sourc
 Croisée avec un plafond de sévérité adossé à l'exposition, appliqué par sévérité élémentaire, l'incidence de l'additivité diminue sans
 s'annuler ; le plafond amortit l'écart sans le compenser.
 
-% SOURCES-SCRIPTS: 74 68 69 86 109 118
+% SOURCES-SCRIPTS: 74 68 69 86 109 118 119
 
 \input{chapitres_inst/approfondissements_calculs}
 
@@ -386,13 +386,15 @@ Pour comparer des scénarios, et non pour arrêter un capital d'entité, trois r
 \begin{enumerate}[leftmargin=*,nosep]
 \item Juger une remédiation par l'effet de fermeture d'un canal depuis l'état de départ, sans
 additionner les gains de plusieurs canaux (chapitre~\ref{chap:resultats}).
-\item Au point d'expert, privilégier gouvernance et prestataires tiers. Quand la direction varie,
-ils arrivent le plus souvent en tête, sans garantie pour toute matrice (\S\ref{sec:res-robustesse}).
+\item Ne pas lire une priorité entre piliers comme un résultat empirique, car elle suit les barèmes de l'auteur et
+les canaux retenus. Gouvernance et prestataires tiers arrivent le plus souvent en tête, P1 à deux canaux au
+point du barème, P4 à quatre canaux par construction de l'accumulation (\S\ref{sec:res-robustesse} et
+\S\ref{sec:res-prio}). Une entité doit refaire ce classement avec ses propres données.
 \item Arbitrer entre remédier, détenir et transférer en euros par an (\S\ref{sec:detenir-transferer}).
 \end{enumerate}
 Pour le superviseur, la priorité est la donnée manquante. Les trois sources agrégées échouent pour des raisons distinctes. La chronologie américaine manque de
 taxonomie et de volume informatif, SAS OpRisk de résolution temporelle, et VERIS possède les bons
-champs sans les renseigner. La proposition~\ref{prop:nonid} précise la donnée qui identifierait $W$.
+champs sans les renseigner. La proposition~\ref{prop:nonid} précise la donnée qui distinguerait $W$ de sa transposée.
 
 Un registre d'incidents TIC devrait horodater la survenance au mois ou à la semaine et classer par
 domaine de contrôle au lieu du vecteur d'attaque. Il devrait de plus consolider une cause commune en

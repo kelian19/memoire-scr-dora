@@ -33,15 +33,15 @@ Le modèle combine le nombre annuel d'incidents, leurs pertes et leur propagatio
 domaines de contrôle. Le besoin de capital est le quantile à $99{,}5\,\%$ de la perte annuelle,
 avec addition des coûts par pilier touché. Les pénalités et les polices cyber vendues sont exclues.
 
-Sur le périmètre financier représenté par le registre, le besoin passe de $6\,049$ à $20\,188$~M\euro{} entre états
+Sur le périmètre financier du registre, le besoin passe de $6\,049$ à $20\,188$~M\euro{} entre états
 conforme et non conforme, soit un facteur $3{,}34$. Ces montants dépendent des paramètres de scénario
-et de la règle de coût. Pour une entité de $20\,000$~M\$ d'actifs, le besoin non conforme est de
+et de la règle de coût : avec une seule perte par incident, le facteur tombe à $2{,}25$. Pour $20\,000$~M\$ d'actifs, le besoin non conforme est de
 $24$~M\euro{} ($15{,}8$ à $27{,}5$ aux sommets admissibles ; $8{,}3$ à $53{,}0$ par bootstrap des
 firmes), extrapolation non validée.
 
-La propagation n'étant pas calibrable, nous posons la force des liens à dire d'expert et faisons
-varier leur sens. Dans un autre calage, le capital va de $6\,858$ à $8\,697$~M\euro{} aux $1\,024$
-sommets admissibles, dont la largeur a un écart-type de $189$~M\euro{} entre graines ; ces extrema ne sont pas des bornes globales démontrées.
+L'auteur pose la force des liens, puis fait varier leur sens. En cascade indépendante, sans détection ni accumulation, le capital
+va de $6\,858$ à $8\,697$~M\euro{} aux $1\,024$ sommets admissibles ; à quatre canaux, le facteur y va de
+$2{,}96$ à $3{,}51$. Ces extrema ne sont pas des bornes globales démontrées.
 Documenter le sens de six dépendances réduirait cette plage de $32{,}7\,\%$ en moyenne
 ($22$ à $44\,\%$ selon la graine). Ce scénario précise l'intérêt d'un registre d'incidents,
 sans garantir le gain d'une collecte.
@@ -97,14 +97,14 @@ Regulatory penalties and the cyber policies an insurer sells are excluded.
 
 For the financial perimeter represented by the loss register, capital need rises from $6\,049$ to $20\,188$~M\euro{} between the
 compliant and non-compliant states, a factor of $3.34$. These amounts depend on scenario parameters
-and on the cost rule. For an entity with $20\,000$~M\$ of assets, the non-compliant need is
+and on the cost rule: with a single loss per incident, the factor falls to $2.25$. For an entity with $20\,000$~M\$ of assets, the non-compliant need is
 $24$~M\euro{} ($15.8$ to $27.5$ at the admissible vertices; $8.3$ to $53.0$ by firm bootstrap),
 an unvalidated extrapolation.
 
-Propagation cannot be calibrated, so we set expert link strength and vary direction. In another
-calibration, capital ranges from $6\,858$ to $8\,697$~M\euro{} at the $1\,024$ admissible vertices,
-the width having a standard deviation of $189$~M\euro{} across seeds; these extrema are not
-proven global bounds. Documenting six link directions would narrow
+The author sets link strength and varies direction. Under independent cascade, without detection or accumulation, capital
+ranges from $6\,858$ to $8\,697$~M\euro{} at the $1\,024$ admissible vertices; with all four channels, the factor there
+ranges from $2.96$ to $3.51$. These extrema are not proven global bounds.
+Documenting six link directions would narrow
 this range by $32.7\,\%$ on average, from $22$ to $44\,\%$ depending on the simulation seed.
 This scenario indicates the potential value of an incident register without guaranteeing
 the benefit of collecting actual observations.
@@ -127,4 +127,4 @@ the benefit of collecting actual observations.
 
 % =====================================================================
 
-% SOURCES-SCRIPTS: 28 39 33 43 68 92 66 89 91 100 30 55 65 117 130 134 136
+% SOURCES-SCRIPTS: 28 39 33 43 68 92 66 89 91 100 30 55 65 117 130 134 136 119 140

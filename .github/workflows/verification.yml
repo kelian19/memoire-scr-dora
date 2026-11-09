@@ -1,11 +1,12 @@
 # Verification continue du memoire, a chaque push et a chaque pull request.
 #
-# Trois jobs :
+# Quatre jobs :
 #   1. garde-fous  : structure, liens documentaires, fichiers interdits et tests
 #                    sur Windows et Linux ;
 #   2. harnais     : chaque nombre publie est confirme par la sortie versionnee du script
 #                    qui le calcule ;
-#   3. compilation : la chaine complete du projet, refaire_tout.py, compile les deux versions,
+#   3. scientifique : tests des modeles sur donnees synthetiques, sans donnees sous licence ;
+#   4. compilation : la chaine complete du projet, refaire_tout.py, compile les trois versions,
 #                    controle debordements, references cassees, pages et flottants, et
 #                    verifie que la version Institut, figee depuis le 1er octobre 2026, garde
 #                    le contenu du PDF committe.
@@ -63,10 +64,25 @@ jobs:
       - name: Chaque nombre publié est confirmé par la sortie de son script
         run: python outils/ci/harnais_strict.py
 
+  scientifique:
+    name: Tests scientifiques
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-test.txt
+      - name: Dépendances des tests sans données privées
+        run: python -m pip install -r requirements-test.txt
+      - name: Modèles et simulations
+        run: python -m pytest recherche/vasicek_lab/tests src/tests -q
+
   compilation:
     name: Compilation et contrôles du mémoire
     runs-on: ubuntu-latest
-    needs: [garde-fous, harnais]
+    needs: [garde-fous, harnais, scientifique]
     steps:
       - uses: actions/checkout@v4
 
@@ -86,11 +102,6 @@ jobs:
 
       - name: Chaîne complète du mémoire (le harnais est passé au job précédent)
         run: python memoire/refaire_tout.py --sans-harnais
-
-      - name: Version Institut actuelle
-        run: |
-          tectonic --keep-logs memoire/main_institut_150.tex
-          python -c "import pymupdf; d=pymupdf.open('memoire/main_institut_150.pdf'); assert d.page_count == 156, d.page_count; assert not any('??' in p.get_text() for p in d), 'Renvoi non resolu'"
 
       - name: PDF de contrôle
         if: always()

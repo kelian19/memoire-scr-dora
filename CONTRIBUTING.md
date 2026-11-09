@@ -10,6 +10,8 @@ Pour une correction, ouvrir une pull request contre `main` et exécuter :
 python projet.py structure
 python outils/ci/harnais_strict.py
 python -m unittest discover -s outils/ci -p "test_*.py"
+pip install -r requirements-test.txt
+python -m pytest recherche/vasicek_lab/tests src/tests -q
 ```
 
 Pour les changements LaTeX, compiler le document concerné avec Tectonic et contrôler les

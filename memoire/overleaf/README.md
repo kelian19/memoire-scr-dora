@@ -13,14 +13,15 @@ Le compilateur à sélectionner est **XeLaTeX**.
 Depuis la racine du dépôt, créer un export dans un dossier neuf :
 
 ```powershell
-.venv/Scripts/python.exe -X utf8 outils/ci/exporter_overleaf_institut.py docs/collaboration/local/overleaf_nexialog_2026-11-04 --nexialog --date 2026-11-04
+.venv/Scripts/python.exe -X utf8 outils/ci/exporter_overleaf_institut.py docs/collaboration/local/overleaf_nexialog_2026-11-09 --nexialog --date 2026-11-09
 ```
 
 Conserver ou ajouter **`RequiredFiles/fond_latex_2.pdf`** depuis le projet Nexialog.
 Ce fond n'est pas disponible dans le dépôt et n'est donc pas inclus dans l'export.
 
-Les exports préparés le 4 novembre remplacent ceux du 29 octobre : ils incluent les corrections
-du mémoire de 156 pages et la figure issue du script 139. Le fichier `MANIFESTE_EXPORT.json`
+Les exports préparés le 9 novembre incluent les corrections des 5 et 6 novembre et la figure
+issue du script 139. Ils portent sur le document de travail de 158 pages, au-dessus de la cible
+de remise de 150 pages ; ils ne constituent pas une validation de dépôt. Le fichier `MANIFESTE_EXPORT.json`
 donne la liste et l'empreinte de chaque dépendance. Une préparation sans `--nexialog` conserve
 les chemins du projet Institut ; la variante Nexialog regroupe les figures dans `figures_memoire/`.
 

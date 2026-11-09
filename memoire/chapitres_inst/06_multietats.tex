@@ -119,12 +119,12 @@ d'une fourchette de multiplicateur propre au scénario non conforme.
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{@{}l r c r r >{\raggedright\arraybackslash}p{5.2cm}@{}}
 \toprule
-\textbf{Vecteur} & \textbf{Part $\pi_v$} & \textbf{Fourchette} & \textbf{Centre} & \textbf{$\pi_v\,m_v$} & \textbf{Effet publié qui ancre la fourchette} \\
+\textbf{Vecteur} & \textbf{Part $\pi_v$} & \textbf{Fourchette} & \textbf{Centre} & \textbf{$\pi_v\,m_v$} & \textbf{Source voisine, sans effet de conformité mesuré} \\
 \midrule
-Hameçonnage & $0{,}388$ & $[1{,}8\,;3{,}0]$ & $2{,}40$ & $0{,}9312$ & réduction du risque par la formation (Ponemon/IBM) \\
-Exploitation de vulnérabilité & $0{,}338$ & $[2{,}0\,;2{,}6]$ & $2{,}30$ & $0{,}7774$ & écart de conversion en intrusion entre exploitation et hameçonnage (ENISA) \\
-Chaîne d'approvisionnement & $0{,}158$ & $[1{,}9\,;2{,}6]$ & $2{,}25$ & $0{,}3555$ & surcoût et progression des brèches d'origine tierce (IBM, SecurityScorecard) \\
-Identifiants compromis & $0{,}063$ & $[3{,}0\,;8{,}0]$ & $5{,}50$ & $0{,}3465$ & réduction de compromission par l'authentification forte (Microsoft Research) \\
+Hameçonnage & $0{,}388$ & $[1{,}8\,;3{,}0]$ & $2{,}40$ & $0{,}9312$ & coût évité par la formation, non un effet de fréquence \citep{ibm2025} \\
+Exploitation de vulnérabilité & $0{,}338$ & $[2{,}0\,;2{,}6]$ & $2{,}30$ & $0{,}7774$ & cas menant à une intrusion, $70\,\%$ pour l'exploitation et $27\,\%$ pour l'hameçonnage \citep{enisa2025} \\
+Chaîne d'approvisionnement & $0{,}158$ & $[1{,}9\,;2{,}6]$ & $2{,}25$ & $0{,}3555$ & coût et part des brèches d'origine tierce \citep{ibm2025,securityscorecard2025} \\
+Identifiants compromis & $0{,}063$ & $[3{,}0\,;8{,}0]$ & $5{,}50$ & $0{,}3465$ & compromission réduite de $99{,}22\,\%$ par l'authentification forte, par compte \citep{meyer2023} \\
 Autres & $0{,}053$ & $[1{,}3\,;1{,}6]$ & $1{,}45$ & $0{,}0769$ & aucune source dédiée \\
 \midrule
 \multicolumn{4}{@{}l}{Multiplicateur agrégé, état non conforme} & $2{,}4875$ & $21{,}56\times 2{,}4875 = 53{,}62$ incidents par an \\
@@ -132,13 +132,27 @@ Autres & $0{,}053$ & $[1{,}3\,;1{,}6]$ & $1{,}45$ & $0{,}0769$ & aucune source d
 \end{tabular}
 \end{center}
 
-\noindent Ce multiplicateur est posé, non calibré : les parts sont une citation externe, et
-chaque fourchette traduit un effet publié en multiplicateur prudent. Aux bornes des fourchettes, il
+\noindent Ce multiplicateur est posé, non calibré : les parts sont une citation externe, et les
+fourchettes sont des choix de l'auteur. Aucune de ces sources ne mesure l'écart de fréquence entre une entité
+conforme et une entité non conforme : l'une porte sur un contrôle, par compte, l'autre compare deux vecteurs, et les
+dernières chiffrent un coût ou une part de brèches. Elles situent des ordres de grandeur sans fixer la
+fourchette. Aux bornes des fourchettes, il
 va de $1{,}933$ à $3{,}042$, ce qui donne une fréquence non conforme de $41{,}7$ à $65{,}6$ incidents
 par an. Le vecteur des identifiants, avec $6{,}3\,\%$ des incidents, représente $13{,}9\,\%$ du
 multiplicateur.
 
-% SOURCES-SCRIPTS: 67 99 43
+% SOURCES-SCRIPTS: 67 99 43 140
+
+La fréquence observée, $21{,}56$ incidents par an, est affectée à l'état conforme, et le taux de dépassement
+observé à l'état partiel ($\times 1{,}00$). Ces deux affectations sont des conventions de calage. Le registre couvre
+2000--2026, presque entièrement avant l'application de DORA, sur des entités dont l'état n'est pas connu : rien
+n'indique qu'elles aient été conformes. À multiplicateurs inchangés, déplacer ces ancrages laisse le facteur entre
+états entre $3{,}21$ et $3{,}41$ (écart-type entre graines de $0{,}04$ à $0{,}20$). Les niveaux bougent
+nettement, de $2\,964$ à $6\,863$~M\euro{} à l'état conforme, de $10\,113$ à $22\,039$~M\euro{} à l'état non conforme, pour un
+écart de $7\,149$ à $15\,176$~M\euro. Si la fréquence observée décrivait l'état non conforme, le besoin de cet état
+vaudrait ainsi $11\,413$~M\euro{} au lieu de $20\,188$. L'écart en euros dépend donc de l'ancrage, le facteur très peu ; ce
+constat ne valide pas les multiplicateurs, maintenus fixes.
+% SOURCES-SCRIPTS: 140
 
 
 \section{Valeurs posées de \texorpdfstring{$g$}{g} et invariance de l'ordre}

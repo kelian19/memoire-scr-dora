@@ -350,7 +350,7 @@ la dépendance déclarée et ne dit rien de l'ordre dans lequel les défaillance
 
 À notre connaissance, les autorités de supervision ne publient pas de probabilité de propagation entre
 piliers. Elles publient des attentes prudentielles et des échelles de maturité, qui sont d'une autre nature. Les
-valeurs de propagation du modèle sont donc posées à dire d'expert, puis bornées, et nous ne les
+valeurs de propagation du modèle sont donc posées par l'auteur à dire d'expert, puis bornées, et nous ne les
 présentons pas comme calibrées sur une source officielle.
 
 \section{Perception du risque et traitement prudentiel}
@@ -494,24 +494,16 @@ limites relevées ci-dessous portent donc sur son adéquation à l'objet étudi�
 réglementaire. Faute de sous-module cyber, l'évaluation de cet objet revient aux modèles internes
 et à l'ORSA. Deux propriétés de la formule fondent la critique.
 
-\begin{proposition}[Invariance et homogénéité de la charge forfaitaire]\label{prop:forfait}
 Soit $v$ le vecteur des grandeurs de volume d'une entité : primes acquises de l'exercice et de
 l'exercice précédent, provisions techniques, $BSCR$ et $Exp_{ul}$. Soit $\theta$ les paramètres
 de sa loi de perte opérationnelle : fréquence, détection, propagation et accumulation.
 \begin{enumerate}[label=(\roman*)]
-\item $SCR_{Op}$ est une fonction de $v$ seule : à $v$ fixé, il ne dépend pas de $\theta$.
+\item $SCR_{Op}$ est une fonction de $v$ seule : à $v$ fixé, il ne dépend pas de $\theta$. L'article~204 du règlement délégué~2015/35 n'emploie en effet comme arguments que les composantes de $v$.
 \item $SCR_{Op}$ est positivement homogène de degré un : $SCR_{Op}(c\,v)=c\,SCR_{Op}(v)$ pour tout
-$c>0$, termes de croissance et plafond compris.
+$c>0$, termes de croissance et plafond compris. Chaque terme de $Op_{premiums}$ et de $Op_{provisions}$ est en effet de la forme $\alpha x$ ou
+$\max(0,\alpha x-\beta y)$, où $\alpha,\beta\ge0$ sont fixés et $x,y$ sont des composantes de $v$. Le maximum, le minimum et la somme de telles
+fonctions restent homogènes, d'où l'homogénéité de $\min(0{,}3\,BSCR,\ Op)+0{,}25\,Exp_{ul}$.
 \end{enumerate}
-\end{proposition}
-
-\begin{proof}
-(i) L'article~204 du règlement délégué~2015/35 n'emploie comme arguments que les composantes de
-$v$. (ii) Chaque terme de $Op_{premiums}$ et de $Op_{provisions}$ est de la forme $\alpha x$ ou
-$\max(0,\alpha x-\beta y)$. Ici $\alpha,\beta\ge0$ sont fixés et $x,y$ sont des composantes de $v$. Ces
-fonctions sont positivement homogènes de degré un. Le maximum, le minimum et la somme de telles
-fonctions le restent, d'où l'homogénéité de $\min(0{,}3\,BSCR,\ Op)+0{,}25\,Exp_{ul}$.
-\end{proof}
 
 La propriété~(i) implique qu'à volume égal l'écart de charge entre un état conforme et un état non
 conforme est nul. La propriété~(ii) fixe à un l'élasticité de la charge lorsque tous les volumes,
@@ -531,7 +523,7 @@ sont établies aux chapitres de renvoi.
 \midrule
 L1 · Indicateur de volume
 & Arguments : primes, provisions, BSCR et frais des unités de compte ; le terme de croissance pénalise une hausse des primes, non du risque.
-& Écart de charge nul entre états de même volume (proposition~\ref{prop:forfait}, tableau~\ref{tab:benchmark-sf}) ; une remédiation ne modifie pas le capital.
+& Écart de charge nul entre états de même volume (propriété~(i), tableau~\ref{tab:benchmark-sf}) ; une remédiation ne modifie pas le capital.
 & Quatre canaux de conformité dans la loi de perte (chapitre~\ref{chap:multietats}). \\
 \addlinespace
 L2 · Proportionnalité à la taille
@@ -562,7 +554,7 @@ L6 · Absence d'historique de pertes
 \end{tabularx}
 \endgroup
 \caption{Six limites du module de risque opérationnel pour la question étudiée, et réponses
-examinées dans le mémoire. L1 et L2 découlent de la proposition~\ref{prop:forfait} ; L3 à L6 tiennent
+examinées dans le mémoire. L1 et L2 découlent des propriétés~(i) et~(ii) ; L3 à L6 tiennent
 à la construction du module.}
 \label{tab:critique-formule-standard}
 \end{table}

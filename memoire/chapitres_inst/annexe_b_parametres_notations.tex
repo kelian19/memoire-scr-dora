@@ -36,10 +36,9 @@
 
 \section{Nature et sensibilité des paramètres}
 
-Trois natures sont distinguées : calibré sur données (avec son incertitude),
-\emph{posé} par jugement d'expert ou choix normatif (non identifiable, cf.\
-chapitre~\ref{ch:identifiabilite}), et semi-ancré sur un proxy externe non
-spécifique au périmètre.
+Deux natures sont distinguées : calibré sur données (avec son incertitude), et
+\emph{posé} par jugement de l'auteur ou choix normatif (non identifiable, cf.\
+chapitre~\ref{ch:identifiabilite}), une source voisine pouvant en situer l'ordre de grandeur.
 
 \vspace{0.25cm}
 % PASSEE DE tabular A longtable LE 17 AOUT 2026. Cette table tenait sur une page tant que rien
@@ -67,16 +66,16 @@ spécifique au périmètre.
 Queue de sévérité $\xi$ & $0{,}5954$ (OpRisk, résultat principal) ; PRC $1{,}03$ ; $0{,}90$ posé en pire cas de modèle & calibré, incertain & GPD sur pertes réelles ; hétérogène par catégorie ($0{,}87$--$1{,}37$) & \textbf{forte} : de $0{,}60$ à $0{,}34$ quand le seuil monte au-dessus de celui retenu, dans l'IC90 $[0{,}30\,;0{,}83]$ ; pilote la queue \\
 Échelle GPD $\sigma$, seuil $u$, $p_u$ & $57{,}97$ M\euro{} ; $20{,}03$ M\euro{} ; $0{,}15$ & calibré & POT au percentile $85$ de l'échantillon 2000--2026, $86$ excès sur $570$ pertes ; $p_u=86/570$ (\S\ref{sec:pu-coherence}) & modérée (via la queue) \\
 Fréquence $\lambda$ & ${\sim}21{,}6$/an (OpRisk) & convention de calage & $582$ événements collectés / 27 ans, dont douze d'avant 2000 : $+2{,}1\,\%$ sur l'échantillon (\S\ref{sec:pu-coherence}) & sous-linéaire sur le niveau \\
-Multiplicateur de fréquence par état & $\times 1{,}525$ partiel ; $\times 2{,}487$ non conforme ($\lambda$ de $21{,}56$ à $53{,}62$) & semi-ancré & parts Hackmageddon et fourchettes posées sur des effets publiés (chapitre~\ref{chap:multietats}) ; aux bornes, $\lambda$ de $41{,}7$ à $65{,}6$ & \textbf{forte} : canal dominant du résultat principal \\
+Multiplicateur de fréquence par état & $\times 1{,}525$ partiel ; $\times 2{,}487$ non conforme ($\lambda$ de $21{,}56$ à $53{,}62$) & \textbf{posé} & parts Hackmageddon citées, fourchettes de l'auteur ; aucune source ne mesure l'effet de la conformité (chapitre~\ref{chap:multietats}) ; aux bornes, $\lambda$ de $41{,}7$ à $65{,}6$ & \textbf{forte} : canal dominant du résultat principal \\
 Sur-dispersion $\phi$ & $9{,}20$ & \textbf{posé} (prudent) & $2{,}24$ mesuré sur la série annuelle détendancée ($2{,}39$ sur la série brute), maintenu entre scénarios & élasticité $-0{,}44$ sur l'écart entre états \\
 Choc commun fréquence $a$ & $0{,}60$ & \textbf{posé} (prudent) & dépasse l'IC empirique haut ($0{,}22$) : conservateur & enveloppe le modèle à paquets ($\times 2{,}5$) \\
 Structure $W = g\,T/s_{\max}$ & classeur qualitatif & \textbf{posé} / normatif & jugement d'expert consigné ; direction non identifiable & l'asymétrie départage les deux piliers de tête ; l'essentiel de l'écart de capital dû à la contagion vient de la partie symétrique \\
 Gain de propagation $g$ & $0{,}90$ base ; par état $0{,}45/0{,}68/0{,}90$ & \textbf{posé} & amplitude de $W$, bornée par Leontief $\rho(W)\le g<1$ & \textbf{levier} : $\times 1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
 Score de conformité $q$ / états & continu $[0,1]$ (ou NC/PC/C) & \textbf{posé} & décrit le profil, subsume 3 ou 5 niveaux & \textbf{levier} : $-53\,\%$ de NC à C sur le seul score ; facteur $3{,}34$ sur les quatre canaux \\
 Multiplicateur de matérialité par état & $0{,}85/1{,}00/1{,}20$ & \textbf{posé} & module $p_u$ selon la conformité ($0{,}1509$ calibré, soit $0{,}128$ à $0{,}181$) & modérée (canal détection) \\
-Charge systémique $\gamma$ & $0{,}68$ & semi-ancré & proxy concentration cloud (AWS+Azure+GCP, Synergy 2025) & modérée \\
+Charge systémique $\gamma$ & $0{,}68$ & \textbf{posé} & même ordre que la part cumulée de trois fournisseurs de nuage, $63\,\%$ \citep{synergy2025}, sans en être déduite & modérée \\
 Seuil de crise $\theta_{\text{crise}}$ & $-2{,}5$ & \textbf{posé} & déclenche le régime de co-mouvement extrême & agit sur la seule queue crise \\
-Probabilités d'état $P(\text{NC/PC/C})$ & $0{,}35/0{,}35/0{,}30$ & semi-ancré & enquêtes conformité DORA ${\sim}50\,\%$ non conformes (Deloitte, ESA) & déplace le mélange, pas les états \\
+Probabilités d'état $P(\text{NC/PC/C})$ & $0{,}35/0{,}35/0{,}30$ & \textbf{posé} & non déduites des enquêtes. Sur $36$ entités, $50\,\%$ attendent la pleine conformité fin 2025, et $8$ à $48\,\%$ se disent pleinement conformes selon le pilier \citep{deloitte2025} ; $6{,}5\,\%$ de $947$ registres passent tous les contrôles \citep{esas2024dryrun}. Le mélange posé compte $0{,}70$ d'états non pleinement conformes & déplace le mélange, pas les états \\
 Copule de dépendance $\theta$ & Gumbel $1{,}8$ & \textbf{posé} & queue supérieure entre briques & \textbf{négligeable} : $\Delta_{\text{DORA}}$ $<1{,}4\,\%$ sur $[1,4]$ \\
 Excès de source $u_{ij}$ & $\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ & \textbf{non identifié} & la direction elle-même ; normalisation $\sum_i u_{ij}=0$ (repérage, non information) & mesurée par l'échelle de repli (ch.~\ref{chap:partielle}) : rang~$1$ capte $74\,\%$ et resserre les bornes de $25\,\%$ ; à $u=0$ P1 et P4 deviennent indiscernables \\
 Élasticité sévérité/taille $b$ & $0{,}087$ $[0{,}026\,;0{,}148]$ & calibré, tronqué & EMV lognormale tronquée au seuil de collecte (ch.~\ref{chap:donnees}) & faible : $\times 0{,}86$ sur la sévérité transposée \\
@@ -86,7 +85,7 @@ Plafond de sévérité & $40$ M\euro{} & \textbf{posé} & capacité de réassura
 }
 
 \vspace{4pt}
-% SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43 76 136 137
+% SOURCES-SCRIPTS: 08b 22 25 34 47 60 67 99 43 76 136 137 140
 
 Les paramètres à forte sensibilité sont calibrés sur données (la queue $\xi$, d'incertitude chiffrée) ou
 sont des \emph{leviers voulus} ($g$, $q$, le multiplicateur de fréquence), qui portent l'effet de la

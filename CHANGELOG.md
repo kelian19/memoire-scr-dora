@@ -1,16 +1,25 @@
 # Journal des versions
 
+## 1.2.3 — 9 novembre 2026
+
+- Correctifs de modélisation et de documentation des 5–6 novembre récupérés depuis `style`.
+- Institut de travail : 158 pages, SHA-256 `B11E6386…` ; cible de remise 150 pages toujours bloquante.
+- Soutenance ENSAE : parcours de 21 diapositives sur 23 pages, puis treize réserves ; script de répétition régénéré dans le dépôt de travail.
+- Annexe Institut sur le comptage journalier alignée sur le mémoire ; ancien temps d'arrêt retiré des slides.
+- Dépendances des tests scientifiques incluses ; workflow de compilation à trois versions conservé, sans double compilation ajoutée par l'exporteur.
+- Harnais de l'export : 7 548 nombres confirmés. Ce contrôle ne valide ni les hypothèses ni la cible de pages.
+
 ## 1.2.2 — 4 novembre 2026
 
 - Soutenance Institut : parcours de 25 diapositives sur 28 pages, puis réserves et annexes ; 79 pages au total.
 - Soutenance ENSAE : 22 diapositives principales sur 26 pages, puis downscaling après dépôt en réserve R1, page 27.
 - Documentation des supports et de l'export Overleaf actualisée ; listes de la variante Nexialog alignées sur le maître Institut.
-- Mémoire Institut : 156 pages, empreinte `DE3E1B78…` ; contenu du PDF conservé.
-- Harnais de l'export : 7 437 nombres confirmés. Les limites de calibration et d'identification restent déclarées.
+- Mémoire Institut : 158 pages, empreinte `B11E6386…` ; contenu du PDF conservé.
+- Harnais de l'export : 7 548 nombres confirmés. Les limites de calibration et d'identification restent déclarées.
 
 ## 1.2.1 — 2 novembre 2026
 
-- Institut actuel : 156 pages, SHA-256 `DE3E1B78…`.
+- Institut actuel : 158 pages, SHA-256 `B11E6386…`.
 - Résumé, abstract et figure 9.3 alignés sur la descente retenue ; script 139.
 - Périmètre financier limité au registre, sans généralisation au secteur mondial.
 - Beamer Institut recalé sur 24,1 M€, comparaison des entités, VaR/ES et capture.
@@ -18,7 +27,7 @@
 - Empreinte, pagination de contrôle et guides publics synchronisés.
 - Cours et questions : compléments Institut actualisés sur 136–139, distinction avec le rapport ENSAE déposé ; sources de compilation incluses.
 - Relecture par l'agent Caroline : contraste MOVEit présenté comme descriptif sans test du net, recommandations P1/P4 conditionnelles à la direction, normalisation de la descente précisée. Cette revue n'est pas une validation humaine.
-- Harnais de cet export : 7 437 nombres confirmés ; aucune validation économique du niveau n'en découle.
+- Harnais de cet export : 7 548 nombres confirmés ; aucune validation économique du niveau n'en découle.
 
 ## 1.2.0 — 29 octobre 2026
 

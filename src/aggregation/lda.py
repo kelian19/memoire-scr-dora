@@ -111,9 +111,18 @@ def simulate_year_3_briques(lambda_annual: float, severity_params: dict,
     cap = severity_params.get("severity_cap", None)
 
     # --- Fréquence annuelle (Loi Binomiale Négative) ---
-    r = lambda_annual / (dispersion - 1) if dispersion > 1 else lambda_annual
-    p = r / (r + lambda_annual)
-    freqs = rng.negative_binomial(r, p, size=n_sim)
+    if not np.isfinite(lambda_annual) or lambda_annual < 0:
+        raise ValueError("lambda_annual doit être finie et positive ou nulle")
+    if not np.isfinite(dispersion) or dispersion < 1:
+        raise ValueError("dispersion_factor doit être fini et supérieur ou égal à 1")
+    if lambda_annual == 0:
+        freqs = np.zeros(n_sim, dtype=int)
+    elif dispersion == 1:
+        freqs = rng.poisson(lambda_annual, size=n_sim)
+    else:
+        r = lambda_annual / (dispersion - 1)
+        p = r / (r + lambda_annual)
+        freqs = rng.negative_binomial(r, p, size=n_sim)
     total_events = int(freqs.sum())
 
     # --- BRIQUE 1 : Remédiation (Base GPD) ---
@@ -176,7 +185,9 @@ def simulate_year_3_briques(lambda_annual: float, severity_params: dict,
     brique_prestataire = brique_prestataire * (1.0 + U[:, 1] * max_stress)
 
     # --- BRIQUE 3 : Sanction (Pilotée par la PCD et U[:, 2]) ---
-    sanction_survient = U[:, 2] < pcd_sanction
+    # Une sanction accompagne les grandes valeurs de stress de la copule.
+    # La probabilité marginale reste pcd_sanction.
+    sanction_survient = U[:, 2] > 1.0 - pcd_sanction
     low_s, high_s = BRIQUE_PARAMS["sanction"]["montant_range_eur_m"]
     
     # Tirage Bêta mis à l'échelle des plafonds réglementaires

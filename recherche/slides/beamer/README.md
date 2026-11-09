@@ -1,13 +1,15 @@
 # Supports de soutenance
 
 Le [support ENSAE](soutenance_ensae.pdf) accompagne le rapport court
-[`main_ensae.pdf`](../../../memoire/main_ensae.pdf). Il comporte 22 diapositives principales sur
-26 pages PDF, puis la réserve R1 en page 27, consacrée au downscaling après dépôt.
+[`main_ensae.pdf`](../../../memoire/main_ensae.pdf). Il comporte 21 diapositives principales sur
+23 pages PDF, puis treize réserves R1 à R13, pages 24 à 37.
 Les autres compléments après dépôt sont signalés dans le support.
 Le fichier ENSAE courant contient des corrections postérieures au dépôt ; le script de préparation
 du dépôt de travail distingue la copie du jury et ces corrections.
 Le choix des paramètres distingue les bases issues des données, les hypothèses entre états
 et les plages de scénario ; le multiplicateur de fréquence est détaillé par vecteur d'attaque.
+Le seuil et les paramètres sont détaillés dans les réserves R1 et R2. La descente à l'entité
+figure dans l'exposé, en diapositive 18, avec son statut de complément après dépôt non validé.
 
 Le [support Institut](soutenance_institut.pdf) est distinct et accompagne
 [`main_institut_150.tex`](../../../memoire/main_institut_150.tex). Il comporte un parcours de

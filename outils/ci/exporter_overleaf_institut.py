@@ -106,6 +106,7 @@ def main():
         "Document principal : main.tex. Compilateur : XeLaTeX.\n"
         "Contenu : version Institut actuelle, dont la methode de downscaling et la comparaison d'entites.\n"
         "PDF local de reference : memoire/main_institut_150.pdf. Le nombre de pages est a verifier apres compilation.\n"
+        "Export de travail : il ne remplace pas les controles de depot de python projet.py depot.\n"
         "Les chemins de figures sont adaptes a la racine de ce projet autonome.\n"
         "Les donnees brutes et les scripts Python ne sont pas necessaires a la compilation.\n"
         + fond_note,

@@ -767,14 +767,14 @@ AMF_DORA_2025 = {
 }
 
 # ---------------------------------------------------------------------------
-# MULTIPLICATEURS DORA — sources de calibration (résumé ; détail dans negbin.py)
+# MULTIPLICATEURS DORA — sources voisines, bornes posées (détail dans negbin.py)
 # ---------------------------------------------------------------------------
 
 MULTIPLICATEURS_SOURCES = {
-    "phishing_social_eng": "Ponemon/IBM 2025 — formation réduit le risque jusqu'à 86%",
-    "exploit_vuln":        "ENISA Threat Landscape 2025 — conversion 70% vs 27%, ratio ×2.6",
-    "supply_chain_tiers":  "IBM/Ponemon + SecurityScorecard — surcoût +11.8%/+8.3%, part 15%→36%",
-    "identifiants":        "Microsoft Research arXiv:2305.00945 — MFA réduit 99.22% (tempéré)",
+    "phishing_social_eng": "IBM/Ponemon 2025 — formation : effet sur le coût, non la fréquence DORA",
+    "exploit_vuln":        "ENISA 2025 — conversion 70% vs 27%, sans effet de conformité estimé",
+    "supply_chain_tiers":  "IBM/Ponemon 2025 — coûts ; SecurityScorecard 2025 — part tierce 35.5% en 2024",
+    "identifiants":        "Meyer et al. 2023, arXiv:2305.00945 — MFA : 99.22% par compte, non par entité",
     "multiplicateur_global_S2": 2.49,   # centre ; IC90% λ = [742.7, 947.4]
 }
 

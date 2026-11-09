@@ -647,7 +647,7 @@
     \end{tabularx}\par\vspace{2mm}
     \textbf{Protocole.} Même moteur, mêmes graines, même sévérité de base : seuls ces quatre paramètres changent.
     On compare $\VaR_{99{,}5\,\%}(L_{\mathrm{NC}})$ et $\VaR_{99{,}5\,\%}(L_{\mathrm{C}})$.\par\vspace{1mm}
-    {\scriptsize\color{gris}Valeurs non conformes posées (multiplicateurs de scénario), non estimées.}
+    {\scriptsize\color{gris}Écarts posés, non estimés. Affecter la fréquence observée à C et le $p_u$ observé à PC est une convention.}
     \column{.38\textwidth}
     \centering
     \begin{tikzpicture}[x=1mm,y=1mm]
@@ -728,7 +728,7 @@
     Conclusion & Ce qu'on fait varier & Effet mesuré & Verdict \\
     \midrule
     $\Delta_{\mathrm{DORA}}$ positif, de plusieurs milliers de M€ & Source de sévérité (OpRisk / PRC) ; copule ($\theta\in[1,4]$) & Facteur $\sim1{,}9$ entre sources ; $<1{,}4\,\%$ sur $\theta$ & \textsc{robuste} \\
-    \rowcolor{clair}Priorité P1 puis P4 & Cadre de dépendance ; branchement contre marche, à direction fixée & P1 et P4 en tête dans ces comparaisons ; capital $\pm4\,\%$ & \textsc{conditionnel} \\
+    \rowcolor{clair}Priorité selon les canaux & Deux canaux contre quatre, à direction fixée & P1 puis P4 en lecture B ; P4 puis P1 à quatre canaux & \textsc{conditionnel} \\
     L'asymétrie de $W$ décide de l'ordre P1 / P4 & Partie antisymétrique supprimée ; placebo & Sans la direction, P1 et P4 ne se distinguent plus & \textsc{assumé} \\
     \rowcolor{clair}Les lois du socle prédisent une période non vue & Origine glissante, douze années & Couverture $91{,}7\,\%$ contre $75{,}0\,\%$ ; queue non rejetée ; peu de puissance & \textsc{assumé} \\
     \rowcolor{clair}Fréquence indépendante de la période Hackmageddon & Quatre jeux de parts, 2025--2026 & $2{,}318$ à $2{,}471$ contre $2{,}487$ ($6{,}8\,\%$ au plus) & \textsc{robuste} \\
@@ -748,20 +748,20 @@
 \section{Recommandations et bilan}
 \begin{frame}{Dans quel ordre remédier ?}
   \suivimethode{5,7}{Cascade, capital}
-  \framesubtitle{\ajout Cent vingt ordres énumérés, un ordre optimal}
+  \framesubtitle{\ajout L'ordre dépend des canaux retenus et du barème de l'auteur}
   \begin{columns}[T,onlytextwidth]
     \column{.50\textwidth}\footnotesize
-    \textbf{Ordre optimal.} Sous budget contraint, un pilier remédié à la fois : P1 $\to$ P4 $\to$ P2 $\to$ P3 $\to$ P5, égal à l'ordre ROOT et distinct de l'ordre glouton par valeur d'accélération. L'écart de capital intégré entre le pire ordre et l'optimal atteint $21\,\%$ : les interactions de cascade imposent de raisonner sur l'horizon entier.\par\vspace{1.5mm}
+    \textbf{Deux canaux, lecture B.} Parmi les 120 ordres, P1 $\to$ P4 $\to$ P2 $\to$ P3 $\to$ P5 minimise le capital intégré. L'écart entre le pire ordre et l'optimal atteint $21\,\%$.\par\vspace{1.5mm}
+    \textbf{Quatre canaux.} P4 $\to$ P1 $\to$ P2 $\to$ P3 $\to$ P5 devient optimal. Le pire ordre coûte $38{,}7\,\%$ de plus que cet optimum. P4 est premier sur les huit graines.\par\vspace{1.5mm}
     \textbf{Trajectoire.} Depuis une répartition supposée des états (NC 35\,\%, PC 35\,\%, C 30\,\%), en lecture B, le capital OpRisk passe de 10\,752 à 7\,041 M€ en cinq ans. Le surcoût résiduel tend vers zéro ; son intégrale, à un coût de capital près, est le coût de portage de la non-conformité.\par\vspace{1.5mm}
     \textbf{Invariance.} L'ordre optimal ne dépend que des SCR par configuration, donc pas des taux de transition de la chaîne de Markov.
     \column{.46\textwidth}\footnotesize
-    {\editorial\normalsize Robustesse de la priorité}\par\vspace{1.5mm}
-    Sur les 220 directions examinées, P1 arrive premier dans $43{,}6\,\%$ des configurations et P4 dans $37{,}7\,\%$, avec un regret maximal de $1{,}5\,\%$ : \textbf{presque à égalité}. P5 n'arrive jamais en tête.\par\vspace{1.5mm}
-    Les rapports post-incident pouvant sur-attribuer à la gouvernance, on dégrade l'émission de P1 par $W_{1k}\to(1-a)W_{1k}$ : le classement tient jusqu'à $a=0{,}25$, puis bascule vers P4 à $a=0{,}50$. À $a=1$, le besoin de l'entité baisse de $37{,}7\,\%$ sous la descente retenue.\par\vspace{1.5mm}
-    Sans la direction (partie antisymétrique supprimée), P1 et P4 ne se distinguent plus.\par\vspace{1mm}
-    {\color{accent}Donc :} P1/P4 sont prioritaires au point d'expert ; d'autres piliers passent devant quand la direction varie.
+    {\editorial\normalsize Un classement conditionnel}\par\vspace{1.5mm}
+    À quatre canaux, les parts de Shapley sont $40{,}6\,\%$ pour P4 et $25{,}6\,\%$ pour P1 (écarts-types entre graines : 190 et 208 M€). L'accumulation posée agit sur P4 ; son rang en découle.\par\vspace{1.5mm}
+    En lecture B, sur les 220 directions examinées, P1 arrive premier dans $43{,}6\,\%$ des cas et P4 dans $37{,}7\,\%$. Le regret maximal est de $1{,}5\,\%$.\par\vspace{1.5mm}
+    Une entité doit refaire ce classement avec ses données et ses coûts. Aucun de ces rangs ne mesure empiriquement l'effet de DORA.
   \end{columns}
-  \source{rapport, chapitre 9 (§ 9.4, 9.5 et 9.6) et chapitre 10 (§ 10.1).}
+  \source{rapport, § 9.3, 9.4 et 10.8 ; script 140. Barèmes et accumulation posés par l'auteur.}
 \end{frame}
 
 \begin{frame}{Quel registre d'incidents faudrait-il ?}
@@ -798,10 +798,10 @@
   \begin{columns}[T]
     \column{.30\textwidth}
     \chiffre{$\times\,3{,}34$}{Capital entre deux états de conformité supposés}
-    \vspace{1.5mm}\footnotesize L'effet est conditionnel aux quatre canaux et à l'addition des pertes entre piliers.
+    \vspace{1.5mm}\footnotesize Sous perte unique par incident, le facteur tombe à $2{,}25$ ; il dépend de l'unité de perte.
     \column{.30\textwidth}
     \chiffre{1\,839 M€}{Largeur de la plage explorée aux sommets}
-    \vspace{1.5mm}\footnotesize Le sens des liens reste non identifié ; la force des liens est posée.
+    \vspace{1.5mm}\footnotesize Sans détection ni accumulation, en cascade indépendante ; la force des liens est posée.
     \column{.30\textwidth}
     \chiffre{32,7\,\%}{Plage levée en moyenne si six sens sont connus, sur la grille explorée à $S$ posée}
     \vspace{1.5mm}\footnotesize La suite utile est un registre qui renseigne l'ordre et les domaines touchés.
@@ -1204,7 +1204,7 @@
       \mathbb P(\mathrm{NC}\mid\Theta)&=\Phi\Big(\frac{K_{\mathrm{bas}}-\gamma\Theta}{\sqrt{1-\gamma^2}}\Big),\\
       \mathbb P(\mathrm C\mid\Theta)&=1-\Phi\Big(\frac{K_{\mathrm{haut}}-\gamma\Theta}{\sqrt{1-\gamma^2}}\Big).
     \end{aligned}\]
-    Masses d'état posées (0,35, 0,35 et 0,30), ancrées sur les enquêtes de fin 2025 ; en crise,
+    Masses d'état posées (0,35, 0,35 et 0,30), non déduites des enquêtes ; en crise,
     davantage de non-conformité. $\gamma=0{,}68$ donne une corrélation de $0{,}462$ entre piliers.\par\vspace{.5mm}
     \textbf{Couche lente.} Une chaîne de Markov NC $\to$ PC $\to$ C, séjours de type phase (Erlang), conforme absorbant dans le cas de base :
     \[\mathrm{SCR}(t)=\sum_{e\in\{\mathrm{NC},\mathrm{PC},\mathrm C\}}\mathbb P(e,t)\,\mathrm{SCR}_e\]
@@ -1220,7 +1220,7 @@
 
 \begin{frame}{D'où vient le multiplicateur de fréquence ?}
   \suivimethode{2,3}{Canaux, fréquence}
-  \framesubtitle{\ajout Quatre canaux ; parts Hackmageddon $\times$ effets publiés}
+  \framesubtitle{\ajout Quatre canaux ; parts Hackmageddon $\times$ multiplicateurs posés}
   \begin{columns}[T,onlytextwidth]
     \column{.47\textwidth}\scriptsize
     \renewcommand{\arraystretch}{1.1}
@@ -1253,7 +1253,7 @@
       \multicolumn{4}{@{}l}{\textbf{Multiplicateur agrégé, état non conforme}} & \textbf{2,4875} \\
       \bottomrule
     \end{tabularx}\par\vspace{1mm}
-    $21{,}56\times 2{,}4875=53{,}62$ incidents par an. Fourchettes ancrées sur des effets publiés ; « autres » n'a aucune source dédiée. Les identifiants, $6{,}3\,\%$ des incidents, pèsent $13{,}9\,\%$ du multiplicateur. Quatre jeux de parts de 2025--2026 donnent $2{,}318$ à $2{,}471$ : au plus $6{,}8\,\%$ d'écart.
+    $21{,}56\times 2{,}4875=53{,}62$ incidents par an. Les fourchettes sont des choix de l'auteur ; aucune source ne mesure l'effet de la conformité sur la fréquence. Les identifiants, $6{,}3\,\%$ des incidents, pèsent $13{,}9\,\%$ du multiplicateur. Quatre jeux de parts de 2025--2026 donnent $2{,}318$ à $2{,}471$ : au plus $6{,}8\,\%$ d'écart.
   \end{columns}
   \source{rapport, chapitre 4 (§ 4.3) et chapitre 6 (§ 6.3). Le multiplicateur est posé, non calibré ; l'écart entre états est posé pour les quatre canaux.}
 \end{frame}
@@ -1895,7 +1895,7 @@
     Le registre couvre-t-il le risque ? & Capture non identifiée : à 100 / 50 / 25 / 10\,\% supposés, la VaR vaut 23,1 / 74,0 / 153,9 / 327,7 M€ (quatre graines). & § 9.6 \\
     \rowcolor{clair}Combien coûte la détention ? & 1,15 à 1,45 M€/an. Diviser la fréquence par deux (posé) ramène le besoin de 24,1 à 4,7 M€. & § 9.8 \\
     Peut-on transférer le risque ? & Traité annuel idéal de portée 24,1 M€ : financement de 1,15 à 0,39 M€/an ; pertes conservées comprises, de 2,00 à 1,05. & § 9.8 \\
-    \rowcolor{clair}Par quel pilier commencer ? & P1 puis P4 au calage de référence. P1 et P4 arrivent en tête dans 43,6\,\% et 37,7\,\% des 220 sommets tirés. Ce diagnostic porte sur le périmètre financier. & § 9.3 \\
+    \rowcolor{clair}Par quel pilier commencer ? & En lecture B : P1 puis P4, premiers dans 43,6\,\% et 37,7\,\% des 220 sommets tirés. À quatre canaux : P4 puis P1, par construction de l'accumulation. Diagnostic sur le périmètre financier. & § 9.3 \\
     \bottomrule
   \end{tabularx}\par\vspace{1.3mm}
   Le niveau d'entité est extrapolé ; la priorisation utilise un autre protocole. Pour A, le besoin non conforme vaut 1,0 M€ et l'écart de contagion 0,4 M€ : annoncer la convention d'agrégation et le recouvrement avec le risque déjà couvert.
@@ -2138,17 +2138,17 @@
     Indice de queue $\xi$ & 0,5954 (OpRisk) ; PRC 1,03 ; 0,90 en pire cas & calibré, incertain & Forte : de 0,60 à 0,38 quand le seuil monte, dans l'IC90 $[0{,}30\,;0{,}83]$ \\
     \rowcolor{clair}$\sigma$, $u$, $p_u$ & 57,97 M€ ; 20,03 M€ ; 0,15 & calibré & Modérée, via la queue ; $p_u=86/570$ \\
     Fréquence $\lambda$ & $\sim21{,}6$/an (OpRisk) & convention de calage & Sous-linéaire sur le niveau ; 582 événements sur 27 ans \\
-    \rowcolor{clair}Multiplicateur de fréquence & $\times1{,}525$ partiel ; $\times2{,}487$ NC & semi-ancré & Forte : canal dominant du chiffre de tête ; $\lambda$ de 41,7 à 65,6 aux bornes \\
+    \rowcolor{clair}Multiplicateur de fréquence & $\times1{,}525$ partiel ; $\times2{,}487$ NC & posé & Forte : parts d'attaque citées, fourchettes de l'auteur ; $\lambda$ de 41,7 à 65,6 aux bornes \\
     Surdispersion $\varphi$ & 9,20 & posé (prudent) & Élasticité $-0{,}44$ sur l'écart entre états ; 2,24 mesuré \\
     Structure $W=gT/s_{\max}$ & classeur qualitatif & posé / normatif & La direction départage les deux piliers de tête ; surcoût porté par la partie symétrique \\
     \rowcolor{clair}Gain de propagation $g$ & 0,90 ; par état 0,45 / 0,68 / 0,90 & posé & Levier : $\times1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
-    Charge systémique $\gamma$ & 0,68 & semi-ancré & Modérée ; proxy de concentration cloud (AWS, Azure, GCP) \\
-    \rowcolor{clair}Probabilités d'état NC / PC / C & 0,35 / 0,35 / 0,30 & semi-ancré & Déplace le mélange, pas les états ; enquêtes de conformité (environ 50\,\% non conformes) \\
+    Charge systémique $\gamma$ & 0,68 & posé & Modérée ; aucune correspondance démontrée avec la concentration du nuage \\
+    \rowcolor{clair}Probabilités d'état NC / PC / C & 0,35 / 0,35 / 0,30 & posé & Déplace le mélange, pas les états ; probabilités non déduites des enquêtes \\
     Élasticité sévérité/taille $b$ & 0,087 $[0{,}026\,;0{,}148]$ & calibré, tronqué & Faible : $\times0{,}86$ sur la sévérité transposée \\
     \bottomrule
   \end{tabularx}
   \vspace{1mm}
-  \source{rapport, annexe E (§ E.1). Trois natures : calibré sur données, posé par jugement d'expert ou choix normatif, semi-ancré sur un proxy externe.}
+  \source{rapport, annexe E (§ E.1). Distinguer les paramètres calibrés des valeurs posées par l'auteur.}
 \end{frame}
 
 \begin{frame}{Annexe · Démonstrations de la cascade}
@@ -2194,28 +2194,26 @@
   \source{rapport, annexe C (§ C.1 et C.2). La vue inter-clients (centaines d'entités victimes de MOVEit) sort du capital par entité.}
 \end{frame}
 
-\begin{frame}{Annexe · Détection, tiers et temps d'arrêt}
+\begin{frame}{Annexe · Détection, tiers et comptage journalier}
   \suivimethode{}{}
-  \framesubtitle{Détection comme courbe de survie, ancrages européens, déclenchement de P4}
+  \framesubtitle{Survie de la détection, repères européens et limites du modèle de comptage}
   \begin{columns}[T,onlytextwidth]
     \column{.33\textwidth}\scriptsize
     {\editorial\normalsize Détection de P2 et P3}\par\vspace{1mm}
     Le délai de découverte en finance (VCDB, $n=278$) est bimodal : $47\,\%$ des incidents sont découverts le jour même, $8\,\%$ en semaines, $45\,\%$ en mois ou plus. La matérialité vient des découvertes lentes : $\pi_{\mathrm{slow}}=0{,}45$.\par\vspace{1mm}
-    L'élasticité de la détection à la maturité n'est pas mesurée : le surcoût du seul canal est une bande, de 1\,775 à 8\,052 M€. Le multiplicateur $0{,}85\,/\,1{,}20$ est retrouvé pour $\eta\approx0{,}36$ : un point de la courbe, non un choix arbitraire.
+    L'élasticité de la détection à la maturité n'est pas mesurée : l'écart du seul canal est une bande, de 1\,775 à 8\,052 M€. Le multiplicateur $0{,}85\,/\,1{,}20$ correspond à $\eta\approx0{,}36$ : un point de la courbe de scénario, sans élasticité estimée.
     \column{.31\textwidth}\scriptsize
     {\editorial\normalsize Ancrages européens}\par\vspace{1mm}
-    Le premier rapport DORA des autorités européennes établit que $29\,\%$ des 3\,383 incidents TIC majeurs de 2025 proviennent d'un tiers : P4 est une amorce majeure, ce que le classeur posait par jugement (ROOT$_4=0{,}90$).\par\vspace{1mm}
-    L'analyse des registres d'externalisation par la BCE : plus de $30\,\%$ du budget des grandes banques va à 10 fournisseurs, $50\,\%$ du budget critique à 30 ; 19 fournisseurs TIC critiques désignés. Ces chiffres ancrent $\gamma=0{,}68$ sur une mesure de concentration officielle.\par\vspace{1mm}
+    Le premier rapport DORA des autorités européennes établit que $29\,\%$ des 3\,383 incidents TIC majeurs de 2025 proviennent d'un tiers. Cette part situe l'amorce P4 ; elle ne calibre pas ROOT$_4=0{,}90$.\par\vspace{1mm}
+    L'analyse des registres d'externalisation par la BCE : plus de $30\,\%$ du budget des grandes banques va à 10 fournisseurs, $50\,\%$ du budget critique à 30 ; 19 fournisseurs TIC critiques désignés. Ces repères motivent l'accumulation sans identifier $\omega$ ni mesurer $\gamma=0{,}68$.\par\vspace{1mm}
     La taxonomie fine du tiers est trop rare dans la donnée ouverte : 20 incidents en finance dans OpRisk.
     \column{.31\textwidth}\scriptsize
-    {\editorial\normalsize Déclenchement de P4}\par\vspace{1mm}
-    Si le facteur tiers est un brownien standard, le déclenchement est un temps de premier passage :
-    \[\mathbb P(\tau\le T)=2\,\Phi\Big(\frac{-z^\star}{\sqrt T}\Big)=2\,\mathbb P(Z_T\ge z^\star)\]
-    (principe de réflexion : propriété de Markov forte et symétrie des accroissements). La lecture dynamique vaut le double de la statique.\par\vspace{1mm}
-    À $\rho=0{,}50$ : $0{,}14$ en moins d'un an, délai médian d'environ cinq ans ; à $\rho=0{,}75$ : $0{,}23$, médian d'environ trois ans.\par\vspace{1mm}
-    Le délai d'un brownien pur est d'espérance infinie ; un facteur à retour à la moyenne serait plus réaliste. Aucun test de martingalité n'est conduit ; $z^\star$ vient de la calibration.
+    {\editorial\normalsize Comptage journalier}\par\vspace{1mm}
+    Brèches financières, 2016--2023 : l'autocorrélation du résidu au premier retard passe de $+0{,}26$ sous une tendance seule à $-0{,}02$ avec excitation des jours précédents.\par\vspace{1mm}
+    Le branchement vaut $0{,}29$, puis $0{,}09$ sans la semaine MOVEit. Le bootstrap avec réestimation rejette encore la spécification.\par\vspace{1mm}
+    Le catalogue CISA KEV n'améliore pas l'ajustement sur 2022--2023 ($p=0{,}90$). Ce diagnostic ne prouve ni causalité ni contagion.
   \end{columns}
-  \source{rapport, annexe C (§ C.2.2, C.2.3 et C.3). Autorités européennes de surveillance (2026) ; Banque centrale européenne (2024).}
+  \source{rapport, annexe C (§ C.2.2, C.2.3 et C.3), script 128. Repères : autorités européennes de surveillance (2026), Banque centrale européenne (2024).}
 \end{frame}
 
 \begin{frame}{Annexe · Questions que le jury peut poser}

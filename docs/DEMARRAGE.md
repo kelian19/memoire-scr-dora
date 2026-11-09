@@ -9,6 +9,8 @@ python -m venv .venv
 pip install -r requirements.txt
 python projet.py structure
 python outils/ci/harnais_strict.py
+pip install -r requirements-test.txt
+python -m pytest recherche/vasicek_lab/tests src/tests -q
 tectonic memoire/main_institut_150.tex
 ```
 

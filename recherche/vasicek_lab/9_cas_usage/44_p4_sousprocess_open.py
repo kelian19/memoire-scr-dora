@@ -177,13 +177,13 @@ ax2.set_title("(b)  Concentration tiers : peu de fournisseurs\net de jours porte
 
 # (c) ancrage des parametres P4 sur donnee europeenne
 ax3.axis("off"); ax3.set_xlim(0, 1); ax3.set_ylim(0, 1)
-ax3.set_title("(c)  Les paramètres P4, ancrés sur\ndonnée UE officielle", fontsize=10.5,
+ax3.set_title("(c)  Repères européens sur P4,\nsans calibration", fontsize=10.5,
               color=INK, pad=8)
 rows = [
     ("Origination tiers", f"{100*ESAS_TP_ORIGIN:.0f} % des incidents majeurs", "ESAs, rapport DORA 2026"),
-    ("  → P4 amorce (modèle)", f"ROOT[4] = {ROOT_P4}", "validé qualitativement"),
+    ("  → P4 amorce (modèle)", f"ROOT[4] = {ROOT_P4}", "posé, non calibré"),
     ("Concentration budget", ">30 % sur 10 fournisseurs", "ECB 2024"),
-    ("  → accumulation γ (modèle)", f"γ = {GAMMA_MODELE}", "ancré, non plus proxy"),
+    ("  → accumulation γ (modèle)", f"γ = {GAMMA_MODELE}", "posé, non mesuré"),
     ("Fournisseurs critiques", f"{N_CTPP} désignés (CTPP)", "ESAs, nov. 2025"),
 ]
 y = 0.94

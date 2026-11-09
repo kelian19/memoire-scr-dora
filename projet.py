@@ -56,7 +56,7 @@ def main() -> int:
         "etat": "afficher la branche, les changements locaux et les manuscrits",
         "structure": "controler la navigation et les fichiers suivis (lecture seule)",
         "verifier": "controler la structure puis le harnais strict (lecture seule)",
-        "compiler": "compiler les deux versions, controler et recopier les PDF, sans harnais",
+        "compiler": "compiler les trois versions, controler et recopier les PDF, sans harnais",
         "depot": "passer les controles stricts puis compiler et recopier les PDF",
         "audit": "auditer les correspondances du harnais avec les sorties enregistrees",
     }

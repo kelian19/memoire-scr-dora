@@ -161,13 +161,13 @@ for i, (n, d, statut) in enumerate(attrib, 1):
     ax1.text(i, base + d + 120, f"+{d:.0f}", ha="center", fontsize=8, color=INK2)
     base += d
 ax1.bar(len(labels) - 2, interaction, bottom=base, color=ACCENT, alpha=0.35, width=0.6)
-ax1.text(len(labels) - 2, base + interaction + 120, f"+{interaction:.0f}", ha="center",
+ax1.text(len(labels) - 2 + 0.25, base + interaction + 120, f"+{interaction:.0f}", ha="right",
          fontsize=8, color=INK2)
 ax1.text(0, scr_C + 120, f"{scr_C:.0f}", ha="center", fontsize=8.5, color=GREEN)
 ax1.text(len(labels) - 1, scr_NC + 120, f"{scr_NC:.0f}", ha="center", fontsize=8.5, color=ACCENT)
-ax1.set_xticks(xs); ax1.set_xticklabels(labels, fontsize=8)
-ax1.set_ylabel("besoin à 99,5 % (M€)", color=INK2)
-ax1.set_title("(a)  L'écart de capital DORA attribué par KPI\n(bleu : calibrable · gris : borné)",
+ax1.set_xticks(xs); ax1.set_xticklabels([l.replace("\n", " ") for l in labels], fontsize=7.5, rotation=32, ha="right")
+ax1.set_ylabel("besoin (M€)", color=INK2)
+ax1.set_title("(a)  L'écart de capital DORA attribué par KPI\n(bleu : écart posé, mesurable · gris : écart posé, non identifié)",
               fontsize=11, color=INK, pad=8)
 
 # (b) tableau de bord : KPI classes par capital, couleur = statut
@@ -177,7 +177,7 @@ cols = [BLUE if s == "calibrable" else MUTED for _, _, s in rank]
 ypos = np.arange(len(rank))[::-1]
 ax2.barh(ypos, vals, color=cols, alpha=0.88)
 for y, v, (_, _, s) in zip(ypos, vals, rank):
-    ax2.text(v + 20, y, f"{v:.0f} M  ({s})", va="center", fontsize=8.5, color=INK2)
+    ax2.text(v + 20, y, f"{v:.0f} M  ({'mesurable' if s == 'calibrable' else 'non identifié'})", va="center", fontsize=8.5, color=INK2)
 ax2.set_yticks(ypos); ax2.set_yticklabels(names, fontsize=9)
 ax2.set_xlabel("capital en jeu = B(non conforme) − B(conforme), canal isolé", color=INK2)
 ax2.set_xlim(0, max(vals) * 1.35)

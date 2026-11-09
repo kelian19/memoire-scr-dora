@@ -1,0 +1,81 @@
+
+==============================================================================
+1. Ancrage des etats, multiplicateurs inchanges (marche, memes graines que le 43)
+==============================================================================
+controle : la ligne publiee doit redonner 6 049 et 20 188
+multiplicateur partiel 1.5252, non conforme 2.4874
+convention                                  lam C lam NC    B(C)   B(NC)   ecart  fact. ET fact.
+publie : lambda obs. = C, p_u obs. = PC     21.56  53.62    6049   20188   14139   3.34     0.04
+lambda obs. = PC                            14.13  35.15    4638   15551   10912   3.35     0.16
+lambda obs. = NC                             8.67  21.56    3492   11413    7920   3.27     0.20
+p_u obs. = C                                21.56  53.62    6863   22039   15176   3.21     0.17
+p_u obs. = NC                               21.56  53.62    5350   17336   11987   3.24     0.16
+lambda obs. = NC, p_u obs. = NC              8.67  21.56    2964   10113    7149   3.41     0.12
+
+==============================================================================
+2. Piliers a quatre canaux, 8 graines de 40000 annees
+==============================================================================
+
+amorces ROOT (parts [0.303 0.182 0.152 0.273 0.091])
+  tous C 5907, tous NC 20121, ecart 14214, facteur 3.41
+  P4  Shapley    5777  ET   190  part  40.6 %
+  P1  Shapley    3635  ET   208  part  25.6 %
+  P2  Shapley    2027  ET   214  part  14.3 %
+  P3  Shapley    1809  ET   271  part  12.7 %
+  P5  Shapley     966  ET   241  part   6.8 %
+  pilier de tete par graine : P4 P4 P4 P4 P4 P4 P4 P4
+  P1 - P4, moyenne et ET entre graines : -2141 ; 265
+  meilleur ordre P4>P1>P2>P3>P5, pire P5>P3>P2>P1>P4, ecart 38.7 %
+  cinq meilleurs : P4>P1>P2>P3>P5 ; P4>P1>P3>P2>P5 ; P4>P1>P2>P5>P3 ; P4>P1>P3>P5>P2 ; P4>P2>P1>P3>P5
+  premier pilier de l'ordre optimal par graine : P4 P4 P4 P4 P4 P4 P4 P4
+
+amorces uniformes (parts [0.2 0.2 0.2 0.2 0.2])
+  tous C 5803, tous NC 18435, ecart 12631, facteur 3.18
+  P4  Shapley    4475  ET   207  part  35.4 %
+  P1  Shapley    2411  ET   176  part  19.1 %
+  P2  Shapley    2070  ET   205  part  16.4 %
+  P3  Shapley    1999  ET   128  part  15.8 %
+  P5  Shapley    1676  ET   198  part  13.3 %
+  pilier de tete par graine : P4 P4 P4 P4 P4 P4 P4 P4
+  P1 - P4, moyenne et ET entre graines : -2064 ; 142
+  meilleur ordre P4>P1>P2>P3>P5, pire P5>P2>P3>P1>P4, ecart 19.6 %
+  cinq meilleurs : P4>P1>P2>P3>P5 ; P4>P1>P2>P5>P3 ; P4>P1>P3>P2>P5 ; P4>P2>P1>P3>P5 ; P4>P2>P1>P5>P3
+  premier pilier de l'ordre optimal par graine : P4 P4 P4 P4 P4 P4 P4 P4
+
+==============================================================================
+3. Direction a quatre canaux, cascade independante, 4 graines
+==============================================================================
+sommets : 1024
+point du bareme : B(C) 6018, B(NC) 19742, ecart 13724, facteur 3.28
+B(C)  aux sommets : [5650 ; 6187]
+B(NC) aux sommets : [17462 ; 20678]
+ecart aux sommets : [11605 ; 14765]
+facteur aux sommets, meme signe aux deux etats : [2.96 ; 3.51]
+B(NC) rapporte au point : [0.885 ; 1.047]
+largeur de B(NC) par graine : [4029. 3252. 2888. 3589.], ET 486
+
+==============================================================================
+4. Citations externes transcrites (non recalculables) et conversions
+==============================================================================
+Deloitte, DORA survey wave 3, mars 2025, 36 entites, 28 pays : pleine conformite pilier I 25, pilier II 48, pilier III 8, tiers 8 ; 50 attendent la pleine conformite fin 2025
+ESAs, dry run 2024 : 947 registres analyses, 6.5 passent tous les controles
+Synergy, T3 2025 : 63 des depenses cloud pour Amazon, Microsoft et Google
+IBM/Ponemon 2025 : formation -191893 USD sur le cout ; chaine tierce 15 des breches, 4.91 M USD
+SecurityScorecard 2025 : 35.5 des breches de 2024 d'origine tierce, sur 1000 breches
+ENISA 2025 : 4875 incidents ; 70 des cas de vulnerabilite et 27 du hameconnage menent a une intrusion
+Meyer et al. 2023 : l'authentification multifacteur reduit la compromission de 99.22
+McKinsey, 28 juin 2024 : 5 a 15 M EUR de pilotage, 5 a 10 fois en mise en oeuvre ; enveloppe calculee 25 a 150 M EUR, non observee
+controle : 25 et 150
+conversions : 20000 M USD a 1.04 USD/EUR = 19231 M EUR ; a 0.92 EUR/USD = 18400 M EUR
+1/1.04 = 0.962 EUR/USD
+non pleinement conformes dans le melange pose : NC + PC = 0.70
+Deloitte, depense prevue : 64 des entites entre 2 et 5 M EUR
+
+==============================================================================
+5. Queue par pilier (patron du script 37) : recentrage a 0,90 puis a la reference
+==============================================================================
+Moyenne des queues fixee ; fréquence conforme, g = 0,90, p_u de base, 30000 annees, graine 909.
+reference 0.9000 : queues [0.634 0.8   0.807 1.124 1.137], max 1.137
+  queue commune 40034 ; assignations [62130 ; 78417] ; ecart de +55.2 % a +95.9 %
+reference 0.5954 : queues [0.329 0.495 0.502 0.819 0.832], max 0.832
+  queue commune 8266 ; assignations [12995 ; 15585] ; ecart de +57.2 % a +88.5 %

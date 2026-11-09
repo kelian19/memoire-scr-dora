@@ -109,48 +109,24 @@ DORA_MAPPING = {
 
 # Multiplicateurs de fréquence par vecteur et par niveau de conformité.
 #
-# CALIBRATION SOURCÉE — chaque borne est ancrée sur une donnée empirique
-# publiée, et non posée arbitrairement. Les valeurs S1/S2 sont des bornes
-# (low, high) traduisant l'incertitude de calibration ; le pipeline tire
-# dedans plutôt que d'utiliser un point unique.
-#
-# ┌─────────────────────┬────────────────────────────────────────────────┐
-# │ phishing_social_eng  │ Ponemon/IBM Cost of a Data Breach : la         │
-# │ (Art. 13)            │ formation réduit le risque jusqu'à 86 %, ROI   │
-# │                      │ médian 5x. Source agrégée tous incidents,      │
-# │                      │ traduite ici en multiplicateur prudent.        │
-# ├─────────────────────┼────────────────────────────────────────────────┤
-# │ exploit_vuln         │ ENISA Threat Landscape 2025 (EU, 4 875         │
-# │ (Art. 26 / TLPT)     │ incidents) : taux de conversion intrusion      │
-# │                      │ réussie = 70 % pour l'exploitation de          │
-# │                      │ vulnérabilités vs 27 % pour le phishing,       │
-# │                      │ soit un ratio ×2,6 directement mesuré.         │
-# ├─────────────────────┼────────────────────────────────────────────────┤
-# │ supply_chain_tiers   │ IBM/Ponemon 2023-2025 : surcoût des brèches    │
-# │ (Art. 28-44)         │ tierces +11,8 % (partenaire) / +8,3 %          │
-# │                      │ (logiciel) ; part des brèches d'origine        │
-# │                      │ tierce passée de 15 % à 36 % en un an          │
-# │                      │ (SecurityScorecard 2025) — proxy de la         │
-# │                      │ vitesse de dégradation sans gouvernance.       │
-# ├─────────────────────┼────────────────────────────────────────────────┤
-# │ identifiants         │ Microsoft Research (étude Azure AD, peer-      │
-# │ (Art. 9 / MFA)       │ reviewed, arXiv:2305.00945) : le MFA réduit    │
-# │                      │ le risque de compromission de 99,22 % en       │
-# │                      │ population générale, 98,56 % même en cas de    │
-# │                      │ fuite de identifiants. Multiplicateur          │
-# │                      │ tempéré : mesure par compte, non transposée    │
-# │                      │ telle quelle à l'échelle entité.               │
-# └─────────────────────┴────────────────────────────────────────────────┘
-#
-# Sources complètes : voir docs/calibration_multiplicateurs.md
+# FOURCHETTES DE SCÉNARIO POSÉES PAR L'AUTEUR. Les parts d'attaque sont
+# citées ; aucune des références ci-dessous ne mesure un effet de conformité
+# DORA sur la fréquence d'incidents d'une entité. Les bornes S1/S2 ne sont
+# donc pas des intervalles de confiance ni une calibration de cet effet.
+# IBM/Ponemon décrit des coûts ; ENISA compare des vecteurs d'attaque ;
+# SecurityScorecard décrit la part des brèches d'origine tierce ; Meyer et al.
+# mesurent la compromission par compte. Ces objets ne fixent pas nos bornes.
+# Relecture des sources : docs/audits/2026-11-05_audit_jury_institut.md, § 8.
 
 SOURCES_MULTIPLICATEURS = {
     "phishing_social_eng": "Ponemon/IBM Cost of a Data Breach 2025 — "
-                            "formation réduit le risque jusqu'à 86%",
+                            "formation : effet sur le coût, non sur la fréquence DORA",
     "exploit_vuln":        "ENISA Threat Landscape 2025 — conversion "
-                            "intrusion 70% (exploit) vs 27% (phishing), ratio x2.6",
-    "supply_chain_tiers":  "IBM/Ponemon 2023-2025 — surcoût +11.8%/+8.3% ; "
-                            "SecurityScorecard 2025 — part tierce 15%->36%/an",
+                            "intrusion 70% (exploit) vs 27% (phishing), "
+                            "sans effet de conformité estimé",
+    "supply_chain_tiers":  "IBM/Ponemon 2025 — coût des brèches ; "
+                            "SecurityScorecard 2025 — part tierce 35.5% en 2024, "
+                            "sans effet de conformité estimé",
     "identifiants":        "Microsoft Research, arXiv:2305.00945 — MFA "
                             "réduit compromission de 99.22% (population), "
                             "98.56% (identifiants déjà fuités)",
@@ -164,14 +140,14 @@ MULTIPLICATEURS_DORA = {
     },
     "S1_partiel": {
         # (borne basse, borne haute) — non-conformité PARTIELLE
-        "phishing_social_eng": (1.2, 1.6),   # fraction de l'effet 86% Ponemon
-        "exploit_vuln":        (1.3, 1.8),   # fraction du ratio x2.6 ENISA
-        "supply_chain_tiers":  (1.3, 1.9),   # entre surcoût observé et tendance
-        "identifiants":        (1.5, 3.0),   # fraction prudente de l'effet MFA
+        "phishing_social_eng": (1.2, 1.6),   # fourchette posée par l'auteur
+        "exploit_vuln":        (1.3, 1.8),   # fourchette posée par l'auteur
+        "supply_chain_tiers":  (1.3, 1.9),   # fourchette posée par l'auteur
+        "identifiants":        (1.5, 3.0),   # fourchette posée, effet MFA par compte
         "autres":              (1.1, 1.3),
     },
     "S2_non_conforme": {
-        # non-conformité TOTALE — bornes plus proches de l'effet plein
+        # non-conformité TOTALE — bornes posées par l'auteur
         "phishing_social_eng": (1.8, 3.0),
         "exploit_vuln":        (2.0, 2.6),   # jusqu'au ratio ENISA complet
         "supply_chain_tiers":  (1.9, 2.6),
@@ -183,9 +159,9 @@ MULTIPLICATEURS_DORA = {
 
 def sample_multiplicateur(scenario: str, vecteur: str, rng=None) -> float:
     """
-    Tire un multiplicateur dans la fourchette [low, high] sourcée,
-    plutôt que d'utiliser un point fixe. Permet le bootstrap sur
-    l'incertitude de calibration des multiplicateurs eux-mêmes.
+    Tire uniformément dans la fourchette [low, high] posée par l'auteur.
+    Ce tirage explore une incertitude de scénario ; il ne constitue pas
+    un bootstrap d'un effet de conformité estimé.
     """
     rng = rng or np.random
     low, high = MULTIPLICATEURS_DORA[scenario][vecteur]
@@ -202,8 +178,8 @@ def compute_lambda_scenario(lambda_ref: float, scenario: str,
     ----------
     lambda_ref : fréquence de référence (scénario S0 conforme)
     scenario   : 'S0_conforme', 'S1_partiel', 'S2_non_conforme'
-    mode       : 'center' (point central de la fourchette sourcée, déterministe)
-                 ou 'sample' (tirage uniforme dans la fourchette, pour bootstrap)
+    mode       : 'center' (point central de la fourchette posée, déterministe)
+                 ou 'sample' (tirage uniforme dans la fourchette de scénario)
     rng        : générateur numpy (utilisé seulement si mode='sample')
 
     Returns
@@ -264,8 +240,9 @@ def scenario_comparison(lambda_ref: float) -> pd.DataFrame:
     print("\n=== SCÉNARIOS DE CONFORMITÉ DORA ===")
     print(df.to_string(index=False, float_format=lambda x: f"{x:.3f}"))
     print(f"\nSource multiplicateurs : Hackmageddon S1 2026 (1 041 incidents)")
-    print(f"Calibration sourcée : ENISA Threat Landscape 2025, Ponemon/IBM 2025,")
-    print(f"Microsoft Research arXiv:2305.00945 — voir SOURCES_MULTIPLICATEURS\n")
+    print("Fourchettes posées par l'auteur ; sources voisines, sans effet DORA estimé :")
+    print("ENISA 2025, IBM/Ponemon 2025, SecurityScorecard 2025, "
+          "Microsoft Research arXiv:2305.00945 — voir SOURCES_MULTIPLICATEURS\n")
     return df
 
 
@@ -292,16 +269,14 @@ def simulate_frequency(params: dict, scenario: str,
     -------
     array de n_sim entiers (nombre d'incidents simulés)
     """
-    np.random.seed(seed)
+    if not np.isfinite(lambda_ref) or lambda_ref <= 0:
+        raise ValueError("lambda_ref doit être une fréquence annuelle strictement positive")
     sc_res = compute_lambda_scenario(lambda_ref, scenario)
-    mult = sc_res["multiplicateur_global"]
 
-    # Ajuster r et p pour le multiplicateur de fréquence
-    # Si X ~ NegBin(r, p) avec E[X] = mu,
-    # alors k*X ~ NegBin(r, p') avec E = k*mu
-    # Approche : on recale mu et on refite p à r fixé
+    # Conserver la forme r et recaler la moyenne sur la fréquence ANNUELLE.
+    # params["mu"] est la moyenne par période de calibration (souvent mensuelle).
     r = params["r"]
-    mu_new = params["mu"] * mult
+    mu_new = sc_res["lambda_global"]
     p_new = r / (r + mu_new)
 
     counts = nbinom.rvs(r, p_new, size=n_sim, random_state=seed)

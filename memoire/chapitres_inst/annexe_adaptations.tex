@@ -26,20 +26,19 @@ décrivent la nature de la perte, pas les domaines de contrôle de DORA, et la p
 d'estimation de $150$. Nous ne posons donc pas $\xi_j = f(\text{pilier})$. Nous suivons la logique du
 chapitre~\ref{chap:partielle} : chaque pilier reçoit l'une des cinq queues observées, nous énumérons
 les $120$ assignations, et le besoin de capital est borné. Pour isoler l'effet de
-l'hétérogénéité, les cinq queues sont centrées sur la valeur de référence.
+l'hétérogénéité, les cinq queues sont recentrées sur une moyenne fixe, sans changer leur dispersion.
 
-Même à moyenne des queues fixe, donner à chaque pilier sa propre queue relève le besoin de capital de $+55\,\%$ à
-$+96\,\%$. Cet effet tient à la convexité. La VaR croît plus vite que linéairement en $\xi$, de sorte qu'une
+À moyenne de $0{,}90$, valeur posée du pire cas de modèle, les queues vont de $0{,}63$ à $1{,}14$ : deux dépassent $1$, donc d'espérance infinie. Donner à chaque pilier sa propre queue y relève le besoin de capital de $+55\,\%$ à $+96\,\%$ autour d'un capital de $40\,034$~M\euro{}. À la moyenne de référence $0{,}5954$, les queues vont de $0{,}33$ à $0{,}83$, et la hausse va de $+57\,\%$ à $+89\,\%$ autour de $8\,266$~M\euro{} (une graine, $30\,000$ années). Cet effet tient à la convexité. La VaR croît plus vite que linéairement en $\xi$, de sorte qu'une
 queue lourde sur un pilier n'est pas compensée par une queue légère ailleurs. Une queue commune
-sous-estime ainsi le capital, ce qui justifie de lire le niveau en bande. Le classement
+sous-estime ainsi le capital dans ces deux calages, ce qui justifie de lire le niveau en bande. Le classement, mesuré à la moyenne de $0{,}90$,
 résiste : le pilier de tête reste dominant dans $83\,\%$ des $30$ assignations tirées parmi les $120$, sans être invariant
 (figure~\ref{fig:xi-pilier}).
 
 \begin{figure}[H]\centering
 \figover{Z8_xi_par_pilier.png}
-\caption{Queue de sévérité par pilier. (a)~Besoin de capital borné sur les $120$ assignations des queues
+\caption{Queue de sévérité par pilier, à moyenne des queues de $0{,}90$. (a)~Besoin de capital borné sur les $120$ assignations des queues
 observées aux piliers ; une queue commune (trait) est en bas de la bande. (b)~Le pilier de tête peut changer selon l'assignation ; les positions affichées sont celles du diagnostic.}
-% SOURCES-SCRIPTS: 37
+% SOURCES-SCRIPTS: 37 140
 \label{fig:xi-pilier}
 \end{figure}
 
@@ -49,19 +48,20 @@ observées aux piliers ; une queue commune (trait) est en bas de la bande. (b)~L
 P4 n'est pas un n\oe{}ud de cascade comme les autres. La défaillance d'un prestataire partagé dégrade
 plusieurs piliers à la fois, par dépendance commune, au lieu de se propager de proche en proche.
 C'est le mécanisme de MOVEit, où $191$ victimes tombent d'un seul choc \matcomp.
-% SOURCES-SCRIPTS: 08g
+% SOURCES-SCRIPTS: 08g 140
 Nous lui substituons un \emph{choc commun} : lorsque l'incident commence en P4, chaque autre pilier
 est inclus indépendamment avec une probabilité $\omega$, au lieu d'une propagation dirigée.
 
 Le choc commun produit des co-occurrences sans direction. Les incidents chez un prestataire partagé
 motivent ce mécanisme, mais ne calibrent ni son intensité au sein d'une entité ni la partie symétrique
 $S$ de la décomposition $W=S+A$. Celle-ci reste posée à dire d'expert
-(chapitre~\ref{chap:partielle}). La concentration du nuage sert d'ancrage au scénario ; elle ne mesure
+(chapitre~\ref{chap:partielle}). La concentration du nuage motive le scénario ; elle ne mesure
 pas une probabilité de transmission entre piliers.
 
 L'intensité $\omega$ n'est pas identifiée au sein d'une entité isolée, car le \emph{batch}
-observé est un phénomène de portefeuille. Nous la bornons sur $[0,\gamma]$, où $\gamma=0{,}68$ est la
-concentration du nuage déjà retenue. Le besoin de capital se lit alors en bande. À $\omega=\gamma$, une
+observé est un phénomène de portefeuille. Nous la bornons sur $[0,\gamma]$, où $\gamma=0{,}68$ est la charge
+posée au chapitre~\ref{chap:multietats}, du même ordre que la part cumulée d'Amazon, Microsoft et Google dans
+le nuage, $63\,\%$ au troisième trimestre 2025 \citep{synergy2025}, sans en être déduite. Le besoin de capital se lit alors en bande. À $\omega=\gamma$, une
 dépendance partagée emporte en moyenne $3{,}7$ piliers d'un coup, soit $+19\,\%$ de besoin de capital par rapport
 au traitement en n\oe{}ud de cascade.
 
@@ -118,8 +118,7 @@ $p_4=0{,}15$ dans les deux cas, car la copule ne change pas combien un pilier ba
 \emph{ensemble}. Seul le co-extrême diverge : la probabilité que les cinq piliers tombent avec P4 passe
 de $0{,}17$ pour la gaussienne à $0{,}39$ pour Gumbel, soit un facteur $2{,}3$. C'est le scénario
 MOVEit que la queue gaussienne manque (figure~\ref{fig:p4-seuil}). Le co-déclenchement d'un autre
-pilier tient dans $[0{,}48\,;\,0{,}58]$, sous la borne $\gamma=0{,}68$ du choc commun, qui reçoit
-ainsi une origine structurelle. Tout est exprimé par pilier, c'est-à-dire en nombre de piliers de l'entité plutôt qu'en fraction de
+pilier tient dans $[0{,}48\,;\,0{,}58]$, sous la borne posée $\gamma=0{,}68$ du choc commun, ce qui ne la calibre pas. Tout est exprimé par pilier, c'est-à-dire en nombre de piliers de l'entité plutôt qu'en fraction de
 portefeuille. La vue inter-clients, avec les centaines d'entités victimes de MOVEit, relèverait d'une
 loi de Vasicek en dimension entité et sort du besoin de capital par entité.
 
@@ -133,63 +132,17 @@ concentrant la masse sur les cinq piliers groupés.}
 \label{fig:p4-seuil}
 \end{figure}
 
-\subsection{Déclenchement comme temps d'arrêt}
-\label{sec:p4-dynamique}
+\subsection{Diagnostic du comptage journalier}
+\label{sec:p4-comptage}
+% SOURCES-SCRIPTS: 128
 
-Le seuil $z^*$ est jusqu'ici un niveau statique. Si le facteur tiers est un processus continu $(Z_t)_{t\ge0}$ adapté à une filtration $(\mathcal{F}_t)$, le déclenchement devient un temps de premier passage,
-\begin{equation}
-  \tau \;=\; \inf\{\,t\ge 0 \;:\; Z_t \ge z^*\,\},
-  \label{eq:temps-arret}
-\end{equation}
-qui est un temps d'arrêt, puisque $\{\tau\le t\}=\{\sup_{s\le t}Z_s\ge z^*\}\in\mathcal{F}_t$.
-
-\begin{proposition}[Loi du délai de déclenchement]\label{prop:premier-passage}
-Si $(Z_t)$ est un mouvement brownien standard issu de $0$ et $z^*>0$, alors pour tout horizon $T>0$
-\begin{equation}
-  \Prob(\tau\le T) \;=\; 2\,\Phi\!\left(-\frac{z^*}{\sqrt{T}}\right)
-  \;=\; 2\,\Prob(Z_T\ge z^*).
-  \label{eq:reflexion}
-\end{equation}
-\end{proposition}
-
-\begin{proof}
-C'est le principe de réflexion. Par symétrie du mouvement brownien après $\tau$, on a
-$\Prob(\tau\le T,\;Z_T< z^*)=\Prob(\tau\le T,\;Z_T> z^*)=\Prob(Z_T>z^*)$, la dernière égalité tenant
-car $\{Z_T>z^*\}\subset\{\tau\le T\}$. En sommant les deux événements disjoints,
-$\Prob(\tau\le T)=2\,\Prob(Z_T>z^*)=2\,\Phi(-z^*/\sqrt{T})$.
-\end{proof}
-
-La lecture dynamique est le double de la lecture statique $\Prob(Z_T\ge z^*)$, puisqu'elle compte tous
-les franchissements survenus avant l'horizon, et pas seulement la position finale. À $\rho=0{,}50$, la
-probabilité de déclenchement de P4 en moins d'un an est de $0{,}14$, pour un délai médian de l'ordre
-de cinq ans. À $\rho=0{,}75$, elle monte à $0{,}23$, pour un médian d'environ trois ans
-(figure~\ref{fig:p4-dynamique}).
-
-\begin{figure}[H]\centering
-\figover{Z16_p4_temps_arret.png}
-\caption{Le déclenchement de P4 comme temps d'arrêt. (a)~Le facteur tiers (martingale) et le premier
-passage de $z^*$. (b)~La loi du délai de déclenchement. (c)~La lecture dynamique
-$\Prob(\tau\le 1\text{ an})$ vaut environ le double de la statique.}
-% SOURCES-SCRIPTS: 52 128
-\label{fig:p4-dynamique}
-\end{figure}
-
-Le principe de réflexion utilise la propriété de Markov forte et la symétrie des accroissements
-du brownien ; la propriété de martingale seule ne suffit pas. La forme de Dirichlet du
-chapitre~\ref{ch:identifiabilite} est un objet distinct. Aucun changement de mesure n'intervient.
-Le cadre complet est déporté \matcomp.
-En revanche, le comptage journalier des brèches du secteur financier (2016--2023) se diagnostique par son
+Le comptage journalier des brèches du secteur financier (2016--2023) se diagnostique par son
 résidu compensé, qui est une différence de martingale si l'intensité prévisible est bien spécifiée.
-
-Une
-tendance seule laisse une autocorrélation de $+0{,}26$ au premier retard ; une excitation des jours
+Une tendance seule laisse une autocorrélation de $+0{,}26$ au premier retard ; une excitation des jours
 antérieurs la ramène à $-0{,}02$, avec un branchement de $0{,}29$, puis de $0{,}09$ sans la semaine MOVEit.
 Les seuils sont recalibrés par bootstrap avec réestimation et la spécification reste rejetée. Les
 vulnérabilités du catalogue CISA KEV n'améliorent pas l'ajustement sur 2022--2023 ($p=0{,}90$), et la
 faille MOVEit y est ajoutée quatre jours après son pic. Ce diagnostic ne prouve ni causalité ni contagion.
-Le brownien pur atteint le niveau presque sûrement, mais son délai est d'espérance infinie. Un facteur
-à retour à la moyenne (Ornstein-Uhlenbeck) donnerait un taux de déclenchement récurrent et fini, plus
-réaliste pour un facteur systémique. Nous gardons le brownien parce qu'il permet un calcul explicite.
 
 \subsection{Sous-processus tiers sur donnée ouverte}
 \label{sec:p4-sousprocess}
@@ -219,8 +172,7 @@ charge de facteur $\gamma=0{,}68$. Concentration du marché et probabilité de c
 \figover{Z14_p4_sousprocess_open.png}
 \caption{Le sous-processus tiers sur donnée ouverte. (a)~La taxonomie fine du tiers est sous le
 seuil d'estimation (registre DORA requis). (b)~La concentration est nette, côté exposition (BCE)
-comme côté sinistralité (Gini $0{,}69$). (c)~Origine et concentration tierces ancrées sur donnée
-européenne officielle.}
+comme côté sinistralité (Gini $0{,}69$). (c)~Repères européens sur l'origine et la concentration tierces, qui ne calibrent aucun paramètre.}
 % SOURCES-SCRIPTS: 44 08g
 \label{fig:p4-open}
 \end{figure}
@@ -228,7 +180,8 @@ européenne officielle.}
 \section{Détection de P2 et P3 comme courbe de survie}
 \label{sec:detection}
 
-P2 (gestion des incidents) et P3 (tests) ne sont pas des n\oe{}uds de sévérité. Ils gouvernent le
+P2 (gestion des incidents) et P3 (tests) ne sont pas, sur le fond, des n\oe{}uds de sévérité, alors que le moteur
+principal fait tirer à chacun une perte de même loi (\S\ref{sec:additivite-couts}). Ils gouvernent le
 temps de détection, car un incident non détecté à temps escalade et devient matériel. Le modèle
 résume cet effet par un multiplicateur du taux de matérialité par pilier touché, de $0{,}85$ à l'état conforme et
 $1{,}20$ à l'état non conforme. Nous le remplaçons par une lecture de survie ancrée sur donnée.
@@ -312,8 +265,7 @@ Deux réserves s'y attachent. D'abord, l'ordre observé porte sur les quantiles 
 trajectoire. À uniformes communs, la perte d'une année donnée baisse dans $16{,}2\,\%$ des cas lorsque l'on relâche la
 propagation et dans $30{,}7\,\%$ lorsque l'on relâche la détection. Les motifs diffèrent : la table
 des sous-ensembles dans le premier cas, la transformation de sévérité dans le second. La version
-trajectorielle demanderait un couplage monotone, donc d'autres tirages, ce que le gel de la calibration
-interdit pour renforcer un énoncé sans déplacer une conclusion. Ensuite, un coin peut être infaisable.
+trajectorielle demanderait un couplage monotone, donc d'autres tirages, et n'est pas construite ici. Ensuite, un coin peut être infaisable.
 Deux des quatre canaux sont des bornes posées, et rien ne garantit qu'une entité présente les quatre
 canaux à leur maximum en même temps. Le coin haut est le maximum observé parmi les seize
 configurations évaluées, non la description d'une entité.
@@ -369,7 +321,7 @@ résultat : elle indique que la cible tombe dans le bruit de simulation.
 \label{sec:interaction-canaux}
 % SOURCES-SCRIPTS: 68 84 88 100
 
-L'interaction n'est plus un résidu, elle se décompose et vit aux paires. La décomposition de Möbius
+La décomposition de Möbius
 sur le treillis des seize configurations rend compte des $+5\,001$~M\euro{} terme par terme. Elle compte quatre
 effets principaux ($9\,138$~M\euro), six croisés de paires ($5\,345$), quatre croisés de triplets
 ($-691$) et un croisé des quatre canaux ($+346$). Leur somme vaut $14\,139$ à la précision machine, aux arrondis d'affichage près.
@@ -427,22 +379,25 @@ fermeture. (c)~Les six croisés de paires avec leur écart-type de simulation ; 
 \subsection{Classement des indicateurs par capital et par statut}
 % SOURCES-SCRIPTS: 43 68
 
-La fréquence et la détection pèsent lourd en capital et sont calibrables : ce sont les leviers de
-remédiation à activer en premier. La propagation et l'accumulation pèsent aussi, mais elles sont
-bornées. Elles mesurent surtout une incertitude, qu'un registre d'incidents mieux renseigné pourrait réduire,
-plus sûrement qu'une action directe sur le contrôle (figure~\ref{fig:kpi}).
+Aucun des quatre écarts entre états n'est estimé, faute d'entités dont l'état serait observé
+(chapitre~\ref{chap:multietats}). La fréquence et la détection pèsent lourd en
+capital et se suivent par des indicateurs qu'une entité peut mesurer, le nombre d'incidents et le délai de
+détection ; leurs écarts restent posés. La propagation et l'accumulation pèsent aussi, mais aucun indicateur
+disponible ne les identifie. Elles mesurent surtout une incertitude, qu'un registre d'incidents mieux renseigné
+pourrait réduire, plus sûrement qu'une action directe sur le contrôle (figure~\ref{fig:kpi}). Ce classement
+compare des écarts posés et ne fixe pas à lui seul l'ordre des actions.
 
 \begin{figure}[H]\centering
 \figover{Z13_kpi_pilotables.png}
 \caption{Des indicateurs descriptifs aux indicateurs pilotables. (a)~Écart de capital DORA attribué
-par indicateur, chaque canal étant isolé (bleu : calibrable ; gris : borné), avec l'interaction qui
+par indicateur, chaque canal étant isolé (bleu : écart posé, mesurable par un indicateur ; gris : écart posé, non identifié), avec l'interaction qui
 referme la cascade. (b)~Tableau de bord de remédiation, indicateurs classés par capital libéré.}
 \label{fig:kpi}
 \end{figure}
 
 \subsection{Retour sur investissement de la conformité}
 \label{sec:roi}
-% SOURCES-SCRIPTS: 50 58 83
+% SOURCES-SCRIPTS: 50 58 83 140
 
 Le tableau de bord se lit en euros, et deux mots demandent une définition. Le portage est le coût de
 détention du capital : sous Solvabilité~II, il se lit dans la marge de risque, un pourcentage annuel du
@@ -455,7 +410,11 @@ $848$~M\euro/an, la sinistralité évitée $3\,247$, la charge annuelle moyenne 
 $622$~M\euro. La composante laissée de côté vaut $3{,}8$ fois celle qui est retenue, de sorte que le
 portage seul minore le bénéfice. Le retour de $6$ à $35$ ans est donc un majorant, pour un coût de
 remédiation de $25$ à $150$~M\euro{} par grande entité, soit $5$ à $30$~Md\euro{} pour deux cents
-entités.
+entités. L'enquête de \citet{mckinsey2024} cite $5$ à $15$~M\euro{} de pilotage et une mise en \oe{}uvre cinq à dix
+fois plus coûteuse : les $25$ à $150$~M\euro{} sont l'enveloppe calculée de ces estimations, non une plage observée. $64\,\%$ des entités interrogées par \citet{deloitte2025}
+prévoient seulement $2$ à $5$~M\euro. Les deux cents entités sont une hypothèse de travail, sans source. Or le
+périmètre du registre n'est ni cet ensemble d'entités ni un secteur : cette durée est un rapport d'ordres de
+grandeur et non le retour d'une entité.
 
 Ajouter les pertes évitées raccourcit cette durée sous les mêmes hypothèses, sans borner le retour réel. Les deux composantes réunies donnent
 $4\,095$~M\euro/an et un retour de $1$ à $7$ ans. Cette addition mêle un flux de compte de résultat à
@@ -469,14 +428,14 @@ Le taux de $6\,\%$ est celui du règlement délégué~2015/35. La directive~(UE)
 $4{,}75\,\%$, taux qu'emploient les calculs d'échelle d'entité. Le portage monétisé tombe alors à
 $672$~M\euro/an, soit une baisse de $21\,\%$, et le majorant du retour passe de $35$ à $45$ ans. Aucune
 conclusion ne bascule : la durée reste un majorant, et la composante dominante du bénéfice n'est pas
-monétisée. La chaîne publiée reste au taux historique, la calibration étant gelée
+monétisée. Les autres calculs de cette section restent au taux de $6\,\%$
 (figure~\ref{fig:roi}). Dans le scénario posé, passer de l'état non conforme à l'état conforme libère ce capital, face à un
-coût de remédiation externe et incertain, affiché comme tel. Les leviers calibrables passent en premier.
+coût de remédiation externe et incertain, affiché comme tel.
 
 \begin{figure}[H]\centering
 \figover{J6_roi_conformite.png}
 \caption{Retour sur investissement de la conformité. (a)~Capital libéré par levier, classé, avec sa
-valeur annuelle à $6\,\%$ (bleu : calibrable ; gris : borné). (b)~Coût de remédiation ponctuel contre
+valeur annuelle à $6\,\%$ (bleu : écart posé, mesurable par un indicateur ; gris : écart posé, non identifié). (b)~Coût de remédiation ponctuel contre
 économie récurrente de portage du capital. Le retour sur le portage seul est de $6$ à $35$ ans, et
 c'est un majorant, la perte évitée n'étant pas monétisée ici.}
 \label{fig:roi}
@@ -488,7 +447,7 @@ c'est un majorant, la perte évitée n'étant pas monétisée ici.}
 Deux piliers appelleraient un traitement propre, mais aucune donnée ne le soutient. Les modéliser par
 des paramètres non identifiables contredirait la démarche, et nous les laissons en perspective.
 \begin{itemize}\itemsep2pt
-\item P1 (gouvernance) ressemble moins à un n\oe{}ud qu'à un modificateur systémique : une gouvernance
+\item P1 (gouvernance) ressemble moins à un n\oe{}ud qu'à un modificateur systémique, bien que le moteur principal lui fasse tirer une perte : une gouvernance
       défaillante charge la sensibilité $\rho$ de tous les piliers à la fois. Aucune donnée ne relie la
       qualité de gouvernance à une hausse du hasard, et cette relation est à borner plutôt qu'à
       estimer.
@@ -497,6 +456,6 @@ des paramètres non identifiables contredirait la démarche, et nous les laisson
 \end{itemize}
 Les diagnostics motivent des adaptations distinctes : hétérogénéité des pertes, choc commun et
 détection. Ils n'identifient pas tous les paramètres correspondants. Les scénarios examinés
-relèvent le niveau du capital sans renverser le classement des piliers. Leur usage reste
+relèvent le niveau du capital sans renverser le classement des piliers de la lecture~B ; à quatre canaux, P4 passe en tête, par construction de l'accumulation (\S\ref{sec:res-prio}). Leur usage reste
 conditionnel aux hypothèses de chaque calcul ; un registre au niveau de l'entité serait nécessaire
 pour estimer les mécanismes encore posés.
