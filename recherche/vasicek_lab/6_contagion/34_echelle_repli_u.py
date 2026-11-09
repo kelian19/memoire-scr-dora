@@ -1,38 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-34 : l'ÉCHELLE DE REPLI sur u_ij, telle que demandée par Hugo.
+34 : repli sur l'effet source résiduel, distinct du pavé à S fixé du script 30.
 
-La consigne du tuteur : attaquer la version la plus dure, puis reculer par crans
-documentés. Instanciation sur les probabilités de propagation :
+    logit p_ij = logit p_j + u_ij        (i = source, j = cible)
 
-        logit p_ij = logit p_j + u_ij        (i = source, j = cible)
+p_j décrit l'attractivité de la cible ; u_ij est un effet source résiduel centré
+par colonne hors diagonale. Translater logit(p_j) et compenser u conserve W :
+le centrage est une convention de repérage, sans information supplémentaire.
 
-  p_j  = attractivité de la cible, ce qui reste quand la source ne compte pas ;
-  u_ij = excès propre à la source, c'est-à-dire LA DIRECTION, et donc la contribution.
+Familles : u libre ; un facteur source/cible avant recentrage ; barème d'expert ;
+u = 0. La fonction historiquement nommée rang1 ne garantit pas un rang matriciel 1
+après recentrage par colonne hors diagonale et annulation de la diagonale.
+La SVD du barème résiduel est un descriptif distinct de cette famille.
 
-NORMALISATION, sans quoi la décomposition n'est pas identifiée. Pour toute constante
-c_j on pourrait poser (p_j + c_j, u_ij - c_j) sans rien changer : on impose donc
-        moyenne sur i (i != j) de u_ij = 0,  pour chaque j,
-ce qui fait de p_j exactement l'attractivité moyenne de j. C'est une CONVENTION DE
-REPÉRAGE et non une information : le script vérifie que le SCR et le classement n'en
-dépendent pas.
-
-LES CRANS, du plus dur au repli :
-  0. u libre                 15 degrés de liberté après normalisation
-  1. u de rang 1             u_ij = b_j (a_i - moyenne des a), ~9 degrés  <- JAMAIS TESTÉ
-  4. u = 0                   p_ij = p_j : les colonnes de W deviennent identiques
-
-Le cran 4 est le MODÈLE NUL, et il n'est pas anodin : à u = 0 aucune source ne se
-distingue plus par son profil de propagation, donc la priorité de remédiation ne peut
-plus venir que de la fréquence d'amorce. L'écart au cran 4 n'est donc pas un delta de
-capital, c'est un basculement de la logique de décision. C'est là que se mesure la
-contribution, pas sur le niveau de la VaR.
-
-Ce que ce script NE prétend pas : rendre u identifiable. Le placebo directionnel ne
-rejette pas u = 0, et restreindre au rang 1 ne crée pas de donnée. Ce que le rang 1
-apporte est un ensemble admissible PLUS PETIT, donc des bornes de capital plus serrées,
-au prix d'une hypothèse de structure explicite.
+À u = 0, W_ij = p_j hors diagonale : des p_j différents conservent une asymétrie.
+La partie symétrique S change également. Cette expérience n'isole donc pas l'effet
+de A. Elle compare des étendues sur 400 tirages par famille, pas des extrema sur
+les 1024 sommets à S fixé ni des bornes globales. Leur différence ne mesure pas
+un gain d'information identifié. Les gains de remédiation restent conditionnels
+aux attractivités, aux amorces et à l'exclusion de l'auto-propagation.
 
 Sortie : diagnostics + figure Z5_echelle_repli.png.
 """
@@ -99,7 +86,7 @@ def centrer(U):
 
 
 def rang1(a, b):
-    """Famille de rang 1 compatible avec la normalisation : u_ij = b_j (a_i - moy_j a)."""
+    """Un facteur source/cible avant recentrage ; nom historique, rang final non imposé."""
     U = np.zeros((pid.NP_, pid.NP_))
     for j in range(pid.NP_):
         idx = [i for i in range(pid.NP_) if i != j]
@@ -136,24 +123,24 @@ else:
     print("  transporterait alors de l'information, et l'enonce serait mal pose.")
 
 # =====================================================================================
-titre("Cran 1 : u est-il bien approché par un rang 1 ?")
+titre("SVD descriptive du bareme residuel, distincte de la famille source/cible")
 # =====================================================================================
 # SVD de u restreinte a la structure hors-diagonale (diagonale mise a zero)
 Usvd = U_EXP.copy()
 s = np.linalg.svd(Usvd, compute_uv=False)
 part1 = s[0] ** 2 / (s ** 2).sum()
 print(f"  valeurs singulieres de u : " + "  ".join(f"{x:.3f}" for x in s))
-print(f"  part de variance captee par le rang 1 : {100*part1:.1f} %")
-print("  Lecture : un rang 1 restitue l'essentiel de la direction posee par le classeur")
-print("  si cette part est elevee ; sinon, reculer d'un cran coute cher en fidelite.")
+print(f"  part d'energie du premier terme de la SVD : {100*part1:.1f} %")
+print("  Cette part decrit le bareme, pas la famille source/cible apres recentrage.")
 
 # =====================================================================================
-titre("Bornes de capital, cran par cran")
+titre("Etendues de capital echantillonnees, famille par famille")
 # =====================================================================================
 rng = np.random.default_rng(SEED)
 
 
 def bornes(tire, n, nom):
+    """Min/max sur les tirages acceptés ; nom historique, sans preuve de bornes globales."""
     vals, Ws = [], []
     for _ in range(n):
         U = tire()
@@ -183,7 +170,7 @@ v0, W0 = bornes(lambda: cal(centrer(rng.uniform(-1, 1, (pid.NP_, pid.NP_)))),
                 N_SET, "cran 0 : u libre")
 v1, W1 = bornes(lambda: cal(rang1(rng.uniform(-1, 1, pid.NP_),
                                   rng.uniform(-1, 1, pid.NP_))),
-                N_SET, "cran 1 : u de rang 1")
+                N_SET, "cran 1 : facteur source/cible")
 scr_exp = ev.scr(recompose(LP, U_EXP))
 scr_nul = ev.scr(recompose(LP, np.zeros((pid.NP_, pid.NP_))))
 print(f"  {'cran 3 : u du classeur (point)':<34} {scr_exp:7.0f} M")
@@ -192,17 +179,13 @@ l0, l1 = v0.max() - v0.min(), v1.max() - v1.min()
 red = 100 * (1 - l1 / l0)
 print(f"\n  Largeur cran 0 : {l0:.0f} M   cran 1 : {l1:.0f} M   variation {red:+.0f} %")
 if red > 5:
-    print("  Reculer d'un cran RESSERRE les bornes : c'est le gain d'une hypothese de")
-    print("  structure explicite. On n'a pas acquis de donnee, on a assume une forme.")
+    print("  L'etendue echantillonnee est plus etroite sous la restriction source/cible.")
 elif red < -5:
-    print("  Reculer d'un cran ELARGIT les bornes. A amplitude egale, la famille de rang 1")
-    print("  n'est donc pas incluse dans l'echantillon libre : le tirage uniforme centre")
-    print("  explore mal les directions extremes, que le rang 1 atteint. A retenir : le")
-    print("  cran 1 n'est PAS un sous-ensemble du cran 0 tel qu'echantillonne ici, et")
-    print("  comparer leurs largeurs ne mesure donc pas un gain d'information.")
+    print("  L'etendue echantillonnee est plus large sous la restriction source/cible.")
 else:
-    print("  Les deux largeurs sont comparables : a cette amplitude, restreindre au rang 1")
-    print("  ne change pas materiellement l'enveloppe de capital.")
+    print("  Les deux etendues echantillonnees sont comparables.")
+print("  Ces tirages ne sont ni les sommets du pave a S fixe ni des extrema globaux.")
+print("  Leur largeur comparee ne mesure pas un gain d'information identifie.")
 
 # =====================================================================================
 titre("Ce qui bascule au cran 4 : la logique de la priorite")
@@ -215,7 +198,7 @@ def profil(Ws, nom):
 
 
 f0 = profil(W0, "cran 0 (u libre)")
-f1 = profil(W1, "cran 1 (rang 1)")
+f1 = profil(W1, "cran 1 (source/cible)")
 ben_exp = ev.benefits(recompose(LP, U_EXP))
 ben_nul = ev.benefits(recompose(LP, np.zeros((pid.NP_, pid.NP_))))
 print(f"  {'cran 3 (classeur), gains':<30}"
@@ -233,22 +216,20 @@ W_nul = recompose(LP, np.zeros((pid.NP_, pid.NP_)))
 ecart_col = max(np.ptp([W_nul[i, j] for i in range(pid.NP_) if i != j])
                 for j in range(pid.NP_))
 print(f"  Au cran 4, pour une meme cible, l'ecart entre sources vaut {ecart_col:.2e} :")
-print("  aucune source ne se distingue plus par son profil de propagation. Ce qui")
-print("  subsiste du classement ne vient QUE de la frequence d'amorce, pas du mecanisme.")
+print("  l'effet source residuel est nul ; les attractivites des cibles restent differentes.")
+print("  Une asymetrie subsiste et S change : le contraste n'isole pas A.")
 
 # Ne PAS crier a l'inversion sur un ecart qui tient dans le bruit Monte-Carlo.
 g1, g2 = sorted(ben_nul)[-1], sorted(ben_nul)[-2]
 marge = 100 * (g1 - g2) / g1
 print(f"\n  Au cran 4, les deux premiers sont separes de {g1-g2:.0f} M ({marge:.1f} %).")
 if o_exp[0] != o_nul[0] and marge > 3:
-    print(f"  => le pilier de tete BASCULE de P{o_exp[0]} a P{o_nul[0]}, avec une marge nette.")
-    print("  C'est la quantite decisionnelle sur laquelle se mesure la contribution.")
+    print(f"  => le pilier de tete passe de P{o_exp[0]} a P{o_nul[0]} dans cette comparaison.")
 elif marge <= 3:
     print(f"  => marge trop faible pour conclure a une inversion : au cran 4, P{o_nul[0]} et")
-    print(f"  P{o_nul[1]} sont INDISCERNABLES. Le resultat defendable n'est pas un")
-    print("  basculement, c'est que la DIRECTION est ce qui separe les deux piliers de")
-    print(f"  tete : au cran 3 l'ecart est de {max(ben_exp)-sorted(ben_exp)[-2]:.0f} M, au cran 4 il")
-    print("  s'annule. Sans direction, on ne sait plus lequel remedier en premier.")
+    print(f"  P{o_nul[1]} ont des gains proches dans ce tirage.")
+    print(f"  Au bareme l'ecart est de {max(ben_exp)-sorted(ben_exp)[-2]:.0f} M.")
+    print("  Le rapprochement ne peut etre attribue a la seule partie antisymetrique.")
 else:
     print(f"  => le pilier de tete reste P{o_exp[0]} : chercher la contribution dans l'ordre")
     print("  complet ou dans l'ecart des gains, pas dans le premier rang.")
@@ -271,7 +252,7 @@ ACCENT, BLUE, GREEN = "#a6002e", "#2b559f", "#009a94"
 # des etiquettes sous 5 points. Le rapport largeur sur hauteur est conserve.
 fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.66, 3.23))
 
-crans = ["0\nu libre", "1\nrang 1", "3\nclasseur", "4\nu = 0"]
+crans = ["0\nu libre", "1\nFacteur\nsource/cible", "3\nBarème", "4\nu = 0"]
 los = [v0.min(), v1.min(), scr_exp, scr_nul]
 his = [v0.max(), v1.max(), scr_exp, scr_nul]
 xs = np.arange(4)
@@ -282,14 +263,14 @@ ax1.scatter(xs, los, marker="_", s=300, color=INK, zorder=5)
 ax1.scatter(xs, his, marker="_", s=300, color=INK, zorder=5)
 ax1.set_xticks(xs); ax1.set_xticklabels(crans, fontsize=9)
 ax1.set_ylabel("besoin de capital à 99,5 % (M€)", color=INK2)
-ax1.set_title("(a)  Les extrema se resserrent\nen reculant d'un cran", fontsize=11,
+ax1.set_title("(a)  Étendues sur 400 tirages\npar famille (S non fixé)", fontsize=11,
               color=INK, pad=8)
 
 ax2.bar(np.arange(len(s)), s, color=BLUE, alpha=0.85)
 ax2.set_xticks(range(len(s)))
 ax2.set_xticklabels([f"$s_{i+1}$" for i in range(len(s))])
 ax2.set_ylabel("valeur singulière $s_i$ de $u$", color=INK2)
-ax2.set_title(f"(b)  Le rang 1 capte {100*part1:.0f} %\nde la direction posée",
+ax2.set_title(f"(b)  SVD du barème résiduel\nPremier terme : {100*part1:.0f} %",
               fontsize=11, color=INK, pad=8)
 
 w = 0.38
@@ -298,7 +279,7 @@ ax3.bar(xs5 - w/2, ben_exp, width=w, color=BLUE, alpha=0.85, label="cran 3 (clas
 ax3.bar(xs5 + w/2, ben_nul, width=w, color=ACCENT, alpha=0.85, label="cran 4 ($u=0$)")
 ax3.set_xticks(xs5); ax3.set_xticklabels([f"P{p}" for p in pid.PIL])
 ax3.set_ylabel("gain de remédiation (M€)", color=INK2)
-ax3.set_title("(c)  Ce que la direction change\nà la décision", fontsize=11, color=INK, pad=8)
+ax3.set_title("(c)  Gains de remédiation\nS et A varient ensemble", fontsize=11, color=INK, pad=8)
 ax3.legend(frameon=False, fontsize=8)
 
 for ax in (ax1, ax2, ax3):

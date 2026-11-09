@@ -940,7 +940,7 @@
 
 \begin{frame}[label=reserve-copule]{R4 · Pourquoi une cascade plutôt qu'une copule ?}
   \suivimethode{5,7}{Cascade, capital}
-  \framesubtitle{Une copule est symétrique : elle ignore l'ordre d'atteinte des piliers}
+  \framesubtitle{Notre copule décrit la dépendance des pertes, pas l'ordre d'atteinte des piliers}
   \vspace{6mm}
   {\centering\begin{tikzpicture}[x=1mm,y=1mm]
     \node[font=\footnotesize\bfseries,text=nexialog,anchor=west] at (0,13) {Surcoût DORA capté, mêmes marges et mêmes graines (M€)};
@@ -954,7 +954,7 @@
     \column{.47\textwidth}\footnotesize
     \textbf{Ce que la copule manque.} Elle capte la fréquence et la détection, pas la propagation d'un pilier à l'autre.
   \end{columns}
-  \reponse{La copule dit \textbf{qui tombe avec qui} ; la cascade dit aussi \textbf{qui entraîne qui}.}
+  \reponse{Notre copule dit \textbf{qui tombe avec qui} ; la cascade dit aussi \textbf{qui entraîne qui}.}
 % Reference interne : rapport ENSAE, § 2 (22 des 26), § 5 et tableau des cadres du chapitre 9 (6 760 contre 10 927).
 \end{frame}
 
@@ -1026,7 +1026,7 @@
 
 \begin{frame}[label=reserve-backtest]{R8 · Le backtest valide-t-il le quantile ?}
   \suivimethode{3,4}{Fréquence, sévérité}
-  \framesubtitle{Non : il valide le centre et le corps de la loi, pas le quantile à 99,5\,\%}
+  \framesubtitle{Non : le comptage et la forme de queue passent, le niveau annuel est rejeté}
   \vspace{6mm}
   {\centering\begin{tikzpicture}[x=1mm,y=1mm]
     \node[font=\footnotesize\bfseries,text=nexialog,anchor=west] at (0,13) {Couverture hors échantillon de la loi de comptage (douze années notées)};
@@ -1037,12 +1037,12 @@
   \begin{columns}[T,onlytextwidth]
     \column{.47\textwidth}\footnotesize
     \textbf{Ce qui passe.} La binomiale négative, et la forme de la queue.\par\vspace{1mm}
-    \textbf{Ce qui ne passe pas.} Le niveau de sévérité : l'échelle des pertes dérive dans le temps.
+    \textbf{Ce qui ne passe pas.} Le niveau de sévérité et de la charge annuelle ; une dérive d'échelle y est compatible.
     \column{.47\textwidth}\centering
     {\editorial\fontsize{20}{22}\selectfont\color{accent}1\,811 ans}\par\vspace{1mm}
-    {\scriptsize d'historique pour détecter, à 99,5\,\%, un taux de dépassement double du taux attendu\par}
+    {\scriptsize pour détecter, à 99,5\,\% et 80\,\% de puissance, un taux de dépassement doublé\par}
   \end{columns}
-  \reponse{Aucun historique existant ne permet de \textbf{tester un quantile à 99,5\,\%}.}
+  \reponse{Douze années ne permettent pas de \textbf{valider précisément un quantile à 99,5\,\%}.}
 % Reference interne : rapport ENSAE, chapitre 4, backtest hors echantillon (91,7 contre 75,0 %, 1 811 annees).
 \end{frame}
 

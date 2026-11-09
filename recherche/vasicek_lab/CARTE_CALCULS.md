@@ -25,11 +25,16 @@ et contrôler le harnais ne revient pas à les réexécuter.
 | **Direction avec quatre canaux — sensibilité** | Cascade indépendante, distincte de la marche du résultat principal ; même direction dans les deux états. | [`140`](5_etats/140_diagnostics_audit_institut.py) ; [sortie 140](../../resultats/sorties_verif/140.txt). | Point ×3,28 ; facteurs aux sommets 2,96–3,51. Ne pas appliquer cette plage au point ×3,34 comme si le moteur était identique. |
 | **Coût par incident — sensibilité majeure** | Fourier ; addition des coûts des piliers contre une perte unique par incident ; mêmes autres conventions. | [`119`](8_benchmarks/119_unite_perte_capital_institut.py) ; [sortie Institut 119](../../resultats/sorties_verif_inst/119.txt). | Facteur 3,35 contre 2,25. Ce contraste porte sur l'unité économique de perte, pas seulement sur la méthode numérique. |
 | **Incertitude de calibration — sensibilité** | Bootstrap conjoint de la sévérité ; autres hypothèses conditionnantes maintenues. | [`120`](1_fondations/120_bootstrap_joint_institut.py) ; [sortie Institut 120](../../resultats/sorties_verif_inst/120.txt). | La bande ne couvre pas toutes les erreurs de modèle ni les paramètres posés. |
-| **Passage à l'entité — courant** | Panel de grandes institutions ; fréquence liée à la taille ; corps de pertes positif ; bootstrap par firme. | [`136`](2_donnees/136_descente_grandes_institutions.py), module [`descente.py`](descente.py) ; [sortie 136](../../resultats/sorties_verif_inst/136.txt). | 24,1 M€ pour l'entité notionnelle de 20 Md$ d'actifs. Extrapolation conditionnelle ; effet du métier non retenu. |
+| **Passage à l'entité — courant** | Panel de grandes institutions ; fréquence liée à la taille ; corps de pertes positif ; bootstrap par firme ; seul g au niveau non conforme. | [`136`](2_donnees/136_descente_grandes_institutions.py), module [`descente.py`](descente.py) ; [sortie 136](../../resultats/sorties_verif_inst/136.txt). | 24,1 M€ pour l'entité notionnelle de 20 Md$ d'actifs. Extrapolation conditionnelle ; effet du métier non retenu. |
 | **Sélection et enregistrement — sensibilité majeure** | Diagnostics de descente et scénarios de taux d'enregistrement ; pas de taux de capture estimé. | [`137`](2_donnees/137_descente_diagnostics.py), [`138`](2_donnees/138_descente_observation.py) ; [sortie 137](../../resultats/sorties_verif_inst/137.txt), [sortie 138](../../resultats/sorties_verif_inst/138.txt). | Les mêmes comptes observés peuvent correspondre à plusieurs fréquences réelles ; le bootstrap ne résout pas cette non-identification. |
 | **Validation annuelle — diagnostic** | Comparaison hors échantillon de la loi annuelle et des observations. | [`91`](1_fondations/91_backtest_charge_agregee.py) ; [sortie Institut 91](../../resultats/sorties_verif_inst/91.txt). | Ajustement du niveau rejeté, p = 0,0042 ; les contrôles techniques ne constituent pas une validation du niveau de capital. |
 
 ## Expériences historiques à reconnaître
+
+Le [diagnostic de repli logit](6_contagion/34_echelle_repli_u.py) est distinct du pavé à S fixé :
+il compare des étendues sur 400 tirages par famille. Sa famille source/cible n'impose pas un
+rang matriciel 1 après recentrage ; `u = 0` conserve les attractivités des cibles et une asymétrie.
+S varie aussi : ce diagnostic n'isole pas l'effet de la partie antisymétrique.
 
 | Entrée | Statut et usage |
 |---|---|

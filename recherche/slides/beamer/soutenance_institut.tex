@@ -729,12 +729,12 @@
     \midrule
     $\Delta_{\mathrm{DORA}}$ positif, de plusieurs milliers de M€ & Source de sévérité (OpRisk / PRC) ; copule ($\theta\in[1,4]$) & Facteur $\sim1{,}9$ entre sources ; $<1{,}4\,\%$ sur $\theta$ & \textsc{robuste} \\
     \rowcolor{clair}Priorité selon les canaux & Deux canaux contre quatre, à direction fixée & P1 puis P4 en lecture B ; P4 puis P1 à quatre canaux & \textsc{conditionnel} \\
-    L'asymétrie de $W$ décide de l'ordre P1 / P4 & Partie antisymétrique supprimée ; placebo & Sans la direction, P1 et P4 ne se distinguent plus & \textsc{assumé} \\
+    Le profil source/cible peut rapprocher P1 et P4 & Repli logit sur l'effet source résiduel & Gains proches sans effet source, mais $S$ change et une asymétrie subsiste & \textsc{assumé} \\
     \rowcolor{clair}Les lois du socle prédisent une période non vue & Origine glissante, douze années & Couverture $91{,}7\,\%$ contre $75{,}0\,\%$ ; queue non rejetée ; peu de puissance & \textsc{assumé} \\
     \rowcolor{clair}Fréquence indépendante de la période Hackmageddon & Quatre jeux de parts, 2025--2026 & $2{,}318$ à $2{,}471$ contre $2{,}487$ ($6{,}8\,\%$ au plus) & \textsc{robuste} \\
     Le capital réagit à la conformité & Score $q$, gain $g\in[0{,}05\,;0{,}90]$ & Facteur $3{,}34$ ; $\times1{,}6$ sur la plage de $g$ & \textsc{voulu} \\
     \rowcolor{clair}Le besoin est une distribution large & Incertitude de paramètre & Facteur $\sim2{,}5$ sur le quantile d'un sinistre & \textsc{assumé} \\
-    \rowcolor{clair}Le niveau de sévérité ne tient pas hors échantillon & Une année à la fois & Quantiles dépassés trois fois trop souvent ; dérive $\ge+16{,}9\,\%$ & \textsc{assumé} \\
+    \rowcolor{clair}Le niveau de sévérité ne tient pas hors échantillon & Une année à la fois & Quantiles dépassés trois fois trop souvent ; $+16{,}9\,\%$ en variante de dérive, sans borne démontrée & \textsc{assumé} \\
     Le signe de $\Delta$ ne dépend pas de l'additivité & Exposant $\theta\in[0{,}70\,;1{,}30]$ & Écart de 9\,706 à 20\,487 M€ : signe et ordre conservés, amplitude non & \textsc{assumé} \\
     \bottomrule
   \end{tabularx}
@@ -754,7 +754,7 @@
     \textbf{Deux canaux, lecture B.} Parmi les 120 ordres, P1 $\to$ P4 $\to$ P2 $\to$ P3 $\to$ P5 minimise le capital intégré. L'écart entre le pire ordre et l'optimal atteint $21\,\%$.\par\vspace{1.5mm}
     \textbf{Quatre canaux.} P4 $\to$ P1 $\to$ P2 $\to$ P3 $\to$ P5 devient optimal. Le pire ordre coûte $38{,}7\,\%$ de plus que cet optimum. P4 est premier sur les huit graines.\par\vspace{1.5mm}
     \textbf{Trajectoire.} Depuis une répartition supposée des états (NC 35\,\%, PC 35\,\%, C 30\,\%), en lecture B, le capital OpRisk passe de 10\,752 à 7\,041 M€ en cinq ans. Le surcoût résiduel tend vers zéro ; son intégrale, à un coût de capital près, est le coût de portage de la non-conformité.\par\vspace{1.5mm}
-    \textbf{Invariance.} L'ordre optimal ne dépend que des SCR par configuration, donc pas des taux de transition de la chaîne de Markov.
+    \textbf{Portée.} À durées identiques par étape, le critère n'utilise que les capitaux des configurations. Des durées ou des coûts propres aux piliers peuvent changer l'ordre.
     \column{.46\textwidth}\footnotesize
     {\editorial\normalsize Un classement conditionnel}\par\vspace{1.5mm}
     À quatre canaux, les parts de Shapley sont $40{,}6\,\%$ pour P4 et $25{,}6\,\%$ pour P1 (écarts-types entre graines : 190 et 208 M€). L'accumulation posée agit sur P4 ; son rang en découle.\par\vspace{1.5mm}
@@ -958,7 +958,7 @@
     \end{tabularx}
   \end{columns}
   \vspace{1.5mm}
-  {\color{accent}\small\textbf{Le vide que le travail comble.}} \footnotesize DORA rend observable un niveau de maîtrise qui ne l'était pas, mais aucun dispositif prudentiel ne le traduit en capital. Nous le traduisons dans l'ORSA, seul cadre qui admette des scénarios stochastiques.
+  {\color{accent}\small\textbf{Le vide que le travail comble.}} \footnotesize DORA rend observable un niveau de maîtrise qui ne l'était pas, mais aucun dispositif prudentiel ne le traduit en capital. Nous le traduisons dans l'ORSA, cadre retenu ici pour ses scénarios stochastiques.
   \source{rapport, chapitre 1 (§ 1.5.2 et § 1.6). Aucun module DORA n'existe en Formule Standard : la grandeur calculée est un besoin de capital ORSA, pas un SCR réglementaire.}
 \end{frame}
 
@@ -1578,7 +1578,7 @@
 
 \begin{frame}{Que gagne-t-on à resserrer la direction ?}
   \suivimethode{7}{Capital}
-  \framesubtitle{\ajout Degré d'ignorance $t$ et échelle de repli}
+  \framesubtitle{\ajout Degré d'ignorance $t$ et repli sur l'effet source}
   \begin{columns}[T,onlytextwidth]
     \column{.47\textwidth}\scriptsize
     \textbf{Degré d'ignorance.} L'ensemble $\mathcal W(t)=\{S+A:\ A^\top=-A,\ |A_{jk}|\le tS_{jk},\ \rho(S+A)<1\}$ ; $t=1$ correspond aux sources publiques actuelles.\par\vspace{1mm}
@@ -1590,12 +1590,12 @@
       Largeur de la bande, M€ & 336 & 695 & 1\,083 & 1\,839 \\
       \bottomrule
     \end{tabular}\par\vspace{1mm}
-    Borner l'asymétrie à la moitié de la co-occurrence réduirait la largeur de 1\,839 à 695 M€ ($-62\,\%$) : un ordre de grandeur de ce que le reporting recommandé permettrait de gagner, sans le garantir.\par\vspace{1mm}
-    \textbf{Échelle de repli.} Direction écrite par l'excès de propagation propre à la source, $\mathrm{logit}\,p_{ij}=\mathrm{logit}\,p_j+u_{ij}$, que l'on limite par crans. Le rang 1 capte $74\,\%$ de la variance de la direction posée et resserre les bornes de $25\,\%$.\par\vspace{1mm}
-    Au cran nul, P1 et P4 sont indiscernables (1\,051 contre 1\,052 M€), alors que 353 M€ les séparent avec la direction du classeur : \textbf{la direction départage les deux piliers prioritaires.}
+    Borner l'asymétrie à la moitié de la force symétrique $S$ posée réduirait la largeur de 1\,839 à 695 M€ ($-62\,\%$) : un ordre de grandeur de ce que le reporting recommandé permettrait de gagner, sans le garantir.\par\vspace{1mm}
+    \textbf{Repli logit.} $\mathrm{logit}\,p_{ij}=\mathrm{logit}\,p_j+u_{ij}$ sépare l'attractivité de la cible et un effet source résiduel. Sur 400 tirages, la famille à un facteur réduit l'étendue de 738 à 555 M€. Le premier terme de la SVD porte $74\,\%$ de l'énergie du barème.\par\vspace{1mm}
+    À $u=0$, les gains de P1 et P4 sont proches (1\,051 et 1\,052 M€), contre 353 M€ d'écart au barème. Mais $S$ change et une asymétrie subsiste : \textbf{ce rapprochement n'isole pas l'effet de la direction.}
     \column{.49\textwidth}
-    \includegraphics[width=\linewidth]{Z5_echelle_repli.png}\par
-    {\tiny\color{gris}(a) Les bornes se resserrent quand la direction descend d'un cran : $u$ libre, rang 1, classeur, cran nul. (b) Valeurs singulières de la direction posée. (c) Gains de remédiation par pilier.\par}
+    \includegraphics[width=\linewidth]{../../vasicek_lab/figures_inst/Z5_echelle_repli.png}\par
+    {\tiny\color{gris}(a) Étendues sur 400 tirages, et deux points. (b) Valeurs singulières du barème résiduel. (c) Gains au barème et à $u=0$, où une asymétrie subsiste.\par}
     \scriptsize\vspace{1mm}
     Les extrema sont numériques : les 3\,000 points intérieurs tirés restent dans les bornes et 172 ascensions depuis des sommets ou des points intérieurs finissent toutes sur un sommet, mais cela n'est pas démontré.
   \end{columns}
@@ -1636,7 +1636,7 @@
       PC contre C, PRC & 1\,257 & [1\,077 ; 1\,466] \\
       \bottomrule
     \end{tabular}\par\vspace{1mm}
-    L'intervalle large côté OpRisk est la signature d'une queue d'indice $0{,}60$ ; il porte sur la lecture B. Pour l'écart à quatre canaux, seule la dispersion entre graines est publiée.\par\vspace{1mm}
+    L'intervalle large côté OpRisk est la signature d'une queue d'indice $0{,}60$ ; il porte sur la lecture B. Pour l'écart à quatre canaux, la dispersion entre graines est de 734 M€ ; le bootstrap conjoint du § 10.7.2 traite son incertitude de calibration.\par\vspace{1mm}
     {\color{accent}Ce facteur compare deux états posés :} ce n'est pas un effet de DORA mesuré sur des entités.
   \end{columns}
   \source{rapport, chapitre 9 (§ 9.1, tableaux 9.1 et 9.2). Le facteur se compare d'une lecture à l'autre, non l'écart en euros.}
@@ -1709,7 +1709,7 @@
       Cadre & $\Delta$ capital C$\to$NC & Part de l'effet \\
       \midrule
       Formule Standard (Solvabilité II) & 0 M€ & 0\,\% \\
-      \rowcolor{clair}LDA-copule (dépendance symétrique) & 6\,760 M€ & 62\,\% \\
+      \rowcolor{clair}LDA-copule gaussienne figée (comparateur) & 6\,760 M€ & 62\,\% \\
       Cascade dirigée & 10\,927 M€ & 100\,\% (référence) \\
       \bottomrule
     \end{tabularx}\par\vspace{1.5mm}
@@ -2140,7 +2140,7 @@
     Fréquence $\lambda$ & $\sim21{,}6$/an (OpRisk) & convention de calage & Sous-linéaire sur le niveau ; 582 événements sur 27 ans \\
     \rowcolor{clair}Multiplicateur de fréquence & $\times1{,}525$ partiel ; $\times2{,}487$ NC & posé & Forte : parts d'attaque citées, fourchettes de l'auteur ; $\lambda$ de 41,7 à 65,6 aux bornes \\
     Surdispersion $\varphi$ & 9,20 & posé (prudent) & Élasticité sur l'écart entre états non résolue ; 2,24 mesuré \\
-    Structure $W=gT/s_{\max}$ & classeur qualitatif & posé / normatif & La direction départage les deux piliers de tête ; surcoût porté par la partie symétrique \\
+    Structure $W=gT/s_{\max}$ & classeur qualitatif & posé / normatif & À $S$ fixé, la direction peut modifier la priorité entre piliers ; le repli logit fait aussi varier $S$ \\
     \rowcolor{clair}Gain de propagation $g$ & 0,90 ; par état 0,45 / 0,68 / 0,90 & posé & Levier : $\times1{,}6$ sur $[0{,}05\,;0{,}90]$ \\
     Charge systémique $\gamma$ & 0,68 & posé & Modérée ; aucune correspondance démontrée avec la concentration du nuage \\
     \rowcolor{clair}Probabilités d'état NC / PC / C & 0,35 / 0,35 / 0,30 & posé & Déplace le mélange, pas les états ; probabilités non déduites des enquêtes \\
@@ -2205,7 +2205,7 @@
     \column{.31\textwidth}\scriptsize
     {\editorial\normalsize Ancrages européens}\par\vspace{1mm}
     Le premier rapport DORA des autorités européennes établit que $29\,\%$ des 3\,383 incidents TIC majeurs de 2025 proviennent d'un tiers. Cette part situe l'amorce P4 ; elle ne calibre pas ROOT$_4=0{,}90$.\par\vspace{1mm}
-    L'analyse des registres d'externalisation par la BCE : plus de $30\,\%$ du budget des grandes banques va à 10 fournisseurs, $50\,\%$ du budget critique à 30 ; 19 fournisseurs TIC critiques désignés. Ces repères motivent l'accumulation sans identifier $\omega$ ni mesurer $\gamma=0{,}68$.\par\vspace{1mm}
+    L'analyse des registres d'externalisation par la BCE : plus de $30\,\%$ du budget des grandes banques va à 10 fournisseurs, $50\,\%$ du budget critique à 30 ; les autorités européennes ont désigné 19 fournisseurs TIC critiques en novembre 2025. Ces repères motivent l'accumulation sans identifier $\omega$ ni mesurer $\gamma=0{,}68$.\par\vspace{1mm}
     La taxonomie fine du tiers est trop rare dans la donnée ouverte : 20 incidents en finance dans OpRisk.
     \column{.31\textwidth}\scriptsize
     {\editorial\normalsize Comptage journalier}\par\vspace{1mm}
@@ -2227,7 +2227,7 @@
     \midrule
     Le facteur 3,34 est-il un effet de DORA mesuré ? & Non : il compare deux états de conformité posés ; aucune entité ne publie son état. Le signe de l'écart tient sur toutes les correspondances testées ; l'amplitude est un scénario. & § 9.1, 6.4 \\
     \rowcolor{clair}Pourquoi $b_\lambda=0{,}494$ ? & NB2 ajustée sur les firmes de plus de 100 Md\$ ; erreur-type par firme 0,066. Son extrapolation aux petites entités, le métier et la capture restent des limites. & § 9.5, 9.6 \\
-    Peut-on backtester le quantile à 99,5\,\% ? & Non : détecter un taux de dépassement doublé demanderait 1\,811 années. Le backtest valide le centre et le corps, et déclare une dérive d'échelle. & § 4.7 \\
+    Peut-on backtester le quantile à 99,5\,\% ? & Pas avec précision : détecter un taux de dépassement doublé avec $80\,\%$ de puissance demanderait 1\,811 années. Le comptage est mieux couvert, la forme de queue n'est pas rejetée, le niveau annuel est rejeté. & § 4.7 \\
     \rowcolor{clair}Que change l'inversion de la direction ? & Retourner $W$ déplace le capital de $3{,}6\,\%$ (295 M€) et la priorité de P1 à P4 ; sur l'ensemble admissible, l'écart atteint 1\,173 M€. D'où des bornes, non un point. & § 5.9, 8.2 \\
     Pourquoi une cascade plutôt qu'un Hawkes ? & Une cascade sans auto-excitation donne un ratio de branchement de $0{,}480$ contre $0{,}551$ mesuré : le Hawkes n'est pas distinguable. Par parcimonie, la cascade décrit aussi la structure entre piliers. & § 10.3 \\
     \rowcolor{clair}Pourquoi additionner les coûts des piliers touchés ? & C'est l'hypothèse structurelle la plus lourde, non testée. Un exposant $\theta\in[0{,}70\,;1{,}30]$ déplace l'écart de 9\,706 à 20\,487 M€ ; signe et ordre tiennent, pas l'amplitude. & § 10.8 \\

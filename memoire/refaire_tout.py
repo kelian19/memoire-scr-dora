@@ -93,7 +93,7 @@ def trouver_tectonic():
     noms = ["tectonic.exe", "tectonic"] if platform.system() == "Windows" else ["tectonic"]
     pistes = [os.path.join(REPO, "outils", "tectonic", n) for n in noms]
     pistes += [os.path.join(ICI, n) for n in noms]
-    pistes += [r"C:\Users\kelia\miniconda3\Library\bin\tectonic.exe"]
+    pistes += [os.path.join(os.path.expanduser("~"), "miniconda3", "Library", "bin", "tectonic.exe")]
     for p in pistes:
         if os.path.isfile(p):
             return p

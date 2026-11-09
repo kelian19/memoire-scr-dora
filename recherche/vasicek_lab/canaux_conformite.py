@@ -18,10 +18,11 @@ LES QUATRE CANAUX (etats C = cible conforme -> NC = non conforme, scripts 16/38/
   frequence    lam      21,6 -> 53,6    base estimee ; multiplicateur pose, ancre sur des publications
   detection    p_u      x0,85 -> x1,20  taux de base estime ; deux facteurs poses, non calibres
   propagation  g        0,45 -> 0,90    deux valeurs posees ; W non identifiee
-  accumulation phi_cs   0 -> 0,68       borne de scenario posee, non estimee (scripts 38/42)
+  accumulation phi_cs  None -> 0,68     cascade P4 ordinaire -> choc commun pose (scripts 38/42)
 """
 
 import os
+import operator
 import sys
 from itertools import combinations
 
@@ -58,8 +59,32 @@ G_C, G_NC = 0.45, 0.90                                          # gain propagati
 PHICS_NC = 0.68                                                 # accumulation P4 (gamma, script 38)
 
 
+def _probabilite(nom, valeur):
+    """Accepte un scalaire fini dans [0, 1], sans le borner silencieusement."""
+    if not np.isscalar(valeur) or not np.isrealobj(valeur):
+        raise ValueError(f"{nom} doit être un scalaire fini entre 0 et 1")
+    try:
+        valide = np.isfinite(valeur) and 0 <= valeur <= 1
+    except TypeError:
+        valide = False
+    if not valide:
+        raise ValueError(f"{nom} doit être un scalaire fini entre 0 et 1")
+
+
+def _entier_positif(nom, valeur):
+    try:
+        entier = operator.index(valeur)
+    except TypeError as erreur:
+        raise ValueError(f"{nom} doit être un entier strictement positif") from erreur
+    if isinstance(valeur, (bool, np.bool_)) or entier < 1:
+        raise ValueError(f"{nom} doit être un entier strictement positif")
+
+
 # ------------------------------------------------------------------ tables de cascade
 def table_amorce(j, g):
+    _probabilite("g", g)
+    if j not in PIL:
+        raise ValueError("l'amorce doit être un pilier de 1 à 5")
     dist = eng.cascade_set_dist(j, g)
     sets = list(dist.keys())
     probs = np.array([dist[s] for s in sets])
@@ -72,6 +97,7 @@ def table_amorce(j, g):
 
 def table_p4_choc(phi_cs):
     """P4 en choc commun : P4 + chaque autre pilier inclus indep. avec proba phi_cs."""
+    _probabilite("phi_cs", phi_cs)
     sets, probs = [], []
     for r in range(len(_others) + 1):
         for combo in combinations(_others, r):
@@ -92,7 +118,26 @@ def pertes_annuelles(lam, g, p_u, phi_cs, rng, ny=NY):
     L'ORDRE DES TIRAGES EST PARTIE DU RESULTAT. Comptage, amorce, uniformes de cascade, puis
     severite : c'est l'ordre du script 43, donc celui des 14 139 M publies. Le reordonner, ou
     inserer un tirage, redonnerait des nombres tout aussi valides et tout aussi differents.
+
+    lam est fini et positif ou nul ; g et p_u sont dans [0, 1] ; ny est un entier positif.
+    phi_cs=None conserve P4 dans la cascade. phi_cs=0 impose un incident P4 isolé.
+    À fréquence nulle, la sortie est nulle sans consommer de nombres aléatoires.
     """
+    _entier_positif("ny", ny)
+    if not np.isscalar(lam) or not np.isrealobj(lam):
+        raise ValueError("lam doit être un scalaire fini positif ou nul")
+    try:
+        valide = np.isfinite(lam) and lam >= 0
+    except TypeError:
+        valide = False
+    if not valide:
+        raise ValueError("lam doit être un scalaire fini positif ou nul")
+    _probabilite("g", g)
+    _probabilite("p_u", p_u)
+    if phi_cs is not None:
+        _probabilite("phi_cs", phi_cs)
+    if lam == 0:
+        return np.zeros(ny)
     r = lam / (ec.PHI - 1.0)
     counts = rng.negative_binomial(r, r / (r + lam), size=ny)
     T = int(counts.sum())
@@ -126,17 +171,18 @@ def metriques_par_graine(lam, g, p_u, phi_cs=None, nseed=NSEED, ny=NY, seed0=SEE
     """(VaR 99,5 %, perte moyenne) graine par graine. phi_cs=None -> P4 noeud de cascade.
 
     NOMBRES COMMUNS, ET CE QU'ILS COUVRENT. La graine k est la meme pour toutes les
-    configurations, donc deux configurations de MEME lam partagent leurs tirages de comptage,
-    d'amorce et de severite : leur difference est alors quasi exempte de bruit de simulation.
-    Deux configurations de lam DIFFERENT ne les partagent pas, la loi de comptage changeant :
-    c'est la que le bruit entre, et c'est pourquoi le script 68 le mesure au lieu de le
-    supposer negligeable.
+    configurations. À lam identique, comptage, amorces et uniformes de cascade sont partagés.
+    Les sévérités le sont aussi si p_u est identique. Changer p_u change les positions des
+    tirages GPD : le couplage n'est pas monotone incident par incident. Changer lam modifie
+    également les comptes et l'affectation des incidents aux années. Les graines communes
+    réduisent le bruit, sans le supprimer ; sa dispersion est mesurée entre graines.
 
     LA SECONDE METRIQUE N'EST PAS UN ORNEMENT. Une interaction est une difference de
     differences, l'estimateur le plus bruite du projet : le script 20b a montre que son SIGNE
     n'est pas resolu en VaR d'une graine a l'autre, alors qu'il l'est en perte moyenne. Toute
     decomposition de l'interaction doit donc etre lue dans les deux metriques.
     """
+    _entier_positif("nseed", nseed)
     out = np.empty((nseed, 2))
     for k in range(nseed):
         rng = np.random.default_rng(seed0 + k)

@@ -10,25 +10,25 @@ Les cas d'usage 08e/08f/08g et le script 39 ont produit des KPI OBSERVABLES par 
   freq frequence d'entree           (calibree, 08b)
 Ils DECRIVENT le risque. Ce script les rend PILOTABLES : chacun est rattache a un CANAL du
 moteur de capital, et l'on mesure le CAPITAL EN JEU derriere ce KPI, c'est-a-dire l'ecart de
-SCR entre l'etat conforme (cible DORA) et l'etat non conforme. On obtient un tableau de bord
-de REMEDIATION : quel KPI, ramene a sa cible DORA, libere le plus de capital.
+besoin de capital entre les deux etats poses. Cela ne mesure ni un effet causal de DORA ni
+le gain reel d'une remediation sans recalcul depuis l'etat de l'entite.
 
 QUATRE CANAUX, QUATRE KPI (etats C -> NC deja dans le modele, scripts 16/39/38) :
   frequence    lam        S0 conforme      -> S2 non conforme
   detection    p_u        x0,85 (P2/P3)    -> x1,20
   propagation  g          0,45             -> 0,90         (le canal NON identifie : W)
-  accumulation P4         choc commun 0    -> phi_cs = gamma = 0,68  (P4, script 38/42)
+  accumulation P4         cascade ordinaire -> phi_cs = 0,68, borne posee (P4, script 38/42)
 
 DISCIPLINE DU MEMOIRE. On isole chaque canal (les autres restant conformes) et on lit sa
-contribution en BANDE, pas en point : detection et frequence sont calibrables (bande etroite),
-propagation et accumulation ne le sont pas (bande large, = la limite d'identification). Le KPI
-observable ancre l'entite sur l'echelle C..NC ; l'attribution dit ce que vaut, en capital, de
-le ramener a la cible DORA.
+contribution dans le scenario. Frequence et detection sont mesurables, mais leurs ecarts entre
+etats sont poses ; propagation et accumulation ne sont pas identifiees. L'attribution classe
+des montants conditionnels, sans identifier la relation entre KPI observe et effet d'une action.
 
-Sortie : diagnostics + figure Z13_kpi_pilotables.png.
+Sortie : diagnostics + figure Z13_kpi_pilotables.png (--sans-figure pour les diagnostics seuls).
 """
 
 import os
+import argparse
 import sys
 
 import numpy as np
@@ -52,6 +52,9 @@ LAM_C, LAM_NC = cx.LAM_C, cx.LAM_NC
 PU_C, PU_NC = cx.PU_C, cx.PU_NC
 G_C, G_NC = cx.G_C, cx.G_NC
 PHICS_NC = cx.PHICS_NC
+parser = argparse.ArgumentParser(description="Attribution des quatre canaux de conformite")
+parser.add_argument("--sans-figure", action="store_true", help="Ne pas reecrire la figure historique")
+args = parser.parse_args()
 
 
 def titre(s):
@@ -64,7 +67,7 @@ titre("1. Reperes : etat conforme (cible DORA) et etat non conforme")
 scr_C = scr_config(LAM_C, G_C, PU_C, phi_cs=None)
 scr_NC = scr_config(LAM_NC, G_NC, PU_NC, phi_cs=PHICS_NC)
 print(f"  lam : C={LAM_C:.1f} -> NC={LAM_NC:.1f} | p_u : C={PU_C:.3f} -> NC={PU_NC:.3f} | "
-      f"g : {G_C} -> {G_NC} | phi_cs : 0 -> {PHICS_NC}")
+      f"g : {G_C} -> {G_NC} | phi_cs : None (cascade P4) -> {PHICS_NC}")
 print(f"\n  SCR conforme (cible DORA)   = {scr_C:.0f} M")
 print(f"  SCR non conforme            = {scr_NC:.0f} M")
 print(f"  Ecart de capital DORA total = {scr_NC - scr_C:.0f} M  (ce que la conformite met en jeu)")
@@ -80,8 +83,8 @@ titre("2. Attribution : capital en jeu derriere chaque KPI (un canal a la fois)"
 # =====================================================================================
 # on part de l'etat conforme et on passe UN canal en non conforme
 canaux = [
-    ("frequence (KPI entree, 08b)", dict(lam=LAM_NC, g=G_C, p_u=PU_C, phi_cs=None), "calibrable"),
-    ("detection (KPI P2 delai, P3 confinement)", dict(lam=LAM_C, g=G_C, p_u=PU_NC, phi_cs=None), "calibrable"),
+    ("frequence (KPI entree, 08b)", dict(lam=LAM_NC, g=G_C, p_u=PU_C, phi_cs=None), "mesurable"),
+    ("detection (KPI P2 delai, P3 confinement)", dict(lam=LAM_C, g=G_C, p_u=PU_NC, phi_cs=None), "mesurable"),
     ("propagation (canal W, non identifie)", dict(lam=LAM_C, g=G_NC, p_u=PU_C, phi_cs=None), "borne"),
     ("accumulation (KPI P4 concentration)", dict(lam=LAM_C, g=G_C, p_u=PU_C, phi_cs=PHICS_NC), "borne"),
 ]
@@ -106,10 +109,9 @@ rank = sorted(attrib, key=lambda x: -x[1])
 print("  Ramener un KPI a sa cible DORA libere (en isolant le canal) :")
 for i, (name, d, statut) in enumerate(rank, 1):
     print(f"    {i}. {name:<44}{d:>7.0f} M   ({statut})")
-print("\n  Lecture : les KPI a fort capital et CALIBRABLES (frequence, detection) sont les")
-print("  leviers de remediation ACTIONNABLES en priorite ; ceux a fort capital mais BORNES")
-print("  (propagation, accumulation) disent surtout l'incertitude, a piloter par la donnee")
-print("  (registre DORA) plutot que par une action directe. Distinguer les deux est le point.")
+print("\n  Lecture : frequence et detection sont mesurables, mais leurs ecarts sont poses.")
+print("  Propagation et accumulation ne sont pas identifiees. Ces montants conditionnels")
+print("  ne suffisent pas a ordonner des actions reelles de remediation.")
 
 # =====================================================================================
 titre("VERDICT")
@@ -118,14 +120,16 @@ print("  1. Chaque KPI descriptif devient un LEVIER DE CAPITAL rattache a un can
 print("     frequence->lam, detection (P2/P3)->p_u, accumulation (P4)->choc commun, W->g.")
 print(f"  2. L'ecart de capital DORA ({scr_NC-scr_C:.0f} M) s'attribue par canal ; les canaux")
 print(f"     ne sont pas additifs (interaction {interaction:+.0f} M).")
-print("  3. Tableau de bord actionnable : classer par capital en jeu ET par statut (calibrable")
-print("     vs borne). Les KPI calibrables se remedient ; les bornes se resorbent par la donnee.")
+print("  3. Classer par capital en jeu et par statut : mesurable ou non identifie.")
+print("     Aucun des quatre ecarts entre etats n'est estime sur des etats observes.")
 print("  4. C'est l'aval du fil : la meme discipline C..NC / bande / identification, exprimee")
 print("     cette fois en KPI opposables a un souscripteur ou a un superviseur DORA.")
 
 # =====================================================================================
 # figure Z13
 # =====================================================================================
+if args.sans_figure:
+    sys.exit(0)
 mpl.rcParams.update({
     "font.family": ["DejaVu Sans", "Segoe UI", "sans-serif"], "font.size": 11,
     "figure.facecolor": "#fcfcfb", "axes.facecolor": "#fcfcfb",
@@ -156,7 +160,7 @@ ax1.bar(0, scr_C, color=GREEN, alpha=0.9, width=0.6)
 ax1.bar(len(labels) - 1, scr_NC, color=ACCENT, alpha=0.9, width=0.6)
 base = scr_C
 for i, (n, d, statut) in enumerate(attrib, 1):
-    c = BLUE if statut == "calibrable" else MUTED
+    c = BLUE if statut == "mesurable" else MUTED
     ax1.bar(i, d, bottom=base, color=c, alpha=0.85, width=0.6)
     ax1.text(i, base + d + 120, f"+{d:.0f}", ha="center", fontsize=8, color=INK2)
     base += d
@@ -173,11 +177,11 @@ ax1.set_title("(a)  L'écart de capital DORA attribué par KPI\n(bleu : écart p
 # (b) tableau de bord : KPI classes par capital, couleur = statut
 names = [short[n].replace("\n", " ") for n, _, _ in rank]
 vals = [d for _, d, _ in rank]
-cols = [BLUE if s == "calibrable" else MUTED for _, _, s in rank]
+cols = [BLUE if s == "mesurable" else MUTED for _, _, s in rank]
 ypos = np.arange(len(rank))[::-1]
 ax2.barh(ypos, vals, color=cols, alpha=0.88)
 for y, v, (_, _, s) in zip(ypos, vals, rank):
-    ax2.text(v + 20, y, f"{v:.0f} M  ({'mesurable' if s == 'calibrable' else 'non identifié'})", va="center", fontsize=8.5, color=INK2)
+    ax2.text(v + 20, y, f"{v:.0f} M  ({'mesurable' if s == 'mesurable' else 'non identifié'})", va="center", fontsize=8.5, color=INK2)
 ax2.set_yticks(ypos); ax2.set_yticklabels(names, fontsize=9)
 ax2.set_xlabel("capital en jeu = B(non conforme) − B(conforme), canal isolé", color=INK2)
 ax2.set_xlim(0, max(vals) * 1.35)

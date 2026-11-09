@@ -92,7 +92,7 @@ quatre répétitions ne suffisent pas à estimer finement ce bruit ; nous conser
 % SOURCES-SCRIPTS: 134
 
 Ramener l'ignorance de $t=1$ à $t=0{,}5$, c'est-à-dire borner l'asymétrie à la moitié de la
-co-occurrence, réduirait la largeur de la plage de $1\,839$ à $695$~M\euro{}, soit $-62\,\%$. Ce scénario donne l'ordre de grandeur de ce que le reporting de la section~\ref{ch:livrable} permettrait de gagner, sans le garantir.
+force symétrique $S$ posée, réduirait la largeur de la plage de $1\,839$ à $695$~M\euro{}, soit $-62\,\%$. Ce scénario donne l'ordre de grandeur de ce que le reporting de la section~\ref{ch:livrable} permettrait de gagner, sans le garantir.
 
 % SOURCES-SCRIPTS: 30 61 127
 
@@ -151,28 +151,32 @@ conservent l'ordre de grandeur des rapports au socle et P1 et P4 en tête, non l
 (figure~\ref{fig:partielle}).
 % SOURCES-SCRIPTS: 33
 
-\section{Échelle de repli sur la direction}
+\section{Repli sur l'effet source résiduel}
 \label{sec:echelle-u}
 
-On peut écrire la direction par l'excès de propagation propre à la source,
-$\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$ ($p_j$ mesure l'attractivité de la cible
-$j$), puis limiter $u$ par structures successives, jusqu'à la variante sans asymétrie où $u=0$.
-Une direction de rang $1$ capte $74\,\%$ de la
-variance de la direction posée et resserre les bornes de $25\,\%$, au prix d'une
-hypothèse de structure. Elle n'a qu'un facteur de source et un facteur de cible, donc une seule valeur singulière non nulle de $u$ (figure~\ref{fig:echelle-repli}b). Sans asymétrie,
-P1 et P4 deviennent indiscernables (gains de remédiation $1\,051$ contre $1\,052$~M\euro{}),
-alors que $353$~M\euro{} les séparent avec la direction du barème d'expert. C'est donc la direction qui
-départage les deux piliers prioritaires.
+Une autre paramétrisation sépare l'attractivité de la cible $j$ et un effet source résiduel :
+$\operatorname{logit}p_{ij}=\operatorname{logit}p_j+u_{ij}$, avec $u$ centré par colonne hors diagonale.
+À $u=0$, $p_{ij}=p_j$ : l'effet source résiduel disparaît, mais les attractivités différentes
+conservent une asymétrie de $W$. Cette variante modifie aussi $S$ ; elle n'isole donc pas l'effet de $A$.
+
+La restriction utilise un facteur source et un facteur cible avant recentrage ; elle n'impose pas
+un rang matriciel de $1$ après recentrage et annulation de la diagonale. Le premier terme de la
+décomposition en valeurs singulières (SVD) du barème résiduel porte $74\,\%$ de son énergie : c'est un
+descriptif du barème, pas une validation de cette famille. Sur $400$ tirages par famille, l'étendue
+du capital passe de $738$ à $555$~M\euro{}, soit $25\,\%$ de moins. Ces étendues échantillonnées
+ne sont pas des extrema démontrés et ne se comparent pas aux sommets à $S$ fixé.
+À $u=0$, les gains de P1 et P4 sont proches ($1\,051$ et $1\,052$~M\euro{}), contre un écart
+de $353$~M\euro{} au barème. Ce rapprochement ne peut être attribué à la seule direction.
 
 % Largeur d'appel reduite de 1,14 a 1,04 \textwidth (au lieu de \figover) : sous le tectonic
 % macOS, la figure 8.3 passait seule a la page suivante (151 pages au lieu de 150 sous Windows,
 % meme source). Aucun texte ni aucune valeur ne change.
 \begin{figure}[H]\centering
 \makebox[\textwidth][c]{\includegraphics[width=1.04\textwidth]{Z5_echelle_repli.png}}
-\caption{Échelle de repli sur la direction. (a)~Les extrema du capital aux sommets se resserrent quand la
-structure est restreinte : $u$ libre, rang~$1$, barème d'expert, puis absence d'asymétrie ($u=0$). (b)~Valeurs
-singulières de la direction posée : le rang~$1$ en capte l'essentiel. (c)~Gains de remédiation par
-pilier avec la direction du barème d'expert et sans asymétrie.}
+\caption{Repli sur l'effet source résiduel, hors du pavé à $S$ fixé.
+(a)~Étendues sur $400$ tirages : $u$ libre ou famille à un facteur avant recentrage ; les deux autres
+valeurs sont des points. (b)~Valeurs singulières du barème résiduel.
+(c)~Gains au barème et à $u=0$, où une asymétrie subsiste.}
 % SOURCES-SCRIPTS: 34
 \label{fig:echelle-repli}
 \end{figure}

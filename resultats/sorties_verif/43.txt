@@ -2,7 +2,7 @@
 ==================================================================================
 1. Reperes : etat conforme (cible DORA) et etat non conforme
 ==================================================================================
-  lam : C=21.6 -> NC=53.6 | p_u : C=0.128 -> NC=0.181 | g : 0.45 -> 0.9 | phi_cs : 0 -> 0.68
+  lam : C=21.6 -> NC=53.6 | p_u : C=0.128 -> NC=0.181 | g : 0.45 -> 0.9 | phi_cs : None (cascade P4) -> 0.68
 
   SCR conforme (cible DORA)   = 6049 M
   SCR non conforme            = 20188 M
@@ -14,8 +14,8 @@
 2. Attribution : capital en jeu derriere chaque KPI (un canal a la fois)
 ==================================================================================
   KPI / canal                                       SCR  capital en jeu      statut
-  frequence (KPI entree, 08b)                   10377 M          4328 M  calibrable
-  detection (KPI P2 delai, P3 confinement)       7497 M          1448 M  calibrable
+  frequence (KPI entree, 08b)                   10377 M          4328 M   mesurable
+  detection (KPI P2 delai, P3 confinement)       7497 M          1448 M   mesurable
   propagation (canal W, non identifie)           7682 M          1633 M       borne
   accumulation (KPI P4 concentration)            7777 M          1728 M       borne
 
@@ -27,15 +27,14 @@
 3. Tableau de bord de remediation : KPI classes par capital libere
 ==================================================================================
   Ramener un KPI a sa cible DORA libere (en isolant le canal) :
-    1. frequence (KPI entree, 08b)                    4328 M   (calibrable)
+    1. frequence (KPI entree, 08b)                    4328 M   (mesurable)
     2. accumulation (KPI P4 concentration)            1728 M   (borne)
     3. propagation (canal W, non identifie)           1633 M   (borne)
-    4. detection (KPI P2 delai, P3 confinement)       1448 M   (calibrable)
+    4. detection (KPI P2 delai, P3 confinement)       1448 M   (mesurable)
 
-  Lecture : les KPI a fort capital et CALIBRABLES (frequence, detection) sont les
-  leviers de remediation ACTIONNABLES en priorite ; ceux a fort capital mais BORNES
-  (propagation, accumulation) disent surtout l'incertitude, a piloter par la donnee
-  (registre DORA) plutot que par une action directe. Distinguer les deux est le point.
+  Lecture : frequence et detection sont mesurables, mais leurs ecarts sont poses.
+  Propagation et accumulation ne sont pas identifiees. Ces montants conditionnels
+  ne suffisent pas a ordonner des actions reelles de remediation.
 
 ==================================================================================
 VERDICT
@@ -44,9 +43,7 @@ VERDICT
      frequence->lam, detection (P2/P3)->p_u, accumulation (P4)->choc commun, W->g.
   2. L'ecart de capital DORA (14139 M) s'attribue par canal ; les canaux
      ne sont pas additifs (interaction +5001 M).
-  3. Tableau de bord actionnable : classer par capital en jeu ET par statut (calibrable
-     vs borne). Les KPI calibrables se remedient ; les bornes se resorbent par la donnee.
+  3. Classer par capital en jeu et par statut : mesurable ou non identifie.
+     Aucun des quatre ecarts entre etats n'est estime sur des etats observes.
   4. C'est l'aval du fil : la meme discipline C..NC / bande / identification, exprimee
      cette fois en KPI opposables a un souscripteur ou a un superviseur DORA.
-
-figure ecrite : exploratory/vasicek_lab/figures/Z13_kpi_pilotables.png

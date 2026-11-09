@@ -13,6 +13,15 @@
 
 Le contrôle de structure et ses tests utilisent uniquement Python et Git. Le [workflow GitHub Actions](../../.github/workflows/verification.yml) les exécute sur Windows et Linux ; il exécute aussi les tests scientifiques, le harnais et la compilation des trois versions sur Linux.
 
+Les tests du moteur courant vérifient aussi la fréquence nulle, les probabilités invalides,
+l'absence d'auto-propagation et les deux capitaux de référence à graines fixes. Une graine commune
+ne garantit pas une comparaison monotone des pertes lorsque le taux de matérialité change.
+
+Les commandes complètes des approfondissements sont dans leur
+[guide de reproduction](../../resultats/institut_approfondissements/README.md).
+Dans `lancer_lot_institut.py`, `119` désigne la variante de `8_benchmarks/` et `120` lance
+2 000 réplications. Le lot sans argument reste celui des seize scripts historiques.
+
 `vitrine/` prépare l'export public contrôlé. Sa surcouche porte les guides propres à cette publication ;
 les guides du dépôt de travail sont ceux reliés depuis l'accueil. La liste de fichiers publiés et les
 balayages de confidentialité sont définis dans `vitrine/exporter.py` ; ce dossier n'est pas exporté.

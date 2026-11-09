@@ -3,6 +3,10 @@
 
 Usage : python outils/ci/lancer_lot_institut.py [numeros...]   (sans argument : les seize scripts)
 
+Les numéros 119 et 120 désignent explicitement les approfondissements Institut : 119 dans
+8_benchmarks/ ; 120 avec --replications 2000, comme dans le résultat publié. Ces deux scripts
+ne font pas partie du lot historique par défaut.
+
 Pour chaque script, sous OPRISK_ANNEE_MIN=2000 : la sortie est ecrite dans
 resultats/sorties_verif_inst/NN.txt, les figures modifiees sont copiees dans
 recherche/vasicek_lab/figures_inst/ puis restaurees dans figures/ depuis Git, et une ligne du
@@ -31,6 +35,10 @@ FIGS = LAB / "figures"
 FIGS_INST = LAB / "figures_inst"
 TOUS = ["63", "47", "72", "14", "16", "46", "48", "51", "71", "89", "90", "91", "102", "104",
         "106", "93"]
+REFERENCES = {
+    "119": ("8_benchmarks/119_unite_perte_capital_institut.py", []),
+    "120": ("1_fondations/120_bootstrap_joint_institut.py", ["--replications", "2000"]),
+}
 
 
 def git(*args):
@@ -87,11 +95,12 @@ def main():
     journal_dir.mkdir(parents=True, exist_ok=False)
     numeros_faits = []
     for n in numeros:
-        candidats = sorted(LAB.rglob(f"{n}_*.py"))
+        reference, arguments = REFERENCES.get(n, (None, []))
+        candidats = [LAB / reference] if reference else sorted(LAB.rglob(f"{n}_*.py"))
         if len(candidats) != 1:
             sys.exit(f"Script {n} ambigu ou absent : {len(candidats)} candidats")
         script = candidats[0]
-        commande = [sys.executable, "-X", "utf8", "-I", str(script)]
+        commande = [sys.executable, "-X", "utf8", "-I", str(script), *arguments]
         debut = datetime.datetime.now().astimezone().isoformat()
         t0 = time.time()
         stderr_path = journal_dir / f"{n}.stderr.txt"

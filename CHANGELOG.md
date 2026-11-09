@@ -1,5 +1,13 @@
 # Journal des versions
 
+## 1.2.6 — 9 novembre 2026
+
+- Repli logit du chapitre 8 requalifié : à u = 0 une asymétrie subsiste et S change ; les largeurs comparées sont des étendues sur 400 tirages, et la famille à un facteur n'est pas de rang 1 après recentrage.
+- Moteur courant : paramètres invalides refusés, fréquence nulle sans tirage aléatoire, tests de contrat ajoutés. Les capitaux de référence ne changent pas.
+- Citation des prestataires critiques séparée des repères de la BCE ; recommandation sur le registre précisée par domaine de contrôle.
+- Supports de soutenance, script oral, cours et fiches alignés sans diapositive ajoutée ; Institut de travail à 158 pages, empreinte `7FA6C6D5…`.
+- Harnais : 7 549 nombres confirmés. La cible de remise reste 150 pages et les hypothèses de scénario conservent leurs limites.
+
 ## 1.2.5 — 9 novembre 2026
 
 - Les 24 M€ d'entité correspondent au seul gain de propagation non conforme ; les quatre canaux restent un protocole distinct.
@@ -7,7 +15,7 @@
 - État conforme sans choc commun : P4 reste un nœud de cascade, ce qui diffère d'un choc commun de probabilité nulle.
 - Élasticité de la surdispersion signalée comme non résolue ; dérive d'échelle présentée comme une variante, sans borne démontrée.
 - Supports de soutenance et figures alignés ; Institut de travail à 158 pages, empreinte `778EF454…`.
-- Harnais : 7 543 nombres confirmés. La cible de remise reste 150 pages et les hypothèses de scénario conservent leurs limites.
+- Harnais : 7 549 nombres confirmés. La cible de remise reste 150 pages et les hypothèses de scénario conservent leurs limites.
 
 ## 1.2.4 — 9 novembre 2026
 

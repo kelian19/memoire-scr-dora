@@ -84,6 +84,19 @@ def rho(M):
 
 
 def admissible(W):
+    """Matrice 5 × 5 finie, sans auto-propagation, à coefficients admissibles et rho < 1.
+
+    Les sommes de lignes peuvent dépasser 1 : ce domaine est celui de la cascade
+    indépendante, pas celui d'une marche à un seul successeur.
+    """
+    try:
+        if not np.isrealobj(W):
+            return False
+        W = np.asarray(W, dtype=float)
+    except (TypeError, ValueError):
+        return False
+    if W.shape != (NP_, NP_) or not np.isfinite(W).all() or np.any(np.diag(W) != 0):
+        return False
     # rho < 1 STRICT, comme dans la definition de l'ensemble admissible (chapitre 8) : a rho = 1 la
     # serie de Neumann diverge et (I - W)^-1 n'existe pas.
     return bool((W >= -1e-12).all() and (W <= 1.0).all() and rho(W) < 1.0)
